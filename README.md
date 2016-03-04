@@ -1,2 +1,2 @@
 # control-repo
-This is 
+Used to manage the repo for module administration
