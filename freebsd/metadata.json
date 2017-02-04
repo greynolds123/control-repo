@@ -1,0 +1,30 @@
+{
+  "name": "csail-freebsd",
+  "version": "0.0.1",
+  "source": "http://tig.csail.mit.edu/git-public/freebsd.git",
+  "author": "MIT Computer Science & Artificial Intelligence Laboratory",
+  "license": "MIT",
+  "summary": "Helpful facts and resource types for FreeBSD systems",
+  "description": "This module contains classes, facts, and resource types useful on\nFreeBSD systems, including rc_conf, loader_conf, and periodic_conf types;\na localbase fact; and ipfw and pf classes (the latter currently stubbed out).",
+  "project_page": "http://tig.csail.mit.edu/wiki/TIG/PuppetAtCSAIL",
+  "dependencies": [
+    {
+      "name": "csail/shell_config",
+      "version_requirement": ">= 0.0.1"
+    }
+  ],
+  "types": [
+
+  ],
+  "checksums": {
+    "LICENSE": "a9ab53ce295f6f1fdc3f332c69ff6408",
+    "Modulefile": "e32c7209a229512756424275980c5ef3",
+    "README": "8e72880d74859644238d9254b12bf565",
+    "lib/facter/localbase.rb": "73403c728ea36ddfedad90189ae14641",
+    "manifests/ipfw.pp": "644271db27567b3a1a3226db5bfd979f",
+    "manifests/loader_conf.pp": "f5d0b8a5d0e684761545bc4519865dcd",
+    "manifests/periodic_conf.pp": "6e5978ed91dd8f49b9d6f5e2da72ad6e",
+    "manifests/pf.pp": "78dd7ac6888de15d06adf38fdd0f45b3",
+    "manifests/rc_conf.pp": "a68bd89229a619eda9ca9809f7084fca"
+  }
+}

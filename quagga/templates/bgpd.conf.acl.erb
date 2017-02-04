@@ -1,0 +1,53 @@
+!
+ip prefix-list default-route seq 1 permit 0.0.0.0/0
+!
+ip prefix-list deny seq 1 deny any
+!
+ip prefix-list deny-default-route seq 1 deny 0.0.0.0/0
+ip prefix-list deny-default-route seq 2 permit 0.0.0.0/0 le 24
+!
+<% if ! @enable_advertisements or ! @enable_advertisements_v4 then -%>
+ip prefix-list prefix-v4 seq 1 deny any
+<%- end -%>
+<%- @prefix_v4_index = 1 -%>
+<%- if ! @failover_server then -%>
+  <%- @networks4.each do |network| -%>
+    <%- @prefix_v4_index += 1 -%>
+ip prefix-list prefix-v4 seq <%= @prefix_v4_index %> permit <%= network %>
+  <%- end -%>
+<%- end -%>
+<%- @failsafe_networks4.each do |network| -%>
+  <%- @prefix_v4_index += 1 -%>
+ip prefix-list prefix-v4 seq <%= @prefix_v4_index %> permit <%= network %>
+<%- end -%>
+!
+<%- @networks4.each_with_index do |network, index| -%>
+ip prefix-list specific-v4 seq <%= index + 1 %> permit <%= network %>
+<%- end -%>
+!
+ipv6 prefix-list default-route seq 1 permit ::/0
+!
+ipv6 prefix-list deny seq 1 deny any
+!
+ipv6 prefix-list deny-default-route seq 1 deny ::/0
+ipv6 prefix-list deny-default-route seq 2 permit ::/0 le 48
+!
+<% if ! @enable_advertisements or ! @enable_advertisements_v6 then -%>
+ipv6 prefix-list prefix-v6 seq 1 deny any
+<%- end -%>
+<%- @prefix_v6_index = 1 -%>
+<%- if ! @failover_server then -%>
+  <%- @networks6.each do |network| -%>
+    <%- @prefix_v6_index += 1 -%>
+ipv6 prefix-list prefix-v6 seq <%= @prefix_v6_index %> permit <%= network %>
+  <%- end -%>
+<%- end -%>
+<%- @failsafe_networks6.each do |network| -%>
+  <%- @prefix_v6_index += 1 -%>
+ipv6 prefix-list prefix-v6 seq <%= @prefix_v6_index %> permit <%= network %>
+<%- end -%>
+!
+<%- @networks6.each_with_index do |network, index| -%>
+ipv6 prefix-list specific-v6 seq <%= index + 1 %> permit <%= network %>
+<%- end -%>
+!
