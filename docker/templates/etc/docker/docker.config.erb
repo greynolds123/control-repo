@@ -1,0 +1,216 @@
+<% if @attach -%>
+<% @attach.each do |a| -%>
+--attach=<%= a %>
+<% end -%>
+<% end -%>
+<% if @add_host -%>
+<% @add_host.each do |a| -%>
+--add-host=<%= a %>
+<% end -%>
+<% end -%>
+<% if @blkio_weight -%>
+--blkio-weight=<%= @blkio_weight %>
+<% end -%>
+<% if @cap_add -%>
+<% @cap_add.each do |a| -%>
+--cap-add=<%= a %>
+<% end -%>
+<% end -%>
+<% if @cap_drop -%>
+<% @cap_drop.each do |a| -%>
+--cap-drop=<%= a %>
+<% end -%>
+<% end -%>
+<% if @cgroup_parent -%>
+--cgroup-parent=<% @cgroup_parent %>
+<% end -%>
+<% if @cpu_set -%>
+--cpu-set=<%= @cpu_set %>
+<% end -%>
+<% if @cpuset_cpus -%>
+--cpuset-cpus=<%= @cpuset_cpus %>
+<% end -%>
+<% if @cpuset_mems -%>
+--cpuset-mems=<%= @cpuset_mems %>
+<% end -%>
+<% if @cpu_peroid -%>
+--cpu-peroid=<%= @cpu_peroid %>
+<% end -%>
+<% if @cpu_quota -%>
+--cpu-quota=<%= @cpu_quota %>
+<% end -%>
+<% if @cpu_shares -%>
+--cpu-shares=<%= @cpu_shares %>
+<% end -%>
+<% if @device -%>
+<% @device.each do |a| -%>
+--device=<%= a %>
+<% end -%>
+<% end -%>
+<% if !@disable_content_trust -%>
+--disable-content-trust=false
+<% end -%>
+<% if @dns -%>
+<% @dns.each do |a| -%>
+--dns=<%= a %>
+<% end -%>
+<% end -%>
+<% if @dns_opt -%>
+<% @dns_opt.each do |a| -%>
+--dns-opt=<%= a %>
+<% end -%>
+<% end -%>
+<% if @dns_search -%>
+<% @dns_search.each do |a| -%>
+--dns-search=<%= a %>
+<% end -%>
+<% end -%>
+<% if @env -%>
+<% @env.each do |a| -%>
+--env=<%= a %>
+<% end -%>
+<% end -%>
+<% if @entrypoint %>
+--entrypoint=<%= @entrypoint %>
+<% end -%>
+<% if @env_file -%>
+<% @env_file.each do |a| -%>
+--env-file=<%= a %>
+<% end -%>
+<% end -%>
+<% if @expose -%>
+<% @expose.each do |a| -%>
+--expose=<%= a %>
+<% end -%>
+<% end -%>
+<% if @hostname -%>
+--hostname=<%= @hostname %>
+<% end -%>
+<% if @interactive -%>
+--interactive=true
+<% end -%>
+<% if @ipc -%>
+--ipc<%= @ipc %>
+<% end -%>
+<% if @kernel_memory -%>
+--kernel-memory<%= @kernel_memory %>
+<% end -%>
+<% if @lable -%>
+<% @lable.each do |a| -%>
+--lable=<%= a %>
+<% end -%>
+<% end -%>
+<% if @label_file -%>
+<% @lable_file.each do |a| -%>
+--lable-file=<%= a %>
+<% end -%>
+<% end -%>
+<% if @link -%>
+<% @link.each do |a| -%>
+--link=<%= a %>
+<% end -%>
+<% end -%>
+<% if @log_driver -%>
+--log-driver=<%= @log_driver %>
+<% end -%>
+<% if @log_opt -%>
+<% @log_opt.each do |a| -%>
+--log-opt=<%= a %>
+<% end -%>
+<% end -%>
+<% if @lxc_conf -%>
+<% @lxc_conf.each do |a| -%>
+--lxc-conf=<%= a %>
+<% end -%>
+<% end -%>
+<% if @mac_address -%>
+--mac-address=<%= @mac_address %>
+<% end -%>
+<% if @memory -%>
+--memory=<%= @memory %>
+<% end -%>
+<% if @memory_limit -%>
+--memory-limit=<%= @memory_limit %>
+<% end -%>
+<% if @memory_reservation -%>
+--memory-reservation=<%= @memory_reservation %>
+<% end -%>
+<% if @memory_swap -%>
+--memory-swap=<%= @memory_swap %>
+<% end -%>
+<% if @memory_swappiness -%>
+--memory-swappiness=<%= @memory_swappiness %>
+<% end -%>
+<% if @net -%>
+--net=<%= @net %>
+<% end -%>
+<% if @oom_kill_disable -%>
+--oom-kill-disable=true
+<% end -%>
+<% if @publish -%>
+<% @publish.each do |a| -%>
+--publish=<%= a %>
+<% end -%>
+<% end -%>
+<% if @publish_all -%>
+--publish-all=true
+<% end -%>
+<% if @privileged -%>
+--privileged=true
+<% end -%>
+<% if @read_only -%>
+--read-only=true
+<% end -%>
+<% if @restart -%>
+--restart=<%= @restart %>
+<% end -%>
+<% if @security_opt -%>
+<% @security_opt.each do |a| -%>
+--security-opt=<%= a %>
+<% end -%>
+<% end -%>
+<% if @stop_signal -%>
+--stop-signal=<%= @stop_signal %>
+<% end -%>
+<% if @tty -%>
+--tty=true
+<% end -%>
+<% if @user -%>
+--user=<%= @user %>
+<% end -%>
+<% if @volume -%>
+<% @volume.each do |a| -%>
+--volume=<%= a %>
+<% end -%>
+<% end -%>
+<% if @volume_driver -%>
+--volume-driver=<%= @volume_driver %>
+<% end -%>
+<% if @volumes_from -%>
+<% @volumes_from.each do |a| -%>
+--volumes-from=<%= a %>
+<% end -%>
+<% end -%>
+<% if @ulimit -%>
+<% @ulimit.each do |a| -%>
+--ulimit=<%= a %>
+<% end -%>
+<% end -%>
+<% if @uts -%>
+--uts=<%= @uts %>
+<% end -%>
+<% if @workdir -%>
+--workdir=<%= @workdir %>
+<% end -%>
+<% if @extra_parameters -%>
+<% @extra_parameters.each do |a| -%>
+<%= a %>
+<% end -%>
+<% end -%>
+--name=<%= @name %>
+<%= @image %>
+<% if @command -%>
+<% @command.split(%r{\s+}).each do |a| -%>
+<%= a %>
+<% end -%>
+<% end -%>
