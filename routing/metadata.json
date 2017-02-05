@@ -1,0 +1,33 @@
+{
+  "project_page": "https://github.com/johann8384/puppet-routing",
+  "license": "Apache License, Version 2.0",
+  "source": "https://github.com/johann8384/puppet-routing",
+  "types": [
+
+  ],
+  "description": "Used to configure multi-site tunnels and rouing",
+  "version": "0.1.2",
+  "summary": "Manages Quagga (ospfd, bgpd, zebra), and GRE tunnels",
+  "name": "johann8384-routing",
+  "author": "johann8384",
+  "checksums": {
+    "Modulefile": "ecdd607ac5661bfe94ea9d38c74b5efb",
+    "manifests/init.pp": "04bfe8e0056e08e8b4e18006fad997de",
+    "manifests/zebra.pp": "bbe1325a29bd7a07a9c4d1f7f42e490b",
+    "templates/ifcfg-tunX.erb": "5d2530f3b46202c35fd7cc71bda4baa2",
+    "spec/spec_helper.rb": "a55d1e6483344f8ec6963fcb2c220372",
+    "manifests/ospfd.pp": "4f4ab5be5d7cfd7956d5fd6b3a2c515a",
+    "manifests/gre.pp": "3e4e2a354259bf3384ea18b123392a50",
+    "templates/zebra.conf.erb": "7e262fcb37c3f2d443dd57e3c3e9e076",
+    "tests/init.pp": "7ab1271a4047c698f59b96c909c90f3b",
+    "manifests/bgpd.pp": "88abd3962235e5c976be1dc5ffa840ea",
+    "manifests/disable/ospfd.pp": "48927a65aad16f34bba262e274e54023",
+    "README.md": "6915583288b1f00e79ba371b8b6d1658",
+    "manifests/disable/bgpd.pp": "5b40d34079621623cad81e7694e5a585",
+    "templates/ospfd.conf.erb": "ec7dac3b83f705b29bb6dda42a1717c5",
+    "templates/bgpd.conf.erb": "9e15a7894286a8632cadb027a2f71e0d"
+  },
+  "dependencies": [
+
+  ]
+}

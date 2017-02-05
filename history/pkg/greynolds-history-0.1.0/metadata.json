@@ -1,0 +1,16 @@
+{
+  "name": "greynolds-history",
+  "version": "0.1.0",
+  "author": "Glynn D. Reynolds",
+  "summary": "Presents the date and time format for the history files",
+  "license": "Apache 2.0",
+  "source": "https://greynolds@centos7.dev.localdomain:/etc/puppetlabs/puppet/modules",
+  "project_page": "https://greynolds@centos7.dev.localdomain:/etc/puppetlabs/puppet/modules",
+  "issues_url": "https://greynolds@centos7.dev.localdomain:/etc/puppetlabs/puppet/modules",
+  "dependencies": [
+    {
+      "name": "puppetlabs-stdlib",
+      "version_range": ">= 1.0.0"
+    }
+  ]
+}

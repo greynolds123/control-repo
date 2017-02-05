@@ -1,0 +1,16 @@
+{
+  "CHANGELOG.md": "0b70336e7f4cec80052392b024379b49",
+  "Gemfile": "5280789eef4822aed6d43a9e8bcd9c8a",
+  "LICENSE": "974ba50a88ee58f288764b2c22d9acfc",
+  "README.md": "17282d69fd30bc0ec155f9609324c967",
+  "Rakefile": "4790ce4524ba6343fc70a71bda479915",
+  "manifests/init.pp": "bc2c1e483f604f533d89a8a43c692019",
+  "manifests/params.pp": "1768c02d817198269eb334c178ee85d9",
+  "manifests/repo.pp": "5b0cc191261426548df9c08f49be0ff8",
+  "metadata.json": "ccf11c01600e7b3ba352a7e670e886b8",
+  "spec/classes/pkgng_spec.rb": "cc19855eceeb1853cd26ef299a43a278",
+  "spec/defines/pkgng_repo_spec.rb": "41ff466c78403bc4c1980632b6c11100",
+  "spec/spec_helper.rb": "693f438e57f5db0f41420bdace98f065",
+  "templates/pkg.conf": "534ba6816f1e7b460a7a91948d714905",
+  "templates/repo.erb": "9d4eea7a706148e9cef944b0bf15c76f"
+}
