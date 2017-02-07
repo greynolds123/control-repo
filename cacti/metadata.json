@@ -1,0 +1,31 @@
+{
+  "name": "cnwr-cacti",
+  "version": "0.0.2",
+  "author": "Garrett Rowell",
+  "summary": "Installs Cacti",
+  "license": "MIT",
+  "source": "https://github.com/cnwrinc/cnwr-cacti",
+  "project_page": "https://github.com/cnwrinc/cnwr-cacti",
+  "issues_url": "https://github.com/cnwrinc/cnwr-cacti/issues",
+  "tags": [
+    "cacti"
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    }
+  ],
+  "dependencies": [
+    {"name":"rmueller/cron","version_requirement":">=0.1.3"},
+    {"name":"puppetlabs/mysql","version_requirement":">= 3.6.1"}
+  ]
+}

@@ -1,0 +1,30 @@
+# MANAGED BY PUPPET
+# Module:: gitlab
+#
+# PRODUCTION
+#
+<% case @type -%>
+<% when 'mysql' -%>
+production:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: <%= @database %>
+  pool: 10
+  username: <%= @username %>
+  password: '<%= @password %>'
+  host: <%= @host %>
+  port: <%= @port %>
+  # socket: /tmp/mysql.sock
+<% when 'pgsql' -%>
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: <%= @database %>
+  pool: 10
+  username: <%= @username %>
+  password: '<%= @password %>'
+  host: <%= @host %>
+  port: <%= @port %>
+  # socket: /tmp/postgresql.sock
+<% end -%>

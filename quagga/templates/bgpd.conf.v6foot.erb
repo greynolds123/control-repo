@@ -1,0 +1,11 @@
+<%- if @networks6 then -%>
+  <%- @networks6.each do |network| -%>
+  network <%= network %>
+  <%- end -%>
+<%- end -%>
+<%- if @failsafe_networks6 then -%>
+  <%- @failsafe_networks6.each do |network| -%>
+  network <%= network %>
+  <%- end -%>
+<%- end -%>
+ exit-address-family

@@ -1,0 +1,9 @@
+quagga::bgpd::my_asn: 64496
+quagga::bgpd::router_id: 192.0.2.1
+quagga::bgpd::networks4: 
+- 192.0.2.0/24
+quagga::bgpd::peers:
+  64497:
+    addr4:
+    - 192.0.2.2
+    desc: Test Network
