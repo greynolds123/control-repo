@@ -1,0 +1,16 @@
+{
+  "name": "cron",
+  "version": "3.2.0",
+  "author": "Glynn D. Reynolds",
+  "summary": "Declarative configuration for cron",
+  "license": "Apache 2.0",
+  "source": "https://github.com/greynolds123/centos7.dev.localdomain:/etc/puppetlabs/puppet/module",
+  "project_page": "https://github.com/greynolds123/centos7.dev.localdomain:/etc/puppetlabs/puppet/module",
+  "issues_url": "https://github.com/greynolds123/centos7.dev.localdomain:/etc/puppetlabs/puppet/module/issues",
+  "dependencies": [
+    {
+      "name": "puppetlabs-stdlib",
+      "version_range": ">= v3.2.2"
+    }
+  ]
+}

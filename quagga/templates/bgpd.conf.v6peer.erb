@@ -1,0 +1,22 @@
+<%- if @addr6 then -%>
+  <%- @addr6.each do |addr| -%>
+    <%- if addr then -%>
+  neighbor <%= addr %> activate
+      <%- if @default_originate then -%>
+ neighbor <%= addr %> default-originate 
+      <%- end -%>
+  neighbor <%= addr %> soft-reconfiguration inbound
+  neighbor <%= addr %> prefix-list prefix-v6 out
+      <%- if @inbound_routes.to_s == 'default' or @inbound_routes.to_s == 'v6default' then -%>
+  neighbor <%= addr %> prefix-list default-route in
+      <%- elsif @inbound_routes.to_s == 'all' then -%>
+  neighbor <%= addr %> prefix-list deny-default-route in
+      <%- else -%>
+  neighbor <%= addr %> prefix-list deny in
+      <%- end -%>
+      <%- if @communities.any? or @prepend then -%>
+  neighbor <%= addr %> route-map outbound-<%= @name %>-v6 out
+      <%- end -%>
+    <%- end -%>
+  <%- end -%>
+<%- end -%>

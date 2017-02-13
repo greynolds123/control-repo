@@ -1,0 +1,25 @@
+<%- if @communities.any? or @prepend -%>
+  <%- if @communities.any? then
+    @no_export = @communities.delete('no-export')
+  end -%>
+route-map outbound-<%= @name %> permit 10
+  match ip address prefix-list specific-v4
+  <%- if @communities.any? or @no_export -%>
+  set community <%= @communities.join(' ') %><%- if @no_export -%> no-export<%- end %>
+  <%- end -%>
+  <%- if @prepend -%>
+  set as-path prepend<%= " #{@my_asn}" * @prepend.to_i %>
+  <%- end -%>
+route-map outbound-<%= @name %> permit 20
+!
+route-map outbound-<%= @name %>-v6 permit 10
+  match ipv6 address prefix-list specific-v6
+  <%- if @communities.any? or @no_export -%>
+  set community <%= @communities.join(' ') %><%- if @no_export -%> no-export<%- end %> 
+  <%- end -%>
+  <%- if @prepend -%>
+  set as-path prepend<%= " #{@my_asn}" * @prepend.to_i %>
+  <%- end -%>
+route-map outbound-<%= @name %>-v6 permit 20
+<%- end -%>
+!

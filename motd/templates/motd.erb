@@ -1,0 +1,13 @@
+The operating system is <%= @operatingsystem %>
+<%- if @domain -%>
+The domain is <%= @domain %>
+Your fqdn is <%= @fqdn %>
+Your free memory is <%=  @memoryfree %>
+Swap available <%= @swapfree %>
+The git version you will need is <%= @git_version %>
+Your IP is <%= @ipaddress %>
+Puppetversion <%= @puppetversion %>
+Ruby <%= @rubyversion %>
+Selinux mode <%= @selinux_current_mode %>
+Virtual type <%= @virtual %>
+<%- end -%>
