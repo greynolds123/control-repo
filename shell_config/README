@@ -1,0 +1,11 @@
+shell_config
+
+This is the shell_config module.  It encapsulates the shell_config
+type given by Tim Bishop on the Puppet Wiki.  CSAIL staff did not
+write this, and MIT has no copyright claims over it.  In fact, we
+don't even know what the appropriate license is -- presumably whatever
+contributor license was agreed to by Mr. Bishop when posting to the
+Puppet Wiki.
+
+The original source is available at:
+http://projects.puppetlabs.com/projects/1/wiki/Puppet_Free_Bsd
