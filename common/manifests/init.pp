@@ -17,7 +17,11 @@ class common (
   $enable_hosts                     = false,
   $enable_inittab                   = false,
   $enable_mailaliases               = false,
+<<<<<<< HEAD
   $enable_motd                      = false,
+=======
+  $enable_motd                      = true,
+>>>>>>> 5e468abb61fdb21f96c229f413b658c9451e7a7e
   $enable_network                   = false,
   $enable_nsswitch                  = false,
   $enable_ntp                       = false,
@@ -26,6 +30,11 @@ class common (
   $enable_rsyslog                   = false,
   $enable_selinux                   = false,
   $enable_ssh                       = false,
+<<<<<<< HEAD
+=======
+  $enable_hiera                     = true,
+  $policy_engine                    = true,
+>>>>>>> 5e468abb61fdb21f96c229f413b658c9451e7a7e
   $enable_utils                     = false,
   $enable_vim                       = false,
   $enable_wget                      = false,
@@ -167,6 +176,32 @@ class common (
   }
 
   # validate type and convert string to boolean if necessary
+<<<<<<< HEAD
+=======
+  if is_string($enable_hiera) {
+    $hiera_enabled = str2bool($enable_hiera)
+  } else {
+    $hiera_enabled = $enable_hiera
+  }
+  if $hiera_enabled == true {
+    include ::hiera
+  }
+
+
+  # validate type and convert string to boolean if necessary
+  if is_string($enable_policy_engine) {
+    $policy_engine_enabled = str2bool($enable_policy_engine)
+  } else {
+    $policy_enginee_enabled = $enable_policy_engine
+  }
+  if $policy_engine_enabled == true {
+    include ::policy_engine
+  }
+
+
+
+  # validate type and convert string to boolean if necessary
+>>>>>>> 5e468abb61fdb21f96c229f413b658c9451e7a7e
   if is_string($enable_utils) {
     $utils_enabled = str2bool($enable_utils)
   } else {
