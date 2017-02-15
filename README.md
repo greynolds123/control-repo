@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+# control-repo
+Used to manage the repo for module administration
+=======
 # README #
 
 This README would normally document whatever steps are necessary to get your application up and running.
@@ -29,3 +33,4 @@ This README would normally document whatever steps are necessary to get your app
 * Greynolds3, glynnreynolds123@gmail.com
 * Will be updated soon
 ~
+>>>>>>> c09738d238b366ad335d602aeeb9056a9e93fd49
