@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+# README #
+
+>>>>>>> c09738d238b366ad335d602aeeb9056a9e93fd49
 This README would normally document whatever steps are necessary to get your application up and running.
 
 ### What is this repository for? ###
@@ -26,5 +31,9 @@ This README would normally document whatever steps are necessary to get your app
 
 * Greynolds3, glynnreynolds123@gmail.com
 * Will be updated soon
+<<<<<<< HEAD
 
 
+=======
+~
+>>>>>>> c09738d238b366ad335d602aeeb9056a9e93fd49
