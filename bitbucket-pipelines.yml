@@ -15,7 +15,8 @@ pipelines:
           - bundler --version
           # ruby:2.3.0 bundler gives load error, fixed in later versions
           - gem install bundler -v 1.14.4
-          - chmod +644 bundler
+          - chmod +644 bundler /opt/puppetlabs/puppet/bin/bundler
+          
           #- bundle install
 
           #
