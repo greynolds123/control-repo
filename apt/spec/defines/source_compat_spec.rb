@@ -13,7 +13,10 @@ describe 'apt::source', :type => :define do
         :lsbdistid       => 'Debian',
         :lsbdistcodename => 'wheezy',
         :osfamily        => 'Debian',
+<<<<<<< HEAD
         :puppetversion   => Puppet.version,
+=======
+>>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
       }
     end
 
@@ -34,8 +37,12 @@ describe 'apt::source', :type => :define do
       {
         :lsbdistid       => 'Debian',
         :lsbdistcodename => 'wheezy',
+<<<<<<< HEAD
         :osfamily        => 'Debian',
         :puppetversion   => Puppet.version,
+=======
+        :osfamily        => 'Debian'
+>>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
       }
     end
     let :params do
@@ -90,8 +97,12 @@ describe 'apt::source', :type => :define do
       {
         :lsbdistid       => 'Debian',
         :lsbdistcodename => 'wheezy',
+<<<<<<< HEAD
         :osfamily        => 'Debian',
         :puppetversion   => Puppet.version,
+=======
+        :osfamily        => 'Debian'
+>>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
       }
     end
     let :params do
@@ -110,8 +121,12 @@ describe 'apt::source', :type => :define do
       {
         :lsbdistid       => 'Debian',
         :lsbdistcodename => 'wheezy',
+<<<<<<< HEAD
         :osfamily        => 'Debian',
         :puppetversion   => Puppet.version,
+=======
+        :osfamily        => 'Debian'
+>>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
       }
     end
     let :params do
@@ -130,8 +145,12 @@ describe 'apt::source', :type => :define do
       {
         :lsbdistid       => 'Debian',
         :lsbdistcodename => 'wheezy',
+<<<<<<< HEAD
         :osfamily        => 'Debian',
         :puppetversion   => Puppet.version,
+=======
+        :osfamily        => 'Debian'
+>>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
       }
     end
     let :params do
@@ -151,8 +170,12 @@ describe 'apt::source', :type => :define do
       let :facts do
         {
           :lsbdistid       => 'Debian',
+<<<<<<< HEAD
           :osfamily        => 'Debian',
           :puppetversion   => Puppet.version,
+=======
+          :osfamily        => 'Debian'
+>>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
         }
       end
 

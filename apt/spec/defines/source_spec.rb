@@ -387,6 +387,7 @@ describe 'apt::source' do
       end
     end
 
+<<<<<<< HEAD
     context "with notify_update = undef (default)" do
       let :facts do
         {
@@ -440,5 +441,7 @@ describe 'apt::source' do
       it { is_expected.to contain_apt__setting("list-#{title}").with_notify_update(false) }
     end
 
+=======
+>>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
   end
 end

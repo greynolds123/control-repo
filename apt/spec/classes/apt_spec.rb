@@ -177,6 +177,7 @@ describe 'apt' do
     it { is_expected.to contain_file('/etc/apt/sources.list.d/puppetlabs.list').with_content(/^deb http:\/\/apt.puppetlabs.com precise main$/) }
   end
 
+<<<<<<< HEAD
   context 'with confs defined on valid osfamily' do
     let :facts do
       { :osfamily        => 'Debian',
@@ -203,6 +204,8 @@ describe 'apt' do
     })}
   end
 
+=======
+>>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
   context 'with keys defined on valid osfamily' do
     let :facts do
       { :osfamily        => 'Debian',

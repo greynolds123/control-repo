@@ -49,7 +49,11 @@ define apt::key (
   }
 
   validate_re($_id, ['\A(0x)?[0-9a-fA-F]{8}\Z', '\A(0x)?[0-9a-fA-F]{16}\Z', '\A(0x)?[0-9a-fA-F]{40}\Z'])
+<<<<<<< HEAD
   validate_re($ensure, ['\A(absent|present)\Z',])
+=======
+  validate_re($ensure, ['\Aabsent|present\Z',])
+>>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
 
   if $_content {
     validate_string($_content)

@@ -40,4 +40,8 @@ pipelines:
           # setup onceover here rather then storing its files in the repo.
           # This lets us account for any new roles and profiles that have
           # been added in the interim
+<<<<<<< HEAD
           #- bundle exec onceover init
+=======
+          #- bundle exec onceover init
+>>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1

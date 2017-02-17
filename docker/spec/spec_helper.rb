@@ -1,4 +1,5 @@
 require 'puppetlabs_spec_helper/module_spec_helper'
+<<<<<<< HEAD
 
 RSpec::Matchers.define :require_string_for do |property|
   match do |type_class|
@@ -25,3 +26,5 @@ RSpec::Matchers.define :require_hash_for do |property|
     "#{type_class} should require #{property} to be a Hash"
   end
 end
+=======
+>>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1

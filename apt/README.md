@@ -260,8 +260,11 @@ Main class, includes all other classes.
 
 ##### Parameters (all optional)
 
+<<<<<<< HEAD
 * `confs`: Creates new `apt::conf` resources. Valid options: a hash to be passed to the [`create_resources` function](https://docs.puppetlabs.com/references/latest/function.html#createresources). Default: {}.
 
+=======
+>>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
 * `keys`: Creates new `apt::key` resources. Valid options: a hash to be passed to the [`create_resources` function](https://docs.puppetlabs.com/references/latest/function.html#createresources). Default: {}.
 
 * `ppas`: Creates new `apt::ppa` resources. Valid options: a hash to be passed to the [`create_resources` function](https://docs.puppetlabs.com/references/latest/function.html#createresources). Default: {}.
@@ -422,12 +425,21 @@ Manages PPA repositories using `add-apt-repository`. Not supported on Debian.
 * `package_name`: Names the package that provides the `apt-add-repository` command. Valid options: a string. Defaults:
 
   * Lucid and Precise: 'python-software-properties'
+<<<<<<< HEAD
   * Trusty and newer: 'software-properties-common'
   * All others: 'python-software-properties'
 
 * `release`: *Optional if lsb-release is installed (unless you're using a different release than indicated by lsb-release, e.g., Linux Mint).* Specifies the operating system of your node. Valid options: a string containing a valid LSB distribution codename. Default: "$lsbdistcodename".
 
 #### Defined Type: `apt::setting`
+=======
+  * Trusty, Utopic, and Vivid: 'software-properties-common'
+  * All others: undef
+
+* `release`: *Optional if lsb-release is installed (unless you're using a different release than indicated by lsb-release, e.g., Linux Mint).* Specifies the operating system of your node. Valid options: a string containing a valid LSB distribution codename. Default: "$lsbdistcodename".
+
+#### Defined Type: `apt:setting`
+>>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
 
 Manages Apt configuration files.
 
@@ -487,8 +499,11 @@ Manages the Apt sources in `/etc/apt/sources.list.d/`.
 
 * `trusted_source`: Specifies whether to authenticate packages from this release, even if the Release file is not signed or the signature can't be checked. Valid options: 'true' and 'false'. Default: undef. This parameter is **deprecated** and will be removed in a future version of the module.
 
+<<<<<<< HEAD
 * `notify_update`: *Optional.* Specifies whether to trigger an `apt-get update` run. Valid options: 'true' and 'false'. Default: 'true'.
 
+=======
+>>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
 #### Type: `apt_key`
 
 Manages the GPG keys that Apt uses to authenticate packages.

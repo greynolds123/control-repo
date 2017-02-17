@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # This file was automatically generated on 2017-02-13 04:04:54 -0800.
+=======
+# This file was automatically generated on 2017-02-13 04:11:50 -0800.
+>>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
 # Use the 'puppet generate types' command to regenerate this file.
 
 # This type allows puppet to manage postgresql.conf parameters.

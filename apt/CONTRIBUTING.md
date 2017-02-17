@@ -208,9 +208,17 @@ review.
 Additional Resources
 ====================
 
+<<<<<<< HEAD
 * [Getting additional help](http://puppet.com/community/get-help)
 
 * [Writing tests](https://docs.puppet.com/guides/module_guides/bgtm.html#step-three-module-testing)
+=======
+* [Getting additional help](http://puppetlabs.com/community/get-help)
+
+* [Writing tests](http://projects.puppetlabs.com/projects/puppet/wiki/Development_Writing_Tests)
+
+* [Patchwork](https://patchwork.puppetlabs.com)
+>>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
 
 * [General GitHub documentation](http://help.github.com/)
 

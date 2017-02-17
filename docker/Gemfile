@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 source "https://rubygems.org"
 
 group :test do
@@ -34,3 +35,12 @@ group :development do
   gem 'parallel_tests' # requires at least Ruby 1.9.3
   gem 'rubocop', :require => false # requires at least Ruby 1.9.2
 end
+=======
+source 'https://rubygems.org'
+
+puppetversion = ENV.key?('PUPPET_VERSION') ? "= #{ENV['PUPPET_VERSION']}" : ['>= 3.3']
+gem 'puppet', puppetversion
+gem 'puppetlabs_spec_helper', '>= 0.1.0'
+gem 'puppet-lint', '>= 0.3.2'
+gem 'facter', '>= 1.7.0'
+>>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1

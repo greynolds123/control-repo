@@ -1,9 +1,14 @@
+<<<<<<< HEAD
 # == Class: apt
 #
 # Manage APT (Advanced Packaging Tool)
 #
 class apt (
   $confs    = {},
+=======
+#
+class apt(
+>>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
   $update   = {},
   $purge    = {},
   $proxy    = {},
@@ -67,7 +72,10 @@ class apt (
 
   $_proxy = merge($apt::proxy_defaults, $proxy)
 
+<<<<<<< HEAD
   validate_hash($confs)
+=======
+>>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
   validate_hash($sources)
   validate_hash($keys)
   validate_hash($settings)
@@ -144,9 +152,12 @@ class apt (
     notify  => Class['apt::update'],
   }
 
+<<<<<<< HEAD
   if $confs {
     create_resources('apt::conf', $confs)
   }
+=======
+>>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
   # manage sources if present
   if $sources {
     create_resources('apt::source', $sources)
