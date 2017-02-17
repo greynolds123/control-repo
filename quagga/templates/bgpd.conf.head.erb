@@ -1,0 +1,53 @@
+!
+! This file is managed by Puppet. DO NOT EDIT.
+!
+hostname <%= @fqdn %>
+!
+<%- if @log_stdout -%>
+log stdout <%= @log_stdout_level %>
+<%- else -%>
+no log stdout
+<%- end -%>
+<%- if @log_file -%>
+log file <%= @log_file_path %> <%= @log_file_level %>
+<%- else -%>
+no log file
+<%- end -%>
+<%- if @log_syslog -%>
+log syslog <%= @log_syslog_level %>
+log facility <%= @log_syslog_facility %>
+<%- else -%>
+no log syslog
+<%- end -%>
+<%- if @log_monitor -%>
+log monitor <%= @log_monitor_level %>
+<%- else -%>
+no log monitor
+<%- end -%>
+<%- if @log_record_priority %>
+log record-priority
+<%- else -%>
+no log record-priority
+<%- end -%>
+log timestamp precision <%= @log_timestamp_precision %>
+<%- @debug_bgp.each do |debug| 
+  @valid_entries = ['as4', 'events', 'filters', 'fsm', 'keepalives', 
+      'updates', 'zebra']
+  if ! @valid_entries.include? debug then
+    raise Puppet::Error, "debug_bgp only supports #{@valid_entries.join(' ')}"
+  end -%>
+debug bgp <%= debug %>
+<%- end -%>
+router bgp <%= @my_asn %>
+!
+ bgp router-id <%= @router_id %>
+<%- if @networks4 then -%>
+  <%- @networks4.each do |network| -%>
+ network <%= network %>
+  <%- end -%>
+<%- end -%>
+<%- if @failsafe_networks4 then -%>
+  <%- @failsafe_networks4.each do |network| -%>
+ network <%= network %>
+  <%- end -%>
+<%- end -%>

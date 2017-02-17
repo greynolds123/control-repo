@@ -1,0 +1,7 @@
+#!/bin/sh
+PATH=/usr/bin
+for DAEMON in $(awk -F= '$2=="yes" {print $1}' /etc/quagga/daemons)
+do
+    pgrep -u <%= @owner %> ${DAEMON} 1>/dev/null || exit 3
+done
+exit 0
