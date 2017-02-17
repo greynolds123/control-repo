@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+# Add any directories, files, or patterns you don't want to be tracked by version control
+
+>>>>>>> c09738d238b366ad335d602aeeb9056a9e93fd49
 # http://www.gnu.org/software/automake
 
 Makefile.in
