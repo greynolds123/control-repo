@@ -1,0 +1,7 @@
+{
+  "name": "production",
+  "signature": "5e468abb61fdb21f96c229f413b658c9451e7a7e",
+  "started_at": "2017-02-13 04:11:22 -0800",
+  "finished_at": "2017-02-13 04:11:23 -0800",
+  "deploy_success": true
+}
