@@ -21,11 +21,7 @@ describe 'apt::ppa' do
     it { is_expected.to contain_exec('add-apt-repository-ppa:needs/such.substitution/wow+type').that_notifies('Class[Apt::Update]').with({
       :environment => [],
       :command     => '/usr/bin/add-apt-repository -y ppa:needs/such.substitution/wow+type',
-<<<<<<< HEAD
       :unless      => '/usr/bin/test -f /etc/apt/sources.list.d/needs-such_substitution-wow_type-natty.list',
-=======
-      :unless      => '/usr/bin/test -s /etc/apt/sources.list.d/needs-such_substitution-wow_type-natty.list',
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
       :user        => 'root',
       :logoutput   => 'on_failure',
     })
@@ -48,11 +44,7 @@ describe 'apt::ppa' do
     it { is_expected.to contain_exec('add-apt-repository-ppa:user/foo').that_notifies('Class[Apt::Update]').with({
       :environment => [],
       :command     => '/usr/bin/add-apt-repository -y ppa:user/foo',
-<<<<<<< HEAD
       :unless      => '/usr/bin/test -f /etc/apt/sources.list.d/user-ubuntu-foo-wily.list',
-=======
-      :unless      => '/usr/bin/test -s /etc/apt/sources.list.d/user-ubuntu-foo-wily.list',
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
       :user        => 'root',
       :logoutput   => 'on_failure',
     })
@@ -91,11 +83,7 @@ describe 'apt::ppa' do
     it { is_expected.to contain_exec('add-apt-repository-ppa:needs/such.substitution/wow').that_notifies('Class[Apt::Update]').with({
       'environment' => [],
       'command'     => '/usr/bin/add-apt-repository -y ppa:needs/such.substitution/wow',
-<<<<<<< HEAD
       'unless'      => '/usr/bin/test -f /etc/apt/sources.list.d/needs-such_substitution-wow-natty.list',
-=======
-      'unless'      => '/usr/bin/test -s /etc/apt/sources.list.d/needs-such_substitution-wow-natty.list',
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
       'user'        => 'root',
       'logoutput'   => 'on_failure',
     })
@@ -135,11 +123,7 @@ describe 'apt::ppa' do
     it { is_expected.to contain_exec('add-apt-repository-ppa:user/bar').that_notifies('Class[Apt::Update]').with({
       'environment' => [],
       'command'     => '/usr/bin/add-apt-repository -y ppa:user/bar',
-<<<<<<< HEAD
       'unless'      => '/usr/bin/test -f /etc/apt/sources.list.d/user-bar-natty.list',
-=======
-      'unless'      => '/usr/bin/test -s /etc/apt/sources.list.d/user-bar-natty.list',
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
       'user'        => 'root',
       'logoutput'   => 'on_failure',
     })
@@ -176,11 +160,7 @@ describe 'apt::ppa' do
     it { is_expected.to contain_exec('add-apt-repository-ppa:needs/such.substitution/wow').that_notifies('Class[Apt::Update]').with({
       'environment' => [],
       'command'     => '/usr/bin/add-apt-repository -y ppa:needs/such.substitution/wow',
-<<<<<<< HEAD
       'unless'      => '/usr/bin/test -f /etc/apt/sources.list.d/needs-such_substitution-wow-natty.list',
-=======
-      'unless'      => '/usr/bin/test -s /etc/apt/sources.list.d/needs-such_substitution-wow-natty.list',
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
       'user'        => 'root',
       'logoutput'   => 'on_failure',
     })
@@ -221,11 +201,7 @@ describe 'apt::ppa' do
     it { is_expected.to contain_exec('add-apt-repository-ppa:user/foo').that_notifies('Class[Apt::Update]').with({
       :environment => [],
       :command     => '/usr/bin/add-apt-repository  ppa:user/foo',
-<<<<<<< HEAD
       :unless      => '/usr/bin/test -f /etc/apt/sources.list.d/user-foo-trusty.list',
-=======
-      :unless      => '/usr/bin/test -s /etc/apt/sources.list.d/user-foo-trusty.list',
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
       :user        => 'root',
       :logoutput   => 'on_failure',
     })
@@ -259,11 +235,7 @@ describe 'apt::ppa' do
     it { is_expected.to contain_exec('add-apt-repository-ppa:user/foo').that_notifies('Class[Apt::Update]').with({
       :environment => ['http_proxy=http://localhost:8080'],
       :command     => '/usr/bin/add-apt-repository  ppa:user/foo',
-<<<<<<< HEAD
       :unless      => '/usr/bin/test -f /etc/apt/sources.list.d/user-foo-trusty.list',
-=======
-      :unless      => '/usr/bin/test -s /etc/apt/sources.list.d/user-foo-trusty.list',
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
       :user        => 'root',
       :logoutput   => 'on_failure',
     })
@@ -297,11 +269,7 @@ describe 'apt::ppa' do
     it { is_expected.to contain_exec('add-apt-repository-ppa:user/foo').that_notifies('Class[Apt::Update]').with({
       :environment => ['http_proxy=http://localhost:8180'],
       :command     => '/usr/bin/add-apt-repository  ppa:user/foo',
-<<<<<<< HEAD
       :unless      => '/usr/bin/test -f /etc/apt/sources.list.d/user-foo-trusty.list',
-=======
-      :unless      => '/usr/bin/test -s /etc/apt/sources.list.d/user-foo-trusty.list',
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
       :user        => 'root',
       :logoutput   => 'on_failure',
     })
@@ -335,11 +303,7 @@ describe 'apt::ppa' do
     it { is_expected.to contain_exec('add-apt-repository-ppa:user/foo').that_notifies('Class[Apt::Update]').with({
       :environment => ['http_proxy=http://localhost:8180', 'https_proxy=https://localhost:8180'],
       :command     => '/usr/bin/add-apt-repository  ppa:user/foo',
-<<<<<<< HEAD
       :unless      => '/usr/bin/test -f /etc/apt/sources.list.d/user-foo-trusty.list',
-=======
-      :unless      => '/usr/bin/test -s /etc/apt/sources.list.d/user-foo-trusty.list',
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
       :user        => 'root',
       :logoutput   => 'on_failure',
     })

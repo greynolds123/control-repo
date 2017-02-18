@@ -4,24 +4,12 @@ class apt::params {
     fail('This module only works on Debian or derivatives like Ubuntu')
   }
 
-<<<<<<< HEAD
   # prior to puppet 3.5.0, defined() couldn't test if a variable was defined.
   # strict_variables wasn't added until 3.5.0, so this should be fine.
   if $::puppetversion and versioncmp($::puppetversion, '3.5.0') < 0 {
     $xfacts = {
       'lsbdistcodename'     => $::lsbdistcodename,
       'lsbdistrelease'      => $::lsbdistrelease,
-=======
-  # prior to puppet 3.5.0, defined couldn't test if a variable was defined
-  # strict variables wasn't added until 3.5.0, so this should be fine.
-  if ! $::settings::strict_variables {
-    $xfacts = {
-      'lsbdistcodename'     => $::lsbdistcodename,
-      'lsbdistrelease'      => $::lsbdistrelease,
-      'lsbmajdistrelease'   => $::lsbmajdistrelease,
-      'lsbdistdescription'  => $::lsbdistdescription,
-      'lsbminordistrelease' => $::lsbminordistrelease,
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
       'lsbdistid'           => $::lsbdistid,
     }
   } else {
@@ -35,21 +23,6 @@ class apt::params {
         true    => $::lsbdistrelease,
         default => undef,
       },
-<<<<<<< HEAD
-=======
-      'lsbmajdistrelease' => defined('$lsbmajdistrelease') ? {
-        true    => $::lsbmajdistrelease,
-        default => undef,
-      },
-      'lsbdistdescription' => defined('$lsbdistdescription') ? {
-        true    => $::lsbdistdescription,
-        default => undef,
-      },
-      'lsbminordistrelease' => defined('$lsbminordistrelease') ? {
-        true    => $::lsbminordistrelease,
-        default => undef,
-      },
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
       'lsbdistid' => defined('$lsbdistid') ? {
         true    => $::lsbdistid,
         default => undef,
@@ -143,7 +116,6 @@ class apt::params {
         'repos'    => 'main universe multiverse restricted',
       }
 
-<<<<<<< HEAD
       if $xfacts['lsbdistcodename'] == 'lucid' {
           $ppa_options        = undef
           $ppa_package        = 'python-software-properties'
@@ -156,25 +128,6 @@ class apt::params {
       } else {
           $ppa_options        = '-y'
           $ppa_package        = 'python-software-properties'
-=======
-      case $xfacts['lsbdistcodename'] {
-        'lucid': {
-          $ppa_options        = undef
-          $ppa_package        = 'python-software-properties'
-        }
-        'precise': {
-          $ppa_options        = '-y'
-          $ppa_package        = 'python-software-properties'
-        }
-        'trusty', 'utopic', 'vivid', 'wily': {
-          $ppa_options        = '-y'
-          $ppa_package        = 'software-properties-common'
-        }
-        default: {
-          $ppa_options        = '-y'
-          $ppa_package        = 'python-software-properties'
-        }
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
       }
     }
     undef: {

@@ -86,11 +86,7 @@ describe 'apt_key' do
         EOS
 
         # Install the key first
-<<<<<<< HEAD
         shell("apt-key adv --keyserver hkps.pool.sks-keyservers.net \
-=======
-        shell("apt-key adv --keyserver keyserver.ubuntu.com \
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
               --recv-keys #{CENTOS_GPG_KEY_FINGERPRINT}")
         shell(CENTOS_KEY_CHECK_COMMAND)
 
@@ -101,11 +97,7 @@ describe 'apt_key' do
         shell(CENTOS_KEY_CHECK_COMMAND,
               :acceptable_exit_codes => [1])
 
-<<<<<<< HEAD
         shell("apt-key adv --keyserver hkps.pool.sks-keyservers.net \
-=======
-        shell("apt-key adv --keyserver keyserver.ubuntu.com \
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
               --recv-keys #{CENTOS_GPG_KEY_FINGERPRINT}")
       end
     end
@@ -120,11 +112,7 @@ describe 'apt_key' do
         EOS
 
         # Install the key first
-<<<<<<< HEAD
         shell("apt-key adv --keyserver hkps.pool.sks-keyservers.net \
-=======
-        shell("apt-key adv --keyserver keyserver.ubuntu.com \
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
               --recv-keys #{PUPPETLABS_GPG_KEY_LONG_ID}")
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
 
@@ -413,21 +401,13 @@ ZTQcCD53HcBLvKX6RJ4ByYawKaQqMa27WK/YWVmFXqVDVk12iKrQW6zktDdGInnD
   end
 
   describe 'server =>' do
-<<<<<<< HEAD
     context 'hkps.pool.sks-keyservers.net' do
-=======
-    context 'pgp.mit.edu' do
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
       it 'works' do
         pp = <<-EOS
         apt_key { 'puppetlabs':
           id     => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
           ensure => 'present',
-<<<<<<< HEAD
           server => 'hkps.pool.sks-keyservers.net',
-=======
-          server => 'pgp.mit.edu',
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
         }
         EOS
 
@@ -437,21 +417,13 @@ ZTQcCD53HcBLvKX6RJ4ByYawKaQqMa27WK/YWVmFXqVDVk12iKrQW6zktDdGInnD
       end
     end
 
-<<<<<<< HEAD
     context 'hkp://hkps.pool.sks-keyservers.net:80' do
-=======
-    context 'hkp://pgp.mit.edu:80' do
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
       it 'works' do
         pp = <<-EOS
         apt_key { 'puppetlabs':
           id     => '#{PUPPETLABS_GPG_KEY_FINGERPRINT}',
           ensure => 'present',
-<<<<<<< HEAD
           server => 'hkp://hkps.pool.sks-keyservers.net:80',
-=======
-          server => 'hkp://pgp.mit.edu:80',
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
         }
         EOS
 
@@ -712,24 +684,6 @@ ZTQcCD53HcBLvKX6RJ4ByYawKaQqMa27WK/YWVmFXqVDVk12iKrQW6zktDdGInnD
         apply_manifest(pp, :catch_failures => true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
-<<<<<<< HEAD
-=======
-
-      it 'fails on invalid options' do
-        pp = <<-EOS
-        apt_key { 'puppetlabs':
-          id      => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
-          ensure  => 'present',
-          options => 'this is totally bonkers',
-        }
-        EOS
-
-        shell("apt-key del #{PUPPETLABS_GPG_KEY_FINGERPRINT}", :acceptable_exit_codes => [0,1,2])
-        apply_manifest(pp, :expect_failures => true) do |r|
-          expect(r.stderr).to match(/--keyserver-options this is totally/)
-        end
-      end
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
     end
   end
 

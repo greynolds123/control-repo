@@ -268,7 +268,6 @@ describe 'apt::key' do
     end
 
     context 'invalid ensure' do
-<<<<<<< HEAD
       %w(foo aabsent absenta apresent presenta).each do |param|
         let :params do
           {
@@ -278,15 +277,6 @@ describe 'apt::key' do
         it 'fails' do
           expect { subject.call }.to raise_error(/does not match/)
         end
-=======
-      let :params do
-        {
-          :ensure => 'foo',
-        }
-      end
-      it 'fails' do
-        expect { subject.call }.to raise_error(/does not match/)
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
       end
     end
 

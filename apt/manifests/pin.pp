@@ -4,11 +4,7 @@
 define apt::pin(
   $ensure          = present,
   $explanation     = undef,
-<<<<<<< HEAD
   $order           = 50,
-=======
-  $order           = undef,
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
   $packages        = '*',
   $priority        = 0,
   $release         = '', # a=

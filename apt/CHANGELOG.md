@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ## Supported Release 2.3.0
 ### Summary
 A release containing many bugfixes with additional features.
@@ -30,16 +29,6 @@ Several bug fixes and the addition of support updates to Debian 8 and Ubuntu Wil
 ####Bugfixes
 - Small fixes to descriptions within the readme and the addition of some examples.
 - Updates to run on Ubuntu Wily.
-=======
-##Supported Release 2.2.2
-###Summary
-
-Several bug fixes and the addition of support updates to Debian 8 and Ubunto Wily.
-
-####Bugfixes
-- Small fixes to descriptions within the readme and the addition of some examples.
-- Updates to run on Ubunto Wily.
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
 - Fixed apt_key tempfile race condition.
 - Run stages limitation added to the documentation.
 - Remove unneeded whitespace in source.list template.

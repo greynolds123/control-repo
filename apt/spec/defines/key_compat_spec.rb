@@ -1,22 +1,17 @@
 require 'spec_helper'
 
 describe 'apt::key', :type => :define do
-<<<<<<< HEAD
   let(:facts) { {
     :lsbdistid => 'Debian',
     :osfamily => 'Debian',
     :puppetversion => Puppet.version,
   } }
-=======
-  let(:facts) { { :lsbdistid => 'Debian' } }
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
   GPG_KEY_ID = '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30'
 
   let :title do
     GPG_KEY_ID
   end
 
-<<<<<<< HEAD
   let :pre_condition do
     'include apt'
   end
@@ -35,22 +30,6 @@ describe 'apt::key', :type => :define do
       }
       it 'contains the apt_key present anchor' do
         is_expected.to contain_anchor("apt_key #{title} present")
-=======
-  describe 'normal operation' do
-    describe 'default options' do
-      it 'contains the apt_key' do
-        should contain_apt_key(title).with({
-          :id                => title,
-          :ensure            => 'present',
-          :source            => nil,
-          :server            => nil,
-          :content           => nil,
-          :keyserver_options => nil,
-        })
-      end
-      it 'contains the apt_key present anchor' do
-        should contain_anchor("apt_key #{title} present")
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
       end
     end
 
@@ -64,29 +43,17 @@ describe 'apt::key', :type => :define do
       } end
 
       it 'contains the apt_key' do
-<<<<<<< HEAD
         is_expected.to contain_apt_key(title).with({
           :id                => GPG_KEY_ID,
           :ensure            => 'present',
           :source            => nil,
           :server            => 'keyserver.ubuntu.com',
-=======
-        should contain_apt_key(title).with({
-          :id                => GPG_KEY_ID,
-          :ensure            => 'present',
-          :source            => nil,
-          :server            => nil,
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
           :content           => nil,
           :keyserver_options => nil,
         })
       end
       it 'contains the apt_key present anchor' do
-<<<<<<< HEAD
         is_expected.to contain_anchor("apt_key #{GPG_KEY_ID} present")
-=======
-        should contain_anchor("apt_key #{GPG_KEY_ID} present")
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
       end
     end
 
@@ -96,29 +63,17 @@ describe 'apt::key', :type => :define do
       } end
 
       it 'contains the apt_key' do
-<<<<<<< HEAD
         is_expected.to contain_apt_key(title).with({
           :id                => title,
           :ensure            => 'absent',
           :source            => nil,
           :server            => 'keyserver.ubuntu.com',
-=======
-        should contain_apt_key(title).with({
-          :id                => title,
-          :ensure            => 'absent',
-          :source            => nil,
-          :server            => nil,
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
           :content           => nil,
           :keyserver_options => nil,
         })
       end
       it 'contains the apt_key absent anchor' do
-<<<<<<< HEAD
         is_expected.to contain_anchor("apt_key #{title} absent")
-=======
-        should contain_anchor("apt_key #{title} absent")
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
       end
     end
 
@@ -131,11 +86,7 @@ describe 'apt::key', :type => :define do
       } end
 
       it 'contains the apt_key' do
-<<<<<<< HEAD
         is_expected.to contain_apt_key(title).with({
-=======
-        should contain_apt_key(title).with({
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
           :id      => title,
           :ensure  => 'present',
           :source  => 'http://apt.puppetlabs.com/pubkey.gpg',
@@ -145,11 +96,7 @@ describe 'apt::key', :type => :define do
         })
       end
       it 'contains the apt_key present anchor' do
-<<<<<<< HEAD
         is_expected.to contain_anchor("apt_key #{title} present")
-=======
-        should contain_anchor("apt_key #{title} present")
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
       end
     end
 
@@ -158,11 +105,7 @@ describe 'apt::key', :type => :define do
         :key_server => 'p-gp.m-it.edu',
       } end
       it 'contains the apt_key' do
-<<<<<<< HEAD
         is_expected.to contain_apt_key(title).with({
-=======
-        should contain_apt_key(title).with({
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
           :id        => title,
           :server => 'p-gp.m-it.edu',
         })
@@ -176,11 +119,7 @@ describe 'apt::key', :type => :define do
         }
       end
       it 'contains the apt_key' do
-<<<<<<< HEAD
         is_expected.to contain_apt_key(title).with({
-=======
-        should contain_apt_key(title).with({
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
           :id        => title,
           :server => 'hkp://pgp.mit.edu',
         })
@@ -193,11 +132,7 @@ describe 'apt::key', :type => :define do
         }
       end
       it 'contains the apt_key' do
-<<<<<<< HEAD
         is_expected.to contain_apt_key(title).with({
-=======
-        should contain_apt_key(title).with({
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
           :id        => title,
           :server => 'hkp://pgp.mit.edu:80',
         })
@@ -349,7 +284,6 @@ describe 'apt::key', :type => :define do
     describe 'duplication' do
       context 'two apt::key resources for same key, different titles' do
         let :pre_condition do
-<<<<<<< HEAD
           "#{super()}\napt::key { 'duplicate': key => '#{title}', }"
         end
 
@@ -362,23 +296,11 @@ describe 'apt::key', :type => :define do
 
         it 'contains the original apt::key resource' do
           is_expected.to contain_apt__key(title).with({
-=======
-          "apt::key { 'duplicate': key => '#{title}', }"
-        end
-
-        it 'contains two apt::key resources' do
-          should contain_apt__key('duplicate').with({
-            :key    => title,
-            :ensure => 'present',
-          })
-          should contain_apt__key(title).with({
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
             :id     => title,
             :ensure => 'present',
           })
         end
 
-<<<<<<< HEAD
         it 'contains the native apt_key' do
           is_expected.to contain_apt_key('duplicate').with({
             :id                => title,
@@ -392,28 +314,12 @@ describe 'apt::key', :type => :define do
 
         it 'does not contain the original apt_key' do
           is_expected.not_to contain_apt_key(title)
-=======
-        it 'contains only a single apt_key' do
-          should contain_apt_key('duplicate').with({
-            :id                => title,
-            :ensure            => 'present',
-            :source            => nil,
-            :server            => nil,
-            :content           => nil,
-            :keyserver_options => nil,
-          })
-          should_not contain_apt_key(title)
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
         end
       end
 
       context 'two apt::key resources, different ensure' do
         let :pre_condition do
-<<<<<<< HEAD
           "#{super()}\napt::key { 'duplicate': key => '#{title}', ensure => 'absent', }"
-=======
-          "apt::key { 'duplicate': key => '#{title}', ensure => 'absent', }"
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
         end
         it 'informs the user of the impossibility' do
           expect { subject.call }.to raise_error(/already ensured as absent/)

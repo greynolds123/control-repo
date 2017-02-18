@@ -358,7 +358,7 @@ deprecation(key, message)
 
 The Puppet settings '[disable_warnings](https://docs.puppet.com/puppet/latest/reference/configuration.html#disablewarnings)', '[max_deprecations](https://docs.puppet.com/puppet/latest/reference/configuration.html#maxdeprecations)', and '[strict](https://docs.puppet.com/puppet/latest/reference/configuration.html#strict)' affect this function. Set 'strict' to `error` to fail immediately with the deprecation message, `off` to output emit no messages at all, or `warning` (default) to log all warnings.
 
-Additionally you can set the environment variable `STDLIB_LOG_DEPRECATION` to decide whether or not to log deprecation warnings: if this environment variable is set to `true`, the functions log a warning, if it is set to `false`, no warnings are logged. If no value is set at all, Puppet 4 will emit warnings, while Puppet 3 will not. Using this setting is especially useful for automated tests to avoid flooding your logs before you are ready to migrate.
+Additionally you can set the environment variable `STDLIB_LOG_DEPRECATIONS` to decide whether or not to log deprecation warnings: if this environment variable is set to `true`, the functions log a warning, if it is set to `false`, no warnings are logged. If no value is set at all, Puppet 4 will emit warnings, while Puppet 3 will not. Using this setting is especially useful for automated tests to avoid flooding your logs before you are ready to migrate.
 
 *Type*: String, String.
 
@@ -578,6 +578,15 @@ fqdn_rotate([1, 2, 3], 'custom seed')
 
 *Type*: rvalue.
 
+#### `fqdn_uuid`
+
+Returns a rfc4122 valid version 5 UUID based on an FQDN string under the DNS namespace
+
+  * fqdn_uuid('puppetlabs.com') returns '9c70320f-6815-5fc5-ab0f-debe68bf764c'
+  * fqdn_uuid('google.com') returns '64ee70a4-8cc1-5d25-abf2-dea6c79a09c8'
+
+*Type*: rvalue.
+
 #### `get_module_path`
 
 Returns the absolute path of the specified module for the current environment.
@@ -712,45 +721,67 @@ See the [`assert_type()`](https://docs.puppetlabs.com/references/latest/function
 
 #### `is_absolute_path`
 
+**Deprecated. Will be removed in a future version of stdlib. See [`validate_legacy`](#validate_legacy).**
+
 Returns 'true' if the given path is absolute. *Type*: rvalue.
 
 #### `is_array`
+
+**Deprecated. Will be removed in a future version of stdlib. See [`validate_legacy`](#validate_legacy).**
 
 Returns 'true' if the variable passed to this function is an array. *Type*: rvalue.
 
 #### `is_bool`
 
+**Deprecated. Will be removed in a future version of stdlib. See [`validate_legacy`](#validate_legacy).**
+
 Returns 'true' if the variable passed to this function is a boolean. *Type*: rvalue.
 
 #### `is_domain_name`
+
+**Deprecated. Will be removed in a future version of stdlib. See [`validate_legacy`](#validate_legacy).**
 
 Returns 'true' if the string passed to this function is a syntactically correct domain name. *Type*: rvalue.
 
 #### `is_float`
 
+**Deprecated. Will be removed in a future version of stdlib. See [`validate_legacy`](#validate_legacy).**
+
 Returns 'true' if the variable passed to this function is a float. *Type*: rvalue.
 
 #### `is_function_available`
+
+**Deprecated. Will be removed in a future version of stdlib. See [`validate_legacy`](#validate_legacy).**
 
 Accepts a string as an argument and determines whether the Puppet runtime has access to a function by that name. It returns 'true' if the function exists, 'false' if not. *Type*: rvalue.
 
 #### `is_hash`
 
+**Deprecated. Will be removed in a future version of stdlib. See [`validate_legacy`](#validate_legacy).**
+
 Returns 'true' if the variable passed to this function is a hash. *Type*: rvalue.
 
 #### `is_integer`
+
+**Deprecated. Will be removed in a future version of stdlib. See [`validate_legacy`](#validate_legacy).**
 
 Returns 'true' if the variable returned to this string is an integer. *Type*: rvalue.
 
 #### `is_ip_address`
 
+**Deprecated. Will be removed in a future version of stdlib. See [`validate_legacy`](#validate_legacy).**
+
 Returns 'true' if the string passed to this function is a valid IP address. *Type*: rvalue.
 
 #### `is_ipv6_address`
 
+**Deprecated. Will be removed in a future version of stdlib. See [`validate_legacy`](#validate_legacy).**
+
 Returns 'true' if the string passed to this function is a valid IPv6 address. *Type*: rvalue.
 
 #### `is_ipv4_address`
+
+**Deprecated. Will be removed in a future version of stdlib. See [`validate_legacy`](#validate_legacy).**
 
 Returns 'true' if the string passed to this function is a valid IPv4 address. *Type*: rvalue.
 
@@ -760,9 +791,13 @@ Returns 'true' if the string passed to this function is a valid MAC address. *Ty
 
 #### `is_numeric`
 
+**Deprecated. Will be removed in a future version of stdlib. See [`validate_legacy`](#validate_legacy).**
+
 Returns 'true' if the variable passed to this function is a number. *Type*: rvalue.
 
 #### `is_string`
+
+**Deprecated. Will be removed in a future version of stdlib. See [`validate_legacy`](#validate_legacy).**
 
 Returns 'true' if the variable passed to this function is a string. *Type*: rvalue.
 
@@ -772,7 +807,9 @@ Joins an array into a string using a separator. For example, `join(['a','b','c']
 
 #### `join_keys_to_values`
 
-Joins each key of a hash to that key's corresponding value with a separator. Keys and values are cast to strings. The return value is an array in which each element is one joined key/value pair. For example, `join_keys_to_values({'a'=>1,'b'=>2}, " is ")` results in ["a is 1","b is 2"]. *Type*: rvalue.
+Joins each key of a hash to that key's corresponding value with a separator. Keys are cast to strings.
+If values are arrays, multiple keys are added for each element.
+The return value is an array in which each element is one joined key/value pair. For example, `join_keys_to_values({'a'=>1,'b'=>[2,3]}, " is ")` results in ["a is 1","b is 2","b is 3"]. *Type*: rvalue.
 
 #### `keys`
 
@@ -907,6 +944,20 @@ For example:
 
 *Type*: rvalue.
 
+#### `pry`
+
+This function invokes a pry debugging session in the current scope object. This is useful for debugging manifest code at specific points during a compilation. Should only be used when running `puppet apply` or running a puppet master in the foreground. This requires the `pry` gem to be installed in puppet's rubygems.
+
+*Examples:*
+```puppet
+pry()
+```
+Once in a pry session, some interesting commands:
+
+* Run `catalog` to see the contents currently compiling catalog
+* Run `cd catalog` and `ls` to see catalog methods and instance variables
+* Run `@resource_table` to see the current catalog resource table
+
 #### `assert_private`
 
 Sets the current class or definition as private. Calling the class or definition from outside the current module will fail.
@@ -1028,7 +1079,7 @@ Returns a new string where runs of the same character that occur in this set are
 
 #### `str2bool`
 
-Converts certain strings to a boolean. This attempts to convert strings that contain the values '1', 't', 'y', or 'yes' to true. Strings that contain values '0', 'f', 'n', or 'no', or that are an empty string or undefined are converted to false. Any other value causes an error. *Type*: rvalue.
+Converts certain strings to a boolean. This attempts to convert strings that contain the values '1', 'true', 't', 'y', or 'yes' to true. Strings that contain values '0', 'false', 'f', 'n', or 'no', or that are an empty string or undefined are converted to false. Any other value causes an error. These checks are case insensitive.  *Type*: rvalue.
 
 #### `str2saltedsha512`
 
@@ -1162,6 +1213,8 @@ Returns a string description of the type when passed a value. Type can be a stri
 
 #### `type_of`
 
+This function is provided for backwards compatibility but is generally not preferred over the built-in [type() function](https://docs.puppet.com/puppet/latest/reference/function.html#type) provided by Puppet.
+
 Returns the literal type when passed a value. Requires the new parser. Useful for comparison of types with `<=` such as in `if type_of($some_value) <= Array[String] { ... }` (which is equivalent to `if $some_value =~ Array[String] { ... }`) *Type*: rvalue.
 
 #### `union`
@@ -1226,6 +1279,8 @@ validate_absolute_path($undefined)
 
 #### `validate_array`
 
+**Deprecated. Will be removed in a future version of stdlib. See [`validate_legacy`](#validate_legacy).**
+
 Validates that all passed values are array data structures. Aborts catalog compilation if any value fails this check.
 
 The following values pass:
@@ -1274,6 +1329,8 @@ validate_augeas($sudoerscontent, 'Sudoers.lns', [], 'Failed to validate sudoers 
 
 #### `validate_bool`
 
+**Deprecated. Will be removed in a future version of stdlib. See [`validate_legacy`](#validate_legacy).**
+
 Validates that all passed values are either true or false. Aborts catalog compilation if any value fails this check.
 
 The following values will pass:
@@ -1314,6 +1371,8 @@ validate_cmd($haproxycontent, '/usr/sbin/haproxy -f % -c', 'Haproxy failed to va
 
 #### `validate_hash`
 
+**Deprecated. Will be removed in a future version of stdlib. See [`validate_legacy`](#validate_legacy).**
+
 Validates that all passed values are hash data structures. Aborts catalog compilation if any value fails this check.
 
   The following values will pass:
@@ -1335,6 +1394,8 @@ Validates that all passed values are hash data structures. Aborts catalog compil
 *Type*: statement.
 
 #### `validate_integer`
+
+**Deprecated. Will be removed in a future version of stdlib. See [`validate_legacy`](#validate_legacy).**
 
 Validates that the first argument is an integer (or an array of integers). Aborts catalog compilation if any of the checks fail.
 
@@ -1394,6 +1455,8 @@ Validates that the first argument is an integer (or an array of integers). Abort
 
 #### `validate_ip_address`
 
+**Deprecated. Will be removed in a future version of stdlib. See [`validate_legacy`](#validate_legacy).**
+
 Validates that the argument is an IP address, regardless of it is an IPv4 or an IPv6
 address. It also validates IP address with netmask. The argument must be given as a string.
 
@@ -1442,24 +1505,28 @@ validate_legacy("Optional[String]", "validate_re", "Value to be validated", ["."
 
 This function supports updating modules from Puppet 3 style argument validation (using the stdlib `validate_*` functions) to Puppet 4 data types, without breaking functionality for those depending on Puppet 3 style validation.
 
-> Note: This function relies on internal APIs from Puppet 4.4.0 (PE 2016.1) onwards, and doesn't work on earlier versions.
+> Note: This function is compatible only with Puppet 4.4.0 (PE 2016.1) and later.
 
 ##### For module users
 
-If you are running Puppet 4 and receiving deprecation warnings about `validate_*` functions, the `validate_legacy` function can help you find and resolve the deprecated code.
+If you are running Puppet 4, the `validate_legacy` function can help you find and resolve deprecated Puppet 3 `validate_*` functions. These functions are deprecated as of stdlib version 4.13 and will be removed in a future version of stdlib.
 
-In Puppet 3, the `validate_*` functions were the only way to easily check the types of class and defined type arguments. Some of the functions provided additional helpers like [validate_numeric](#validate_numeric), which unintentionally allowed not only numbers, but also arrays of numbers. Puppet 4 allows much better defined type checking using [data types](https://docs.puppet.com/puppet/latest/reference/lang_data.html), without such unintentional effects. The `validate_legacy` function makes these differences visible and makes it easier to move to the clearer Puppet 4 syntax.
+Puppet 4 allows improved defined type checking using [data types](https://docs.puppet.com/puppet/latest/reference/lang_data.html). Data types avoid some of the problems with Puppet 3's `validate_*` functions, which could sometimes be inconsistent. For example, [validate_numeric](#validate_numeric) unintentionally allowed not only numbers, but also arrays of numbers or strings that looked like numbers.
 
-Depending on the current state of development of the modules you use and the data you feed those modules, you'll encounter different messages:
+If you run Puppet 4 and use modules with deprecated `validate_*` functions, you might encounter deprecation messages. The `validate_legacy` function makes these differences visible and makes it easier to move to the clearer Puppet 4 syntax.
+
+The deprecation messages you get can vary, depending on the modules and data that you use. These deprecation messages appear by default only in Puppet 4:
 
 * `Notice: Accepting previously invalid value for target type '<type>'`: This message is informational only. You're using values that are allowed by the new type, but would have been invalid by the old validation function.
 * `Warning: This method is deprecated, please use the stdlib validate_legacy function`: The module has not yet upgraded to `validate_legacy`. Use the [deprecation](#deprecation) options to silence warnings for now, or submit a fix with the module's developer. See the information [for module developers](#for-module-developers) below for how to fix the issue.
-* `Warning: validate_legacy(<function>) expected <type> value, got <actual type>_`: Your code passes a value that was accepted by the Puppet 3 style validation, but will not be accepted by the next version of the module. Most often, you can fix this by removing quotes from numbers or booleans.
+* `Warning: validate_legacy(<function>) expected <type> value, got <actual type>_`: Your code passes a value that was accepted by the Puppet 3-style validation, but will not be accepted by the next version of the module. Most often, you can fix this by removing quotes from numbers or booleans.
 * `Error: Evaluation Error: Error while evaluating a Resource Statement, Evaluation Error: Error while evaluating a Function Call, validate_legacy(<function>) expected <type> value, got <actual type>`: Your code passes a value that is not acceptable to either the new or the old style validation.
 
 ##### For module developers
 
-Many `validate_*` functions have surprising holes in their validation. For example, [validate_numeric](#validate_numeric) allows not only numbers, but also arrays of numbers or strings that look like numbers, without giving you any control over the specifics. In contrast, Puppet 4 [data types](https://docs.puppet.com/puppet/latest/reference/lang_data.html) allows you to choose between `Numeric`, `Array[Numeric]`, or `Optional[Numeric]`. The `validate_legacy` function helps you move from Puppet 3 style validation to Puppet 4 validation without breaking functionality your module's users depend on.
+The `validate_legacy` function helps you move from Puppet 3 style validation to Puppet 4 validation without breaking functionality your module's users depend on.
+
+Moving to Puppet 4 type validation allows much better defined type checking using [data types](https://docs.puppet.com/puppet/latest/reference/lang_data.html). Many of Puppet 3's `validate_*` functions have surprising holes in their validation. For example, [validate_numeric](#validate_numeric) allows not only numbers, but also arrays of numbers or strings that look like numbers, without giving you any control over the specifics. 
 
 For each parameter of your classes and defined types, choose a new Puppet 4 data type to use. In most cases, the new data type allows a different set of values than the original `validate_*` function. The situation then looks like this:
 
@@ -1502,6 +1569,8 @@ Always note such changes in your CHANGELOG and README.
 
 #### `validate_numeric`
 
+**Deprecated. Will be removed in a future version of stdlib. See [`validate_legacy`](#validate_legacy).**
+
 Validates that the first argument is a numeric value (or an array or string of numeric values). Aborts catalog compilation if any of the checks fail.
 
   The second argument is optional and passes a maximum. (All elements of) the first argument has to be less or equal to this max.
@@ -1517,6 +1586,8 @@ Validates that the first argument is a numeric value (or an array or string of n
 *Type*: statement.
 
 #### `validate_re`
+
+**Deprecated. Will be removed in a future version of stdlib. See [`validate_legacy`](#validate_legacy).**
 
 Performs simple validation of a string against one or more regular expressions. The first argument of this function should be the string to
 test, and the second argument should be a stringified regular expression (without the // delimiters) or an array of regular expressions. If none of the regular expressions match the string passed in, compilation aborts with a parse error.
@@ -1552,6 +1623,8 @@ test, and the second argument should be a stringified regular expression (withou
 
 #### `validate_slength`
 
+**Deprecated. Will be removed in a future version of stdlib. See [`validate_legacy`](#validate_legacy).**
+
 Validates that the first argument is a string (or an array of strings), and is less than or equal to the length of the second argument. It fails if the first argument is not a string or array of strings, or if the second argument is not convertable to a number.  Optionally, a minimum string length can be given as the third argument.
 
   The following values pass:
@@ -1573,6 +1646,8 @@ Validates that the first argument is a string (or an array of strings), and is l
 *Type*: statement.
 
 #### `validate_string`
+
+**Deprecated. Will be removed in a future version of stdlib. See [`validate_legacy`](#validate_legacy).**
 
 Validates that all passed values are string data structures. Aborts catalog compilation if any value fails this check.
 
@@ -1644,7 +1719,7 @@ Takes one element from first array given and merges corresponding elements from 
 
 As of Puppet Enterprise 3.7, the stdlib module is no longer included in PE. PE users should install the most recent release of stdlib for compatibility with Puppet modules.
 
-###Version Compatibility
+### Version Compatibility
 
 Versions | Puppet 2.6 | Puppet 2.7 | Puppet 3.x | Puppet 4.x |
 :---------------|:-----:|:---:|:---:|:----:

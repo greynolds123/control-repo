@@ -18,10 +18,7 @@ define apt::source(
   $key_content       = undef,
   $key_source        = undef,
   $trusted_source    = undef,
-<<<<<<< HEAD
   $notify_update     = undef,
-=======
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
 ) {
   validate_string($architecture, $comment, $location, $repos)
   validate_bool($allow_unsigned)
@@ -118,14 +115,9 @@ define apt::source(
   }
 
   apt::setting { "list-${name}":
-<<<<<<< HEAD
     ensure        => $ensure,
     content       => template('apt/_header.erb', 'apt/source.list.erb'),
     notify_update => $notify_update,
-=======
-    ensure  => $ensure,
-    content => template('apt/_header.erb', 'apt/source.list.erb'),
->>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
   }
 
   if $pin {
