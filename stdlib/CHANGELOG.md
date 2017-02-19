@@ -1,3 +1,38 @@
+## Supported Release 4.15.0
+### Summary
+
+This release introduces multiple new functions, a new fact and the addition of Ubuntu Xenial support. Also includes a bugfix and documentation update.
+
+#### Features
+- Addition of puppet_server fact to return agents server.
+- Addition of a pry function.
+- Addition of tests for ensure_resources.
+- Addition of FQDN UUID generation function.
+- Addition of Ubuntu Xenial to OS Support.
+
+####Bugfixes
+- Ensure_packages now works with Ruby < 2.0.
+- Updated the documentation of str2bool function.
+
+## Supported Release 4.14.0
+### Summary
+
+Adds several new features and updates, especially around refining the deprecation and validate_legacy functions. Also includes a Gemfile update around an issue with parallel_tests dependancy for different versions of Ruby.
+
+#### Features
+- Deprecation function now uses puppet stacktrace if available.
+- join_key_to_values function now handles array values. If values are arrays, multiple keys are added for each element.
+- Updated Gemfile to deal with parallel_tests Ruby dependancy (MODULES-3983).
+- Updated/Fixed ipv4 regex validator (MODULES-3980).
+- Deprecation clarification added to README.
+
+#### Bugfixes
+- README typo fixes.
+- Use .dup to duplicate classes for modification (MODULES-3829).
+- Fixes spec failures that were caused by a change in the tested error message in validate_legacy_spec.
+- Broken link to validate_legacy docs fixed.
+- Updates deprecation tests to include future parser.
+
 ## Supported Release 4.13.1
 ### Summary
 
