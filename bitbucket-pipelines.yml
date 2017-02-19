@@ -15,7 +15,7 @@ pipelines:
           - bundler --version
           # ruby:2.3.0 bundler gives load error, fixed in later versions
           - gem install bundler -v 1.14.4
-          #- bundle install
+          - bundle install
 
           #
           # Syntax tests
