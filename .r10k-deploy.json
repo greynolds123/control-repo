@@ -1,0 +1,14 @@
+{
+<<<<<<< HEAD
+  "name": "production",
+  "signature": "5e468abb61fdb21f96c229f413b658c9451e7a7e",
+  "started_at": "2017-02-13 04:11:22 -0800",
+  "finished_at": "2017-02-13 04:11:23 -0800",
+=======
+  "name": "Dev",
+  "signature": "3d8ca4cdd98df1d8dd5385d08596628394005612",
+  "started_at": "2017-02-13 04:11:46 -0800",
+  "finished_at": "2017-02-13 04:11:46 -0800",
+>>>>>>> 61a94e602d9e9814c0d27f76e0942de0d08f50a1
+  "deploy_success": true
+}

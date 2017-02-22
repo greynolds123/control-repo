@@ -118,21 +118,51 @@ class hiera (
     #}
   #}
     
+<<<<<<< HEAD
   file {'/etc/puppetlabs/code/environments/dev/hieradata/defaults.yaml':
   ensure   =>  present,
   content  =>  template('hiera/defaults.yaml.erb'),
+=======
+<<<<<<< HEAD
+  file {'/etc/puppetlabs/code/environments/stage/hieradata/stage.yaml':
+  ensure   =>  present,
+  content  =>  template('hiera/stage.yaml.erb'),
+=======
+  file {'/etc/puppetlabs/code/environments/dev/hieradata/defaults.yaml':
+  ensure   =>  present,
+  content  =>  template('hiera/defaults.yaml.erb'),
+>>>>>>> 5e468abb61fdb21f96c229f413b658c9451e7a7e
+>>>>>>> baf70cd00e91cadac610381cb9c1e9283cc2abaa
       }
       
  
    if [ '%{environment}' == $hieraenv ]  {
+<<<<<<< HEAD
       if ('$mdir dev !~ /%\{.*\}/')  {
       file {[ '/etc/puppetlabs/code/environments/dev','/etc/puppetlabs/code/environments/dev/hieradata/environment','/etc/puppetlabs/code/environments/dev/hieradata/role' ]:
+=======
+<<<<<<< HEAD
+      if ('$mdir stage !~ /%\{.*\}/')  {
+      file {[ '/etc/puppetlabs/code/environments/stage','/etc/puppetlabs/code/environments/stage/hieradata/environment','/etc/puppetlabs/code/environments/stage/hieradata/role' ]:
+=======
+      if ('$mdir dev !~ /%\{.*\}/')  {
+      file {[ '/etc/puppetlabs/code/environments/dev','/etc/puppetlabs/code/environments/dev/hieradata/environment','/etc/puppetlabs/code/environments/dev/hieradata/role' ]:
+>>>>>>> 5e468abb61fdb21f96c229f413b658c9451e7a7e
+>>>>>>> baf70cd00e91cadac610381cb9c1e9283cc2abaa
       ensure => directory,
       }
      }
     }
  
+<<<<<<< HEAD
      file {'/etc/puppetlabs/code/environments/dev/hieradata/environment/upoint_dv.yaml':
+=======
+<<<<<<< HEAD
+     file {'/etc/puppetlabs/code/environments/stage/hieradata/environment/upoint_dv.yaml':
+=======
+     file {'/etc/puppetlabs/code/environments/dev/hieradata/environment/upoint_dv.yaml':
+>>>>>>> 5e468abb61fdb21f96c229f413b658c9451e7a7e
+>>>>>>> baf70cd00e91cadac610381cb9c1e9283cc2abaa
      ensure  => present,
      content => template('hiera/upoint_dv.yaml.erb'),
      }
@@ -141,7 +171,15 @@ class hiera (
 
 
 
+<<<<<<< HEAD
       file {  [ '/etc/puppetlabs/code/environments/dev/hieradata' ]: 
+=======
+<<<<<<< HEAD
+      file {  [ '/etc/puppetlabs/code/environments/stage/hieradata' ]: 
+=======
+      file {  [ '/etc/puppetlabs/code/environments/dev/hieradata' ]: 
+>>>>>>> 5e468abb61fdb21f96c229f413b658c9451e7a7e
+>>>>>>> baf70cd00e91cadac610381cb9c1e9283cc2abaa
       ensure  => 'directory',
       owner  => 'root',
       group  => 'wheel',
