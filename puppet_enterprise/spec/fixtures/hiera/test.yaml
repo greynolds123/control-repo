@@ -1,5 +1,0 @@
----
-puppet_enterprise::console::config::apache_limit_request_line: 400
-puppet_enterprise::profile::console::console_services_config::tk_jetty_request_header_max_size: 12
-puppet_enterprise::puppetdb::jetty_ini::tk_jetty_request_header_max_size: 55
-pe_r10k::r10k_basedir: /etc/puppetlabs/code/environments
