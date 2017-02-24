@@ -1,0 +1,48 @@
+<%- if @addr4.any? then -%>
+  <%- @addr4.each do |addr| -%>
+    <%- if addr then -%>
+ neighbor <%= addr %> remote-as <%= @name %>
+      <%- if @desc then -%>
+ neighbor <%= addr %> description <%= @desc %>
+      <%- end -%>
+      <%- if @password then -%>
+ neighbor <%= addr %> password <%= @password %>
+      <%- end -%>
+      <%- if @multihop then -%>
+ neighbor <%= addr %> ebgp-multihop <%= @multihop %>
+      <%- end -%>
+      <%- if @default_originate then -%>
+ neighbor <%= addr %> default-originate
+      <%- end -%>
+ neighbor <%= addr %> soft-reconfiguration inbound
+ neighbor <%= addr %> prefix-list prefix-v4 out
+      <%- if @inbound_routes.to_s == 'default' or @inbound_routes.to_s == 'v4default' then -%>
+ neighbor <%= addr %> prefix-list default-route in
+      <%- elsif @inbound_routes.to_s == 'all' then -%>
+ neighbor <%= addr %> prefix-list deny-default-route in
+      <%- else -%>
+ neighbor <%= addr %> prefix-list deny in
+      <%- end -%>
+      <%- if @communities.any? or @prepend then -%>
+ neighbor <%= addr %> route-map outbound-<%= @name %> out
+      <%- end -%>
+    <%- end -%>
+  <%- end -%>
+<%- end -%>
+<%- if @addr6.any? then -%>
+  <%- @addr6.each do |addr| -%>
+    <%- if addr then -%>
+ neighbor <%= addr %> remote-as <%= @name %>
+      <%- if @desc then -%>
+ neighbor <%= addr %> description <%= @desc %>
+      <%- end -%>
+      <%- if @password then -%>
+ neighbor <%= addr %> password <%= @password %>
+      <%- end -%>
+      <%- if @multihop then -%>
+ neighbor <%= addr %> ebgp-multihop <%= @multihop %>
+      <%- end -%>
+ no neighbor <%= addr %> activate
+    <%- end -%>
+  <%- end -%>
+<%- end -%>
