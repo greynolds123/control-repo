@@ -1,0 +1,16 @@
+{
+  "Gemfile": "dbc1a15e3a264c03878028240cfc5d89",
+  "LICENSE": "d2794c0df5b907fdace235a619d80314",
+  "README.md": "2e067ffbd9921fd0742784f63ebb81a9",
+  "Rakefile": "20b80e526e351a74df2001f504e756d2",
+  "lib/facter/docker.rb": "6ad1f4351a4f7c3530304e7543b86dc3",
+  "lib/puppet/provider/service/docker.rb": "a3e9e65b28f5ee2d6838f04c23784cab",
+  "manifests/container.pp": "041981eb3f37227b2ce459047449d4ce",
+  "manifests/image.pp": "991c95f12b6feb9fe5a3b993bb40b68a",
+  "manifests/init.pp": "2958a269b806bd975653b8aa3df45434",
+  "metadata.json": "ebab247e64b45b7475777ed9a168d79f",
+  "spec/classes/init_spec.rb": "56b5395603cb9ee41f5c056796dd1e0f",
+  "spec/spec_helper.rb": "0db89c9a486df193c0e40095422e19dc",
+  "templates/etc/docker/docker.config.erb": "859ee1b5858076189e5bdfba280b94fc",
+  "tests/init.pp": "8f9c81e35e4287bf551f1d5370a38709"
+}

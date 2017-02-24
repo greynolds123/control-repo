@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -e
+
+# No bash-isms are used. This allows us to use the /bin/sh shebang.
+
+source_dir="<%= @tarball_staging %>"
+source_list=`cat ${source_dir}/install_modules.txt`
+modpath="<%= @system_module_dir %>"
+for source in $source_list; do
+  <%= @puppetlabs_bin_dir %>/puppet module install "${source_dir}/${source}"-*.tar.gz --force --ignore-dependencies --modulepath "$modpath"
+done
+chown <%= scope['::puppet_enterprise::params::puppet_user'] %>:<%= scope['::puppet_enterprise::params::puppet_group'] %> -R "$modpath"
