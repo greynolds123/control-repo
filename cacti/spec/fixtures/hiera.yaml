@@ -1,8 +1,0 @@
----
-:backends:
-  - yaml
-:yaml:
-  :datadir: './spec/fixtures/hiera'
-:hierarchy:
-  - '%{::clientcert}'
-  - 'cacti_data'
