@@ -11,11 +11,19 @@ group :test do
   end
   gem "puppet-lint"
   gem "puppet-lint-unquoted_string-check"
+<<<<<<< HEAD
   gem "rspec-puppet", "2.2.0"
   gem "puppet-syntax"
   gem "puppetlabs_spec_helper"
   gem "metadata-json-lint"
   gem "rspec", '< 3.2.0' # Support for 1.8.7
+=======
+  gem "rspec-puppet"
+  gem "puppet-syntax"
+  gem "puppetlabs_spec_helper"
+  gem "metadata-json-lint"
+  gem "rspec"
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
   gem "rspec-retry"
   gem 'simplecov', '>= 0.11.0'
   gem 'simplecov-console'

@@ -14,6 +14,10 @@ class docker::params {
   $tls_key                           = '/etc/docker/tls/key.pem'
   $ip_forward                        = true
   $iptables                          = true
+<<<<<<< HEAD
+=======
+  $icc                               = undef
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
   $ip_masq                           = true
   $bip                               = undef
   $mtu                               = undef
@@ -71,7 +75,12 @@ class docker::params {
   $storage_pool_autoextend_threshold = undef
   $storage_pool_autoextend_percent   = undef
   $storage_config_template           = 'docker/etc/sysconfig/docker-storage.erb'
+<<<<<<< HEAD
   $compose_version                   = '1.5.2'
+=======
+  $compose_version                   = '1.7.0'
+  $compose_install_path              = '/usr/local/bin'
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
 
   case $::osfamily {
     'Debian' : {
@@ -82,14 +91,26 @@ class docker::params {
             $service_provider        = 'systemd'
             $storage_config          = '/etc/default/docker-storage'
             $service_config_template = 'docker/etc/sysconfig/docker.systemd.erb'
+<<<<<<< HEAD
+=======
+            $service_overrides_template = 'docker/etc/systemd/system/docker.service.d/service-overrides-debian.conf.erb'
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
             $service_hasstatus       = true
             $service_hasrestart      = true
             include docker::systemd_reload
           } else {
             $service_config_template = 'docker/etc/default/docker.erb'
+<<<<<<< HEAD
             $service_provider        = 'upstart'
             $service_hasstatus       = true
             $service_hasrestart      = false
+=======
+            $service_overrides_template = undef
+            $service_provider        = 'upstart'
+            $service_hasstatus       = true
+            $service_hasrestart      = false
+            $storage_config          = undef
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
           }
         }
         default: {
@@ -99,11 +120,24 @@ class docker::params {
             $storage_config             = '/etc/default/docker-storage'
             $service_config_template    = 'docker/etc/sysconfig/docker.systemd.erb'
             $service_overrides_template = 'docker/etc/systemd/system/docker.service.d/service-overrides-debian.conf.erb'
+<<<<<<< HEAD
             $service_hasstatus       = true
             $service_hasrestart      = true
             include docker::systemd_reload
           } else {
             $service_config_template = 'docker/etc/default/docker.erb'
+=======
+            $service_hasstatus          = true
+            $service_hasrestart         = true
+            include docker::systemd_reload
+          } else {
+            $service_provider           = undef
+            $storage_config             = undef
+            $service_config_template    = 'docker/etc/default/docker.erb'
+            $service_overrides_template = undef
+            $service_hasstatus          = undef
+            $service_hasrestart         = undef
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
           }
         }
       }
@@ -117,6 +151,11 @@ class docker::params {
       $use_upstream_package_source = true
       $repo_opt = undef
       $nowarn_kernel = false
+<<<<<<< HEAD
+=======
+      $service_config = undef
+      $storage_setup_file = undef
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
 
       $package_cs_source_location = 'http://packages.docker.com/1.9/apt/repo'
       $package_cs_key_source = 'http://packages.docker.com/1.9/apt/gpg'
@@ -125,7 +164,12 @@ class docker::params {
       $package_key_source = 'http://apt.dockerproject.org/gpg'
       $package_key = '58118E89F3A912897C070ADBF76221572C52609D'
 
+<<<<<<< HEAD
       if ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemmajrelease, '8') >= 0) or ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '15.04') >= 0) {
+=======
+      if ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemmajrelease, '8') >= 0) or
+        ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '15.04') >= 0) {
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
         $detach_service_in_init = false
       } else {
         $detach_service_in_init = true
@@ -135,6 +179,10 @@ class docker::params {
     'RedHat' : {
       $service_config = '/etc/sysconfig/docker'
       $storage_config = '/etc/sysconfig/docker-storage'
+<<<<<<< HEAD
+=======
+      $storage_setup_file = '/etc/sysconfig/docker-storage-setup'
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
       $service_hasstatus  = true
       $service_hasrestart = true
 
@@ -240,6 +288,11 @@ class docker::params {
       $service_hasrestart = true
       $service_config = '/etc/conf.d/docker'
       $service_config_template = 'docker/etc/conf.d/docker.erb'
+<<<<<<< HEAD
+=======
+      $storage_config = undef
+      $storage_setup_file = undef
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
     }
     'Gentoo' : {
       $manage_epel = false
@@ -262,6 +315,11 @@ class docker::params {
       $service_hasrestart = true
       $service_config = '/etc/conf.d/docker'
       $service_config_template = 'docker/etc/conf.d/docker.gentoo.erb'
+<<<<<<< HEAD
+=======
+      $storage_config = undef
+      $storage_setup_file = undef
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
     }
     default: {
       $manage_epel = false
@@ -272,14 +330,28 @@ class docker::params {
       $package_repos = undef
       $package_release = undef
       $use_upstream_package_source = true
+<<<<<<< HEAD
       $service_hasstatus  = undef
       $service_hasrestart = undef
+=======
+      $service_overrides_template = undef
+      $service_hasstatus  = undef
+      $service_hasrestart = undef
+      $service_provider = undef
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
       $package_name = $package_name_default
       $service_name = $service_name_default
       $docker_command = $docker_command_default
       $detach_service_in_init = true
       $repo_opt = undef
       $nowarn_kernel = false
+<<<<<<< HEAD
+=======
+      $service_config = undef
+      $storage_config = undef
+      $storage_setup_file = undef
+      $service_config_template = undef
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
     }
   }
 

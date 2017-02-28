@@ -44,7 +44,19 @@ compose_test:
   image: ubuntu:14.04
   command: /bin/sh -c "while true; do echo hello world; sleep 1; done"
       EOS
+<<<<<<< HEAD
       create_remote_file(host, "/tmp/docker-compose.yml", docker_compose_content)
+=======
+      docker_compose_content_v2 = <<-EOS
+version: "2"
+services:
+  compose_test:
+    image: ubuntu:14.04
+    command: /bin/sh -c "while true; do echo hello world; sleep 1; done"
+      EOS
+      create_remote_file(host, "/tmp/docker-compose.yml", docker_compose_content)
+      create_remote_file(host, "/tmp/docker-compose-v2.yml", docker_compose_content_v2)
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
     end
   end
 end

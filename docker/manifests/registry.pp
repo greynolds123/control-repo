@@ -48,6 +48,7 @@ define docker::registry(
     }
     else {
       $auth_cmd = "${docker_command} login ${server}"
+<<<<<<< HEAD
     }
   }
   else {
@@ -55,6 +56,17 @@ define docker::registry(
   }
 
   exec { "auth against ${server}":
+=======
+      $auth_environment = undef
+    }
+  }
+  else {
+    $auth_cmd = "${docker_command} logout ${server}"
+    $auth_environment = undef
+  }
+
+  exec { "${title} auth":
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
     environment => $auth_environment,
     command     => $auth_cmd,
     user        => $local_user,

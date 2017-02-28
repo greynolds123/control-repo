@@ -3,6 +3,13 @@ Puppet::Type.newtype(:docker_compose) do
 
   ensurable
 
+<<<<<<< HEAD
+=======
+  def refresh
+      provider.restart
+  end
+
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
   newparam(:name) do
     desc 'Docker compose file path.'
   end
@@ -27,6 +34,16 @@ Puppet::Type.newtype(:docker_compose) do
 		end
 	end
 
+<<<<<<< HEAD
+=======
+	newparam(:up_args) do
+    desc 'Arguments to be passed directly to docker-compose up.'
+		validate do |value|
+      fail 'up_args should be a String' unless value.is_a? String
+		end
+	end
+
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
   autorequire(:file) do
     self[:name]
   end

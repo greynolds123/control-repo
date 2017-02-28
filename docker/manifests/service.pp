@@ -44,6 +44,10 @@ class docker::service (
   $ip_forward                        = $docker::ip_forward,
   $iptables                          = $docker::iptables,
   $ip_masq                           = $docker::ip_masq,
+<<<<<<< HEAD
+=======
+  $icc                               = $docker::icc,
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
   $bridge                            = $docker::bridge,
   $fixed_cidr                        = $docker::fixed_cidr,
   $default_gateway                   = $docker::default_gateway,
@@ -96,6 +100,10 @@ class docker::service (
   $storage_pool_autoextend_percent   = $docker::storage_pool_autoextend_percent,
   $storage_config                    = $docker::storage_config,
   $storage_config_template           = $docker::storage_config_template,
+<<<<<<< HEAD
+=======
+  $storage_setup_file                = $docker::storage_setup_file,
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
   $service_provider                  = $docker::service_provider,
   $service_config                    = $docker::service_config,
   $service_config_template           = $docker::service_config_template,
@@ -133,7 +141,11 @@ class docker::service (
   }
 
   if $::osfamily == 'RedHat' {
+<<<<<<< HEAD
     file { '/etc/sysconfig/docker-storage-setup':
+=======
+    file { $storage_setup_file:
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
       ensure  => present,
       force   => true,
       content => template('docker/etc/sysconfig/docker-storage-setup.erb'),
@@ -171,6 +183,10 @@ class docker::service (
         notify => $_manage_service,
       }
     }
+<<<<<<< HEAD
+=======
+    default: {}
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
   }
 
   if $storage_config {

@@ -57,6 +57,14 @@
 #   Enable IP masquerading for bridge's IP range.
 #   The default is true.
 #
+<<<<<<< HEAD
+=======
+# [*icc*]
+#   Enable or disable Docker's unrestricted inter-container and Docker daemon host communication.
+#   (Requires iptables=true to disable)
+#   Default is undef. (Docker daemon's default is true)
+#
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
 # [*bip*]
 #   Specify docker's network bridge IP, in CIDR notation.
 #   Defaults to undefined.
@@ -108,6 +116,11 @@
 #                Writes log messages to a GELF endpoint: Graylog or Logstash.
 #     fluentd  : Fluentd logging driver for Docker.
 #                Writes log messages to fluentd (forward input).
+<<<<<<< HEAD
+=======
+#     splunk   : Splunk logging driver for Docker.
+#                Writes log messages to Splunk (HTTP Event Collector).
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
 #
 # [*log_opt*]
 #   Set the log driver specific options
@@ -135,6 +148,12 @@
 #                fluentd-tag={{.ID}} - short container id (12 characters)|
 #                            {{.FullID}} - full container id
 #                            {{.Name}} - container name
+<<<<<<< HEAD
+=======
+#     splunk   :
+#                splunk-token=<splunk_http_event_collector_token>
+#                splunk-url=https://your_splunk_instance:8088
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
 #
 # [*selinux_enabled*]
 #   Enable selinux support. Default is false. SELinux does  not  presently
@@ -199,7 +218,11 @@
 # [*storage_driver*]
 #   Specify a storage driver to use
 #   Default is undef: let docker choose the correct one
+<<<<<<< HEAD
 #   Valid values: aufs, devicemapper, btrfs, overlay, vfs, zfs
+=======
+#   Valid values: aufs, devicemapper, btrfs, overlay, overlay2, vfs, zfs
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
 #
 # [*dm_basesize*]
 #   The size to use when creating the base device, which limits the size of images and containers.
@@ -250,7 +273,13 @@
 #   Defaults to false
 #
 # [*dm_override_udev_sync_check*]
+<<<<<<< HEAD
 #   By default, the devicemapper backend attempts to synchronize with the udev device manager for the Linux kernel. This option allows disabling that synchronization, to continue even though the configuration may be buggy.
+=======
+#   By default, the devicemapper backend attempts to synchronize with the udev
+#   device manager for the Linux kernel. This option allows disabling that
+#   synchronization, to continue even though the configuration may be buggy.
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
 #   Defaults to true
 #
 # [*manage_package*]
@@ -326,6 +355,10 @@ class docker(
   $bip                               = $docker::params::bip,
   $mtu                               = $docker::params::mtu,
   $iptables                          = $docker::params::iptables,
+<<<<<<< HEAD
+=======
+  $icc                               = $docker::params::icc,
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
   $socket_bind                       = $docker::params::socket_bind,
   $fixed_cidr                        = $docker::params::fixed_cidr,
   $bridge                            = $docker::params::bridge,
@@ -392,6 +425,10 @@ class docker(
   $storage_pool_autoextend_percent   = $docker::params::storage_pool_autoextend_percent,
   $storage_config                    = $docker::params::storage_config,
   $storage_config_template           = $docker::params::storage_config_template,
+<<<<<<< HEAD
+=======
+  $storage_setup_file                = $docker::params::storage_setup_file,
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
   $service_provider                  = $docker::params::service_provider,
   $service_config                    = $docker::params::service_config,
   $service_config_template           = $docker::params::service_config_template,
@@ -401,7 +438,12 @@ class docker(
 ) inherits docker::params {
 
   validate_string($version)
+<<<<<<< HEAD
   validate_re($::osfamily, '^(Debian|RedHat|Archlinux|Gentoo)$', 'This module only works on Debian or Red Hat based systems or on Archlinux as on Gentoo.')
+=======
+  validate_re($::osfamily, '^(Debian|RedHat|Archlinux|Gentoo)$',
+              'This module only works on Debian or Red Hat based systems or on Archlinux as on Gentoo.')
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
   validate_bool($manage_kernel)
   validate_bool($manage_package)
   validate_bool($docker_cs)
@@ -412,10 +454,17 @@ class docker(
   validate_bool($ip_forward)
   validate_bool($iptables)
   validate_bool($ip_masq)
+<<<<<<< HEAD
+=======
+  if $icc != undef {
+    validate_bool($icc)
+  }
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
   validate_string($bridge)
   validate_string($fixed_cidr)
   validate_string($default_gateway)
   validate_string($bip)
+<<<<<<< HEAD
 
   if ($fixed_cidr or $default_gateway) and (!$bridge) {
     fail('You must provide the $bridge parameter.')
@@ -429,11 +478,28 @@ class docker(
     validate_re($log_driver, '^(none|json-file|syslog|journald|gelf|fluentd)$', 'log_driver must be one of none, json-file, syslog, journald, gelf or fluentd')
   }
 
+=======
+
+  if ($default_gateway) and (!$bridge) {
+    fail('You must provide the $bridge parameter.')
+  }
+
+  if $log_level {
+    validate_re($log_level, '^(debug|info|warn|error|fatal)$', 'log_level must be one of debug, info, warn, error or fatal')
+  }
+
+  if $log_driver {
+    validate_re($log_driver, '^(none|json-file|syslog|journald|gelf|fluentd|splunk)$',
+                'log_driver must be one of none, json-file, syslog, journald, gelf, fluentd or splunk')
+  }
+
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
   if $selinux_enabled {
     validate_re($selinux_enabled, '^(true|false)$', 'selinux_enabled must be true or false')
   }
 
   if $storage_driver {
+<<<<<<< HEAD
     validate_re($storage_driver, '^(aufs|devicemapper|btrfs|overlay|vfs|zfs)$', 'Valid values for storage_driver are aufs, devicemapper, btrfs, overlay, vfs, zfs.' )
   }
 
@@ -449,6 +515,24 @@ class docker(
     fail('You can use the $dm_thinpooldev parameter, or the $dm_datadev and $dm_metadatadev parameter pair, but you cannot use both.')
   }
 
+=======
+    validate_re($storage_driver, '^(aufs|devicemapper|btrfs|overlay|overlay2|vfs|zfs)$',
+                'Valid values for storage_driver are aufs, devicemapper, btrfs, overlay, overlay2, vfs, zfs.' )
+  }
+
+  if $dm_fs {
+    validate_re($dm_fs, '^(ext4|xfs)$', 'Only ext4 and xfs are supported currently for dm_fs.')
+  }
+
+  if ($dm_loopdatasize or $dm_loopmetadatasize) and ($dm_datadev or $dm_metadatadev) {
+    fail('You should provide parameters only for loop lvm or direct lvm, not both.')
+  }
+
+  if ($dm_datadev or $dm_metadatadev) and $dm_thinpooldev {
+    fail('You can use the $dm_thinpooldev parameter, or the $dm_datadev and $dm_metadatadev parameter pair, but you cannot use both.')
+  }
+
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
   if ($dm_datadev or $dm_metadatadev) {
     notice('The $dm_datadev and $dm_metadatadev parameter pair are deprecated.  The $dm_thinpooldev parameter should be used instead.')
   }
@@ -457,7 +541,12 @@ class docker(
     fail('You need to provide both $dm_datadev and $dm_metadatadev parameters for direct lvm.')
   }
 
+<<<<<<< HEAD
   if ($dm_basesize or $dm_fs or $dm_mkfsarg or $dm_mountopt or $dm_blocksize or $dm_loopdatasize or $dm_loopmetadatasize or $dm_datadev or $dm_metadatadev) and ($storage_driver != 'devicemapper') {
+=======
+  if ($dm_basesize or $dm_fs or $dm_mkfsarg or $dm_mountopt or $dm_blocksize or $dm_loopdatasize or
+      $dm_loopmetadatasize or $dm_datadev or $dm_metadatadev) and ($storage_driver != 'devicemapper') {
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
     fail('Values for dm_ variables will be ignored unless storage_driver is set to devicemapper.')
   }
 

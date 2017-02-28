@@ -121,7 +121,10 @@ describe 'docker' do
       EOS
       apply_manifest(manifest, :catch_failures=>true)
       shell("grep #{@registry_address} #{@config_file}", :acceptable_exit_codes => [0])
+<<<<<<< HEAD
       shell("grep #{@registry_email} #{@config_file}", :acceptable_exit_codes => [0])
+=======
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
     end
 
     it 'should be able to logout from the registry' do

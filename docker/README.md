@@ -72,6 +72,7 @@ as there is no further upstream):
 class { 'docker':
   use_upstream_package_source => false,
 }
+<<<<<<< HEAD
 ```
 
 Docker recently [launched new official
@@ -132,6 +133,68 @@ For TLS setup you should upload related files (such as CA certificate, server ce
 
 ```puppet
 class { 'docker':
+=======
+```
+
+Docker recently [launched new official
+repositories](http://blog.docker.com/2015/07/new-apt-and-yum-repos/#comment-247448)
+which are now the default for the module from version 5. If you want to
+stick with the old respoitories you can do so with the following:
+
+```puppet
+class { 'docker':
+  package_name => 'lxc-docker',
+  package_source_location => 'https://get.docker.com/ubuntu',
+  package_key_source => 'https://get.docker.com/gpg',
+  package_key => '36A1D7869245C8950F966E92D8576A8BA88D21E',
+  package_release => 'docker',
+}
+```
+
+Docker also provide a [commercially
+supported](https://docs.docker.com/docker-trusted-registry/install/install-csengine/)
+version of the Docker Engine, called Docker CS, available from a separate repository.
+This can be installed with the module using the following:
+
+```puppet
+class { 'docker':
+  docker_cs => true,
+}
+```
+
+The module also now uses the upstream repositories by default for RHEL
+based distros, including Fedora. If you want to stick with the distro packages
+you should use the following:
+
+```puppet
+class { 'docker':
+  use_upstream_package_source => false,
+  package_name => 'docker',
+}
+```
+
+By default the docker daemon will bind to a unix socket at
+/var/run/docker.sock. This can be changed, as well as binding to a tcp
+socket if required.
+
+```puppet
+class { 'docker':
+  tcp_bind        => ['tcp://127.0.0.1:4243','tcp://10.0.0.1:4243'],
+  socket_bind     => 'unix:///var/run/docker.sock',
+  ip_forward      => true,
+  iptables        => true,
+  ip_masq         => true,
+  bridge          => br0,
+  fixed_cidr      => '10.20.1.0/24',
+  default_gateway => '10.20.0.1',
+}
+```
+
+For TLS setup you should upload related files (such as CA certificate, server certificate and key) and use their paths in manifest
+
+```puppet
+class { 'docker':
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
   tcp_bind        => ['tcp://0.0.0.0:2376'],
   tls_enable      => true,
   tls_cacert      => '/etc/docker/tls/ca.pem',
@@ -238,8 +301,48 @@ You can trigger a rebuild of the image by subscribing to external events like Do
 docker::image { 'ubuntu':
   docker_file => '/tmp/Dockerfile'
   subscribe => File['/tmp/Dockerfile'],
+<<<<<<< HEAD
+=======
 }
 
+file { '/tmp/Dockerfile':
+  ensure => file,
+  source => 'puppet:///modules/someModule/Dockerfile',
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
+}
+```
+
+You can also remove images you no longer need with:
+
+```puppet
+docker::image { 'base':
+  ensure => 'absent'
+}
+
+docker::image { 'ubuntu':
+  ensure    => 'absent',
+  image_tag => 'precise'
+}
+```
+
+If using hiera, there's a `docker::images` class you can configure, for example:
+
+```yaml
+---
+  classes:
+    - docker::images
+
+docker::images::images:
+  ubuntu:
+    image_tag: 'precise'
+```
+
+
+### Containers
+
+Now you have an image you can launch containers:
+
+<<<<<<< HEAD
 file { '/tmp/Dockerfile':
   ensure => file,
   source => 'puppet:///modules/someModule/Dockerfile',
@@ -279,10 +382,74 @@ Now you have an image you can launch containers:
 ```puppet
 docker::run { 'helloworld':
   image   => 'base',
+=======
+```puppet
+docker::run { 'helloworld':
+  image   => 'base',
   command => '/bin/sh -c "while true; do echo hello world; sleep 1; done"',
 }
 ```
 
+This is equivalent to running the following:
+
+    docker run -d base /bin/sh -c "while true; do echo hello world; sleep 1; done"
+
+This will launch a Docker container managed by the local init system.
+
+Run also takes a number of optional parameters:
+
+```puppet
+docker::run { 'helloworld':
+  image           => 'base',
+  command         => '/bin/sh -c "while true; do echo hello world; sleep 1; done"',
+  ports           => ['4444', '4555'],
+  expose          => ['4666', '4777'],
+  links           => ['mysql:db'],
+  net             => 'my-user-def-net',
+  volumes         => ['/var/lib/couchdb', '/var/log'],
+  volumes_from    => '6446ea52fbc9',
+  memory_limit    => '10m', # (format: '<number><unit>', where unit = b, k, m or g)
+  cpuset          => ['0', '3'],
+  username        => 'example',
+  hostname        => 'example.com',
+  env             => ['FOO=BAR', 'FOO2=BAR2'],
+  env_file        => ['/etc/foo', '/etc/bar'],
+  dns             => ['8.8.8.8', '8.8.4.4'],
+  restart_service => true,
+  privileged      => false,
+  pull_on_start   => false,
+  before_stop     => 'echo "So Long, and Thanks for All the Fish"',
+  after           => [ 'container_b', 'mysql' ],
+  depends         => [ 'container_a', 'postgres' ],
+  extra_parameters => [ '--restart=always' ],
+}
+```
+
+Ports, expose, env, env_file, dns and volumes can be set with either a single string or as above with an array of values.
+
+Specifying `pull_on_start` will pull the image before each time it is started.
+
+Specifying `before_stop` will execute a command before stopping the container.
+
+The `after` option allows expressing containers that must be started before. This affects the generation of the init.d/systemd script.
+
+The `depends` option allows expressing container dependencies. The depended container will be started before this container(s), and this container will be stopped before the depended container(s). This affects the generation of the init.d/systemd script. You can use `depend_services` to specify dependency for generic services (non-docker) that should be started before this container.
+
+`extra_parameters` : An array of additional command line arguments to pass to the `docker run` command. Useful for adding additional new or experimental options that the module does not yet support.
+
+The service file created for systemd based systems enables automatic restarting of the service on failure by default.
+
+To use an image tag just append the tag name to the image name separated by a semicolon:
+
+```puppet
+docker::run { 'helloworld':
+  image   => 'ubuntu:precise',
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
+  command => '/bin/sh -c "while true; do echo hello world; sleep 1; done"',
+}
+```
+
+<<<<<<< HEAD
 This is equivalent to running the following:
 
     docker run -d base /bin/sh -c "while true; do echo hello world; sleep 1; done"
@@ -394,6 +561,62 @@ extra_parameters => '--cluster-store=<backend>://172.17.8.101:<port> --cluster-a
 
 If using hiera, there's a `docker::networks` class you can configure, for example:
 
+=======
+By default the generated init scripts will remove the container (but not
+any associated volumes) when the service is stopped or started. This
+behaviour can be modified using the following, with defaults shown:
+
+```puppet
+docker::run { 'helloworld':
+  remove_container_on_start => true,
+  remove_volume_on_start    => false,
+  remove_container_on_stop  => true,
+  remove_volume_on_stop     => false,
+}
+```
+
+If using hiera, there's a `docker::run_instance` class you can configure, for example:
+
+```yaml
+---
+  classes:
+    - docker::run_instance
+
+  docker::run_instance::instance:
+    helloworld:
+      image: 'ubuntu:precise'
+      command: '/bin/sh -c "while true; do echo hello world; sleep 1; done"'
+```
+
+### Networks
+
+As of Docker 1.9.x, Docker has official support for networks. The module
+now exposes a type, `docker_network`, used to manage those. This works
+like:
+
+```puppet
+docker_network { 'my-net':
+  ensure   => present,
+  driver   => 'overlay',
+  subnet   => '192.168.1.0/24',
+  gateway  => '192.168.1.1',
+  ip_range => '192.168.1.4/32',
+}
+```
+
+Only the name is required, along with an ensure value. If you don't pass
+a driver Docker network will use the default bridge. Note that some
+networks require the Docker daemon to be configured to use them, for
+instance for the overlay network you'll need a cluster store configured.
+You can do that on the `docker` class like so:
+
+```puppet
+extra_parameters => '--cluster-store=<backend>://172.17.8.101:<port> --cluster-advertise=<interface>:2376'
+```
+
+If using hiera, there's a `docker::networks` class you can configure, for example:
+
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
 ```yaml
 ---
   classes:
@@ -405,7 +628,11 @@ docker::networks::networks:
     subnet: '192.168.1.0/24'
     gateway: '192.168.1.1'
 ```
+<<<<<<< HEAD
 
+=======
+The network defined can then be used on a `docker::run` resource with the `net` parameter.
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
 ### Compose
 
 Docker Compose allows for describing a set of containers in a simple
@@ -415,6 +642,17 @@ using Puppet to run Compose. This means you can have Puppet remediate
 any issues and make sure reality matches the model in your Compose
 file.
 
+<<<<<<< HEAD
+=======
+Before using the docker_compose type make sure the docker-compose utility is installed:
+
+```puppet
+class {'docker::compose': 
+  ensure => present,
+}
+```
+
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
 Here's an example. Given the following Compose file:
 
 ```yaml
@@ -438,7 +676,11 @@ docker_compose { '/tmp/docker-compose.yml':
 Now when Puppet runs it will automatically run Compose is required,
 for example because the relevant Compose services aren't running.
 
+<<<<<<< HEAD
 You can also pass addition options (for example to enable experimental
+=======
+You can also pass additional options (for example to enable experimental
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
 features) as well as provide scaling rules. The following example
 requests 2 containers be running for example. Puppet will now run
 Compose if the number of containers for a given service don't match the
@@ -454,6 +696,12 @@ docker_compose { '/tmp/docker-compose.yml':
 }
 ```
 
+<<<<<<< HEAD
+=======
+It is also possible to give options to the ```docker-compose up``` command
+such as ```--remove-orphans``` using the ```up_args``` option.
+
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
 ### Private registries
 By default images will be pushed and pulled from [index.docker.io](http://index.docker.io) unless you've specified a server. If you have your own private registry without authentication, you can fully qualify your image name. If your private registry requires authentication you may configure a registry:
 

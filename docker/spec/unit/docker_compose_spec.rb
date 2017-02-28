@@ -10,6 +10,10 @@ describe compose do
       :provider,
       :scale,
       :options,
+<<<<<<< HEAD
+=======
+      :up_args,
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
     ]
   end
 
@@ -35,6 +39,13 @@ describe compose do
 		expect(compose).to require_string_for('options')
   end
 
+<<<<<<< HEAD
+=======
+	it 'should require up_args to be a string' do
+		expect(compose).to require_string_for('up_args')
+  end
+
+>>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
 	it 'should require scale to be a hash' do
 		expect(compose).to require_hash_for('scale')
   end
