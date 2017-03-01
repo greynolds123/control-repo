@@ -12,11 +12,8 @@ pipelines:
     - step:
         script: # Modify the commands below to build your repository.
           - ruby --version
-<<<<<<< HEAD
           #- bundler --version
-=======
           - bundler --version
->>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
           # ruby:2.3.0 bundler gives load error, fixed in later versions
           - gem install bundler -v 1.14.4
           #- bundle install
@@ -29,11 +26,8 @@ pipelines:
           # having been setup
 
           # puppet files
-<<<<<<< HEAD
           # - find . -name '*.pp' -not -path './.onceover/*' | xargs -n1 puppet parser validate
-=======
           #- find . -name '*.pp' -not -path './.onceover/*' | xargs -n1 puppet parser validate
->>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
 
           # ERB files
           #- find . -name '*.erb' -not -path './.onceover/*' | xargs -n1 -I {} sh -c "erb -P -x -T '-' {} | ruby -c >/dev/null || echo ERB syntax error in {} ; exit 1"
@@ -48,8 +42,5 @@ pipelines:
           # setup onceover here rather then storing its files in the repo.
           # This lets us account for any new roles and profiles that have
           # been added in the interim
-<<<<<<< HEAD
           #- bundle exec onceover init
-=======
           #- bundle exec onceover init
->>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
