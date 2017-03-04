@@ -14,7 +14,9 @@ pipelines:
           - ruby --version
           #- bundler --version
           # ruby:2.3.0 bundler gives load error, fixed in later versions
+          - 
           - gem install bundler -v 1.14.4
+          - chmod 655 $BUILD_DIR
           #- bundle install
 
           #
