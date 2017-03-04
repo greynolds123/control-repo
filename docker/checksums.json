@@ -1,5 +1,6 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
   "CHANGELOG.md": "022e0833526e055582e69075cd8491af",
   "CONTRIBUTING.md": "2e0bf76b0408e7a7595cea20b6d3c65c",
   "Gemfile": "ea87947f7aab9bc8c100bdd083da56b8",
@@ -15,6 +16,8 @@
   "lib/puppet/type/docker_network.rb": "f4012e6f5b689cde29b05277608a3343",
   "manifests/compose.pp": "f148d2d8399d8c7b52677c5ae7921b3c",
 =======
+=======
+>>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
   "CHANGELOG.md": "c8a976c9c06c2fb468a83d102b0f9f29",
   "CONTRIBUTING.md": "2e0bf76b0408e7a7595cea20b6d3c65c",
   "Gemfile": "fde0500fcd1b8114bbf4843c0559fd35",
@@ -225,11 +228,15 @@
   "log/ubuntu-1504-x64/2016-01-28_10_44_33/sut.log": "adfb2f36077ed66f469fed54264067a4",
   "log/ubuntu-server-12042-x64/2015-08-22_20_12_13/sut.log": "d742c8971642fb02e6ebb1c7a625e137",
   "manifests/compose.pp": "1e58d8e383b30520fc812e293b1ba013",
+<<<<<<< HEAD
 >>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
+=======
+>>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
   "manifests/config.pp": "e0e444963094f5a3a0f8b9d353465f01",
   "manifests/exec.pp": "3ef0ebb03c595bf9a60c55d88548f07f",
   "manifests/image.pp": "afe9e751af820a91771b694cdab7798e",
   "manifests/images.pp": "526d83a1aac20b37e9d3d492dd6d919e",
+<<<<<<< HEAD
 <<<<<<< HEAD
   "manifests/init.pp": "463e27e53030fd2eced65fa08a847176",
   "manifests/install.pp": "95367dee787b1512fdec2cb406274bfa",
@@ -248,6 +255,8 @@
   "spec/acceptance/docker_full_spec.rb": "aeb009f8b7d9cdee25948bf44cc1e638",
   "spec/acceptance/docker_spec.rb": "5c94121c02d9127c9d8f1c2eec4c8c35",
 =======
+=======
+>>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
   "manifests/init.pp": "85bfcd46ab144d171f97146d438e7232",
   "manifests/install.pp": "6d1bff554b0245b812c545ad88bb71a0",
   "manifests/networks.pp": "ef79956c99c607a5ae96e0c215d1a0f8",
@@ -265,7 +274,10 @@
   "spec/acceptance/compose_spec_v2.rb": "6d46082e06d4646641f61f1e335d32b0",
   "spec/acceptance/docker_full_spec.rb": "aeb009f8b7d9cdee25948bf44cc1e638",
   "spec/acceptance/docker_spec.rb": "2a954ff3d273f5cad6eb26d63f6fabc9",
+<<<<<<< HEAD
 >>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
+=======
+>>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
   "spec/acceptance/network_spec.rb": "b6b98aaf855f59996b4a64ceb9048cfd",
   "spec/acceptance/nodesets/centos-66-x64.yml": "edf84debc7449818e9f0d44819dcb44d",
   "spec/acceptance/nodesets/centos-70-x64.yml": "d1cd6fce3c82ca79a11e0f67a2fdda8c",
@@ -275,6 +287,7 @@
   "spec/acceptance/nodesets/ubuntu-12042-x64.yml": "b2b29e20a4fcc6a334df033733926a04",
   "spec/acceptance/nodesets/ubuntu-1404-x64.yml": "2b1dda37273da50d6eaa7605ed170f88",
   "spec/classes/coverage_spec.rb": "c976704f4dc107fb0e6f7980ce99764a",
+<<<<<<< HEAD
 <<<<<<< HEAD
   "spec/classes/docker_spec.rb": "953f902835548487f2cd8b67bd91b8bd",
   "spec/defines/exec_spec.rb": "a16d19dc40fde8b0ac880064d57b311e",
@@ -301,6 +314,8 @@
   "templates/etc/systemd/system/docker.service.d/service-overrides-rhel.conf.erb": "ec9c543d6f0c0e66e94f50a472e7e525",
   "templates/update_docker_image.sh.erb": "87f007dd417278ebe73e345af01867e2"
 =======
+=======
+>>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
   "spec/classes/docker_spec.rb": "294d90bf94f6877499010631316406a8",
   "spec/defines/exec_spec.rb": "7df25a5a7faae9c52708921216170ac7",
   "spec/defines/image_spec.rb": "6ba583207ec55928894dbbba460488a7",
@@ -325,5 +340,8 @@
   "templates/etc/systemd/system/docker.service.d/service-overrides-debian.conf.erb": "db5bfafdd7bf2e61ba5c76963b809cb2",
   "templates/etc/systemd/system/docker.service.d/service-overrides-rhel.conf.erb": "ec9c543d6f0c0e66e94f50a472e7e525",
   "templates/update_docker_image.sh.erb": "fb05ada566bc366840b2bf89b6a46de8"
+<<<<<<< HEAD
 >>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
+=======
+>>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
 }

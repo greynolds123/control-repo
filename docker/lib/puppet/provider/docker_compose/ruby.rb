@@ -16,11 +16,14 @@ Puppet::Type.type(:docker_compose).provide(:ruby) do
       "label=com.docker.compose.project=#{project}"
     ]).split("\n")
 <<<<<<< HEAD
+<<<<<<< HEAD
     counts = Hash[*compose_file.each_key.collect { |key|
       Puppet.info("Checking for compose service #{key}")
       [key, containers.count(key)]
     }.flatten]
 =======
+=======
+>>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
     counts = case compose_file["version"]
     when /^2(\.0)?$/
       Hash[*compose_file["services"].each_key.collect { |key|
@@ -35,7 +38,10 @@ Puppet::Type.type(:docker_compose).provide(:ruby) do
     else
       raise(Puppet::Error, "Unsupported docker compose file syntax version \"#{compose_file["version"]}\"!")
     end
+<<<<<<< HEAD
 >>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
+=======
+>>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
     # No containers found for the project
     if counts.empty? or
       # Containers described in the compose file are not running
@@ -51,10 +57,14 @@ Puppet::Type.type(:docker_compose).provide(:ruby) do
   def create
     Puppet.info("Running compose project #{project}")
 <<<<<<< HEAD
+<<<<<<< HEAD
     args = ['-f', name, 'up', '-d'].insert(2, resource[:options]).compact
 =======
     args = ['-f', name, 'up', '-d'].insert(2, resource[:options]).insert(5,resource[:up_args]).compact
 >>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
+=======
+    args = ['-f', name, 'up', '-d'].insert(2, resource[:options]).insert(5,resource[:up_args]).compact
+>>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
     dockercompose(args)
     if resource[:scale]
       instructions = resource[:scale].collect { |k,v| "#{k}=#{v}" }
@@ -73,7 +83,10 @@ Puppet::Type.type(:docker_compose).provide(:ruby) do
   end
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
   def restart
     if exists?
       Puppet.info("Rebuilding and Restarting all containers for compose project #{project}")
@@ -85,7 +98,10 @@ Puppet::Type.type(:docker_compose).provide(:ruby) do
     end
   end
 
+<<<<<<< HEAD
 >>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
+=======
+>>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
   private
   def project
     File.basename(File.dirname(name)).downcase.gsub(/[^0-9a-z ]/i, '')

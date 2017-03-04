@@ -1,10 +1,14 @@
 {
   "name": "garethr-docker",
 <<<<<<< HEAD
+<<<<<<< HEAD
   "version": "5.2.0",
 =======
   "version": "5.3.0",
 >>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
+=======
+  "version": "5.3.0",
+>>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
   "author": "Gareth Rushgrove",
   "summary": "Module for installing and managing docker",
   "license": "Apache-2.0",

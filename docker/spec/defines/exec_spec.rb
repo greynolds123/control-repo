@@ -3,6 +3,7 @@ require 'spec_helper'
 describe 'docker::exec', :type => :define do
   let(:title) { 'sample' }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
   context 'when running detached' do
       let(:params) { {'command' => 'command', 'container' => 'container', 'detach' => true} }
@@ -28,6 +29,8 @@ describe 'docker::exec', :type => :define do
       let(:params) { {'command' => 'command', 'container' => 'container', 'interactive' => true,} }
       it { should contain_exec('docker exec --interactive=true container command').with_unless (nil) }
 =======
+=======
+>>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
 	let(:facts) { {
 		:osfamily                  => 'Debian',
 		:operatingsystem           => 'Debian',
@@ -60,6 +63,9 @@ describe 'docker::exec', :type => :define do
   context 'when running without unless' do
 		let(:params) { {'command' => 'command', 'container' => 'container', 'interactive' => true,} }
 		it { should contain_exec('docker exec --interactive=true container command').with_unless (nil) }
+<<<<<<< HEAD
 >>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
+=======
+>>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
   end
 end

@@ -14,6 +14,7 @@
 #   Defaults to the value set in $docker::params::compose_version
 #
 <<<<<<< HEAD
+<<<<<<< HEAD
 class docker::compose(
   $ensure = 'present',
   $version = $docker::params::compose_version
@@ -41,6 +42,8 @@ class docker::compose(
       "/usr/local/bin/docker-compose-${version}",
       '/usr/local/bin/docker-compose'
 =======
+=======
+>>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
 # [*install_path*]
 #   The path where to install Docker Compose.
 #   Defaults to the value set in $docker::params::compose_install_path
@@ -76,7 +79,10 @@ class docker::compose(
     file { [
       "${install_path}/docker-compose-${version}",
       "${install_path}/docker-compose"
+<<<<<<< HEAD
 >>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
+=======
+>>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
     ]:
       ensure => absent,
     }

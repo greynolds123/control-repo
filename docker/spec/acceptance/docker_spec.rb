@@ -122,9 +122,12 @@ describe 'docker' do
       apply_manifest(manifest, :catch_failures=>true)
       shell("grep #{@registry_address} #{@config_file}", :acceptable_exit_codes => [0])
 <<<<<<< HEAD
+<<<<<<< HEAD
       shell("grep #{@registry_email} #{@config_file}", :acceptable_exit_codes => [0])
 =======
 >>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
+=======
+>>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
     end
 
     it 'should be able to logout from the registry' do

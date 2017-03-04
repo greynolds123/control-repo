@@ -3,7 +3,10 @@ require 'spec_helper'
 describe 'docker::image', :type => :define do
   let(:title) { 'base' }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
 	let(:facts) { {
 		:osfamily                  => 'Debian',
 		:operatingsystem           => 'Debian',
@@ -12,7 +15,10 @@ describe 'docker::image', :type => :define do
 		:kernelrelease             => '3.2.0-4-amd64',
 		:operatingsystemmajrelease => '8',
 	} }
+<<<<<<< HEAD
 >>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
+=======
+>>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
 
   context 'with ensure => absent' do
     let(:params) { { 'ensure' => 'absent' } }

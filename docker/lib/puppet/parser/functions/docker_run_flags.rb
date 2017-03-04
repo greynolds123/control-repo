@@ -66,11 +66,15 @@ module Puppet::Parser::Functions
       ['-l %s',             'labels'],
       ['--add-host %s',     'hostentries'],
 <<<<<<< HEAD
+<<<<<<< HEAD
       ['-v %s',             'volumes'],
       ['-H %s',             'socket_connect'],
 =======
       ['-v %s',             'volumes']
 >>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
+=======
+      ['-v %s',             'volumes']
+>>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
     ].each do |(format, key)|
       values    = opts[key]
       new_flags = multi_flags.call(values, format)

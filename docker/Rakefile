@@ -24,9 +24,12 @@ PuppetLint.configuration.relative = true
 PuppetLint.configuration.disable_80chars
 PuppetLint.configuration.log_format = "%{path}:%{linenumber}:%{check}:%{KIND}:%{message}"
 <<<<<<< HEAD
+<<<<<<< HEAD
 PuppetLint.configuration.disable_case_without_default
 =======
 >>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
+=======
+>>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
 PuppetLint.configuration.fail_on_warnings = true
 
 # Forsake support for Puppet 2.6.2 for the benefit of cleaner code.

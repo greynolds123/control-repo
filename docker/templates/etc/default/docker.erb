@@ -22,18 +22,26 @@ DOCKER_OPTS="\
 <% if @root_dir %> -g <%= @root_dir %><% end -%>
 <% if @tcp_bind %><% @tcp_bind_array.each do |param| %> -H <%= param %><% end %> <% end -%>
 <<<<<<< HEAD
+<<<<<<< HEAD
 <% if @tls_enable %><% if @tls_verify -%> --tlsverify<% end -%> --tlscacert=<%= @tls_cacert %> --tlscert=<%= @tls_cert %> --tlskey=<%= @tls_key %><% end -%>
 =======
 <% if @tls_enable %> --tls<% if @tls_verify -%> --tlsverify<% end -%> --tlscacert=<%= @tls_cacert %> --tlscert=<%= @tls_cert %> --tlskey=<%= @tls_key %><% end -%>
 >>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
+=======
+<% if @tls_enable %> --tls<% if @tls_verify -%> --tlsverify<% end -%> --tlscacert=<%= @tls_cacert %> --tlscert=<%= @tls_cert %> --tlskey=<%= @tls_key %><% end -%>
+>>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
 <% if @socket_bind %> -H <%= @socket_bind %><% end -%>
  --ip-forward=<%= @ip_forward -%>
  --iptables=<%= @iptables -%>
  --ip-masq=<%= @ip_masq -%>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <% unless @icc == nil %> --icc=<%= @icc %><% end -%>
 >>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
+=======
+<% unless @icc == nil %> --icc=<%= @icc %><% end -%>
+>>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
 <% if @fixed_cidr %> --fixed-cidr <%= @fixed_cidr %><% end -%>
 <% if @bridge %> --bridge <%= @bridge %><% end -%>
 <% if @default_gateway %> --default-gateway <%= @default_gateway %><% end -%>
