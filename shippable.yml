@@ -45,7 +45,3 @@ integrations:
      recipients:
        - #recp1
        - #recp2
-  hub:
-    - integrationName:
-      type:
-      agent_only:
