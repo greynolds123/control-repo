@@ -1,16 +1,15 @@
 language:                               
 
-node_js:                                      
-  - #language version                   
+ruby:                                      
+  - #language 2.3.0              
 
 services:                                       
   - #any supported service                      
 
-env:                                                
-  - #env1=foo                           
-  - #env2=bar
-
-matrix:                                                                 
+env:      
+  - #dev                                          
+  - #production                          
+  - #stage                                                                
 
 build:                                                  
 
@@ -22,20 +21,22 @@ build:
     pull:
     options:
   ci:
-    - #command1
-    - #command2
+    - #command1 
+    - #command2 
   post_ci:
-    - #command1
-    - #command2
+    - #command1 bash install
+    - #command2 df   install
+    - #command3 git  install
+    - #command4 free install
   on_success:
-    - #command1
-    - #command2  
+    - #command1 /bin/df -h
+    - #command2 /bin/free -ml
   on_failure:
-    - #command1
-    - #command2
+    - #command1 echo "build failed"
+    - #command2 
   cache:
   cache_dir_list:
-    - #dir1
+    - #dir1 
   push:
 
 integrations:
