@@ -1,7 +1,7 @@
-language:                               
+language: node.js                              
 
-ruby:                                      
-  - language               
+nodejs:
+  - 0.12                                      
 
 services:                                       
   - #any supported service 
