@@ -40,5 +40,3 @@ build:
     - command5 /bin/df -h
     - command6 /bin free -ml
 
-  on_failure:
-    - command7 echo 'build failed'
