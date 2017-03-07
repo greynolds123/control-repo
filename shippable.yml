@@ -27,7 +27,3 @@ build:
     - df   install
     - git  install
     - free install
-
-  on_success:
-    -  run df -h
-    -  run free -ml
