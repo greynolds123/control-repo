@@ -43,8 +43,3 @@ build:
   on_failure:
     - command1 echo "build failed"
     - command2 
-
-  cache:
-  cache_dir_list:
-    - #dir1 
-  push:
