@@ -37,8 +37,8 @@ build:
     - command4 free install
 
   on_success:
-    - command1 /bin/df -h
-    - command2 /bin free -ml
+    - command5 /bin/df -h
+    - command6 /bin free -ml
 
   on_failure:
-    - command3 echo "build failed"
+    - command7 echo "build failed"
