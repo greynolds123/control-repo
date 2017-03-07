@@ -26,9 +26,6 @@ build:
     image_tag: ruby
     pull:
     options:
-  ci:
-    - #command1 
-    - #command2
  
   post_ci:
     - command1 bash install
@@ -39,4 +36,3 @@ build:
   on_success:
     - command5 /bin/df -h
     - command6 /bin free -ml
-
