@@ -1,4 +1,6 @@
-language: ruby                                                           
+language: ruby 
+
+version: 2.3.0                                                         
 
 services:                                       
   - any supported service 
