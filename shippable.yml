@@ -41,5 +41,4 @@ build:
     - command2 /bin free -ml
 
   on_failure:
-    - command1 echo "build failed"
-    - command2 
+    - command3 echo "build failed"
