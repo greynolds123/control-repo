@@ -1,10 +1,7 @@
-language: node.js                              
-
-nodejs:
-  - 0.12                                      
+language: ruby                                                           
 
 services:                                       
-  - #any supported service 
+  - any supported service 
   - postgres
 
 build:
@@ -18,9 +15,7 @@ env:
   - stage                                                                
 
 build:                                                  
-
   pre_ci:                               
-
   pre_ci_boot:                          
     image_name: Ruby 2.3.0
     image_tag: ruby
@@ -28,11 +23,11 @@ build:
     options:
  
   post_ci:
-    - yum bash install
+    - bash install
     - df   install
     - git  install
     - free install
 
   on_success:
-    -  /bin/df -h
-    -  /bin free -ml
+    -  run df -h
+    -  run free -ml
