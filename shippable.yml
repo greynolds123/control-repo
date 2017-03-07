@@ -28,11 +28,11 @@ build:
     options:
  
   post_ci:
-    - command1 bash install
-    - command2 df   install
-    - command3 git  install
-    - command4 free install
+    - yum bash install
+    - df   install
+    - git  install
+    - free install
 
   on_success:
-    - command5 /bin/df -h
-    - command6 /bin free -ml
+    -  /bin/df -h
+    -  /bin free -ml
