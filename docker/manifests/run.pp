@@ -95,14 +95,6 @@ define docker::run(
   $remove_container_on_stop = true,
   $remove_volume_on_start = false,
   $remove_volume_on_stop = false,
-<<<<<<< HEAD
-<<<<<<< HEAD
-) {
-  include docker::params
-  $docker_command = $docker::params::docker_command
-=======
-=======
->>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
   $stop_wait_time = 0,
 ) {
   include docker::params
@@ -112,10 +104,6 @@ define docker::run(
   }else {
     $docker_command = $docker::params::docker_command
   }
-<<<<<<< HEAD
->>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
-=======
->>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
   $service_name = $docker::params::service_name
 
   validate_re($image, '^[\S]*$')
@@ -148,16 +136,8 @@ define docker::run(
   validate_bool($remove_volume_on_stop)
   validate_bool($use_name)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
   validate_integer($stop_wait_time)
 
->>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
-=======
-  validate_integer($stop_wait_time)
-
->>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
   if ($remove_volume_on_start and !$remove_container_on_start) {
     fail("In order to remove the volume on start for ${title} you need to also remove the container")
   }
@@ -232,13 +212,6 @@ define docker::run(
 
     $cidfile = "/var/run/${service_prefix}${sanitised_title}.cid"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    exec { "run ${title} with docker":
-      command     => "${docker_command} run -d ${docker_run_flags} --name ${sanitised_title} --cidfile=${cidfile} --restart=\"${restart}\" ${image} ${command}",
-=======
-=======
->>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
     $run_with_docker_command = [
       "${docker_command} run -d ${docker_run_flags}",
       "--name ${sanitised_title} --cidfile=${cidfile}",
@@ -246,10 +219,6 @@ define docker::run(
     ]
     exec { "run ${title} with docker":
       command     => join($run_with_docker_command, ' '),
-<<<<<<< HEAD
->>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
-=======
->>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
       unless      => "${docker_command} ps --no-trunc -a | grep `cat ${cidfile}`",
       environment => 'HOME=/root',
       path        => ['/bin', '/usr/bin'],
@@ -261,17 +230,8 @@ define docker::run(
       'Debian': {
         $deprecated_initscript = "/etc/init/${service_prefix}${sanitised_title}.conf"
         $hasstatus  = true
-<<<<<<< HEAD
-<<<<<<< HEAD
-        if ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemmajrelease, '8') >= 0) or ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '15.04') >= 0) {
-=======
         if ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemmajrelease, '8') >= 0) or
           ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '15.04') >= 0) {
->>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
-=======
-        if ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemmajrelease, '8') >= 0) or
-          ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '15.04') >= 0) {
->>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
           $initscript = "/etc/systemd/system/${service_prefix}${sanitised_title}.service"
           $init_template = 'docker/etc/systemd/system/docker-run.erb'
           $uses_systemd = true
@@ -360,23 +320,12 @@ define docker::run(
           if $initscript == "/etc/init.d/${service_prefix}${sanitised_title}" {
             # This exec sequence will ensure the old-style CID container is stopped
             # before we replace the init script with the new-style.
-<<<<<<< HEAD
-<<<<<<< HEAD
-            exec { "/bin/sh /etc/init.d/${service_prefix}${sanitised_title} stop":
-              onlyif  => "/usr/bin/test -f /var/run/docker-${sanitised_title}.cid && /usr/bin/test -f /etc/init.d/${service_prefix}${sanitised_title}",
-=======
-=======
->>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
             $transition_onlyif = [
               "/usr/bin/test -f /var/run/docker-${sanitised_title}.cid &&",
               "/usr/bin/test -f /etc/init.d/${service_prefix}${sanitised_title}",
             ]
             exec { "/bin/sh /etc/init.d/${service_prefix}${sanitised_title} stop":
               onlyif  => join($transition_onlyif, ' '),
-<<<<<<< HEAD
->>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
-=======
->>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
               require => [],
             } ->
             file { "/var/run/${service_prefix}${sanitised_title}.cid":

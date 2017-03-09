@@ -17,24 +17,8 @@ class common (
   $enable_hosts                     = false,
   $enable_inittab                   = false,
   $enable_mailaliases               = false,
-<<<<<<< HEAD
-<<<<<<< HEAD
-  $enable_motd                      = true,
-=======
-<<<<<<< HEAD
-  $enable_motd                      = false,
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
   $enable_motd                      = false,
   $enable_motd                      = true,
-<<<<<<< HEAD
->>>>>>> 5e468abb61fdb21f96c229f413b658c9451e7a7e
->>>>>>> 65278082df726ecc5bc5bf5888db3bb047ac06d4
->>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
-=======
->>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
   $enable_network                   = false,
   $enable_nsswitch                  = false,
   $enable_ntp                       = false,
@@ -43,24 +27,8 @@ class common (
   $enable_rsyslog                   = false,
   $enable_selinux                   = false,
   $enable_ssh                       = false,
-<<<<<<< HEAD
-<<<<<<< HEAD
   $enable_hiera                     = true,
   $policy_engine                    = true,
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-  $enable_hiera                     = true,
-  $policy_engine                    = true,
->>>>>>> 5e468abb61fdb21f96c229f413b658c9451e7a7e
->>>>>>> 65278082df726ecc5bc5bf5888db3bb047ac06d4
->>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
-=======
-  $enable_hiera                     = true,
-  $policy_engine                    = true,
->>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
   $enable_utils                     = false,
   $enable_vim                       = false,
   $enable_wget                      = false,
@@ -202,16 +170,6 @@ class common (
   }
 
   # validate type and convert string to boolean if necessary
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
-=======
->>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
   if is_string($enable_hiera) {
     $hiera_enabled = str2bool($enable_hiera)
   } else {
@@ -235,14 +193,6 @@ class common (
 
 
   # validate type and convert string to boolean if necessary
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 5e468abb61fdb21f96c229f413b658c9451e7a7e
->>>>>>> 65278082df726ecc5bc5bf5888db3bb047ac06d4
->>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
-=======
->>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
   if is_string($enable_utils) {
     $utils_enabled = str2bool($enable_utils)
   } else {

@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
 ##2016-07-13 - Version 5.3
 
 Several minor improvements to the Docker Compose support including:
@@ -31,10 +26,6 @@ Fix a number of issues if running the module with strict variables
 enabled, and add this to the tested conbinations.
 
 
-<<<<<<< HEAD
->>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
-=======
->>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
 ##2016-03-30 - Version 5.2
 
 This release includes some minor features and several bug fixes,

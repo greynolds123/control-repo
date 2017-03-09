@@ -13,37 +13,6 @@
 #   The version of Docker Compose to install.
 #   Defaults to the value set in $docker::params::compose_version
 #
-<<<<<<< HEAD
-<<<<<<< HEAD
-class docker::compose(
-  $ensure = 'present',
-  $version = $docker::params::compose_version
-) inherits docker::params {
-  validate_string($version)
-  validate_re($ensure, '^(present|absent)$')
-
-  if $ensure == 'present' {
-    exec { "Install Docker Compose ${version}":
-      path    => '/usr/bin/',
-      cwd     => '/tmp',
-      command => "curl -s -L https://github.com/docker/compose/releases/download/${version}/docker-compose-${::kernel}-x86_64 > /usr/local/bin/docker-compose-${version}",
-      creates => "/usr/local/bin/docker-compose-${version}"
-    } ->
-    file { "/usr/local/bin/docker-compose-${version}":
-      owner => 'root',
-      mode  => '0755'
-    } ->
-    file { '/usr/local/bin/docker-compose':
-      ensure => 'link',
-      target => "/usr/local/bin/docker-compose-${version}",
-    }
-  } else {
-    file { [
-      "/usr/local/bin/docker-compose-${version}",
-      '/usr/local/bin/docker-compose'
-=======
-=======
->>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
 # [*install_path*]
 #   The path where to install Docker Compose.
 #   Defaults to the value set in $docker::params::compose_install_path
@@ -79,10 +48,6 @@ class docker::compose(
     file { [
       "${install_path}/docker-compose-${version}",
       "${install_path}/docker-compose"
-<<<<<<< HEAD
->>>>>>> c887bd06d1850eff2505a6dc00584284155634ad
-=======
->>>>>>> 5b05f9928392d20140da52f72c42e34ca7b3c890
     ]:
       ensure => absent,
     }

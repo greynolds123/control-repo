@@ -36,4 +36,3 @@ This README would normally document whatever steps are necessary to get your app
 =======
 
 * Will be updated soon
->>>>>>> e04a5d0aaf043f29fc060d623309411ff2fb9654
