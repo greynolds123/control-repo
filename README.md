@@ -30,10 +30,4 @@ This README would normally document whatever steps are necessary to get your app
 ### Who do I talk to? ###
 
 * Greynolds3, glynnreynolds123@gmail.com
-<<<<<<< HEAD
 * Will be updated soon
-* Will be updated soon
-=======
-
-* Will be updated soon
->>>>>>> e04a5d0aaf043f29fc060d623309411ff2fb9654
