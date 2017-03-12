@@ -1,0 +1,15 @@
+{
+  "name": "Aon-profile",
+  "version": "0.1.0",
+  "author": "Aon",
+  "summary": "Roles for the application",
+  "license": "Apache-2.0",
+  "source": "http://10.80.31.216:9382/projects/UDO/repos/puppet/browse/profile/manifests",
+  "project_page": "http://10.80.31.216:9382/projects/UDO/repos/puppet/browse/profile/manifests",
+  "issues_url": "http://10.80.31.216:9382/projects/UDO/repos/puppet/browse/profile/manifests",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+  ],
+  "data_provider": null
+}
+
