@@ -28,7 +28,7 @@ pipelines:
           #- find . -name '*.pp' -not -path './.onceover/*' | xargs -n1 puppet parser validate
 
           # ERB files
-          - find . -name '*.erb' -not -path '/etc/puppetlabs/code/environments/' | xargs -n1 -I {} sh -c "erb -P -x -T '-' {} | ruby -c >/dev/null || echo ERB syntax error in {} ; exit 1"
+          - find . -name '*.erb' -not -path | 'erb -x -P -T -  *.erb' | ruby -c ' | xargs -n1 -I {} sh -c "erb -P -x -T '-' {} | ruby -c >/dev/null || echo ERB syntax error in {} ; exit 1"
 
           # YAML files
           - find . -name '*.yaml' -not -path './.onceover/*' | xargs -n1 -I {} ruby -ryaml -e "YAML.load_file '"{}"' "
