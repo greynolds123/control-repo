@@ -20,7 +20,7 @@
 define rsyslog::snippet(
   $content    = '',
   $ensure     = 'present',
-  $file_mode  = 'undef'
+  $file_mode  = '0644'
 ) {
   include ::rsyslog
 
