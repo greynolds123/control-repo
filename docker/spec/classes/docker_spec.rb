@@ -52,6 +52,8 @@ describe 'docker', :type => :class do
         it { should contain_apt__source('docker').with_location('http://apt.dockerproject.org/repo') }
         it { should contain_package('docker').with_install_options(nil) }
 
+        it { should contain_file('/etc/default/docker').without_content(/icc=/) }
+
         context 'with a custom version' do
           let(:params) { {'version' => '0.5.5' } }
           it { should contain_package('docker').with_ensure('0.5.5').with_name('docker-engine') }
@@ -90,6 +92,11 @@ describe 'docker', :type => :class do
           it { should contain_file('/etc/default/docker').with_content(/iptables=false/) }
         end
 
+        context 'with icc param set to false' do
+          let(:params) {{ 'icc' => false }}
+          it { should contain_file('/etc/default/docker').with_content(/icc=false/) }
+        end
+
         context 'with tcp_bind array param' do
           let(:params) {{ 'tcp_bind' => ['tcp://127.0.0.1:2375', 'tcp://10.0.0.1:2375'] }}
           it do
@@ -116,7 +123,22 @@ describe 'docker', :type => :class do
               /tcp:\/\/127.0.0.1:2375/
             )
             should contain_file('/etc/default/docker').with_content(
-              /--tlsverify --tlscacert=\/etc\/docker\/tls\/ca.pem --tlscert=\/etc\/docker\/tls\/cert.pem --tlskey=\/etc\/docker\/tls\/key.pem/
+              /--tls --tlsverify --tlscacert=\/etc\/docker\/tls\/ca.pem --tlscert=\/etc\/docker\/tls\/cert.pem --tlskey=\/etc\/docker\/tls\/key.pem/
+            )
+          end
+        end
+        context 'with tls param and without tlsverify' do
+          let(:params) {{
+              'tcp_bind' => 'tcp://127.0.0.1:2375',
+              'tls_enable' => true,
+              'tls_verify' => false,
+          }}
+          it do
+            should contain_file('/etc/default/docker').with_content(
+              /tcp:\/\/127.0.0.1:2375/
+            )
+            should contain_file('/etc/default/docker').with_content(
+              /--tls --tlscacert=\/etc\/docker\/tls\/ca.pem --tlscert=\/etc\/docker\/tls\/cert.pem --tlskey=\/etc\/docker\/tls\/key.pem/
             )
           end
         end
@@ -156,9 +178,12 @@ describe 'docker', :type => :class do
           :operatingsystem => 'RedHat',
           :operatingsystemrelease => '6.5',
           :operatingsystemmajrelease => '7',
+          :kernelversion => '2.6.32',
         } }
         service_config_file = '/etc/sysconfig/docker'
         storage_config_file = '/etc/sysconfig/docker-storage'
+
+        it { should contain_file('/etc/sysconfig/docker').without_content(/icc=/) }
 
         context 'with proxy param' do
           let(:params) { {'proxy' => 'http://127.0.0.1:3128' } }
@@ -191,6 +216,11 @@ describe 'docker', :type => :class do
           it { should contain_file('/etc/sysconfig/docker').with_content(/iptables=false/) }
         end
 
+        context 'with icc param set to false' do
+          let(:params) {{ 'icc' => false }}
+          it { should contain_file('/etc/sysconfig/docker').with_content(/icc=false/) }
+        end
+
         context 'with tcp_bind array param' do
           let(:params) {{ 'tcp_bind' => ['tcp://127.0.0.1:2375', 'tcp://10.0.0.1:2375'] }}
           it do
@@ -215,7 +245,22 @@ describe 'docker', :type => :class do
               /tcp:\/\/127.0.0.1:2375/
             )
             should contain_file('/etc/sysconfig/docker').with_content(
-              /--tlsverify --tlscacert=\/etc\/docker\/tls\/ca.pem --tlscert=\/etc\/docker\/tls\/cert.pem --tlskey=\/etc\/docker\/tls\/key.pem/
+              /--tls --tlsverify --tlscacert=\/etc\/docker\/tls\/ca.pem --tlscert=\/etc\/docker\/tls\/cert.pem --tlskey=\/etc\/docker\/tls\/key.pem/
+            )
+          end
+        end
+        context 'with tls param and without tlsverify' do
+          let(:params) {{
+              'tcp_bind' => 'tcp://127.0.0.1:2375',
+              'tls_enable' => true,
+              'tls_verify' => false,
+          }}
+          it do
+            should contain_file('/etc/sysconfig/docker').with_content(
+              /tcp:\/\/127.0.0.1:2375/
+            )
+            should contain_file('/etc/sysconfig/docker').with_content(
+              /--tls --tlscacert=\/etc\/docker\/tls\/ca.pem --tlscert=\/etc\/docker\/tls\/cert.pem --tlskey=\/etc\/docker\/tls\/key.pem/
             )
           end
         end
@@ -342,10 +387,12 @@ describe 'docker', :type => :class do
       end
 
       it { should compile.with_all_deps }
-      it { should contain_class('docker::repos').that_comes_before('docker::install') }
-      it { should contain_class('docker::install').that_comes_before('docker::config') }
-      it { should contain_class('docker::service').that_subscribes_to('docker::config') }
+      it { should contain_class('docker::repos').that_comes_before('Class[docker::install]') }
+      it { should contain_class('docker::install').that_comes_before('Class[docker::config]') }
+      it { should contain_class('docker::service').that_subscribes_to('Class[docker::config]') }
       it { should contain_class('docker::config') }
+
+      it { should contain_file(service_config_file).without_content(/icc=/) }
 
       context 'with a specific docker command' do
         let(:params) {{ 'docker_command' => 'docker.io' }}
@@ -366,14 +413,18 @@ describe 'docker', :type => :class do
       end
 
       context 'when not managing the package' do
-        let(:params) { {'manage_package' => false } }
-        it { should_not contain_package('docker') }
+        let(:params) { { 'manage_package' => false } }
+        skip 'the APT module at v2.1 does not support STRICT_VARIABLES' do
+          it { should_not contain_package('docker') }
+        end
       end
 
       context 'It should accept custom prerequired_packages' do
         let(:params) { {'prerequired_packages' => [ 'test_package' ],
                         'manage_package'       => false,  } }
-        it { should contain_package('test_package').with_ensure('present') }
+        skip 'the APT module at v2.1 does not support STRICT_VARIABLES' do
+          it { should contain_package('test_package').with_ensure('present') }
+        end
       end
 
       context 'with proxy param' do
@@ -396,7 +447,7 @@ describe 'docker', :type => :class do
         it { should contain_file(service_config_file).with_content(/-e native/) }
       end
 
-      ['aufs', 'devicemapper', 'btrfs', 'overlay', 'vfs', 'zfs'].each do |driver|
+      ['aufs', 'devicemapper', 'btrfs', 'overlay', 'overlay2', 'vfs', 'zfs'].each do |driver|
         context "with #{driver} storage driver" do
           let(:params) { { 'storage_driver' => driver }}
           it { should contain_file(storage_config_file).with_content(/--storage-driver=#{driver}/) }
@@ -555,7 +606,7 @@ describe 'docker', :type => :class do
         it do
           expect {
             should contain_package('docker')
-          }.to raise_error(Puppet::Error, /log_driver must be one of none, json-file, syslog, journald, gelf or fluentd/)
+          }.to raise_error(Puppet::Error, /log_driver must be one of none, json-file, syslog, journald, gelf, fluentd or splunk/)
         end
       end
 
@@ -696,6 +747,7 @@ describe 'docker', :type => :class do
       :operatingsystem => 'RedHat',
       :operatingsystemrelease => '6.5',
       :operatingsystemmajrelease => '6',
+      :kernelversion => '2.6.32',
     } }
 
     it { should contain_class('epel') }
@@ -740,6 +792,7 @@ describe 'docker', :type => :class do
       :operatingsystem => 'Family',
       :operatingsystemrelease => '21.0',
       :operatingsystemmajrelease => '21',
+      :kernelversion => '2.6.31'
     } }
 
     it { should contain_package('docker').with_name('docker-engine') }
@@ -754,6 +807,7 @@ describe 'docker', :type => :class do
         :operatingsystem => operatingsystem,
         :operatingsystemrelease => '7.0',
         :operatingsystemmajrelease => '7',
+        :kernelversion => '2.6.32',
       } }
 
       storage_setup_file = '/etc/sysconfig/docker-storage-setup'
@@ -813,6 +867,11 @@ describe 'docker', :type => :class do
         it { should contain_file(storage_setup_file).with_content(/^POOL_AUTOEXTEND_PERCENT=10/) }
       end
 
+      context 'with custom storage_setup_file' do
+        let(:params) { { 'storage_setup_file' => '/etc/sysconfig/docker-latest-storage-setup' }}
+        it { should contain_file('/etc/sysconfig/docker-latest-storage-setup').with_content(/managed by Puppet/) }
+      end
+
     end
   end
 
@@ -822,6 +881,7 @@ describe 'docker', :type => :class do
       :operatingsystem => 'RedHat',
       :operatingsystemrelease => '7.0',
       :operatingsystemmajrelease => '7',
+      :kernelversion => '2.6.32',
     } }
 
     it { should contain_package('docker').with_name('docker-engine') }
@@ -842,6 +902,7 @@ describe 'docker', :type => :class do
       :operatingsystem => 'OracleLinux',
       :operatingsystemrelease => '7.0',
       :operatingsystemmajrelease => '7',
+      :kernelversion => '2.6.32',
     } }
 
     it { should contain_package('docker').with_name('docker-engine') }
@@ -855,6 +916,7 @@ describe 'docker', :type => :class do
       :operatingsystem => 'Scientific',
       :operatingsystemrelease => '7.0',
       :operatingsystemmajrelease => '7',
+      :kernelversion => '2.6.32',
     } }
 
     it { should contain_package('docker').with_name('docker-engine') }
@@ -925,6 +987,7 @@ describe 'docker', :type => :class do
       :operatingsystem => 'RedHat',
       :operatingsystemrelease => '6.4',
       :operatingsystemmajrelease => '6',
+      :kernelversion => '2.6.32',
     } }
     it do
       expect {
@@ -939,6 +1002,7 @@ describe 'docker', :type => :class do
       :operatingsystem => 'Amazon',
       :operatingsystemrelease => '2015.09',
       :operatingsystemmajrelease => '2015',
+      :kernelversion => '2.6.32',
     } }
     it {should contain_service('docker').without_provider }
   end

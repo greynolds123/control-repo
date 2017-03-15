@@ -7,8 +7,8 @@
 class docker::install {
   $docker_command = $docker::docker_command
   validate_string($docker::version)
-  validate_re($::osfamily, '^(Debian|RedHat|Archlinux|Gentoo)$', 'This module only works on Debian or Red Hat based systems or on Archlinux as on Gentoo.')
-  validate_string($::kernelrelease)
+  validate_re($::osfamily, '^(Debian|RedHat|Archlinux|Gentoo)$',
+              'This module only works on Debian or Red Hat based systems or on Archlinux as on Gentoo.')
   validate_bool($docker::use_upstream_package_source)
 
   if $docker::version and $docker::ensure != 'absent' {
@@ -59,6 +59,7 @@ class docker::install {
     'Gentoo': {
       $manage_kernel = false
     }
+    default: {}
   }
 
   if $manage_kernel {
