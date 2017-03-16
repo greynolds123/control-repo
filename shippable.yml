@@ -26,7 +26,4 @@ build:
     - bash install
     - df   install
     - git  install
-<<<<<<< HEAD
-=======
     - free install
->>>>>>> 5cdb7f74adc01d8a8a07b1809717953098035b4b
