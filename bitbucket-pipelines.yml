@@ -12,7 +12,7 @@ pipelines:
     - step:
         script: # Modify the commands below to build your repository.
           - ruby --version
-          - bundler --version
+          #- bundler --version
           # ruby:2.3.0 bundler gives load error, fixed in later versions
           - gem install bundler -v 1.14.4
           #- bundle install
