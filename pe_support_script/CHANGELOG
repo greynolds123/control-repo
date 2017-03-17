@@ -1,0 +1,103 @@
+2016-11-16 Charlie Sharpsteen <chuck@puppet.com> - 2016.5.0
+============================================================
+ Charlie Sharpsteen <chuck@puppet.com> (14):
+  * (PE-16091) Add LEI install to acceptance test
+  * (PE-16091) Add support script to pluginsync
+  * (maint) Update tests for Solaris platforms
+  * (PE-16091) Disable support script on non-master platforms
+  * (PE-18359) Make tests conditional on installed components
+  * (PE-18358) Add timeout to PuppetDB stats collection
+  * (maint) Fix support script execution
+  * (PE-16371) Collect MCollective client config and logs
+  * (PE-3877) Capture Postgresql configuration
+  * (maint) Fix acceptance test for LEI installs
+  * (maint) Update certificate check
+  * (maint) Update MCO checks
+  * Update metadata.json and CHANGELOG for v1.2.0
+  * Update metadata.json and CHANGELOG for v2.0.0
+ 
+ John McCabe <mccabe@puppet.com> (1):
+  * (PE-17822) Move puppet enterprise face from pe_manager
+ 
+2016-10-12 GitHub <noreply@github.com> - 2016.4.1
+==================================================
+ Brandon High <brandon.high@puppetlabs.com> (1):
+  * (PE-17233) Fix rspec tests for 2.2.5
+ 
+2016-08-16 Charlie Sharpsteen <chuck@puppet.com> - 2016.4.0
+============================================================
+ Charlie Sharpsteen <chuck@puppet.com> (2):
+  * (maint) Update config file whitelist for Davis
+  * Update metadata.json and CHANGELOG for v1.1.0
+ 
+2016-08-12 GitHub <noreply@github.com> - 2016.3.0-rc0
+======================================================
+ Charlie Sharpsteen <chuck@puppet.com> (4):
+  * (PE-11914) Collect Puppet Server status API output
+  * (maint) Remove unused testing skeleton
+  * (PE-16536) Collect Code Manager r10k deploy info
+  * (PE-16537) Collect Puppet Server environments API output
+ 
+ Tony Vu <tony.vu@puppetlabs.com> (1):
+  * (maint) Add acceptance tests folder
+ 
+2016-06-15 Charlie Sharpsteen <chuck@puppet.com> - 2016.2.1
+============================================================
+ Charlie Sharpsteen <source@sharpsteen.net> (26):
+  * (PE-15433) Import enteprise-dist support script
+  * (PE-15433) Implement puppet enterprise support command
+  * (PE-15434) Add host configs for monolithic masters
+  * (PE-15434) Add PE installation to test pre-suite
+  * (PE-15434) Add module installation to test pre-suite
+  * (PE-15434) Mock MEEP support in test pre-suite
+  * (PE-15434) Run Support Script in pre-suite
+  * (PE-15435) Add constants for PE filesystem locations
+  * (PE-15435) Copy display functions from utilities
+  * (PE-15435) Implement fail function
+  * (PE-15435) Replace wherefore with cmd
+  * (PE-15435) Remove installer exception handler
+  * (PE-15435) Replace quit function with a simple exit
+  * (PE-15435) Import detect_platform function from pe_repo
+  * (PE-15435) Add PLATFORM_EGREP to detect_platform
+  * (PE-15435) Add PLATFORM_HOSTNAME to detect_platform
+  * (PE-15435) Add PLATFORM_PACKAGING to detect_platform
+  * (PE-15435) Replace prepare_user with a uid check
+  * (PE-15435) Copy is_package_installed from utilities
+  * (PE-15435) Remove unused logic from run_diagnostic
+  * (PE-15435) Copy is_noop from utilities
+  * (PE-15435) Remove puppet_bin_dir function
+  * (PE-15435) Copy get_ini_field from utilities
+  * (PE-15435) Remove utilities library
+  * (maint) Remove old nodes_listing diagnostic
+  * (maint) Skip template databases
+ 
+ Charlie Sharpsteen <chuck@puppet.com> (23):
+  * (maint) Declare excludes before use
+  * (maint) Add default value for FILESYNC variable
+  * (maint) Turn command checks into conditionals
+  * (maint) Skip r10k diagnostics if no config file
+  * (maint) Skip activemq lsof check if no lsof
+  * (maint) Increase timeout on console status check
+  * (maint) Move timeout function
+  * (PE-15945) Only gather whitelisted config files
+  * (PE-6731) Redact passwords from PE configuration
+  * Add a version number to the support script
+  * (maint) Move TIMESTAMP and DROP to main section
+  * Ensure TIMESTAMP is in UTC
+  * Add hostname to archive filename
+  * Add metadata to support script output
+  * (maint) Copy agent state to enterprise/state
+  * (maint) Add .json extension to console_status
+  * Ensure PLATFORM_HOSTNAME_SHORT uses one segment
+  * Update metadata.json for v1.0.0
+  * Add CHANGELOG for v1.0.0
+  * Make upload instructions agnostic
+  * Test using legit MEEP installations
+  * Add Gemfile.local to .gitignore
+  * Run tests without specifying modulepath
+ 
+2016-04-20 Eric Williamson <eric.williamson@puppetlabs.com> - 2016.2.0-rc0
+===========================================================================
+ * no changes since the previous version.2016-06-01 Charlie Sharpsteen <chuck@puppet.com> - 2016.2.0
+============================================================
+ * no changes since the previous version.

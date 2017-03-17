@@ -1,0 +1,74 @@
+2016-06-15 GitHub <noreply@github.com> - 2016.2.0-rc1
+======================================================
+ Anderson Mills <anderson@puppetlabs.com> (1):
+  * (PE-15146) Update metadata.json
+ 
+2016-04-22 Eric Williamson <github@williamson.vg> - 2016.2.0-rc0
+=================================================================
+ Bryan Jen <bryan.jen@gmail.com> (4):
+  * (MAINT) Update metadata.json to include OS support and puppet
+    requirements.
+  * (MODULES-2806) Setup Travis CI.
+  * Release Prep. Adds CHANGELOG.
+  * Adds .gitignore file.
+ 
+ Matthaus Owens <matthaus@puppetlabs.com> (4):
+  * (PE-14870) Add Hash to data types for allow and deny rules
+  * (PE-14870) Add support for extensions matching
+  * (PE-14870) Update README.md for allow/deny improvments
+  * (PE-14870) hashses => hashes in README.md
+ 
+ Nate Wolfe <nwolfe@puppetlabs.com> (3):
+  * (FM-3766) Easier ensure=>absent support
+  * (FM-3767) Inline parts of HOCON module
+  * (MAINT) Fix up code samples in README
+ 
+ jbondpdx <jbondpdx@gmail.com> (2):
+  * DOCS: edits to README for puppet_authorization module
+  * DOCS: one more pass on README
+ 
+ Jeremy Barlow <jeremy.barlow@puppetlabs.com> (1):
+  * (FM-3807) Add rules when target array does not already exist
+ 
+ Vicinus, Reinhard <r.vicinus@metaways.de> (1):
+  * update concat version dependency
+ 
+ jbondpdx <jean@puppetlabs.com> (1):
+  * Edit on puppet_authorization readme
+ 
+2016-02-17 Josh Partlow <jpartlow@glatisant.org> - 2016.1.0
+============================================================
+ Jeremy Barlow <jeremy.barlow@puppetlabs.com> (6):
+  * (MAINT) Fixes for use of allow and deny directives
+  * (MAINT) Moved dev dependencies into dev group in Gemfile
+  * (MAINT) Remove excess spaces from rules_spec.rb tests
+  * (MAINT) Convert `puppet_authorization` class to define
+  * (MAINT) Change namespaces of OSS things to PE things
+  * (FM-3807) Add rules when target array does not already exist
+ 
+ Nate Wolfe <nwolfe@puppetlabs.com> (5):
+  * (MAINT) Fix set_value to only consider rule name
+  * (FM-3766) Easier ensure=>absent support
+  * (FM-3767) Inline parts of HOCON module
+  * (MAINT) PE-namespace HOCON changes from FOSS
+  * (MAINT) PE-namespace array changes from FOSS
+ 
+ Eric Sorenson <eric.sorenson@puppetlabs.com> (3):
+  * (maint) Rename the module internals
+  * (maint) rename fixtures directory
+  * (maint) Rename module to pe_puppet_authorization
+ 
+ Morgan Haskel <morgan@puppetlabs.com> (3):
+  * Use correct default path for auth.conf
+  * one-character typo was breaking sorting
+  * (maint) Incorrect hocon dependency in metadata.json
+ 
+ Britt Gresham <brittcgresham@gmail.com> (2):
+  * (maint) Bump module version
+  * (PE-14190) Remove upper bound on version requirements
+ 
+2015-09-24 Morgan Haskel <morgan@puppetlabs.com> - 2015.3.0-rc0
+================================================================
+ * no changes since the previous version.2015-11-04 Britt Gresham <brittcgresham@gmail.com> - 2015.3.0
+==============================================================
+ * no changes since the previous version.

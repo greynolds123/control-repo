@@ -1,0 +1,39 @@
+2015-04-24 Josh Partlow <joshua.partlow@puppetlabs.com> - 3.8.3
+================================================================
+ Josh Partlow <joshua.partlow@puppetlabs.com> (1):
+  * (maint) Confine specs to run with Puppet 3.x
+ 
+2015-10-06 Eric Williamson <github@williamson.vg> - 2015.3.0
+=============================================================
+ Eric Williamson <eric.williamson@puppetlabs.com> (4):
+  * (PE-6969) Explicity ensure directory when managing mode
+  * (maint) Update to metadata.json format
+  * (PE-10148) Remove creates file resource in extract.pp
+  * (PE-10333) Add support for GNU tar --strip
+ 
+ Brandon High <brandon.high@puppetlabs.com> (2):
+  * (PE-8090) Update to /opt/puppetlabs
+  * (PE-8090) Use server/data folder for staging
+ 
+ Britt Gresham <brittcgresham@gmail.com> (2):
+  * (PE-12149) Add puppet bin dir to exec path
+  * (PE-12149) Use curl on nodes with puppet-agent installed
+ 
+ Chris Barker <cbarker@puppetlabs.com> (2):
+  * changes staging path to /opt/puppetlabs/staging
+  * Changes value to /opt/puppet/
+ 
+ Britt Gresham <britt@puppetlabs.com> (1):
+  * (PE-6969) Add mode param into pe_staging::deploy
+ 
+ Nick Lewis <nick@puppetlabs.com> (1):
+  * (PE-2538) Only download deploy tarballs when necessary
+ 
+2014-02-19 Nick Lewis <nick@puppetlabs.com> - 0.3.2
+====================================================
+ Eric Williamson <eric.williamson@puppetlabs.com> (1):
+  * (PE-2718) Dynamically generate the module version
+ 
+2014-01-17 Eric Williamson <eric.williamson@puppetlabs.com> - 0.3.1
+====================================================================
+ * no changes since the previous version.
