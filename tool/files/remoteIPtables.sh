@@ -101,7 +101,13 @@ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8082 -j ACCEPT
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 5432 -j ACCEPT
 
-ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 25151 -j ACCEPT
+ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 25151 -j ACCEPT
+
+ ssh root@$d  $cwd -A INPUT  -p udp -s $i --dport 6738 -j ACCEPT
+
+ ssh root@$d  $cwd -A INPUT  -p udp -s $i --dport 6783 -j ACCEPT
+
+ ssh root@$d  $cwd -A INPUT  -p udp -s $i --dport 2375 -j ACCEPT
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 69 -j ACCEPT
 
@@ -188,9 +194,15 @@ ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 749 -j ACCEPT
 
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 5222 -j ACCEPT
 
-ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 5432 -j ACCEPT
+ ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 5432 -j ACCEPT
 
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 25151 -j ACCEPT
+
+ ssh root@$d  $cwd -A OUTPUT  -p udp -s $i --dport 6738 -j ACCEPT
+
+ ssh root@$d  $cwd -A OUTPUT  -p udp -s $o --dport 6783 -j ACCEPT
+
+ ssh root@$d  $cwd -A OUTPUT  -p udp -s $o --dport 2375 -j ACCEPT
 
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 69 -j ACCEPT
 
