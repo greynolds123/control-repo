@@ -54,3 +54,13 @@ end
    }
   end
 
+     it { should contain_file('/root/ipscan.sh').with(
+   {
+     'ensure'  => 'present',
+     'owner'   => 'root',
+     'mode'    => '655',
+     'seltype' => 'admin_home_t',
+     'content' => 'puppet:///modules/tool/ipscan.sh',
+   }
+  end
+end
