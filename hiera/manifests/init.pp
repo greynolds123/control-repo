@@ -225,21 +225,21 @@ class hiera (
       target => $hiera_yaml,
     }
   }
-  if $puppet_conf_manage {
-    ini_setting { 'puppet.conf hiera_config main section' :
-      ensure  => present,
-      path    => "${confdir}/puppet.conf",
-      section => 'main',
-      setting => 'hiera_config',
-      value   => $hiera_yaml,
-    }
-    $master_subscribe = [
-      File[$hiera_yaml],
-      Ini_setting['puppet.conf hiera_config main section'],
-    ]
-  } else {
-    $master_subscribe = File[$hiera_yaml]
-  }
+#if $puppet_conf_manage {
+#ini_setting { 'puppet.conf hiera_config main section' :
+#ensure  => present,
+#path    => "${confdir}/puppet.conf",
+#section => 'main',
+#setting => 'hiera_config',
+#value   => $hiera_yaml,
+#    }
+#    $master_subscribe = [
+#      File[$hiera_yaml],
+#      Ini_setting['puppet.conf hiera_config main section'],
+#    ]
+#  } else {
+#    $master_subscribe = File[$hiera_yaml]
+ #}
 
   # Restart master service
   Service <| title == $master_service |> {

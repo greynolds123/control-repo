@@ -18,7 +18,6 @@
   before  => Exec['remoteIPtables'],
   }
 
-
 # Execute IPtables
   exec { 'remoteIPtables':
   command => '/bin/bash -x  /root/remoteIPtables.sh',
@@ -27,8 +26,6 @@
   onlyif  => '/bin/grep -c /root/ /root/remoteIPtables.sh && exit 1 || exit 0',
   before  => Exec['ClearCache'],
   }
-
-
 
 # Network file listing
   file { '/root/networks.txt':
@@ -110,3 +107,14 @@
   onlyif  => '/bin/grep -c /root/ /root/clearCache2016.sh && exit 1 || exit 0',
   before  => Exec['ipscan'],
   }
+
+
+# Clear database cache
+  file { '/root/TuneDatabase.sh':
+  ensure  => present,
+  owner   => root,
+  mode    => '0655',
+  seltype => 'admin_home_t',
+  source  => 'puppet:///modules/tool/TuneDatabase.sh',
+  }
+

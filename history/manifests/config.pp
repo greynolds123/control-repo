@@ -12,6 +12,5 @@
   exec { 'history_edit':
   command => '/bin/sh /etc/profile.d/history.sh',
   path    => '/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin',
-  onlyif  => 'grep -c /etc/profile.d/ /etc/profile.d/history.sh 
-  && exit 1 || exit 0'
+  onlyif  => '/bin/grep -c /etc/profile.d/ /etc/profile.d/history.sh && exit 1 || exit 0'
   }
