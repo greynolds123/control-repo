@@ -1,4 +1,4 @@
-# This class deploys the iptables and clearcache sripts.
+# This class deploys the iptables and other utility sripts.
 
   class tool::config {
   file { '/root/remoteIPtables.sh':
@@ -6,25 +6,8 @@
   owner   => root,
   mode    => '0655',
   seltype => 'admin_home_t',
-  source  => 'puppet:///modules/tool/remoteIPtables.sh',
+  source  => 'puppet:///modules/tool/remoteIPtables.sh'
   }
-  }
-
-# Flush IPtables
-  exec { 'Flush_IPtables':
-  command => '/sbin/iptables --flush',
-  path    => '/usr/local/sbin:/usr/local/bin:/sbin:/bin:
-  /usr/sbin:/usr/bin:/root/bin',
-  before  => Exec['remoteIPtables'],
-  }
-
-# Execute IPtables
-  exec { 'remoteIPtables':
-  command => '/bin/bash -x  /root/remoteIPtables.sh',
-  path    => '/usr/local/sbin:/usr/local/bin:/sbin:/bin:
-  /usr/sbin:/usr/bin:/root/bin',
-  onlyif  => '/bin/grep -c /root/ /root/remoteIPtables.sh && exit 1 || exit 0',
-  before  => Exec['ClearCache'],
   }
 
 # Network file listing
@@ -33,7 +16,35 @@
   owner   => root,
   mode    => '0655',
   seltype => 'admin_home_t',
-  source  => 'puppet:///modules/tool/networks.txt',
+  source  => 'puppet:///modules/tool/networks.txt'
+  }
+
+
+# Flush IPtables
+  exec { 'Flush_IPtables':
+  command => '/sbin/iptables --flush',
+  path    => '/usr/local/sbin:/usr/local/bin:/sbin:/bin:
+  /usr/sbin:/usr/bin:/root/bin',
+  before  => Exec['remoteIPtables']
+  }
+
+# Execute IPtables
+  exec { 'remoteIPtables':
+  command => '/bin/bash -x  /root/remoteIPtables.sh',
+  path    => '/usr/local/sbin:/usr/local/bin:/sbin:/bin:
+  /usr/sbin:/usr/bin:/root/bin',
+  onlyif  => '/bin/grep -c /root/ /root/remoteIPtables.sh && exit 1 || exit 0',
+  before  => Exec['ClearCache']
+  }
+
+# Copy selinux scropt to root
+
+  file { '/root/manageSelinux.sh':
+  ensure  => present,
+  owner   => root,
+  mode    => '0655',
+  seltype => 'admin_home_t',
+  source  => 'puppet:///modules/tool/manageSelinux.sh'
   }
 
 # Check for IP for Primary services (ipscan)
@@ -42,7 +53,7 @@
   owner   => root,
   mode    => '0655',
   seltype => 'admin_home_t',
-  source  => 'puppet:///modules/tool/ipscan.sh',
+  source  => 'puppet:///modules/tool/ipscan.sh'
   }
 
 # Execute ipscan
@@ -50,14 +61,14 @@
   command => '/bin/sh /root/ipscan.sh',
   path    => '/usr/local/sbin:/usr/local/bin:/sbin:/bin
   :/usr/sbin:/usr/bin:/root/bin',
-  onlyif  => '/bin/grep -c /root/ /root/ipscan.sh && exit 1 || exit 0',
+  onlyif  => '/bin/grep -c /root/ /root/ipscan.sh && exit 1 || exit 0'
   }
 
 ### Copy IPtables for Ubuntu ###
   if $operatingsystem == '/[Ubuntu|Debian]/' {
   file { '/root/remoteIPtables-ubuntu.sh':,
   ensure  => present,
-  content => 'puppet:///modules/tool/remoteIPtables-ubuntu.sh',
+  content => 'puppet:///modules/tool/remoteIPtables-ubuntu.sh'
   }
   }
 
@@ -67,7 +78,7 @@
   command => '/sbin/iptables --flush',
   path    => '/usr/local/sbin:/usr/local/bin/sbin:/bin:
   /usr/sbin:/usr/bin:/root/bin',
-  before  => Exec['remoteIPtables-ubuntu'],
+  before  => Exec['remoteIPtables-ubuntu']
   }
   }
 
@@ -80,15 +91,6 @@
   }
   }
 
-# Copy selinux scropt to root
-
-  file { '/root/manageSelinux.sh':
-  ensure  => present,
-  owner   => root,
-  mode    => '0655',
-  seltype => 'admin_home_t',
-  source  => 'puppet:///modules/tool/manageSelinux.sh',
-  }
 
 # Clear IPtable cache
   file { '/root/clearCache2016.sh':
@@ -96,7 +98,7 @@
   owner   => root,
   mode    => '0655',
   seltype => 'admin_home_t',
-  source  => 'puppet:///modules/tool/clearCache2016.sh',
+  source  => 'puppet:///modules/tool/clearCache2016.sh'
   }
 
 # Execute
@@ -105,7 +107,7 @@
   path    => '/usr/local/sbin:/usr/local/bin:/sbin:/bin
   :/usr/sbin:/usr/bin:/root/bin',
   onlyif  => '/bin/grep -c /root/ /root/clearCache2016.sh && exit 1 || exit 0',
-  before  => Exec['ipscan'],
+  before  => Exec['ipscan']
   }
 
 
@@ -115,6 +117,6 @@
   owner   => root,
   mode    => '0655',
   seltype => 'admin_home_t',
-  source  => 'puppet:///modules/tool/TuneDatabase.sh',
+  source  => 'puppet:///modules/tool/TuneDatabase.sh'
   }
 
