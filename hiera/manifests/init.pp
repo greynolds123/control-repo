@@ -152,6 +152,7 @@ class hiera (
   } else {
     $requested_backends = $backends
     $eyaml_real_datadir = undef
+<<<<<<< HEAD
   }
 
   # without these variables defined here puppet will puke when strict
@@ -204,6 +205,60 @@ class hiera (
     or you might be using symbols in your hiera data")
   }
 
+=======
+  }
+
+  # without these variables defined here puppet will puke when strict
+  # variables is enabled, which are needed for delete_undef_values
+  if $eyaml_gpg {
+    $encrypt_method = 'gpg'
+    $gpg_gnupghome  = "${_keysdir}/gpg"
+    require ::hiera::eyaml_gpg
+  } elsif $eyaml {
+    require ::hiera::eyaml
+    $encrypt_method = undef
+    $gpg_gnupghome  = undef
+  } else {
+    $encrypt_method = undef
+    $gpg_gnupghome  = undef
+  }
+
+  if $manage_package {
+    package { 'hiera':
+      ensure => $package_ensure,
+      name   => $package_name,
+    }
+  }
+  # these are the default eyaml options that were interpolated in
+  # the above logic.  This was neccessary in order to maintain compability
+  # with prior versions of this module
+  $eyaml_options = {
+    'eyaml' => delete_undef_values({
+      'datadir'           => $eyaml_real_datadir,
+      'extension'         => $eyaml_extension,
+      'pkcs7_private_key' => $_eyaml_pkcs7_private_key,
+      'pkcs7_public_key'  => $_eyaml_pkcs7_public_key,
+      'encrypt_method'    => $encrypt_method,
+      'gpg_gnupghome'     => $gpg_gnupghome,
+      'gpg_recipients'    => $eyaml_gpg_recipients,
+    }),
+  }
+  $yaml_options = { 'yaml' => { 'datadir' => $datadir } }
+  # all the backend options are merged together into a single hash
+  # the user can override anything via the backend_options hash parameter
+  # which will override any data set in the eyaml or yaml parameters above.
+  # the template will only use the backends that were defined in the backends
+  # array even if there is info in the backend data hash
+  $backend_data = deep_merge($yaml_options, $eyaml_options, $backend_options)
+  # if for some reason the user mispelled the backend in the backend_options lets
+  # catch that error here and notify the user
+  $missing_backends = difference($backends, keys($backend_data))
+  if count($missing_backends) > 0 {
+    fail("The supplied backends: ${missing_backends} are missing from the backend_options hash:\n ${backend_options}\n
+    or you might be using symbols in your hiera data")
+  }
+
+>>>>>>> cf850101c2ed19bf0b365868ab575029eb84f554
   # Template uses:
   # - $backends
   # - $requested_backends
@@ -219,6 +274,7 @@ class hiera (
     content => template('hiera/hiera.yaml.erb'),
   }
   # Symlink for hiera command line tool
+<<<<<<< HEAD
 <<<<<<< HEAD
   #if $create_symlink {
     #file { '/etc/puppetlabs/puppet':
@@ -304,6 +360,22 @@ class hiera (
       setting => 'hiera_config',
       value   => $hiera_yaml,
     }
+=======
+  if $create_symlink {
+    file { '/etc/hiera.yaml':
+      ensure => symlink,
+      target => $hiera_yaml,
+    }
+  }
+  if $puppet_conf_manage {
+    ini_setting { 'puppet.conf hiera_config main section' :
+      ensure  => present,
+      path    => "${confdir}/puppet.conf",
+      section => 'main',
+      setting => 'hiera_config',
+      value   => $hiera_yaml,
+    }
+>>>>>>> cf850101c2ed19bf0b365868ab575029eb84f554
     $master_subscribe = [
       File[$hiera_yaml],
       Ini_setting['puppet.conf hiera_config main section'],
@@ -317,4 +389,7 @@ class hiera (
     subscribe +> $master_subscribe,
   }
 }
+<<<<<<< HEAD
 >>>>>>> b6c2f339b882be28199d563d2a46c16e07a0fa56
+=======
+>>>>>>> cf850101c2ed19bf0b365868ab575029eb84f554

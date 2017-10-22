@@ -33,7 +33,7 @@ pipelines:
           #- find . -name '*.erb' -not -path './.onceover/*' | xargs -n1 -I {} sh -c "erb -P -x -T '-' {} | ruby -c >/dev/null || echo ERB syntax error in {} ; exit 1"
 
           # YAML files
-          - find . -name '*.yaml' -not -path './.onceover/*' | xargs -n1 -I {} ruby -ryaml -e "YAML.load_file '"{}"' "
+          #- find . -name '*.yaml' -not -path './.onceover/*' | xargs -n1 -I {} ruby -ryaml -e "YAML.load_file '"{}"' "
 
           #
           # Onceover (RSpec Puppet) tests against local roles and profiles
