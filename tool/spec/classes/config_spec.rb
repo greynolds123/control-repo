@@ -1,14 +1,10 @@
 spec file
 
 require 'spec_helper'
+require 'rspec'
 
-describe('tool::config') do
-  let(:facts) {
-    {
-      :operatingsystem => '/['CentOS'|Rhel|/',
-      :osfamily        => 'RedHat'
-    }
-  }
+
+describe('tool::config') do}
 
  context 'with defaults for all parameters' do
     let (:config) {{}}
@@ -20,37 +16,79 @@ describe('tool::config') do
     end
   end
 
- context 'with default parameters from init' do
-  let (:config) {
-  it { should contain_class('tool::config') }
-  it { should contain_file('/root/clearCache.sh').with(
-   {
-     'ensure'  => 'present',
-     'owner'   => 'root',
-     'mode'    => '655',
-     'seltype' => 'admin_home_t',
-     'content' => 'puppet:///modules/tool/clearCache.sh',
-   }
-  end
-end
-
-  it { should contain_file('/root/manageSelinux.sh').with(
-   {
-     'ensure'  => 'present',
-     'owner'   => 'root',
-     'mode'    => '655',
-     'seltype' => 'admin_home_t',
-     'content' => 'puppet:///modules/tool/manageSelinux.sh',
-   }
-  end
-
+ context 'with default parameters from config' do
+   let (:params)  {{ :class => 'tool::config' }}
   it { should contain_file('/root/remoteIPtables.sh').with(
    {
      'ensure'  => 'present',
      'owner'   => 'root',
      'mode'    => '655',
      'seltype' => 'admin_home_t',
-     'content' => 'puppet:///modules/tool/remoteIPtables.sh',
+     'content' => 'puppet:///modules/tool/remoteIPtables.sh'),
    }
   end
 
+   it { should contain_file('/root/network.txt').with(
+   {
+     'ensure'  => 'present',
+     'owner'   => 'root',
+     'mode'    => '655',
+     'seltype' => 'admin_home_t',
+     'content' => 'puppet:///modules/tool/network.txt'),
+   }
+  end
+
+   it { should contain_file('/root/manageSelinux.sh').with(
+   {
+     'ensure'  => 'present',
+     'owner'   => 'root',
+     'mode'    => '655',
+     'seltype' => 'admin_home_t',
+     'content' => 'puppet:///modules/tool/manageSelinux.sh'),
+   }
+  end
+
+   it { should contain_file( '/root/ipscan.sh).with(
+   { 
+    'ensure'  => 'present',
+     'owner'   => 'root',
+     'mode'    => '655',
+     'seltype' => 'admin_home_t',
+     'content' => 'puppet:///modules/tool/ipscan.sh'),
+   }
+  end
+
+   it { should contain_file('/root/clearCache.sh').with(
+    {
+     'ensure'  => 'present',
+     'owner'   => 'root',
+     'mode'    => '655',
+     'seltype' => 'admin_home_t',
+     'content' => 'puppet:///modules/tool/clearCache.sh'),
+    }
+  end
+end
+
+    it { should contain_file('/root/TuneDatabase.sh').with(
+    {
+     'ensure'  => 'present',
+     'owner'   => 'root',
+     'mode'    => '655',
+     'seltype' => 'admin_home_t',
+     'content' => 'puppet:///modules/tool/TuneDatabase.sh'),
+    }
+  end
+end
+
+    it { should contain_file('/root/Server_List').with(
+    {
+     'ensure'  => 'present',
+     'owner'   => 'root',
+     'mode'    => '655',
+     'seltype' => 'admin_home_t',
+     'content' => 'puppet:///modules/tool/Server_List'),
+    }
+  end
+end
+
+   
