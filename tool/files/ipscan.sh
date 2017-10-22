@@ -14,11 +14,11 @@ networks="/root/networks.txt"
 ###########################
 
 for s in $(gawk -F: '{print}' < "$networks");
-   
+
     do
 
 echo $s
-  
+
 nmap -sn $s -oG -;
 
     done

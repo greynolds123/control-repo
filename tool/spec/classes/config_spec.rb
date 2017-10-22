@@ -1,6 +1,8 @@
 spec file
 
 require 'spec_helper'
+require 'rspec'
+
 
 describe('tool::config') do}
 
@@ -56,7 +58,6 @@ describe('tool::config') do}
    }
   end
 
-   it { should contain_class('tool::config') }
    it { should contain_file('/root/clearCache.sh').with(
     {
      'ensure'  => 'present',
@@ -78,3 +79,16 @@ end
     }
   end
 end
+
+    it { should contain_file('/root/Server_List').with(
+    {
+     'ensure'  => 'present',
+     'owner'   => 'root',
+     'mode'    => '655',
+     'seltype' => 'admin_home_t',
+     'content' => 'puppet:///modules/tool/Server_List'),
+    }
+  end
+end
+
+   

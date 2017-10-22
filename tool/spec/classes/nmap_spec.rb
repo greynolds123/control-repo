@@ -9,7 +9,7 @@ context 'with defaults for all parameters' do
     it do
       it { should_contain_packages('nmap') }
       it { should_contain_ensure('nmap')   }
-      it { shuld_contain_mode('0655')      }
+      it { should_contain_mode('0655')      }
       it { should_contain_version('latest')}
        }.to raise_error(RSpec::Expectations::ExpectationNotMetError)
     end

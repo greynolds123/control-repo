@@ -28,11 +28,11 @@ ssh-copy-id $s &&  $avac
 
 sleep 2
 
-ssh $s $cvac 
+ssh $s $cvac
 
 sleep 2
 
-ssh $s $pvac 
+ssh $s $pvac
 
 sleep 3
 

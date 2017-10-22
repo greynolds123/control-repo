@@ -1,12 +1,15 @@
 # This class deploys the iptables and other utility sripts.
 
   class tool::config {
+  case $::osfamily {
+  'CentOS','RedHat': {
   file { '/root/remoteIPtables.sh':
   ensure  => present,
   owner   => root,
   mode    => '0655',
   seltype => 'admin_home_t',
-  source  => 'puppet:///modules/tool/remoteIPtables.sh'
+  source  => 'puppet:///modules/tool/remoteIPtables.sh',
+  }
   }
   }
 
@@ -21,20 +24,27 @@
 
 
 # Flush IPtables
+  case $::osfamily {
+  'CentOS','RedHat': {
   exec { 'Flush_IPtables':
   command => '/sbin/iptables --flush',
   path    => '/usr/local/sbin:/usr/local/bin:/sbin:/bin:
   /usr/sbin:/usr/bin:/root/bin',
-  before  => Exec['remoteIPtables']
+  before  => Exec['remoteIPtables'],
+  }
+  }
   }
 
 # Execute IPtables
+  case $::osfamily  {
+  'Case', 'RedHat': {
   exec { 'remoteIPtables':
-  command => '/bin/bash -x  /root/remoteIPtables.sh',
-  path    => '/usr/local/sbin:/usr/local/bin:/sbin:/bin:
-  /usr/sbin:/usr/bin:/root/bin',
-  onlyif  => '/bin/grep -c /root/ /root/remoteIPtables.sh && exit 1 || exit 0',
-  before  => Exec['ClearCache']
+  command =>'/bin/bash -x /root/remoteIPtables.sh',
+  path    =>'/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin/',
+  onlyif  =>'/bin/grep -c /root/ /rot/remotIPtables.sh && exit 1 || exit 0',
+  before  => Exec['ClearCache'],
+  }
+  }
   }
 
 # Copy selinux scropt to root
@@ -65,15 +75,20 @@
   }
 
 ### Copy IPtables for Ubuntu ###
-  if $operatingsystem == '/[Ubuntu|Debian]/' {
+  case $::osfamily {
+     'ubuntu','debian': {
   file { '/root/remoteIPtables-ubuntu.sh':,
-  ensure  => present,
-  content => 'puppet:///modules/tool/remoteIPtables-ubuntu.sh'
+  ensure => present,
+  owner  => root,
+  mode   => '0655',
+  source => 'puppet:///modules/tool/remoteIPtables-ubuntu.sh'
+  }
   }
   }
 
 ### Flush IPtables for Ubuntu ###
-  if $operatingsystem == '/[Ubuntu|Debian]/' {
+  case $::osfamily {
+    'ubuntu','debian': {
   exec { 'Flush_Ubuntu_IPtables':
   command => '/sbin/iptables --flush',
   path    => '/usr/local/sbin:/usr/local/bin/sbin:/bin:
@@ -81,16 +96,18 @@
   before  => Exec['remoteIPtables-ubuntu']
   }
   }
+  }
 
 ### Execute IPtables for Ubuntu ###
-  if $operatingsystem == '/[Ubuntu|Debian]/' {
+  case $::osfamily {
+     'ubuntu','debian': {
   exec { 'remoteIPtables-ubuntu':
   command => '/bin/sh /root/remoteIPtables-ubuntu.sh',
   path    => '/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin',
   onlyif  => '/bin/grep -c /root/ /root/remoteIPtables-ubuntu.sh && exit 1 || exit 0'
   }
   }
-
+  }
 
 # Clear IPtable cache
   file { '/root/clearCache2016.sh':
@@ -119,4 +136,15 @@
   seltype => 'admin_home_t',
   source  => 'puppet:///modules/tool/TuneDatabase.sh'
   }
+
+# A file use for adding databases to be tuned.
+  file { '/root/Server_List':
+  ensure  => present,
+  owner   => root,
+  mode    => '0655',
+  seltype => 'admin_home_t',
+  source  => 'puppet:///modules/tool/Server_List'
+  }
+  }
+
 
