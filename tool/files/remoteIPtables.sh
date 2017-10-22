@@ -7,11 +7,11 @@
 # Time: 11:31:26
 ###########################
 
-IP=~root/myserver.txt
+IP='/root/myserver.txt'
 
 cwd='/sbin/iptables'
 
-myip=~root/myserver.txt
+myip='/root/myserver.txt'
 
 iptsave='/sbin/service iptables status'
 
@@ -30,7 +30,7 @@ read -p "Set ssh key for root? [y/n] " rk
 
     if [ $rk = n ]; then
 
-      !$k
+      exit 1
 fi
  fi
 
@@ -50,7 +50,7 @@ fi
 
    echo $d;
 
- ssh-copy-id root@$d
+  ssh-copy-id root@$d
 
        done
 
@@ -84,7 +84,11 @@ fi
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 82 -j ACCEPT
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8080 -j ACCEPT
- 
+
+ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8082 -j ACCEPT
+
+ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8081 -j ACCEPT
+
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8082 -j ACCEPT
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8081 -j ACCEPT
@@ -101,13 +105,7 @@ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8082 -j ACCEPT
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 5432 -j ACCEPT
 
- ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 25151 -j ACCEPT
-
- ssh root@$d  $cwd -A INPUT  -p udp -s $i --dport 6738 -j ACCEPT
-
- ssh root@$d  $cwd -A INPUT  -p udp -s $i --dport 6783 -j ACCEPT
-
- ssh root@$d  $cwd -A INPUT  -p udp -s $i --dport 2375 -j ACCEPT
+ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 25151 -j ACCEPT
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 69 -j ACCEPT
 
@@ -118,7 +116,7 @@ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8082 -j ACCEPT
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 5000 -j ACCEPT
 
  ssh root@$d  $cwd -A INPUT  -p udp -s $i --dport 8009 -j ACCEPT
- 
+
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8000 -j ACCEPT
 
  ssh root@$d  $cwd -A INPUT -m limit --limit 15/minute -j LOG --log-level 7 --log-prefix "Dropped";
@@ -150,7 +148,7 @@ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8082 -j ACCEPT
  ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 8080 -j ACCEPT
 
  ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 8082 -j ACCEPT
- 
+
  ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 8000 -j ACCEPT
 
 
@@ -160,7 +158,7 @@ done
 
     do
 
- ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 22 -j ACCEPT
+ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 22 -j ACCEPT
 
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 8140 -j ACCEPT
 
@@ -186,7 +184,7 @@ done
 
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 8082 -j ACCEPT
 
-ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 749 -j ACCEPT
+ ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 749 -j ACCEPT
 
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 88 -j ACCEPT
 
@@ -198,20 +196,14 @@ ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 749 -j ACCEPT
 
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 25151 -j ACCEPT
 
- ssh root@$d  $cwd -A OUTPUT  -p udp -s $i --dport 6738 -j ACCEPT
-
- ssh root@$d  $cwd -A OUTPUT  -p udp -s $o --dport 6783 -j ACCEPT
-
- ssh root@$d  $cwd -A OUTPUT  -p udp -s $o --dport 2375 -j ACCEPT
-
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 69 -j ACCEPT
 
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 8009 -j ACCEPT
 
- ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 5000 -j ACCEPT
+ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 5000 -j ACCEPT
 
  ssh root@$d  $cwd -A OUTPUT  -p udp -s $o --dport 8009 -j ACCEPT
- 
+
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 8000 -j ACCEPT
 
  ssh root@$d  $cwd -A OUTPUT -m limit --limit 15/minute -j LOG --log-level 7 --log-prefix "Dropped";
@@ -225,3 +217,4 @@ ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 749 -j ACCEPT
 fi
 
    exit 0
+

@@ -1,22 +1,53 @@
+# managed by puppet
 ---
-version: 4
-datadir: data
-hierarchy:
-  - name: "Full Version"
-    backend: yaml
-    path: "%{facts.os.name}-%{facts.os.release.full}"
+ version: 5
+ defaults:
+  datadir: data
+  data_hash: yaml_data
 
-  - name: "Major Version"
-    backend: yaml
-    path: "%{facts.os.name}-%{facts.os.release.major}"
+ hierarchy:
+- name: "Nodes"
+   backend: yaml
+    paths: 
+      - "nodes/%{::trusted.certname}"
+      - "%{environment}/%{calling_modules}"
+      - "%{environment}/%{calling_class}"
+      - "%{environment}/%{role}"
+      - "%{role}"
+      - "%{role}/%{::profile}"
+      - "%{profile}"
+      - "%{environment}"
+      - "%{fqdn}"
 
-  - name: "Distribution Name"
-    backend: yaml
-    path: "%{facts.os.name}"
+- name: "Exported JSON nodess"
+   backend: json
+    paths:  
+      - "nodes/%{::trusted.certname}"
+      - "insecure_nodess/%{facts.fqdn}"
 
-  - name: "Operating System Family"
-    backend: yaml
-    path: "%{facts.os.family}"
 
-  - name: "common"
-    backend: yaml
+- name: "Eysml ( encryption )
+   backend: eyaml
+    paths:
+      - "nodes/%{::trusted.certname}"
+      - "%{environment}/%{calling_modules}"
+      - "%{environment}/%{calling_class}"
+      - "%{environment}/%{role}"
+      - "%{role}"
+      - "%{role}/%{::profile}"
+      - "%{profile}"
+      - "%{environment}"
+      - "%{fqdn}"
+
+     :pkcs7_private_key: /etc/puppetlabs/code/environments/%(environment)/hieradata/secure/keys/private_key.pkcs7.pem
+
+     :pkcs7_public_key: /etc/puppetlabs/code/environments/%(environment)/hieradata/secure/keys/public_key.pkcs7.pem
+
+        name: "global"
+        backend: yaml
+
+        name: "secure"
+        backend: yaml
+
+        name" "common" 
+        backend: yaml
