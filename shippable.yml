@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 language: ruby 
 
 version: 2.3.0                                                         
+=======
+language: ruby                                                           
+>>>>>>> f625a7024a48731d39927fd32c45a2568a816338
 
 services:                                       
   - any supported service 
