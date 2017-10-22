@@ -44,10 +44,10 @@
 #
 class role {
   include role::databases, 
-  role::dev 
-  role::region 
-  role::secure 
-  role::software
-  role::stage
-  role::webserver,
+  role::dev, 
+  role::region, 
+  role::secure,
+  role::software,
+  role::stage,
+  role::webserver
 }
