@@ -42,27 +42,3 @@ pipelines:
           # been added in the interim
           #- bundle exec onceover init
           
-          # 
-          - rvm: 1.9.3
-           env: PUPPET_GEM_VERSION="~> 3.0" STRICT_VARIABLES=yes
-          - rvm: 1.9.3
-          env: PUPPET_GEM_VERSION="~> 3.0" STRICT_VARIABLES=yes FUTURE_PARSER=yes
-          - rvm: 1.9.3
-          env: PUPPET_GEM_VERSION="~> 4.0" STRICT_VARIABLES=yes
-          - rvm: 2.1.0
-          env: PUPPET_GEM_VERSION="~> 3.0" STRICT_VARIABLES=yes
-          - rvm: 2.1.0
-          env: PUPPET_GEM_VERSION="~> 3.0" STRICT_VARIABLES=yes FUTURE_PARSER=yes
-          - rvm: 2.1.0
-          env: PUPPET_GEM_VERSION="~> 4.0" STRICT_VARIABLES=yes
-          - rvm: 2.3.0
-          env: PUPPET_GEM_VERSION="~> 4.0" STRICT_VARIABLES="yes" CHECK=test
-          allow_failures:
-          - rvm: 2.3.0
-          env: PUPPET_GEM_VERSION="~> 4.0" STRICT_VARIABLES="yes" CHECK=test
-          - run: 5.3.2
-          env: PUPPET_GEM_VERSION="~> 4.0" STRICT_VARIABLES=yes
-          - run: 5.3.2  
-          env: PUPPET_GEM_VERSION="~> 4.0" STRICT_VARIABLES="yes" CHECK=test 
-          - run: 5.3.2
-          env: PUPPET_GEM_VERSION="~> 3.0" STRICT_VARIABLES=yes FUTURE_PARSER=yes
