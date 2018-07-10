@@ -1,0 +1,17 @@
+{
+  "name": "voya-test",
+  "version": "0.1.0",
+  "author": "voya",
+  "summary": "Test module",
+  "license": "Apache-2.0",
+  "source": "DockerServer-module-path",
+  "project_page": "Same",
+  "issues_url": "Same",
+  "dependencies": [
+    {
+      "name": "puppetlabs-stdlib",
+      "version_requirement": ">= 1.0.0"
+    }
+  ],
+  "data_provider": null
+}
