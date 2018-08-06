@@ -1,0 +1,12 @@
+FROM puppet/puppet-agent
+
+RUN gem install bundler
+
+COPY Gemfile /module/Gemfile
+
+WORKDIR /module
+RUN bundle install
+
+COPY . /module
+
+CMD bundle exec rake -T
