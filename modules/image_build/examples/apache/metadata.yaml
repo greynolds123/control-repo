@@ -1,3 +1,0 @@
-cmd: "/usr/sbin/apache2,-DFOREGROUND"
-expose: 80
-image_name: puppet/apache
