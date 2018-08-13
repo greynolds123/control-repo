@@ -4,7 +4,7 @@
   ensure   => present,
   user     => 'root',
   command  =>'/opt/puppetlabs/bin/rake -f /opt/puppet/share/puppet-dashboard/Rakefile RAILS_ENV=production reports:prune reports:prune:failed upto=${prune_upto} unit=${prune_unit} > /dev/null',
-  hour     => '2',
+  hour     => '1',
   minute   => '0',
   }
   }
