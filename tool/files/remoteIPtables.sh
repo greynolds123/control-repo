@@ -140,10 +140,15 @@ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 25151 -j ACCEPT
  
  ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 8143 -j ACCEPT
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  
  ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 8143 -j ACCEPT
 >>>>>>> 0b5e3ea5e7cc60a418529dd87446c6686ef1b3e0
+=======
+ 
+ ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 8143 -j ACCEPT
+>>>>>>> cebd2f908c751349c9576e41139907f4fe36d870
 
  ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 61613 -j ACCEPT
 
