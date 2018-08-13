@@ -135,6 +135,8 @@ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 25151 -j ACCEPT
  ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 22 -j ACCEPT
 
  ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 8140 -j ACCEPT
+ 
+ ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 8143 -j ACCEPT
 
  ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 61613 -j ACCEPT
 
@@ -163,9 +165,11 @@ done
 
     do
 
-ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 22 -j ACCEPT
+ ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 22 -j ACCEPT
 
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 8140 -j ACCEPT
+ 
+ ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 8143 -j ACCEPT
 
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 61613 -j ACCEPT
 
