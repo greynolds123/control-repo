@@ -1,9 +1,0 @@
-quagga::bgpd::my_asn: 64496
-quagga::bgpd::router_id: 192.0.2.1
-quagga::bgpd::networks6: 
-- 2001:DB8::/48
-quagga::bgpd::peers:
-  64497:
-    addr6:
-    - 2001:DB8::2
-    desc: Test Network

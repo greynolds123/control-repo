@@ -1,2 +1,0 @@
-forge 'https://forge.puppetlabs.com'
-mod 'icann-quagga', :path => '/vagrant'
