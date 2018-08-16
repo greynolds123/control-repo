@@ -1,6 +1,7 @@
 #
 # difference.rb
 #
+<<<<<<< HEAD
 
 module Puppet::Parser::Functions
   newfunction(:difference, :type => :rvalue, :doc => <<-EOS
@@ -19,6 +20,24 @@ Would return: ["a"]
     # Two arguments are required
     raise(Puppet::ParseError, "difference(): Wrong number of arguments " +
       "given (#{arguments.size} for 2)") if arguments.size != 2
+=======
+module Puppet::Parser::Functions
+  newfunction(:difference, :type => :rvalue, :doc => <<-DOC
+    This function returns the difference between two arrays.
+    The returned array is a copy of the original array, removing any items that
+    also appear in the second array.
+
+    *Examples:*
+
+        difference(["a","b","c"],["b","c","d"])
+
+    Would return: ["a"]
+    DOC
+             ) do |arguments|
+
+    # Two arguments are required
+    raise(Puppet::ParseError, "difference(): Wrong number of arguments given (#{arguments.size} for 2)") if arguments.size != 2
+>>>>>>> cebd2f908c751349c9576e41139907f4fe36d870
 
     first = arguments[0]
     second = arguments[1]

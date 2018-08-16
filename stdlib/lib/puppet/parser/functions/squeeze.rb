@@ -1,6 +1,7 @@
 #
 # squeeze.rb
 #
+<<<<<<< HEAD
 
 module Puppet::Parser::Functions
   newfunction(:squeeze, :type => :rvalue, :doc => <<-EOS
@@ -11,11 +12,22 @@ Returns a new string where runs of the same character that occur in this set are
     if ((arguments.size != 2) and (arguments.size != 1)) then
       raise(Puppet::ParseError, "squeeze(): Wrong number of arguments "+
         "given #{arguments.size} for 2 or 1")
+=======
+module Puppet::Parser::Functions
+  newfunction(:squeeze, :type => :rvalue, :doc => <<-DOC
+    Returns a new string where runs of the same character that occur in this set are replaced by a single character.
+  DOC
+             ) do |arguments|
+
+    if (arguments.size != 2) && (arguments.size != 1)
+      raise(Puppet::ParseError, "squeeze(): Wrong number of arguments given #{arguments.size} for 2 or 1")
+>>>>>>> cebd2f908c751349c9576e41139907f4fe36d870
     end
 
     item = arguments[0]
     squeezeval = arguments[1]
 
+<<<<<<< HEAD
     if item.is_a?(Array) then
       if squeezeval then
         item.collect { |i| i.squeeze(squeezeval) }
@@ -30,6 +42,19 @@ Returns a new string where runs of the same character that occur in this set are
       end
     end
 
+=======
+    if item.is_a?(Array)
+      if squeezeval
+        item.map { |i| i.squeeze(squeezeval) }
+      else
+        item.map { |i| i.squeeze }
+      end
+    elsif squeezeval
+      item.squeeze(squeezeval)
+    else
+      item.squeeze
+    end
+>>>>>>> cebd2f908c751349c9576e41139907f4fe36d870
   end
 end
 

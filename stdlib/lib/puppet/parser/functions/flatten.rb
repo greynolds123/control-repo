@@ -1,6 +1,7 @@
 #
 # flatten.rb
 #
+<<<<<<< HEAD
 
 module Puppet::Parser::Functions
   newfunction(:flatten, :type => :rvalue, :doc => <<-EOS
@@ -17,6 +18,22 @@ Would return: ['a','b','c']
 
     raise(Puppet::ParseError, "flatten(): Wrong number of arguments " +
       "given (#{arguments.size} for 1)") if arguments.size != 1
+=======
+module Puppet::Parser::Functions
+  newfunction(:flatten, :type => :rvalue, :doc => <<-DOC
+    This function flattens any deeply nested arrays and returns a single flat array
+    as a result.
+
+    *Examples:*
+
+        flatten(['a', ['b', ['c']]])
+
+    Would return: ['a','b','c']
+  DOC
+             ) do |arguments|
+
+    raise(Puppet::ParseError, "flatten(): Wrong number of arguments given (#{arguments.size} for 1)") if arguments.size != 1
+>>>>>>> cebd2f908c751349c9576e41139907f4fe36d870
 
     array = arguments[0]
 

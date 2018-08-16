@@ -4,8 +4,13 @@ describe 'shell_split' do
   it { is_expected.not_to eq(nil) }
 
   describe 'signature validation' do
+<<<<<<< HEAD
     it { is_expected.to run.with_params().and_raise_error(Puppet::ParseError, /wrong number of arguments/i) }
     it { is_expected.to run.with_params('foo', 'bar').and_raise_error(Puppet::ParseError, /wrong number of arguments/i) }
+=======
+    it { is_expected.to run.with_params.and_raise_error(Puppet::ParseError, %r{wrong number of arguments}i) }
+    it { is_expected.to run.with_params('foo', 'bar').and_raise_error(Puppet::ParseError, %r{wrong number of arguments}i) }
+>>>>>>> cebd2f908c751349c9576e41139907f4fe36d870
   end
 
   describe 'stringification' do
@@ -15,10 +20,27 @@ describe 'shell_split' do
 
   describe 'shell line spliting' do
     it { is_expected.to run.with_params('foo').and_return(['foo']) }
+<<<<<<< HEAD
     it { is_expected.to run.with_params('foo bar').and_return(['foo', 'bar']) }
     it { is_expected.to run.with_params('\~\`\!@\#\$\%\^\&\*\(\)_\+-\=\[\]\\\\\{\}\|\;\\\':\",./\<\>\?')
          .and_return(['~`!@#$%^&*()_+-=[]\{}|;\':",./<>?']) }
     it { is_expected.to run.with_params('\~\`\!@\#\$ \%\^\&\*\(\)_\+-\= \[\]\\\\\{\}\|\;\\\':\" ,./\<\>\?')
          .and_return(['~`!@#$', '%^&*()_+-=', '[]\{}|;\':"', ',./<>?']) }
+=======
+    it { is_expected.to run.with_params('foo bar').and_return(%w[foo bar]) }
+    it {
+      is_expected.to run.with_params('\~\`\!@\#\$\%\^\&\*\(\)_\+-\=\[\]\\\\\{\}\|\;\\\':\",./\<\>\?')
+                        .and_return(['~`!@#$%^&*()_+-=[]\{}|;\':",./<>?'])
+    }
+    it {
+      is_expected.to run.with_params('\~\`\!@\#\$ \%\^\&\*\(\)_\+-\= \[\]\\\\\{\}\|\;\\\':\" ,./\<\>\?')
+                        .and_return(['~`!@#$', '%^&*()_+-=', '[]\{}|;\':"', ',./<>?'])
+    }
+
+    context 'with UTF8 and double byte characters' do
+      it { is_expected.to run.with_params('\\μ\\ť\\ƒ 8 \\ŧ\\ĕ\\χ\\ť').and_return(%w[μťƒ 8 ŧĕχť]) }
+      it { is_expected.to run.with_params('\\ス\\ペ\\ー \\ス\\を\\含\\む\\テ \\ \\キ\\ス\\ト').and_return(['スペー', 'スを含むテ', ' キスト']) }
+    end
+>>>>>>> cebd2f908c751349c9576e41139907f4fe36d870
   end
 end

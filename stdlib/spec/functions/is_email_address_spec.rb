@@ -2,8 +2,13 @@ require 'spec_helper'
 
 describe 'is_email_address' do
   it { is_expected.not_to eq(nil) }
+<<<<<<< HEAD
   it { is_expected.to run.with_params().and_raise_error(Puppet::ParseError, /wrong number of arguments/i) }
   it { is_expected.to run.with_params([], []).and_raise_error(Puppet::ParseError, /wrong number of arguments/i) }
+=======
+  it { is_expected.to run.with_params.and_raise_error(Puppet::ParseError, %r{wrong number of arguments}i) }
+  it { is_expected.to run.with_params([], []).and_raise_error(Puppet::ParseError, %r{wrong number of arguments}i) }
+>>>>>>> cebd2f908c751349c9576e41139907f4fe36d870
   it { is_expected.to run.with_params('bob@gmail.com').and_return(true) }
   it { is_expected.to run.with_params('alice+puppetlabs.com@gmail.com').and_return(true) }
   it { is_expected.to run.with_params('peter.parker@gmail.com').and_return(true) }

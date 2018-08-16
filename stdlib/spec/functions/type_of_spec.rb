@@ -1,6 +1,10 @@
 require 'spec_helper'
 
+<<<<<<< HEAD
 if ENV["FUTURE_PARSER"] == 'yes'
+=======
+if ENV['FUTURE_PARSER'] == 'yes'
+>>>>>>> cebd2f908c751349c9576e41139907f4fe36d870
   describe 'type_of' do
     pending 'teach rspec-puppet to load future-only functions under 3.7.5' do
       it { is_expected.not_to eq(nil) }
@@ -11,7 +15,11 @@ end
 if Puppet.version.to_f >= 4.0
   describe 'type_of' do
     it { is_expected.not_to eq(nil) }
+<<<<<<< HEAD
     it { is_expected.to run.with_params().and_raise_error(ArgumentError) }
+=======
+    it { is_expected.to run.with_params.and_raise_error(ArgumentError) }
+>>>>>>> cebd2f908c751349c9576e41139907f4fe36d870
     it { is_expected.to run.with_params('', '').and_raise_error(ArgumentError) }
 
     it 'gives the type of a string' do

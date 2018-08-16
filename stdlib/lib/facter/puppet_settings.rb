@@ -13,10 +13,16 @@ rescue LoadError => e
   # #4248). It should (in the future) but for the time being we need to be
   # defensive which is what this rescue block is doing.
   rb_file = File.join(File.dirname(__FILE__), 'util', 'puppet_settings.rb')
+<<<<<<< HEAD
   load rb_file if File.exists?(rb_file) or raise e
 end
 
 
+=======
+  load rb_file if File.exist?(rb_file) || raise(e)
+end
+
+>>>>>>> cebd2f908c751349c9576e41139907f4fe36d870
 # These will be nil if Puppet is not available.
 Facter.add(:puppet_vardir) do
   setcode do
@@ -33,3 +39,14 @@ Facter.add(:puppet_environmentpath) do
     end
   end
 end
+<<<<<<< HEAD
+=======
+
+Facter.add(:puppet_server) do
+  setcode do
+    Facter::Util::PuppetSettings.with_puppet do
+      Puppet[:server]
+    end
+  end
+end
+>>>>>>> cebd2f908c751349c9576e41139907f4fe36d870
