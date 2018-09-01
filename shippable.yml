@@ -1,14 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-language: ruby 
-
-version: 2.3.0                                                         
-=======
 language: ruby                                                           
->>>>>>> f625a7024a48731d39927fd32c45a2568a816338
-=======
-language: ruby                                                           
->>>>>>> cf850101c2ed19bf0b365868ab575029eb84f554
 
 services:                                       
   - any supported service 

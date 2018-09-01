@@ -1,6 +1,0 @@
-#
-# THIS FILE IS MANAGED BY PUPPET
-# <%= file %>
-#
-
-[<%= scope['::postfix::relayhost'] -%>]:<%= scope['::postfix::relayport'] -%> <%= scope['::postfix::sasl_user'] -%>:<%= scope['::postfix::sasl_pass'] %>
