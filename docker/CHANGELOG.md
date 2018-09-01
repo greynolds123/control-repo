@@ -1,102 +1,132 @@
-##2016-07-13 - Version 5.3
+# Version 2.0.0
 
-Several minor improvements to the Docker Compose support including:
+Various fixes for github issues
+- 193
+- 197
+- 198
+- 203
+- 207
+- 208
+- 209
+- 211
+- 212
+- 213
+- 215
+- 216
+- 217
+- 218
+- 223
+- 224
+- 225
+- 228
+- 229
+- 230
+- 232
+- 234
+- 237
+- 243
+- 245
+- 255
+- 256
+- 259
 
-* Support for v2 of the Compose file syntax
-* Support refreshing the docker_compose resource
-* The ability to pass an install_path for custom installations
-* Passing arguments to docker-compose up
-* Ensuring curl is available when using it to install Compose
+Adding in the following features/functionality
 
-New parameters for docker::run including stop_wait_time to allow
-containers time to stop when killed
+- Ability to define swarm clusters in Hiera.
+- Support docker compose file V2.3.
+- Support refresh only flag.
+- Support for Docker healthcheck and unhealthy container restart.
+- Support for Docker on Windows:
+    - Add docker ee support for windows server 2016.
+    - Docker image on Windows.
+    - Docker run on Windows.
+    - Docker compose on Windows.
+    - Docker swarm on Windows.
+    - Add docker exec functionality for docker on windows.
+    - Add storage driver for Windows.  
 
-New parameters for the docker class, including icc, storage_setup_file
-
-Support for the overlay2 storage driver and the splunk log driver.
-
-Improvements to management when not using the upstream repository,
-including doing less to manage potentially unneeded dependencies.
-
-Support multiple registry authentications on the same host.
-
-Fix an issue with using docker::run on Swarm.
-
-Fix a number of issues if running the module with strict variables
-enabled, and add this to the tested conbinations.
-
-
-##2016-03-30 - Version 5.2
-
-This release includes some minor features and several bug fixes,
-including:
-
-* Support for specifying TLS settings for Docker connectivity
-* Added support for BIP and MTU options
-* Ensure containers are restarted if Docker is restarted
-* Support creating Docker Networks using Hiera
-* Fix issues with left over containers when using
-  remove_container_on_stop
-* Use the plain HTTP package repository rather than HTTPS
-* Added Gentoo support
-* Support managing labels on Docker Engine
-
-
-##2016-02-12 - Version 5.1
-
-Note that changes in Docker 1.10 changed the flag used to start the
-docker daemon. If you are using a version of docker prior to 1.8 you
-will need to pass the docker_subcommand parameter with the '-d' option.
-
-
-This release includes a few minor bug-fixes along with several new features:
-
-* The module now allows for installing, and running, Docker Compose from
-  Puppet, using both the docker::compose class the the docker_compose
-  type.
-* The module also now allows for the creation and management of Docker
-  Network using the new docker_network type
-* And the docker::run type now supports ensure => absent
-* Lots of options to configure the docker deaemon network
-* Support for installing Docker CS, the commercially supported Docker
-  engine
-* Disable managing the docker service in Puppet
-
-Fixes include:
-
-* Ensuring idempotence of docker::run using deprecated params
-* Properly escaping variables in unless for docker::exec
-* Explicitly specify systemd as the service provider for recent versions
-  of Ubuntu and Debian
-* Fix issue with Amazon Linux support
-
-##2015-12-18 - Version 5.0
-
-Note that this is a major release and in particular changes the default
-repository behaviour so all supported operating systems use the new
-Docker upstream repos.
-
-This release includes:
-
-* Full docker label support
-* Support for CentOS 7 repository options
-* Support for Docker's built-in restart policy
-* Docker storage setup options support for systemd
-* The ability to configure log drivers
-* Support unless for docker exec
-* Full datamapper property support, and deprecation of old property
-  names
-* Allow arbitrary parameters to be passed to systemd
-* Add ZFS storage driver support
-* Allow docker image resources to be refreshed, pulling the latest
-* Deprecates use_name, all containers are now named for the resource
-* Support for Puppet 4.3 with the stricter parser
+A full list of issues and PRs associated with this release can be found [here](https://github.com/puppetlabs/puppetlabs-docker/milestone/2?closed=1)
 
 
-As well as fixes for:
+# Version 1.1.0
 
-* Fix running=false to not start the docker image on docker restart
-  under systemd
-* Prevent timeouts for docker run
-* Ensure docker is running before attempting to use docker run
-* Obsfucate registry password from Puppet logs
+Various fixes for Github issues
+- 183
+- 173
+- 173
+- 167
+- 163
+- 161
+
+Adding in the following features/functionality
+
+- IPv6 support
+- Define type for docker plugins
+
+A full list of issues and PRs associated with this release can be found [here](https://github.com/puppetlabs/puppetlabs-docker/milestone/1?closed=1)
+
+
+# Version 1.0.5
+
+Various fixes for Github issues
+- 98
+- 104
+- 115
+- 122
+- 124
+
+Adding in the following features/functionality
+
+- Removed all unsupported OS related code from module
+- Removed EPEL dependency
+- Added http support in compose proxy
+- Added in rubocop support and i18 gem support
+- Type and provider for docker volumes
+- Update apt module to latest
+- Added in support for a registry mirror
+- Facts for docker version and docker info
+- Fixes for $pass_hash undef
+- Fixed typo in param.pp
+- Replaced deprecated stblib functions with data types
+
+# Version 1.0.4
+
+Correcting changelog
+
+# Version 1.0.3
+Various fixes for Github issues
+ - 33
+ - 68
+ - 74
+ - 77
+ - 84
+
+Adding in the following features/functionality:
+
+ - Add tasks to update existing service
+ - Backwards compatible TMPDIR
+ - Optional GPG check on repos
+ - Force pull on image tag 'latest'
+ - Add support for overlay2.override_kernel_check setting
+ - Add docker network fact
+ - Add pw hash for registry login idompodency
+ - Additional flags for creating a network
+ - Fixing incorrect repo url for redhat
+
+# Version 1.0.2
+Various fixes for Github issues
+ - 9
+ - 11
+ - 15
+ - 21
+Add tasks support for Docker Swarm
+
+# Version 1.0.1
+Updated metadata and CHANGELOG
+
+# Version 1.0.0
+Forked for garethr/docker v5.3.0
+Added support for:
+- Docker services within a swarm cluster
+- Swarm mode
+- Docker secrets

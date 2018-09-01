@@ -2,21 +2,23 @@ require 'spec_helper'
 
 describe 'docker', :type => :class do
 
-  ['Debian', 'Ubuntu', 'RedHat', 'Archlinux', 'Gentoo'].each do |osfamily|
+  ['Debian', 'Ubuntu', 'RedHat'].each do |osfamily|
     context "on #{osfamily}" do
 
       if osfamily == 'Debian'
         let(:facts) { {
-          :osfamily               => 'Debian',
-          :operatingsystem        => 'Debian',
-          :lsbdistid              => 'Debian',
-          :lsbdistcodename        => 'wheezy',
-          :kernelrelease          => '3.2.0-4-amd64',
-          :operatingsystemrelease => '7.3',
-          :operatingsystemmajrelease => '7',
+          :architecture              => 'amd64',
+          :osfamily                  => 'Debian',
+          :operatingsystem           => 'Debian',
+          :lsbdistid                 => 'Debian',
+          :lsbdistcodename           => 'stretch',
+          :kernelrelease             => '4.9.0-3-amd64',
+          :operatingsystemrelease    => '9.0',
+          :operatingsystemmajrelease => '9',
+          :os                        => { :distro => { :codename => 'wheezy' }, :family => 'Debian', :name => 'Debian', :release => { :major => '7', :full => '7.0' } }
         } }
         service_config_file = '/etc/default/docker'
-        storage_config_file = '/etc/default/docker'
+        storage_config_file = '/etc/default/docker-storage'
 
         context 'It should include default prerequired_packages' do
           it { should contain_package('cgroupfs-mount').with_ensure('present') }
@@ -25,19 +27,20 @@ describe 'docker', :type => :class do
 
       if osfamily == 'Ubuntu'
         let(:facts) { {
-          :osfamily               => 'Debian',
-          :operatingsystem        => 'Ubuntu',
-          :lsbdistid              => 'Ubuntu',
-          :lsbdistcodename        => 'maverick',
-          :kernelrelease          => '3.8.0-29-generic',
-          :operatingsystemrelease => '10.04',
-          :operatingsystemmajrelease => '10',
+          :architecture              => 'amd64',
+          :osfamily                  => 'Debian',
+          :operatingsystem           => 'Ubuntu',
+          :lsbdistid                 => 'Ubuntu',
+          :lsbdistcodename           => 'xenial',
+          :kernelrelease             => '4.4.0-21-generic',
+          :operatingsystemrelease    => '16.04',
+          :operatingsystemmajrelease => '16.04',
+          :os                        => { :distro => { :codename =>  'wheezy' }, :family => 'Debian', :name => 'Debian', :release => { :major => '7', :full => '7.0' } }
         } }
         service_config_file = '/etc/default/docker'
-        storage_config_file = '/etc/default/docker'
+        storage_config_file = '/etc/default/docker-storage'
 
-        it { should contain_service('docker').with_hasrestart('false') }
-        it { should contain_file('/etc/init.d/docker').with_ensure('link').with_target('/lib/init/upstart-job') }
+        it { should contain_service('docker').with_hasrestart('true') }
 
         context 'It should include default prerequired_packages' do
           it { should contain_package('cgroup-lite').with_ensure('present') }
@@ -45,36 +48,65 @@ describe 'docker', :type => :class do
         end
       end
 
-      if osfamily == 'Ubuntu' or osfamily == 'Debian'
+      if osfamily == 'Ubuntu'
 
         it { should contain_class('apt') }
-        it { should contain_package('docker').with_name('docker-engine').with_ensure('present') }
-        it { should contain_apt__source('docker').with_location('http://apt.dockerproject.org/repo') }
+        it { should contain_package('docker').with_name('docker-ce').with_ensure('present') }
+        it { should contain_apt__source('docker').with_location('https://download.docker.com/linux/ubuntu') }
+        it { should contain_apt__pin('docker').with_origin('download.docker.com') }
         it { should contain_package('docker').with_install_options(nil) }
 
         it { should contain_file('/etc/default/docker').without_content(/icc=/) }
+      end
+
+      if osfamily == 'Debian'
+
+        it { should contain_class('apt') }
+        it { should contain_package('docker').with_name('docker-ce').with_ensure('present') }
+        it { should contain_apt__source('docker').with_location('https://download.docker.com/linux/debian') }
+        it { should contain_apt__pin('docker').with_origin('download.docker.com') }
+        it { should contain_package('docker').with_install_options(nil) }
+
+        it { should contain_file('/etc/default/docker').without_content(/icc=/) }
+      end
+
+      if osfamily == 'Debian' or osfamily == 'Ubuntu'
 
         context 'with a custom version' do
-          let(:params) { {'version' => '0.5.5' } }
-          it { should contain_package('docker').with_ensure('0.5.5').with_name('docker-engine') }
+          let(:params) { {'version' => '1.7.0' } }
+          it { should contain_package('docker').with_ensure('1.7.0').with_name('docker-engine') }
         end
 
         context 'with no upstream package source' do
           let(:params) { {'use_upstream_package_source' => false } }
           it { should_not contain_apt__source('docker') }
-          it { should contain_package('docker').with_name('docker-engine') }
+          it { should_not contain_apt__pin('docker') }
+          it { should contain_package('docker').with_name('docker-ce') }
         end
 
         context 'with no upstream package source' do
           let(:params) { {'use_upstream_package_source' => false } }
           it { should_not contain_apt__source('docker') }
-          it { should_not contain_class('epel') }
+          it { should_not contain_apt__pin('docker') }
           it { should contain_package('docker') }
+        end
+
+        context 'with no package pinning' do
+          let(:params) { {'pin_upstream_package_source' => false } }
+          it { should contain_apt__pin('docker').with_ensure('absent') }
+        end
+
+        context 'with different package pinning priority' do
+          let(:params) { {
+            'pin_upstream_package_source' => true,
+            'apt_source_pin_level'        => 900,
+          } }
+          it { should contain_apt__pin('docker').with_priority(900) }
         end
 
         context 'when given a specific tmp_dir' do
           let(:params) {{ 'tmp_dir' => '/bigtmp' }}
-          it { should contain_file('/etc/default/docker').with_content(/export TMPDIR="\/bigtmp"/) }
+          it { should contain_file('/etc/default/docker').with_content(/TMPDIR="\/bigtmp"/) }
         end
 
         context 'with ip_forwaring param set to false' do
@@ -152,6 +184,17 @@ describe 'docker', :type => :class do
           it { should contain_file('/etc/default/docker').with_content(/fixed-cidr 10.0.0.0\/24/) }
         end
 
+        context 'with ipv6 params' do
+          let(:params) {{
+            'ipv6' => true,
+            'ipv6_cidr' => '2001:db8:1::/64',
+            'default_gateway_ipv6' => 'fe80::2d4:12ff:fef6:67a2/16'
+            }}
+          it { should contain_file('/etc/default/docker').with_content(/--ipv6/) }
+          it { should contain_file('/etc/default/docker').with_content(/--fixed-cidr-v6 2001:db8:1::\/64/) }
+          it { should contain_file('/etc/default/docker').with_content(/--default-gateway-v6 fe80::2d4:12ff:fef6:67a2\/16/) }
+        end
+
         context 'with default_gateway and bridge params' do
           let(:params) {{
             'default_gateway' => '10.0.0.1',
@@ -168,17 +211,17 @@ describe 'docker', :type => :class do
         context 'with custom service_name' do
           let(:params) {{ 'service_name' => 'docker.io' }}
           it { should contain_file('/etc/default/docker.io') }
-        end
-
+       end
       end
 
       if osfamily == 'RedHat'
         let(:facts) { {
-          :osfamily => osfamily,
-          :operatingsystem => 'RedHat',
-          :operatingsystemrelease => '6.5',
-          :operatingsystemmajrelease => '7',
-          :kernelversion => '2.6.32',
+          :architecture               => 'x86_64',
+          :osfamily                   => osfamily,
+          :operatingsystem            => 'RedHat',
+          :operatingsystemrelease     => '7.2',
+          :operatingsystemmajrelease  => '7',
+          :kernelversion              => '3.10.0',
         } }
         service_config_file = '/etc/sysconfig/docker'
         storage_config_file = '/etc/sysconfig/docker-storage'
@@ -187,18 +230,23 @@ describe 'docker', :type => :class do
 
         context 'with proxy param' do
           let(:params) { {'proxy' => 'http://127.0.0.1:3128' } }
-          it { should contain_file(service_config_file).with_content(/export http_proxy='http:\/\/127.0.0.1:3128'/) }
-          it { should contain_file(service_config_file).with_content(/export https_proxy='http:\/\/127.0.0.1:3128'/) }
+          it { should contain_file(service_config_file).with_content(/http_proxy='http:\/\/127.0.0.1:3128'/) }
+          it { should contain_file(service_config_file).with_content(/https_proxy='http:\/\/127.0.0.1:3128'/) }
         end
 
         context 'with no_proxy param' do
           let(:params) { {'no_proxy' => '.github.com' } }
-          it { should contain_file(service_config_file).with_content(/export no_proxy='.github.com'/) }
+          it { should contain_file(service_config_file).with_content(/no_proxy='.github.com'/) }
+        end
+
+        context 'with registry_mirror param set to mirror value' do
+          let(:params) {{ 'registry_mirror' => 'https://mirror.gcr.io' }}
+          it { should contain_file('/etc/sysconfig/docker').with_content(/registry-mirror/) }
         end
 
         context 'when given a specific tmp_dir' do
           let(:params) {{ 'tmp_dir' => '/bigtmp' }}
-          it { should contain_file('/etc/sysconfig/docker').with_content(/export TMPDIR="\/bigtmp"/) }
+          it { should contain_file('/etc/sysconfig/docker').with_content(/TMPDIR="\/bigtmp"/) }
         end
 
         context 'with ip_forwaring param set to false' do
@@ -292,7 +340,7 @@ describe 'docker', :type => :class do
             'storage_driver' => 'devicemapper',
             'dm_basesize'  => '3G'
           }}
-          it { should contain_file(storage_config_file).with_content(/^(DOCKER_STORAGE_OPTIONS=" --storage-driver=devicemapper --storage-opt dm.basesize=3G)/) }
+          it { should contain_file('/etc/sysconfig/docker-storage').with_content(/^(DOCKER_STORAGE_OPTIONS=" --storage-driver=devicemapper --storage-opt dm.basesize=3G)/) }
         end
 
         context 'It should include default prerequired_packages' do
@@ -303,13 +351,13 @@ describe 'docker', :type => :class do
           let(:params) { {
             'manage_package'              => true,
             'use_upstream_package_source' => false,
-            'package_name'                => 'docker-engine',
-            'package_source'              => 'https://get.docker.com/rpm/1.7.0/centos-6/RPMS/x86_64/docker-engine-1.7.0-1.el6.x86_64.rpm'
+            'docker_engine_package_name'  => 'docker-engine',
+            'package_source'              => 'https://get.docker.com/rpm/1.7.0/centos-7/RPMS/x86_64/docker-engine-1.7.0-1.el7.x86_64.rpm'
           } }
           it do
             should contain_package('docker').with(
               'ensure' => 'present',
-              'source' => 'https://get.docker.com/rpm/1.7.0/centos-6/RPMS/x86_64/docker-engine-1.7.0-1.el6.x86_64.rpm',
+              'source' => 'https://get.docker.com/rpm/1.7.0/centos-7/RPMS/x86_64/docker-engine-1.7.0-1.el7.x86_64.rpm',
               'name'   => 'docker-engine'
             )
           end
@@ -319,14 +367,14 @@ describe 'docker', :type => :class do
           let(:params) { {
             'manage_package'              => true,
             'use_upstream_package_source' => false,
-            'package_name'                => 'docker-engine',
-            'package_source'              => 'https://get.docker.com/rpm/1.7.0/centos-6/RPMS/x86_64/docker-engine-1.7.0-1.el6.x86_64.rpm',
+            'docker_engine_package_name'  => 'docker-engine',
+            'package_source'              => 'https://get.docker.com/rpm/1.7.0/centos-7/RPMS/x86_64/docker-engine-1.7.0-1.el7.x86_64.rpm',
             'repo_opt'                    => '--enablerepo=rhel7-extras'
           } }
           it do
             should contain_package('docker').with(
               'ensure'          => 'present',
-              'source'          => 'https://get.docker.com/rpm/1.7.0/centos-6/RPMS/x86_64/docker-engine-1.7.0-1.el6.x86_64.rpm',
+              'source'          => 'https://get.docker.com/rpm/1.7.0/centos-7/RPMS/x86_64/docker-engine-1.7.0-1.el7.x86_64.rpm',
               'name'            => 'docker-engine',
               'install_options' => '--enablerepo=rhel7-extras'
             )
@@ -337,16 +385,17 @@ describe 'docker', :type => :class do
           let(:params) { {
             'manage_package'              => true,
             'use_upstream_package_source' => false,
-            'package_name'                => 'docker-engine',
-            'package_source'              => 'https://get.docker.com/rpm/1.7.0/centos-6/RPMS/x86_64/docker-engine-1.7.0-1.el6.x86_64.rpm'
+            'docker_engine_package_name'  => 'docker-engine',
+            'package_source'              => 'https://get.docker.com/rpm/1.7.0/centos-7/RPMS/x86_64/docker-engine-1.7.0-1.el7.x86_64.rpm'
           } }
           it do
             should contain_package('docker').with(
               'ensure'          => 'present',
-              'source'          => 'https://get.docker.com/rpm/1.7.0/centos-6/RPMS/x86_64/docker-engine-1.7.0-1.el6.x86_64.rpm',
+              'source'          => 'https://get.docker.com/rpm/1.7.0/centos-7/RPMS/x86_64/docker-engine-1.7.0-1.el7.x86_64.rpm',
               'name'            => 'docker-engine',
-              'install_options' => /--enablerepo/
+              'install_options' => '--enablerepo=rhel-7-server-extras-rpms'
             )
+
           end
         end
 
@@ -354,14 +403,14 @@ describe 'docker', :type => :class do
           let(:params) { {
             'manage_package'              => true,
             'use_upstream_package_source' => false,
-            'package_name'                => 'docker-engine',
-            'package_source'              => 'https://get.docker.com/rpm/1.7.0/centos-6/RPMS/x86_64/docker-engine-1.7.0-1.el6.x86_64.rpm',
+            'docker_engine_package_name'  => 'docker-engine',
+            'package_source'              => 'https://get.docker.com/rpm/1.7.0/centos-7/RPMS/x86_64/docker-engine-1.7.0-1.el7.x86_64.rpm',
             'repo_opt'                    => ''
           } }
           it do
             should contain_package('docker').with(
               'ensure'          => 'present',
-              'source'          => 'https://get.docker.com/rpm/1.7.0/centos-6/RPMS/x86_64/docker-engine-1.7.0-1.el6.x86_64.rpm',
+              'source'          => 'https://get.docker.com/rpm/1.7.0/centos-7/RPMS/x86_64/docker-engine-1.7.0-1.el7.x86_64.rpm',
               'name'            => 'docker-engine',
               'install_options' => nil
             )
@@ -370,46 +419,31 @@ describe 'docker', :type => :class do
 
       end
 
-      if osfamily == 'Archlinux'
-        let(:facts) { {
-          :osfamily => osfamily,
-        } }
-        service_config_file = '/etc/conf.d/docker'
-        storage_config_file = '/etc/conf.d/docker'
-      end
-
-      if osfamily == 'Gentoo'
-        let(:facts) { {
-          :osfamily => osfamily,
-        } }
-        service_config_file = '/etc/conf.d/docker'
-        storage_config_file = '/etc/conf.d/docker'
-      end
-
       it { should compile.with_all_deps }
       it { should contain_class('docker::repos').that_comes_before('Class[docker::install]') }
       it { should contain_class('docker::install').that_comes_before('Class[docker::config]') }
-      it { should contain_class('docker::service').that_subscribes_to('Class[docker::config]') }
-      it { should contain_class('docker::config') }
+      it { should contain_class('docker::config').that_comes_before('Class[docker::service]') }
 
       it { should contain_file(service_config_file).without_content(/icc=/) }
 
+      # storage_config_file = '/etc/default/docker-storage'
+
       context 'with a specific docker command' do
-        let(:params) {{ 'docker_command' => 'docker.io' }}
-        it { should contain_file(service_config_file).with_content(/docker.io/) }
+        let(:params) {{ 'docker_ce_start_command' => 'docker.io' }}
+        it { should contain_file('/etc/systemd/system/docker.service.d/service-overrides.conf').with_content(/docker.io/) }
       end
 
       context 'with a custom package name' do
-        let(:params) { {'package_name' => 'docker-custom-pkg-name' } }
+        let(:params) { {'docker_ce_package_name' => 'docker-custom-pkg-name' } }
         it { should contain_package('docker').with_name('docker-custom-pkg-name').with_ensure('present') }
       end
 
       context 'with a custom package name and version' do
         let(:params) { {
-           'version'      => '0.5.5',
-           'package_name' => 'docker-custom-pkg-name',
+           'version'      => '17.06.2~ce-0~debian',
+           'docker_ce_package_name' => 'docker-custom-pkg-name',
         } }
-        it { should contain_package('docker').with_name('docker-custom-pkg-name').with_ensure('0.5.5') }
+        it { should contain_package('docker').with_name('docker-custom-pkg-name').with_ensure('17.06.2~ce-0~debian') }
       end
 
       context 'when not managing the package' do
@@ -429,12 +463,13 @@ describe 'docker', :type => :class do
 
       context 'with proxy param' do
         let(:params) { {'proxy' => 'http://127.0.0.1:3128' } }
-        it { should contain_file(service_config_file).with_content(/export http_proxy='http:\/\/127.0.0.1:3128'\nexport https_proxy='http:\/\/127.0.0.1:3128'/) }
+          it { should contain_file(service_config_file).with_content(/http_proxy='http:\/\/127.0.0.1:3128'/) }
+          it { should contain_file(service_config_file).with_content(/https_proxy='http:\/\/127.0.0.1:3128'/) }
       end
 
       context 'with no_proxy param' do
         let(:params) { {'no_proxy' => '.github.com' } }
-        it { should contain_file(service_config_file).with_content(/export no_proxy='.github.com'/) }
+        it { should contain_file(service_config_file).with_content(/no_proxy='.github.com'/) }
       end
 
       context 'with execdriver param lxc' do
@@ -450,7 +485,7 @@ describe 'docker', :type => :class do
       ['aufs', 'devicemapper', 'btrfs', 'overlay', 'overlay2', 'vfs', 'zfs'].each do |driver|
         context "with #{driver} storage driver" do
           let(:params) { { 'storage_driver' => driver }}
-          it { should contain_file(storage_config_file).with_content(/--storage-driver=#{driver}/) }
+          it { should contain_file(storage_config_file).with_content(/ --storage-driver=#{driver}/) }
         end
       end
 
@@ -466,7 +501,7 @@ describe 'docker', :type => :class do
       context 'with use deferred removal param' do
         let(:params) {
           { 'storage_driver' => 'devicemapper',
-            'dm_use_deferred_removal' => 'true'
+            'dm_use_deferred_removal' => true
           }
         }
         it { should contain_file(storage_config_file).with_content(/--storage-opt dm\.use_deferred_removal=true/) }
@@ -475,7 +510,7 @@ describe 'docker', :type => :class do
       context 'with use deferred deletion param' do
         let(:params) {
           { 'storage_driver' => 'devicemapper',
-            'dm_use_deferred_deletion' => 'true'
+            'dm_use_deferred_deletion' => true
           }
         }
         it { should contain_file(storage_config_file).with_content(/--storage-opt dm\.use_deferred_deletion=true/) }
@@ -484,7 +519,7 @@ describe 'docker', :type => :class do
       context 'with block discard param' do
         let(:params) {
           { 'storage_driver' => 'devicemapper',
-            'dm_blkdiscard' => 'true'
+            'dm_blkdiscard' => true
           }
         }
         it { should contain_file(storage_config_file).with_content(/--storage-opt dm\.blkdiscard=true/) }
@@ -493,7 +528,7 @@ describe 'docker', :type => :class do
       context 'with override udev sync check param' do
         let(:params) {
           { 'storage_driver' => 'devicemapper',
-            'dm_override_udev_sync_check' => 'true'
+            'dm_override_udev_sync_check' => true
           }
         }
         it { should contain_file(storage_config_file).with_content(/--storage-opt dm\.override_udev_sync_check=true/) }
@@ -568,12 +603,12 @@ describe 'docker', :type => :class do
       end
 
       context 'with service_enable set to false' do
-        let(:params) { {'service_enable' => 'false'} }
+        let(:params) { {'service_enable' => false} }
         it { should contain_service('docker').with_enable('false') }
       end
 
       context 'with service_enable set to true' do
-        let(:params) { {'service_enable' => 'true'} }
+        let(:params) { {'service_enable' => true} }
         it { should contain_service('docker').with_enable('true') }
       end
 
@@ -602,7 +637,7 @@ describe 'docker', :type => :class do
       end
 
       context 'with an invalid log_driver' do
-        let(:params) { { 'log_driver' => 'verbose'} }
+        let(:params) { { 'log_driver' => 'etwlogs'} }
         it do
           expect {
             should contain_package('docker')
@@ -651,7 +686,7 @@ describe 'docker', :type => :class do
       end
 
       context 'with specific selinux_enabled parameter' do
-        let(:params) { { 'selinux_enabled' => 'true' } }
+        let(:params) { { 'selinux_enabled' => true } }
         it { should contain_file(service_config_file).with_content(/--selinux-enabled=true/) }
       end
 
@@ -660,7 +695,7 @@ describe 'docker', :type => :class do
         it do
           expect {
             should contain_package('docker')
-          }.to raise_error(Puppet::Error, /selinux_enabled must be true or false/)
+          }.to raise_error(Puppet::Error, /got String/)
         end
       end
 
@@ -692,122 +727,16 @@ describe 'docker', :type => :class do
 
   end
 
-  context 'specific to Ubuntu Maverick' do
-    let(:facts) { {
-      :osfamily               => 'Debian',
-      :operatingsystem        => 'Ubuntu',
-      :lsbdistid              => 'Ubuntu',
-      :lsbdistcodename        => 'maverick',
-      :kernelrelease          => '3.8.0-29-generic',
-      :operatingsystemrelease => '10.04',
-    } }
-
-    context 'with no parameters' do
-      it { should contain_package('linux-image-extra-3.8.0-29-generic') }
-      it { should contain_package('apparmor') }
-    end
-
-    context 'with no upstream package source' do
-      let(:params) { {'use_upstream_package_source' => false } }
-      it { should contain_package('linux-image-extra-3.8.0-29-generic') }
-    end
-
-    context 'when not managing the kernel' do
-      let(:params) { {'manage_kernel' => false} }
-      it { should_not contain_package('linux-image-extra-3.8.0-29-generic') }
-    end
-  end
-
-  context 'specific to Debian wheezy' do
-    let(:facts) { {
-      :osfamily        => 'Debian',
-      :operatingsystem => 'Debian',
-      :lsbdistid       => 'Debian',
-      :lsbdistcodename => 'wheezy',
-      :operatingsystemrelease => '7.9',
-      :operatingsystemmajrelease => '7',
-      :kernelrelease   => '3.12-1-amd64'
-    } }
-
-    it { should_not contain_package('linux-image-extra-3.8.0-29-generic') }
-    it { should_not contain_package('linux-image-generic-lts-raring') }
-    it { should_not contain_package('linux-headers-generic-lts-raring') }
-    it { should contain_service('docker').without_provider }
-
-    context 'with no upstream package source' do
-      let(:params) { {'use_upstream_package_source' => false } }
-      it { should_not contain_apt__source('docker') }
-      it { should contain_package('docker').with_name('docker-engine') }
-    end
-  end
-
-  context 'specific to RedHat' do
-    let(:facts) { {
-      :osfamily => 'RedHat',
-      :operatingsystem => 'RedHat',
-      :operatingsystemrelease => '6.5',
-      :operatingsystemmajrelease => '6',
-      :kernelversion => '2.6.32',
-    } }
-
-    it { should contain_class('epel') }
-    it { should_not contain_yumrepo('docker') }
-
-    context 'with no epel repo' do
-      let(:params) { {'manage_epel' => false } }
-      it { should_not contain_class('epel') }
-    end
-
-    it { should contain_package('docker').with_name('docker-io').with_ensure('present') }
-    it { should_not contain_apt__source('docker') }
-    it { should_not contain_package('linux-image-extra-3.8.0-29-generic') }
-
-  end
-
-  context 'RedHat 6.5 with patched Docker kernel' do
-    let(:facts) { {
-      :osfamily => 'RedHat',
-      :operatingsystem => 'RedHat',
-      :operatingsystemrelease => '6.5',
-      :operatingsystemmajrelease => '6',
-      :kernelversion => '2.6.32'
-    } }
-    it { should contain_file('/etc/sysconfig/docker').with_content(/DOCKER_NOWARN_KERNEL_VERSION=1/) }
-  end
-
-  context 'RedHat 6.5 without patched Docker kernel' do
-    let(:facts) { {
-      :osfamily => 'RedHat',
-      :operatingsystem => 'RedHat',
-      :operatingsystemrelease => '6.5',
-      :operatingsystemmajrelease => '6',
-      :kernelversion => '2.6.31'
-    } }
-    it { should_not contain_file('/etc/sysconfig/docker').with_content(/DOCKER_NOWARN_KERNEL_VERSION=1/) }
-  end
-
-  context 'specific to Fedora 21 or above' do
-    let(:facts) { {
-      :osfamily => 'RedHat',
-      :operatingsystem => 'Family',
-      :operatingsystemrelease => '21.0',
-      :operatingsystemmajrelease => '21',
-      :kernelversion => '2.6.31'
-    } }
-
-    it { should contain_package('docker').with_name('docker-engine') }
-    it { should contain_yumrepo('docker').with_descr('Docker') }
-    it { should_not contain_class('epel') }
-  end
-
-  ['RedHat', 'OracleLinux', 'Scientific', 'CentOS'].each do |operatingsystem|
+  ['RedHat', 'CentOS'].each do |operatingsystem|
     context "on #{operatingsystem}" do
       let(:facts) { {
-        :osfamily => 'RedHat',
-        :operatingsystem => operatingsystem,
-        :operatingsystemrelease => '7.0',
+        :architecture              => 'x86_64',
+        :osfamily                  => 'RedHat',
+        :operatingsystem           => operatingsystem,
+        :operatingsystemrelease    => '7.0',
         :operatingsystemmajrelease => '7',
-        :kernelversion => '2.6.32',
+        :kernelversion             => '3.10.0',
+        :os                        => { :distro => { :codename => 'wheezy' }, :family => 'Debian', :name => 'Debian', :release => { :major => '7', :full => '7.0' } }
       } }
 
       storage_setup_file = '/etc/sysconfig/docker-storage-setup'
@@ -848,7 +777,7 @@ describe 'docker', :type => :class do
       end
 
       context 'with storage grow partition' do
-        let(:params) { { 'storage_growpart' => 'true' }}
+        let(:params) { { 'storage_growpart' => true }}
         it { should contain_file(storage_setup_file).with_content(/^GROWPART=true/) }
       end
 
@@ -875,92 +804,33 @@ describe 'docker', :type => :class do
     end
   end
 
-  context 'specific to RedHat 7 or above' do
-    let(:facts) { {
-      :osfamily => 'RedHat',
-      :operatingsystem => 'RedHat',
-      :operatingsystemrelease => '7.0',
-      :operatingsystemmajrelease => '7',
-      :kernelversion => '2.6.32',
-    } }
-
-    it { should contain_package('docker').with_name('docker-engine') }
-    it { should contain_yumrepo('docker') }
-    it { should_not contain_class('epel') }
-    it { should contain_package('docker').with_install_options('--enablerepo=rhel7-extras') }
-
-    let(:params) { {'proxy' => 'http://127.0.0.1:3128' } }
-    service_config_file = '/etc/sysconfig/docker'
-    it { should contain_file(service_config_file).with_content(/^http_proxy='http:\/\/127.0.0.1:3128'/) }
-    it { should contain_file(service_config_file).with_content(/^  https_proxy='http:\/\/127.0.0.1:3128'/) }
-    it { should contain_service('docker').with_provider('systemd').with_hasstatus(true).with_hasrestart(true) }
-  end
-
-  context 'specific to Oracle Linux 7 or above' do
-    let(:facts) { {
-      :osfamily => 'RedHat',
-      :operatingsystem => 'OracleLinux',
-      :operatingsystemrelease => '7.0',
-      :operatingsystemmajrelease => '7',
-      :kernelversion => '2.6.32',
-    } }
-
-    it { should contain_package('docker').with_name('docker-engine') }
-    it { should_not contain_class('epel') }
-    it { should contain_package('docker').with_install_options('--enablerepo=ol7_addons') }
-  end
-
-  context 'specific to Scientific Linux 7 or above' do
-    let(:facts) { {
-      :osfamily => 'RedHat',
-      :operatingsystem => 'Scientific',
-      :operatingsystemrelease => '7.0',
-      :operatingsystemmajrelease => '7',
-      :kernelversion => '2.6.32',
-    } }
-
-    it { should contain_package('docker').with_name('docker-engine') }
-    it { should_not contain_class('epel') }
-  end
-
-  context 'specific to Ubuntu Precise' do
-    let(:facts) { {
-      :osfamily               => 'Debian',
-      :lsbdistid              => 'Ubuntu',
-      :operatingsystem        => 'Ubuntu',
-      :lsbdistcodename        => 'precise',
-      :operatingsystemrelease => '12.04',
-      :kernelrelease          => '3.8.0-29-generic'
-    } }
-    it { should contain_package('linux-image-generic-lts-trusty') }
-    it { should contain_package('linux-headers-generic-lts-trusty') }
-    it { should contain_service('docker').with_provider('upstart') }
-    it { should contain_package('apparmor') }
-  end
-
   context 'specific to Ubuntu Trusty' do
     let(:facts) { {
+      :architecture           => 'amd64',
       :osfamily               => 'Debian',
       :lsbdistid              => 'Ubuntu',
       :operatingsystem        => 'Ubuntu',
       :lsbdistcodename        => 'trusty',
       :operatingsystemrelease => '14.04',
-      :kernelrelease          => '3.8.0-29-generic'
+      :kernelrelease          => '3.8.0-29-generic',
+      :os                     => { :distro => { :codename => 'wheezy' }, :family => 'Debian', :name => 'Debian', :release => { :major => '7', :full => '7.0' } }
     } }
     it { should contain_service('docker').with_provider('upstart') }
-    it { should contain_package('docker').with_name('docker-engine').with_ensure('present')  }
+    it { should contain_package('docker').with_name('docker-ce').with_ensure('present')  }
     it { should contain_package('apparmor') }
   end
 
   context 'newer versions of Debian and Ubuntu' do
     context 'Ubuntu >= 15.04' do
       let(:facts) { {
+        :architecture           => 'amd64',
         :osfamily               => 'Debian',
         :lsbdistid              => 'Ubuntu',
         :operatingsystem        => 'Ubuntu',
         :lsbdistcodename        => 'trusty',
         :operatingsystemrelease => '15.04',
-        :kernelrelease          => '3.8.0-29-generic'
+        :kernelrelease          => '3.8.0-29-generic',
+        :os                     => { :distro => { :codename => 'wheezy' }, :family => 'Debian', :name => 'Debian', :release => { :major => '7', :full => '7.0' } }
       } }
 
       it { should contain_service('docker').with_provider('systemd').with_hasstatus(true).with_hasrestart(true) }
@@ -968,51 +838,35 @@ describe 'docker', :type => :class do
 
     context 'Debian >= 8' do
       let(:facts) { {
+        :architecture              => 'amd64',
         :osfamily                  => 'Debian',
         :operatingsystem           => 'Debian',
         :lsbdistid                 => 'Debian',
         :lsbdistcodename           => 'jessie',
         :kernelrelease             => '3.2.0-4-amd64',
         :operatingsystemmajrelease => '8',
+        :os                        => { :distro => { :codename => 'wheezy' }, :family => 'Debian', :name => 'Debian', :release => { :major => '7', :full => '7.0' } }
       } }
 
       it { should contain_service('docker').with_provider('systemd').with_hasstatus(true).with_hasrestart(true) }
     end
   end
 
-
-  context 'specific to older RedHat based distros' do
-    let(:facts) { {
-      :osfamily => 'RedHat',
-      :operatingsystem => 'RedHat',
-      :operatingsystemrelease => '6.4',
-      :operatingsystemmajrelease => '6',
-      :kernelversion => '2.6.32',
-    } }
-    it do
-      expect {
-        should contain_package('docker')
-      }.to raise_error(Puppet::Error, /version to be at least 6.5/)
-    end
-  end
-
-  context 'specific to Amazon Linux (based on centos6) distros' do
-    let(:facts) { {
-      :osfamily => 'RedHat',
-      :operatingsystem => 'Amazon',
-      :operatingsystemrelease => '2015.09',
-      :operatingsystemmajrelease => '2015',
-      :kernelversion => '2.6.32',
-    } }
-    it {should contain_service('docker').without_provider }
-  end
-
   context 'with an invalid distro name' do
-    let(:facts) { {:osfamily => 'Whatever'} }
+      let(:facts) { {
+        :architecture              => 'Whatever',
+        :osfamily                  => 'Whatever',
+        :operatingsystem           => 'Whatever',
+        :lsbdistid                 => 'Whatever',
+        :lsbdistcodename           => 'Whatever',
+        :kernelrelease             => 'Whatever',
+        :operatingsystemmajrelease => 'Whatever',
+        :os                        => { :distro => { :codename => 'Whatever' }, :family => 'Whatever', :name => 'Whatever', :release => { :major => 'Whatever', :full => 'Whatever' } }
+      } }
     it do
       expect {
         should contain_package('docker')
-      }.to raise_error(Puppet::Error, /This module only works on Debian or Red Hat based systems or on Archlinux as on Gentoo./)
+      }.to raise_error(Puppet::Error, /This module only works on Debian, Red Hat or Windows based systems./)
     end
   end
 

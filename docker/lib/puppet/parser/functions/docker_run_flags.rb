@@ -1,5 +1,7 @@
 require 'shellwords'
-
+#
+# docker_run_flags.rb
+#
 module Puppet::Parser::Functions
   # Transforms a hash into a string of docker flags
   newfunction(:docker_run_flags, :type => :rvalue) do |args|
@@ -29,7 +31,7 @@ module Puppet::Parser::Functions
     cpusets = [opts['cpuset']].flatten.compact
     unless cpusets.empty?
       value = cpusets.join(',')
-      flags << "--cpuset=#{value}"
+      flags << "--cpuset-cpus=#{value}"
     end
 
     if opts['disable_network']
@@ -44,13 +46,26 @@ module Puppet::Parser::Functions
       flags << '--detach=true'
     end
 
+    if opts['health_check_cmd'].to_s != 'undef'
+      flags << "--health-cmd='#{opts['health_check_cmd']}'"
+    end
+
+    if opts['health_check_interval'].to_s != 'undef'
+      flags << "--health-interval=#{opts['health_check_interval']}s"
+    end
+
     if opts['tty']
       flags << '-t'
     end
 
+    if opts['read_only']
+      flags << '--read-only=true'
+    end
+    params_join_char = Facter.value(:osfamily).casecmp('windows').zero? ? ' ' : " \\\n"
+
     multi_flags = lambda { |values, format|
       filtered = [values].flatten.compact
-      filtered.map { |val| sprintf(format, val) }
+      filtered.map { |val| sprintf(format + params_join_char, val) }
     }
 
     [
@@ -60,12 +75,12 @@ module Puppet::Parser::Functions
       ['--link %s',         'links'],
       ['--lxc-conf="%s"',   'lxc_conf'],
       ['--volumes-from %s', 'volumes_from'],
-      ['-e %s',             'env'],
+      ['-e "%s"',           'env'],
       ['--env-file %s',     'env_file'],
       ['-p %s',             'ports'],
       ['-l %s',             'labels'],
       ['--add-host %s',     'hostentries'],
-      ['-v %s',             'volumes']
+      ['-v %s',             'volumes'],
     ].each do |(format, key)|
       values    = opts[key]
       new_flags = multi_flags.call(values, format)
@@ -76,6 +91,8 @@ module Puppet::Parser::Functions
       flags << param
     end
 
-    flags.flatten.join(" ")
+    # Some software (inc systemd) will truncate very long lines using glibc's
+    # max line length. Wrap options across multiple lines with '\' to avoid
+    flags.flatten.join(params_join_char)
   end
 end

@@ -43,4 +43,11 @@
 # Copyright 2016 Your name here, unless otherwise noted.
 #
 class role {
+  include role::databases, 
+  role::dev, 
+  role::region, 
+  role::secure,
+  role::software,
+  role::stage,
+  role::webserver
 }
