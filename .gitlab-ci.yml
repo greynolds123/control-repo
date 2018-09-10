@@ -21,6 +21,5 @@ rubocop:
     - bundle exec rubocop
 
 After_script:
-   api:
    script:
     - https://gitlab.com/api/v4/projects/8316533/ref/production/trigger/pipeline?token=3a6b89fa86323f1d369c2000d48912&variables
