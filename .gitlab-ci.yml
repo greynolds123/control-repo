@@ -5,6 +5,13 @@ before_script:
   - gem install bundler 
   - bundle install --jobs $(nproc)  "${FLAGS[@]}"
 
+curl:
+  script:
+  - curl -X POST \
+     -F token=3a6b89fa86323f1d369c2000d48912  \
+     -F ref=production \
+   https://gitlab.com/api/v4/projects/8316533/trigger/pipeline
+
 rspec:
   script:
     - bundle exec rspec
@@ -12,4 +19,8 @@ rspec:
 rubocop:
   script:
     - bundle exec rubocop
-`
+
+After_script:
+   api:
+   script:
+    - https://gitlab.com/api/v4/projects/8316533/ref/production/trigger/pipeline?token=3a6b89fa86323f1d369c2000d48912&variables
