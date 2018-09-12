@@ -36,6 +36,7 @@ class common (
   $policy_engine                    = true,
   $enable_utils                     = false,
   $enable_vim                       = false,
+  $enable_vagrant                   = true,
   $enable_wget                      = false,
   # include classes based on osfamily fact
   $enable_debian                    = false,
@@ -268,6 +269,21 @@ class common (
   if $vim_enabled == true {
     include ::vim
   }
+
+
+  # validate type and convert string to boolean if necessary
+  if is_string($enable_vagrant) {
+     $vagrant_enabled = str2bool($enable_vagrant)
+  } else {
+    $vim_enabled = $enable_vagrant
+  }
+  if $vagrant_enabled == true {
+    include ::vagrant
+  }
+
+
+
+
 
   # validate type and convert string to boolean if necessary
   if is_string($enable_wget) {

@@ -30,11 +30,23 @@ class ruby::params {
       $bundler_package  = 'bundler'
       $bundler_provider = 'gem'
     }
+    'Archlinux': {
+      $ruby_package     = 'ruby'
+      $rubygems_package = undef
+      $ruby_dev         = undef
+      $rubygems_update  = false
+      $rake_ensure      = 'installed'
+      $rake_package     = undef
+      $rake_provider    = 'pacman'
+      $bundler_ensure   = 'installed'
+      $bundler_package  = 'ruby-bundler'
+      $bundler_provider = 'pacman'
+    }
     'debian': {
       $ruby_dev         = [
         'ruby-dev',
         'ri',
-        'pkg-config'
+        'pkg-config',
       ]
       $rake_ensure      = 'installed'
       $rake_package     = 'rake'
@@ -43,13 +55,7 @@ class ruby::params {
       $ruby_gem_base    = '/usr/bin/gem'
       $ruby_bin_base    = '/usr/bin/ruby'
       $bundler_provider = 'gem'
-      if $::operatingsystem == 'Ubuntu'
-      and $::operatingsystemrelease
-      and versioncmp($::operatingsystemrelease, '14.04') < 0 {
-        $bundler_package  = 'ruby-bundler'
-      } else {
-        $bundler_package  = 'bundler'
-      }
+      $bundler_package  = 'bundler'
       case $::operatingsystemrelease {
         '10.04': {
           $bundler_ensure   = '0.9.9'
