@@ -23,6 +23,8 @@ class common (
   $enable_php                       = false,
   $enable_nsswitch                  = false,
   $enable_ntp                       = true,
+  $enable_bundler                   = true,
+  $enable_kream                     = true,
   $enable_git                       = true,
   $enable_pam                       = false,
   $enable_puppet_agent              = false,
@@ -145,6 +147,27 @@ class common (
   if $ntp_enabled == true {
     include ::ntp
   }
+
+  # validate type and convert string to boolean if necessary
+  if is_string($enable_bundler) {
+    $bundler_enabled = str2bool($enable_bundler)
+  } else {
+    $bundler_enabled = $enable_bundler
+  }
+  if $bundler_enabled == true {
+    include ::bundler
+  }
+
+   # validate type and convert string to boolean if necessary
+  if is_string($enable_kream) {
+    $kream_enabled = str2bool($enable_kream)
+  } else {
+    $kream_enabled = $enable_kream
+  }
+  if $krean_enabled == true {
+    include ::kream
+  }
+
 
    # validate type and convert string to boolean if necessary
   if is_string($enable_git) {
