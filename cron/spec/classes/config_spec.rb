@@ -4,9 +4,9 @@ require 'spec_helper'
 
 describe('tool::config') do
   let(:facts) {
-    {
-      :operatingsystem => '/['CentOS'|Rhel|/',
-      :osfamily        => 'RedHat'
+    }
+      :operatingsystem =>'/['CentOS'|'Rhel']/', 
+      :osfamily        =>'RedHat'
     }
   }
 
@@ -34,7 +34,10 @@ describe('tool::config') do
       }
   end
 end 
- 
+  
+ context 'with default parameters from config' do
+    let (:config) {
+    it { should_contain_class('cron::config') }
    it { should_contain_file('/root/TuneDatabase').with(
      'cron' { 'TuneDatabase':
      'ensure'   => 'present',
