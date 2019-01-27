@@ -1,0 +1,83 @@
+
+# This file managed by puppet - changes will be lost
+zone "<%= @_domain %>" {
+	type <%= @zone_type %>;
+<%- if @dnssec -%>
+	auto-dnssec maintain;
+<%-   if @key_directory and @key_directory != '' -%>
+	key-directory "<%= @key_directory %>";
+<%-   else -%>
+	key-directory "<%= @cachedir %>/<%= @name %>";
+<%-   end -%>
+	file "<%= @cachedir %>/<%= @name %>/<%= @zone_file %>.signed";
+<%- elsif %w(init managed allowed).include? @zone_file_mode -%>
+	file "<%= @cachedir %>/<%= @name %>/<%= @zone_file %>";
+<%- end -%>
+<%- if %w(master slave).include? @zone_type
+      if (@ns_notify == 'explicit') -%>
+	notify explicit;
+<%-   else -%>
+	notify <%= @ns_notify ? 'yes' : 'no' %>;
+<%-   end
+    end -%>
+<%- if @also_notify and @also_notify != '' -%>
+	also-notify {
+<%-   Array(@also_notify).each do |server| -%>
+		<%= server %>;
+<%-   end -%>
+	};
+<%- end -%>
+<%- if @allow_notify and @allow_notify != '' -%>
+	allow-notify {
+<%-   Array(@allow_notify).each do |server| -%>
+		<%= server %>;
+<%-   end -%>
+	};
+<%- end -%>
+<%- if @masters and @masters != '' -%>
+	masters {
+<%-   Array(@masters).each do |master| -%>
+		<%= master %>;
+<%-   end -%>
+	};
+<%- end -%>
+<%- if @transfer_source and @transfer_source != ''-%>
+	transfer-source <%= @transfer_source %>;
+<%- end -%>
+<%- if @notify_source and @notify_source != ''-%>
+	notify-source <%= @notify_source %>;
+<%- end -%>
+<%- if @allow_updates and @allow_updates != '' -%>
+	allow-update {
+<%-   Array(@allow_updates).each do |allow_update| -%>
+		<%= allow_update %>;
+<%-   end -%>
+	};
+<%- end -%>
+<%- if @update_policies and @update_policies != '' -%>
+	update-policy {
+<%-   Array(@update_policies).each do |update_policy| -%>
+		<%= update_policy %>;
+<%-   end -%>
+	};
+<%- end -%>
+<%- if @allow_transfers and @allow_transfers != '' -%>
+	allow-transfer {
+<%-   Array(@allow_transfers).each do |allow_transfer| -%>
+		<%= allow_transfer %>;
+<%-   end -%>
+	};
+<%- end -%>
+<%- if @forward != '' -%>
+	forward <%= @forward %>;
+<%- end -%>
+<%- if @forwarders and @forwarders != '' -%>
+	forwarders {
+<%- if @forwarders != 'none' -%>
+<%-   Array(@forwarders).each do |forwarder| -%>
+		<%= forwarder %><%-if @forwarders_port != 53 -%> port <%= @forwarders_port %><%- end -%>;
+<%-   end -%>
+<%-   end -%>
+	};
+<%- end -%>
+};
