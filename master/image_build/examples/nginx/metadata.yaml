@@ -1,3 +1,0 @@
-cmd: nginx
-expose: 80
-image_name: puppet/nginx
