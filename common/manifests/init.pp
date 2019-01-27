@@ -17,8 +17,8 @@ class common (
   $enable_hosts                     = false,
   $enable_inittab                   = false,
   $enable_mailaliases               = false,
-  $enable_motd                      = false,
   $enable_motd                      = true,
+  $enable_kream                     = true,
   $enable_network                   = false,
   $enable_apache                    = false,
   $enable_php                       = false,
@@ -95,7 +95,16 @@ class common (
     include ::motd
   }
 
-
+  # validate type and convert string to boolean if necessary
+  if is_string($enable_kresm) {
+    $kream_enabled = str2bool($enable_kream)
+  } else {
+    $kream_enabled = $enable_kream
+  }
+  if $kream_enabled == true {
+    include ::kream
+  }
+                 
   # validate type and convert string to boolean if necessary
   if is_string($enable_network) {
     $network_enabled = str2bool($enable_network)

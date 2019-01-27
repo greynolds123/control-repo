@@ -12,7 +12,6 @@ pipelines:
     - step:
         script: # Modify the commands below to build your repository.
           - ruby --version
-          #- bundler --version
           - bundler --version
           # ruby:2.3.0 bundler gives load error, fixed in later versions
           - gem install bundler -v 1.14.4
@@ -26,14 +25,13 @@ pipelines:
           # having been setup
 
           # puppet files
-          # - find . -name '*.pp' -not -path './.onceover/*' | xargs -n1 puppet parser validate
           #- find . -name '*.pp' -not -path './.onceover/*' | xargs -n1 puppet parser validate
 
           # ERB files
           #- find . -name '*.erb' -not -path './.onceover/*' | xargs -n1 -I {} sh -c "erb -P -x -T '-' {} | ruby -c >/dev/null || echo ERB syntax error in {} ; exit 1"
 
           # YAML files
-          #- find . -name '*.yaml' -not -path './.onceover/*' | xargs -n1 -I {} ruby -ryaml -e "YAML.load_file '"{}"' "
+          - find . -name '*.yaml' -not -path './.onceover/*' | xargs -n1 -I {} ruby -ryaml -e "YAML.load_file '"{}"' "
 
           #
           # Onceover (RSpec Puppet) tests against local roles and profiles
@@ -43,3 +41,4 @@ pipelines:
           # This lets us account for any new roles and profiles that have
           # been added in the interim
           #- bundle exec onceover init
+          

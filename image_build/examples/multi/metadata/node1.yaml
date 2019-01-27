@@ -1,0 +1,2 @@
+image_name: puppet/node1
+expose: 90
