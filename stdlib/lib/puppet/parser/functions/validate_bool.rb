@@ -1,14 +1,6 @@
-<<<<<<< HEAD
 module Puppet::Parser::Functions
 
   newfunction(:validate_bool, :doc => <<-'ENDHEREDOC') do |args|
-=======
-#
-# validate_bool.rb
-#
-module Puppet::Parser::Functions
-  newfunction(:validate_bool, :doc => <<-'DOC') do |args|
->>>>>>> cebd2f908c751349c9576e41139907f4fe36d870
     Validate that all passed values are either true or false. Abort catalog
     compilation if any value fails this check.
 
@@ -25,7 +17,6 @@ module Puppet::Parser::Functions
         validate_bool("true")
         validate_bool($some_array)
 
-<<<<<<< HEAD
     ENDHEREDOC
 
     # The deprecation function was being called twice, as validate_bool calls is_bool. I have removed it from here so it only calls deprecation once within is_bool.
@@ -33,27 +24,14 @@ module Puppet::Parser::Functions
 
     unless args.length > 0 then
       raise Puppet::ParseError, ("validate_bool(): wrong number of arguments (#{args.length}; must be > 0)")
-=======
-    DOC
-
-    if args.empty?
-      raise Puppet::ParseError, "validate_bool(): wrong number of arguments (#{args.length}; must be > 0)"
->>>>>>> cebd2f908c751349c9576e41139907f4fe36d870
     end
 
     args.each do |arg|
       unless function_is_bool([arg])
-<<<<<<< HEAD
         raise Puppet::ParseError, ("#{arg.inspect} is not a boolean.  It looks to be a #{arg.class}")
       end
     end
 
   end
 
-=======
-        raise Puppet::ParseError, "#{arg.inspect} is not a boolean.  It looks to be a #{arg.class}"
-      end
-    end
-  end
->>>>>>> cebd2f908c751349c9576e41139907f4fe36d870
 end

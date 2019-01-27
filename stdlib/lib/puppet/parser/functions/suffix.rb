@@ -1,7 +1,6 @@
 #
 # suffix.rb
 #
-<<<<<<< HEAD
 
 module Puppet::Parser::Functions
   newfunction(:suffix, :type => :rvalue, :doc => <<-EOS
@@ -23,27 +22,6 @@ Will return: ['ap','bp','cp']
     enumerable = arguments[0]
 
     unless enumerable.is_a?(Array) or enumerable.is_a?(Hash)
-=======
-module Puppet::Parser::Functions
-  newfunction(:suffix, :type => :rvalue, :doc => <<-DOC
-    This function applies a suffix to all elements in an array, or to the keys
-    in a hash.
-
-    *Examples:*
-
-        suffix(['a','b','c'], 'p')
-
-    Will return: ['ap','bp','cp']
-    DOC
-             ) do |arguments|
-
-    # Technically we support two arguments but only first is mandatory ...
-    raise(Puppet::ParseError, "suffix(): Wrong number of arguments given (#{arguments.size} for 1)") if arguments.empty?
-
-    enumerable = arguments[0]
-
-    unless enumerable.is_a?(Array) || enumerable.is_a?(Hash)
->>>>>>> cebd2f908c751349c9576e41139907f4fe36d870
       raise Puppet::ParseError, "suffix(): expected first argument to be an Array or a Hash, got #{enumerable.inspect}"
     end
 
@@ -55,7 +33,6 @@ module Puppet::Parser::Functions
       end
     end
 
-<<<<<<< HEAD
     if enumerable.is_a?(Array)
       # Turn everything into string same as join would do ...
       result = enumerable.collect do |i|
@@ -68,20 +45,6 @@ module Puppet::Parser::Functions
         [ suffix ? k + suffix : k, v ]
       end]
     end
-=======
-    result = if enumerable.is_a?(Array)
-               # Turn everything into string same as join would do ...
-               enumerable.map do |i|
-                 i = i.to_s
-                 suffix ? i + suffix : i
-               end
-             else
-               Hash[enumerable.map do |k, v|
-                 k = k.to_s
-                 [suffix ? k + suffix : k, v]
-               end]
-             end
->>>>>>> cebd2f908c751349c9576e41139907f4fe36d870
 
     return result
   end

@@ -1,7 +1,6 @@
 #
 # abs.rb
 #
-<<<<<<< HEAD
 
 module Puppet::Parser::Functions
   newfunction(:abs, :type => :rvalue, :doc => <<-EOS
@@ -12,22 +11,11 @@ module Puppet::Parser::Functions
 
     raise(Puppet::ParseError, "abs(): Wrong number of arguments " +
       "given (#{arguments.size} for 1)") if arguments.size < 1
-=======
-module Puppet::Parser::Functions
-  newfunction(:abs, :type => :rvalue, :doc => <<-DOC
-    Returns the absolute value of a number, for example -34.56 becomes
-    34.56. Takes a single integer and float value as an argument.
-    DOC
-             ) do |arguments|
-
-    raise(Puppet::ParseError, "abs(): Wrong number of arguments given (#{arguments.size} for 1)") if arguments.empty?
->>>>>>> cebd2f908c751349c9576e41139907f4fe36d870
 
     value = arguments[0]
 
     # Numbers in Puppet are often string-encoded which is troublesome ...
     if value.is_a?(String)
-<<<<<<< HEAD
       if value.match(/^-?(?:\d+)(?:\.\d+){1}$/)
         value = value.to_f
       elsif value.match(/^-?\d+$/)
@@ -35,14 +23,6 @@ module Puppet::Parser::Functions
       else
         raise(Puppet::ParseError, 'abs(): Requires float or ' +
           'integer to work with')
-=======
-      if value =~ %r{^-?(?:\d+)(?:\.\d+){1}$}
-        value = value.to_f
-      elsif value =~ %r{^-?\d+$}
-        value = value.to_i
-      else
-        raise(Puppet::ParseError, 'abs(): Requires float or integer to work with')
->>>>>>> cebd2f908c751349c9576e41139907f4fe36d870
       end
     end
 

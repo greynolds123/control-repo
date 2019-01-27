@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 module Puppet::Parser::Functions
   newfunction(:deprecation, :type => :rvalue, :doc => <<-EOS
   Function to print deprecation warnings (this is the 3.X version of it), The uniqueness key - can appear once. The msg is the message text including any positional information that is formatted by the user/caller of the method.).
@@ -12,23 +11,6 @@ EOS
     message = arguments[1]
     
     if ENV['STDLIB_LOG_DEPRECATIONS'] == "true"
-=======
-#
-# deprecation.rb
-#
-module Puppet::Parser::Functions
-  newfunction(:deprecation, :doc => <<-DOC
-  Function to print deprecation warnings (this is the 3.X version of it), The uniqueness key - can appear once. The msg is the message text including any positional information that is formatted by the user/caller of the method.).
-DOC
-             ) do |arguments|
-
-    raise(Puppet::ParseError, "deprecation: Wrong number of arguments given (#{arguments.size} for 2)") unless arguments.size == 2
-
-    key = arguments[0]
-    message = arguments[1]
-
-    if ENV['STDLIB_LOG_DEPRECATIONS'] == 'true'
->>>>>>> cebd2f908c751349c9576e41139907f4fe36d870
       warning("deprecation. #{key}. #{message}")
     end
   end

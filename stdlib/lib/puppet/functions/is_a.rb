@@ -25,11 +25,7 @@ Puppet::Functions.create_function(:is_a) do
     param 'Type', :type
   end
 
-<<<<<<< HEAD
   def is_a(value, type)
-=======
-  def is_a(value, type) # rubocop:disable Style/PredicateName : Used in to many other places to rename at this time, attempting to refactor caused Rubocop to crash.
->>>>>>> cebd2f908c751349c9576e41139907f4fe36d870
     # See puppet's lib/puppet/pops/evaluator/evaluator_impl.rb eval_MatchExpression
     Puppet::Pops::Types::TypeCalculator.instance?(type, value)
   end

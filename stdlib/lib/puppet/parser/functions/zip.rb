@@ -1,7 +1,6 @@
 #
 # zip.rb
 #
-<<<<<<< HEAD
 
 module Puppet::Parser::Functions
   newfunction(:zip, :type => :rvalue, :doc => <<-EOS
@@ -20,33 +19,11 @@ Would result in:
     # Technically we support three arguments but only first is mandatory ...
     raise(Puppet::ParseError, "zip(): Wrong number of arguments " +
       "given (#{arguments.size} for 2)") if arguments.size < 2
-=======
-module Puppet::Parser::Functions
-  newfunction(:zip, :type => :rvalue, :doc => <<-DOC
-    Takes one element from first array and merges corresponding elements from second array. This generates a sequence of n-element arrays, where n is one more than the count of arguments.
-
-    *Example:*
-
-        zip(['1','2','3'],['4','5','6'])
-
-    Would result in:
-
-        ["1", "4"], ["2", "5"], ["3", "6"]
-    DOC
-             ) do |arguments|
-
-    # Technically we support three arguments but only first is mandatory ...
-    raise(Puppet::ParseError, "zip(): Wrong number of arguments given (#{arguments.size} for 2)") if arguments.size < 2
->>>>>>> cebd2f908c751349c9576e41139907f4fe36d870
 
     a = arguments[0]
     b = arguments[1]
 
-<<<<<<< HEAD
     unless a.is_a?(Array) and b.is_a?(Array)
-=======
-    unless a.is_a?(Array) && b.is_a?(Array)
->>>>>>> cebd2f908c751349c9576e41139907f4fe36d870
       raise(Puppet::ParseError, 'zip(): Requires array to work with')
     end
 

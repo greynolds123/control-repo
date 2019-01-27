@@ -1,7 +1,6 @@
 #
 # is_ip_address.rb
 #
-<<<<<<< HEAD
 
 module Puppet::Parser::Functions
   newfunction(:is_ip_address, :type => :rvalue, :doc => <<-EOS
@@ -16,21 +15,6 @@ Returns true if the string passed to this function is a valid IP address.
     if (arguments.size != 1) then
       raise(Puppet::ParseError, "is_ip_address(): Wrong number of arguments "+
         "given #{arguments.size} for 1")
-=======
-module Puppet::Parser::Functions
-  newfunction(:is_ip_address, :type => :rvalue, :doc => <<-DOC
-    Returns true if the string passed to this function is a valid IP address.
-    DOC
-             ) do |arguments|
-
-    require 'ipaddr'
-
-    function_deprecation([:is_ip_address, 'This method is deprecated, please use the stdlib validate_legacy function,
-                           with Stdlib::Compat::Ip_address. There is further documentation for validate_legacy function in the README.'])
-
-    if arguments.size != 1
-      raise(Puppet::ParseError, "is_ip_address(): Wrong number of arguments given #{arguments.size} for 1")
->>>>>>> cebd2f908c751349c9576e41139907f4fe36d870
     end
 
     begin
@@ -39,16 +23,11 @@ module Puppet::Parser::Functions
       return false
     end
 
-<<<<<<< HEAD
     if ip.ipv4? or ip.ipv6? then
       return true
     else
       return false
     end
-=======
-    return true if ip.ipv4? || ip.ipv6?
-    return false
->>>>>>> cebd2f908c751349c9576e41139907f4fe36d870
   end
 end
 
