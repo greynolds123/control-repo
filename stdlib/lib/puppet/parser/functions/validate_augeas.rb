@@ -1,15 +1,7 @@
 require 'tempfile'
 
-<<<<<<< HEAD
 module Puppet::Parser::Functions
   newfunction(:validate_augeas, :doc => <<-'ENDHEREDOC') do |args|
-=======
-#
-# validate_augaes.rb
-#
-module Puppet::Parser::Functions
-  newfunction(:validate_augeas, :doc => <<-'DOC') do |args|
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
     Perform validation of a string using an Augeas lens
     The first argument of this function should be a string to
     test, and the second argument should be the name of the Augeas lens to use.
@@ -37,7 +29,6 @@ module Puppet::Parser::Functions
 
         validate_augeas($sudoerscontent, 'Sudoers.lns', [], 'Failed to validate sudoers content with Augeas')
 
-<<<<<<< HEAD
     ENDHEREDOC
     unless Puppet.features.augeas?
       raise Puppet::ParseError, ("validate_augeas(): this function requires the augeas feature. See http://docs.puppetlabs.com/guides/augeas.html#pre-requisites for how to activate it.")
@@ -45,34 +36,17 @@ module Puppet::Parser::Functions
 
     if (args.length < 2) or (args.length > 4) then
       raise Puppet::ParseError, ("validate_augeas(): wrong number of arguments (#{args.length}; must be 2, 3, or 4)")
-=======
-    DOC
-    unless Puppet.features.augeas?
-      raise Puppet::ParseError, 'validate_augeas(): this function requires the augeas feature. See http://docs.puppetlabs.com/guides/augeas.html#pre-requisites for how to activate it.'
-    end
-
-    if (args.length < 2) || (args.length > 4)
-      raise Puppet::ParseError, "validate_augeas(): wrong number of arguments (#{args.length}; must be 2, 3, or 4)"
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
     end
 
     msg = args[3] || "validate_augeas(): Failed to validate content against #{args[1].inspect}"
 
     require 'augeas'
-<<<<<<< HEAD
     aug = Augeas::open(nil, nil, Augeas::NO_MODL_AUTOLOAD)
-=======
-    aug = Augeas.open(nil, nil, Augeas::NO_MODL_AUTOLOAD)
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
     begin
       content = args[0]
 
       # Test content in a temporary file
-<<<<<<< HEAD
       tmpfile = Tempfile.new("validate_augeas")
-=======
-      tmpfile = Tempfile.new('validate_augeas')
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
       begin
         tmpfile.write(content)
       ensure
@@ -84,22 +58,14 @@ module Puppet::Parser::Functions
       aug.transform(
         :lens => lens,
         :name => 'Validate_augeas',
-<<<<<<< HEAD
         :incl => tmpfile.path
-=======
-        :incl => tmpfile.path,
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
       )
       aug.load!
 
       unless aug.match("/augeas/files#{tmpfile.path}//error").empty?
         error = aug.get("/augeas/files#{tmpfile.path}//error/message")
         msg += " with error: #{error}"
-<<<<<<< HEAD
         raise Puppet::ParseError, (msg)
-=======
-        raise Puppet::ParseError, msg
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
       end
 
       # Launch unit tests
@@ -107,11 +73,7 @@ module Puppet::Parser::Functions
       aug.defvar('file', "/files#{tmpfile.path}")
       tests.each do |t|
         msg += " testing path #{t}"
-<<<<<<< HEAD
         raise Puppet::ParseError, (msg) unless aug.match(t).empty?
-=======
-        raise Puppet::ParseError, msg unless aug.match(t).empty?
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
       end
     ensure
       aug.close

@@ -1,7 +1,6 @@
 #
 # unique.rb
 #
-<<<<<<< HEAD
 
 module Puppet::Parser::Functions
   newfunction(:unique, :type => :rvalue, :doc => <<-EOS
@@ -27,45 +26,12 @@ This returns:
 
     raise(Puppet::ParseError, "unique(): Wrong number of arguments " +
       "given (#{arguments.size} for 1)") if arguments.size < 1
-=======
-module Puppet::Parser::Functions
-  newfunction(:unique, :type => :rvalue, :doc => <<-DOC
-    This function will remove duplicates from strings and arrays.
-
-    *Examples:*
-
-        unique("aabbcc")
-
-    Will return:
-
-        abc
-
-    You can also use this with arrays:
-
-        unique(["a","a","b","b","c","c"])
-
-    This returns:
-
-        ["a","b","c"]
-    DOC
-             ) do |arguments|
-
-    if Puppet::Util::Package.versioncmp(Puppet.version, '5.0.0') >= 0
-      function_deprecation([:unique, 'This method is deprecated, please use the core puppet unique function. There is further documentation for the function in the release notes of Puppet 5.0.'])
-    end
-
-    raise(Puppet::ParseError, "unique(): Wrong number of arguments given (#{arguments.size} for 1)") if arguments.empty?
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
 
     value = arguments[0]
 
     unless value.is_a?(Array) || value.is_a?(String)
-<<<<<<< HEAD
       raise(Puppet::ParseError, 'unique(): Requires either ' +
         'array or string to work with')
-=======
-      raise(Puppet::ParseError, 'unique(): Requires either array or string to work with')
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
     end
 
     result = value.clone

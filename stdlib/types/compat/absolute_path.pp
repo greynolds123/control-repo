@@ -4,8 +4,4 @@
 # slash = '[\\\\/]'
 # name = '[^\\\\/]+'
 # %r!^(([A-Z]:#{slash})|(#{slash}#{slash}#{name}#{slash}#{name})|(#{slash}#{slash}\?#{slash}#{name}))!i,
-<<<<<<< HEAD
 type Stdlib::Compat::Absolute_path = Variant[Pattern[/^(([a-zA-Z]:[\\\/])|([\\\/][\\\/][^\\\/]+[\\\/][^\\\/]+)|([\\\/][\\\/]\?[\\\/][^\\\/]+))/], Pattern[/^\//]]
-=======
-type Stdlib::Compat::Absolute_path = Variant[Pattern[/^(([a-zA-Z]:[\\\/])|([\\\/][\\\/][^\\\/]+[\\\/][^\\\/]+)|([\\\/][\\\/]\?[\\\/][^\\\/]+))/], Pattern[/^\//]] # lint:ignore:140chars
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19

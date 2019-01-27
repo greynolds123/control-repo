@@ -1,14 +1,6 @@
-<<<<<<< HEAD
 module Puppet::Parser::Functions
 
   newfunction(:validate_numeric, :doc => <<-'ENDHEREDOC') do |args|
-=======
-#
-# validate_numeric.rb
-#
-module Puppet::Parser::Functions
-  newfunction(:validate_numeric, :doc => <<-'DOC') do |args|
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
     Validate that the first argument is a numeric value (or an array of numeric values). Abort catalog compilation if any of the checks fail.
 
     The second argument is optional and passes a maximum. (All elements of) the first argument has to be less or equal to this max.
@@ -21,22 +13,12 @@ module Puppet::Parser::Functions
 
     For passing and failing usage, see `validate_integer()`. It is all the same for validate_numeric, yet now floating point values are allowed, too.
 
-<<<<<<< HEAD
     ENDHEREDOC
 
     function_deprecation([:validate_numeric, 'This method is deprecated, please use the stdlib validate_legacy function, with Stdlib::Compat::Numeric. There is further documentation for validate_legacy function in the README.'])
 
     # tell the user we need at least one, and optionally up to two other parameters
     raise Puppet::ParseError, "validate_numeric(): Wrong number of arguments; must be 1, 2 or 3, got #{args.length}" unless args.length > 0 and args.length < 4
-=======
-    DOC
-
-    function_deprecation([:validate_numeric, 'This method is deprecated, please use the stdlib validate_legacy function,
-                            with Stdlib::Compat::Numeric. There is further documentation for validate_legacy function in the README.'])
-
-    # tell the user we need at least one, and optionally up to two other parameters
-    raise Puppet::ParseError, "validate_numeric(): Wrong number of arguments; must be 1, 2 or 3, got #{args.length}" unless !args.empty? && args.length < 4
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
 
     input, max, min = *args
 
@@ -44,11 +26,7 @@ module Puppet::Parser::Functions
     if args.length > 1
       max = max.to_s
       # allow max to be empty (or undefined) if we have a minimum set
-<<<<<<< HEAD
       if args.length > 2 and max == ''
-=======
-      if args.length > 2 && max == ''
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
         max = nil
       else
         begin
@@ -73,16 +51,11 @@ module Puppet::Parser::Functions
     end
 
     # ensure that min < max
-<<<<<<< HEAD
     if min and max and min > max
-=======
-    if min && max && min > max
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
       raise Puppet::ParseError, "validate_numeric(): Expected second argument to be larger than third argument, got #{max} < #{min}"
     end
 
     # create lamba validator function
-<<<<<<< HEAD
     validator = lambda do |num|
       # check input < max
       if max and num > max
@@ -90,15 +63,6 @@ module Puppet::Parser::Functions
       end
       # check input > min (this will only be checked if no exception has been raised before)
       if min and num < min
-=======
-    validator = ->(num) do
-      # check input < max
-      if max && num > max
-        raise Puppet::ParseError, "validate_numeric(): Expected #{input.inspect} to be smaller or equal to #{max}, got #{input.inspect}."
-      end
-      # check input > min (this will only be checked if no exception has been raised before)
-      if min && num < min
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
         raise Puppet::ParseError, "validate_numeric(): Expected #{input.inspect} to be greater or equal to #{min}, got #{input.inspect}."
       end
     end

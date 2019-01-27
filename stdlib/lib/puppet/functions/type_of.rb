@@ -10,11 +10,6 @@
 # See the documentation for "The Puppet Type System" for more information about types.
 # See the `assert_type()` function for flexible ways to assert the type of a value.
 #
-<<<<<<< HEAD
-=======
-# The built-in type() function in puppet is generally preferred over this function
-# this function is provided for backwards compatibility.
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
 Puppet::Functions.create_function(:type_of) do
   def type_of(value)
     Puppet::Pops::Types::TypeCalculator.infer_set(value)

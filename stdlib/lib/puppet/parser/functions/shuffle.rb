@@ -1,7 +1,6 @@
 #
 # shuffle.rb
 #
-<<<<<<< HEAD
 
 module Puppet::Parser::Functions
   newfunction(:shuffle, :type => :rvalue, :doc => <<-EOS
@@ -11,25 +10,12 @@ Randomizes the order of a string or array elements.
 
     raise(Puppet::ParseError, "shuffle(): Wrong number of arguments " +
       "given (#{arguments.size} for 1)") if arguments.size < 1
-=======
-module Puppet::Parser::Functions
-  newfunction(:shuffle, :type => :rvalue, :doc => <<-DOC
-    Randomizes the order of a string or array elements.
-  DOC
-             ) do |arguments|
-
-    raise(Puppet::ParseError, "shuffle(): Wrong number of arguments given (#{arguments.size} for 1)") if arguments.empty?
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
 
     value = arguments[0]
 
     unless value.is_a?(Array) || value.is_a?(String)
-<<<<<<< HEAD
       raise(Puppet::ParseError, 'shuffle(): Requires either ' +
         'array or string to work with')
-=======
-      raise(Puppet::ParseError, 'shuffle(): Requires either array or string to work with')
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
     end
 
     result = value.clone
