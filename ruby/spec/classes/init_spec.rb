@@ -1737,6 +1737,45 @@ describe 'ruby', :type => :class do
 
   end
 
+<<<<<<< HEAD
+=======
+  context 'On a Archlinux family operating system' do
+    let :facts do
+      {
+        :osfamily               => 'Archlinux',
+        :operatingsystem        => 'Archlinux',
+      }
+    end
+    it { should contain_class('ruby::params') }
+    it {
+      should contain_package('ruby').with({
+        'ensure'  => 'installed',
+        'name'    => 'ruby',
+      })
+    }
+    it { should_not contain_package('rubygems') }
+    it { should_not contain_package('rubygems-update') }
+    it { should_not contain_exec('ruby::update_rubygems') }
+    it { should_not contain_package('ruby-switch') }
+    it { should_not contain_exec('switch_ruby') }
+    it { should_not contain_file('ruby_bin') }
+    it { should_not contain_file('gem_bin') }
+
+    describe 'when using the latest release' do
+      let :params do
+        {
+          :latest_release  => true
+        }
+      end
+      it {
+        should contain_package('ruby').with({
+          'ensure'  => 'latest'
+        })
+      }
+    end
+  end
+
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
   context 'With an Unkown operating system' do
     let :facts do
       {

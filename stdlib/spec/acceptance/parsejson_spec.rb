@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env ruby -S rspec
 require 'spec_helper_acceptance'
 
@@ -5,19 +6,34 @@ describe 'parsejson function', :unless => UNSUPPORTED_PLATFORMS.include?(fact('o
   describe 'success' do
     it 'parses valid json' do
       pp = <<-EOS
+=======
+require 'spec_helper_acceptance'
+
+describe 'parsejson function' do
+  describe 'success' do
+    pp1 = <<-DOC
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
       $a = '{"hunter": "washere", "tests": "passing"}'
       $ao = parsejson($a)
       $tests = $ao['tests']
       notice(inline_template('tests are <%= @tests.inspect %>'))
+<<<<<<< HEAD
       EOS
 
       apply_manifest(pp, :catch_failures => true) do |r|
         expect(r.stdout).to match(/tests are "passing"/)
+=======
+    DOC
+    it 'parses valid json' do
+      apply_manifest(pp1, :catch_failures => true) do |r|
+        expect(r.stdout).to match(%r{tests are "passing"})
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
       end
     end
   end
 
   describe 'failure' do
+<<<<<<< HEAD
     it 'raises error on incorrect json' do
       pp = <<-EOS
       $a = '{"hunter": "washere", "tests": "passing",}'
@@ -49,6 +65,36 @@ describe 'parsejson function', :unless => UNSUPPORTED_PLATFORMS.include?(fact('o
 
       apply_manifest(pp, :expect_failures => true) do |r|
         expect(r.stderr).to match(/wrong number of arguments/i)
+=======
+    pp2 = <<-DOC
+      $a = '{"hunter": "washere", "tests": "passing",}'
+      $ao = parsejson($a, 'tests are using the default value')
+      notice(inline_template('a is <%= @ao.inspect %>'))
+    DOC
+    it 'raises error on incorrect json - default value is used' do
+      apply_manifest(pp2, :catch_failures => true) do |r|
+        expect(r.stdout).to match(%r{tests are using the default value})
+      end
+    end
+
+    pp3 = <<-DOC
+      $a = '{"hunter": "washere", "tests": "passing",}'
+      $ao = parsejson($a)
+      notice(inline_template('a is <%= @ao.inspect %>'))
+    DOC
+    it 'raises error on incorrect json' do
+      apply_manifest(pp3, :expect_failures => true) do |r|
+        expect(r.stderr).to match(%r{expected next name})
+      end
+    end
+
+    pp4 = <<-DOC
+      $o = parsejson()
+    DOC
+    it 'raises error on incorrect number of arguments' do
+      apply_manifest(pp4, :expect_failures => true) do |r|
+        expect(r.stderr).to match(%r{wrong number of arguments}i)
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
       end
     end
   end

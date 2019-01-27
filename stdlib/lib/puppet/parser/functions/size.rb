@@ -1,6 +1,7 @@
 #
 # size.rb
 #
+<<<<<<< HEAD
 
 module Puppet::Parser::Functions
   newfunction(:size, :type => :rvalue, :doc => <<-EOS
@@ -13,6 +14,20 @@ Returns the number of elements in a string, an array or a hash
 
     item = arguments[0]
 
+=======
+module Puppet::Parser::Functions
+  newfunction(:size, :type => :rvalue, :doc => <<-DOC
+    Returns the number of elements in a string, an array or a hash
+  DOC
+             ) do |arguments|
+
+    raise(Puppet::ParseError, "size(): Wrong number of arguments given (#{arguments.size} for 1)") if arguments.empty?
+
+    item = arguments[0]
+
+    function_deprecation([:size, 'This method is going to be deprecated, please use the stdlib length function.'])
+
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
     if item.is_a?(String)
 
       begin
@@ -26,9 +41,13 @@ Returns the number of elements in a string, an array or a hash
         #
         Float(item)
 
+<<<<<<< HEAD
         raise(Puppet::ParseError, 'size(): Requires either ' +
           'string, array or hash to work with')
 
+=======
+        raise(Puppet::ParseError, 'size(): Requires either string, array or hash to work with')
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
       rescue ArgumentError
         result = item.size
       end

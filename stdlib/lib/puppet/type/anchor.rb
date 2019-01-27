@@ -1,5 +1,9 @@
 Puppet::Type.newtype(:anchor) do
+<<<<<<< HEAD
   desc <<-'ENDOFDESC'
+=======
+  desc <<-'DESCRIPTION'
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
   A simple resource type intended to be used as an anchor in a composite class.
 
   In Puppet 2.6, when a class declares another class, the resources in the
@@ -32,10 +36,17 @@ Puppet::Type.newtype(:anchor) do
       class { 'ntp': } -> class { 'mcollective': }
       class { 'mcollective': } -> class { 'ntp': }
 
+<<<<<<< HEAD
   ENDOFDESC
 
   newparam :name do
     desc "The name of the anchor resource."
+=======
+  DESCRIPTION
+
+  newparam :name do
+    desc 'The name of the anchor resource.'
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
   end
 
   def refresh

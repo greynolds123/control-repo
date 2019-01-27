@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #! /usr/bin/env ruby -S rspec
 require 'spec_helper_acceptance'
 
@@ -12,6 +13,20 @@ describe 'to_bytes function', :unless => UNSUPPORTED_PLATFORMS.include?(fact('op
       apply_manifest(pp, :catch_failures => true) do |r|
         m = r.stdout.match(/to_bytes is (\d+)\D/)
         expect(m[1]).to eq("4096")
+=======
+require 'spec_helper_acceptance'
+
+describe 'to_bytes function' do
+  describe 'success' do
+    pp = <<-DOC
+      $o = to_bytes('4 kB')
+      notice(inline_template('to_bytes is <%= @o.inspect %>'))
+    DOC
+    it 'converts kB to B' do
+      apply_manifest(pp, :catch_failures => true) do |r|
+        m = r.stdout.match(%r{to_bytes is (\d+)\D})
+        expect(m[1]).to eq('4096')
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
       end
     end
     it 'works without the B in unit'

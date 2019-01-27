@@ -1,6 +1,7 @@
 #
 # is_float.rb
 #
+<<<<<<< HEAD
 
 module Puppet::Parser::Functions
   newfunction(:is_float, :type => :rvalue, :doc => <<-EOS
@@ -13,11 +14,25 @@ Returns true if the variable passed to this function is a float.
     if (arguments.size != 1) then
       raise(Puppet::ParseError, "is_float(): Wrong number of arguments "+
         "given #{arguments.size} for 1")
+=======
+module Puppet::Parser::Functions
+  newfunction(:is_float, :type => :rvalue, :doc => <<-DOC
+    Returns true if the variable passed to this function is a float.
+    DOC
+             ) do |arguments|
+
+    function_deprecation([:is_float, 'This method is deprecated, please use the stdlib validate_legacy function,
+                          with Stdlib::Compat::Float. There is further documentation for validate_legacy function in the README.'])
+
+    if arguments.size != 1
+      raise(Puppet::ParseError, "is_float(): Wrong number of arguments given #{arguments.size} for 1")
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
     end
 
     value = arguments[0]
 
     # Only allow Numeric or String types
+<<<<<<< HEAD
     return false unless value.is_a?(Numeric) or value.is_a?(String)
 
     if value != value.to_f.to_s and !value.is_a? Float then
@@ -26,6 +41,12 @@ Returns true if the variable passed to this function is a float.
       return true
     end
 
+=======
+    return false unless value.is_a?(Numeric) || value.is_a?(String)
+
+    return false if value != value.to_f.to_s && !value.is_a?(Float)
+    return true
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
   end
 end
 

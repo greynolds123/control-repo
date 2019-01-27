@@ -1,6 +1,7 @@
 #
 # intersection.rb
 #
+<<<<<<< HEAD
 
 module Puppet::Parser::Functions
   newfunction(:intersection, :type => :rvalue, :doc => <<-EOS
@@ -17,6 +18,21 @@ This function returns an array of the intersection of two.
     # Two arguments are required
     raise(Puppet::ParseError, "intersection(): Wrong number of arguments " +
       "given (#{arguments.size} for 2)") if arguments.size != 2
+=======
+module Puppet::Parser::Functions
+  newfunction(:intersection, :type => :rvalue, :doc => <<-DOC
+    This function returns an array of the intersection of two.
+
+    *Examples:*
+
+        intersection(["a","b","c"],["b","c","d"])  # returns ["b","c"]
+        intersection(["a","b","c"],[1,2,3,4])      # returns [] (true, when evaluated as a Boolean)
+    DOC
+             ) do |arguments|
+
+    # Two arguments are required
+    raise(Puppet::ParseError, "intersection(): Wrong number of arguments given (#{arguments.size} for 2)") if arguments.size != 2
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
 
     first = arguments[0]
     second = arguments[1]

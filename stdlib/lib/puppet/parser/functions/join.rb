@@ -1,6 +1,7 @@
 #
 # join.rb
 #
+<<<<<<< HEAD
 
 module Puppet::Parser::Functions
   newfunction(:join, :type => :rvalue, :doc => <<-EOS
@@ -17,6 +18,22 @@ Would result in: "a,b,c"
     # Technically we support two arguments but only first is mandatory ...
     raise(Puppet::ParseError, "join(): Wrong number of arguments " +
       "given (#{arguments.size} for 1)") if arguments.size < 1
+=======
+module Puppet::Parser::Functions
+  newfunction(:join, :type => :rvalue, :doc => <<-DOC
+    This function joins an array into a string using a separator.
+
+    *Examples:*
+
+        join(['a','b','c'], ",")
+
+    Would result in: "a,b,c"
+    DOC
+             ) do |arguments|
+
+    # Technically we support two arguments but only first is mandatory ...
+    raise(Puppet::ParseError, "join(): Wrong number of arguments given (#{arguments.size} for 1)") if arguments.empty?
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
 
     array = arguments[0]
 

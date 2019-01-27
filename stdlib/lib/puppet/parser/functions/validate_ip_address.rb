@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 module Puppet::Parser::Functions
 
   newfunction(:validate_ip_address, :doc => <<-ENDHEREDOC
+=======
+#
+# validate_ip_address.rb
+#
+module Puppet::Parser::Functions
+  newfunction(:validate_ip_address, :doc => <<-DOC
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
     Validate that all values passed are valid IP addresses,
     regardless they are IPv4 or IPv6
     Fail compilation if any value fails this check.
@@ -17,6 +25,7 @@ module Puppet::Parser::Functions
     The following values will fail, causing compilation to abort:
     $some_array = [ 1, true, false, "garbage string", "3ffe:505:2" ]
     validate_ip_address($some_array)
+<<<<<<< HEAD
     ENDHEREDOC
   ) do |args|
 
@@ -24,13 +33,28 @@ module Puppet::Parser::Functions
     rescuable_exceptions = [ ArgumentError ]
 
     function_deprecation([:validate_ip_address, 'This method is deprecated, please use the stdlib validate_legacy function, with Stdlib::Compat::Ip_address. There is further documentation for validate_legacy function in the README.'])
+=======
+    DOC
+             ) do |args|
+
+    require 'ipaddr'
+    rescuable_exceptions = [ArgumentError]
+
+    function_deprecation([:validate_ip_address, 'This method is deprecated, please use the stdlib validate_legacy function,
+                            with Stdlib::Compat::Ip_address. There is further documentation for validate_legacy function in the README.'])
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
 
     if defined?(IPAddr::InvalidAddressError)
       rescuable_exceptions << IPAddr::InvalidAddressError
     end
 
+<<<<<<< HEAD
     unless args.length > 0 then
       raise Puppet::ParseError, ("validate_ip_address(): wrong number of arguments (#{args.length}; must be > 0)")
+=======
+    if args.empty?
+      raise Puppet::ParseError, "validate_ip_address(): wrong number of arguments (#{args.length}; must be > 0)"
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
     end
 
     args.each do |arg|
@@ -39,14 +63,22 @@ module Puppet::Parser::Functions
       end
 
       begin
+<<<<<<< HEAD
         unless IPAddr.new(arg).ipv4? or IPAddr.new(arg).ipv6?
+=======
+        unless IPAddr.new(arg).ipv4? || IPAddr.new(arg).ipv6?
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
           raise Puppet::ParseError, "#{arg.inspect} is not a valid IP address."
         end
       rescue *rescuable_exceptions
         raise Puppet::ParseError, "#{arg.inspect} is not a valid IP address."
       end
     end
+<<<<<<< HEAD
 
   end
 
+=======
+  end
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
 end

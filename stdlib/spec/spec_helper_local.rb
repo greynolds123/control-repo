@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 
 # hack to enable all the expect syntax (like allow_any_instance_of) in rspec-puppet examples
+=======
+# automatically load any shared examples or contexts
+Dir['./spec/support/**/*.rb'].sort.each { |f| require f }
+
+# HACK: to enable all the expect syntax (like allow_any_instance_of) in rspec-puppet examples
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
 RSpec::Mocks::Syntax.enable_expect(RSpec::Puppet::ManifestMatchers)
 
 RSpec.configure do |config|
@@ -14,7 +21,11 @@ RSpec.configure do |config|
     # Facter.collection.loader.load(:ipaddress)
     Facter.clear
     Facter.clear_messages
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
     RSpec::Mocks.setup
   end
 
