@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 Checklist (and a short version for the impatient)
 =================================================
 
@@ -58,8 +57,6 @@ Checklist (and a short version for the impatient)
         organization.
 
 The long version
-================
-=======
 # Contributing to Puppet modules
 
 So you want to contribute to a Puppet module: Great! Below are some instructions to get you started doing
@@ -132,7 +129,6 @@ process as easy as possible.
 - [Open a Pull Request](https://help.github.com/articles/creating-a-pull-request-from-a-fork/) against the repository in the puppetlabs organization
 
 ## More about commits 
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
 
   1.  Make separate commits for logically separate changes.
 
@@ -179,34 +175,26 @@ process as easy as possible.
       GitHub has some pretty good
       [general documentation](http://help.github.com/) on using
       their site.  They also have documentation on
-<<<<<<< HEAD
       [creating pull requests](http://help.github.com/send-pull-requests/).
-=======
       [creating pull requests](https://help.github.com/articles/creating-a-pull-request-from-a-fork/).
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
 
       In general, after pushing your topic branch up to your
       repository on GitHub, you can switch to the branch in the
       GitHub UI and click "Pull Request" towards the top of the page
       in order to open a pull request.
 
-<<<<<<< HEAD
 
   3.  Update the related GitHub issue.
 
       If there is a GitHub issue associated with the change you
-=======
   3.  Update the related JIRA issue.
 
       If there is a JIRA issue associated with the change you
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
       submitted, then you should update the ticket to include the
       location of your branch, along with any other commentary you
       may wish to make.
 
-<<<<<<< HEAD
 Testing
-=======
 
 Getting Started
 ---------------
@@ -221,7 +209,6 @@ by running
 
 ```shell
 % bundle install
-=======
 # Testing
 
 ## Getting Started
@@ -234,7 +221,6 @@ install all dependencies needed for this project in the project root by running
 
 ```shell
 % bundle install --path .bundle/gems
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
 Fetching gem metadata from https://rubygems.org/........
 Fetching gem metadata from https://rubygems.org/..
 Using rake (10.1.0)
@@ -248,11 +234,9 @@ Your bundle is complete!
 Use `bundle show [gemname]` to see where a bundled gem is installed.
 ```
 
-<<<<<<< HEAD
 NOTE some systems may require you to run this command with sudo.
 =======
 NOTE: some systems may require you to run this command with sudo.
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
 
 If you already have those gems installed, make sure they are up-to-date:
 
@@ -260,21 +244,17 @@ If you already have those gems installed, make sure they are up-to-date:
 % bundle update
 ```
 
-<<<<<<< HEAD
 With all dependencies in place and up-to-date we can now run the tests:
-=======
 ## Running Tests
 
 With all dependencies in place and up-to-date, run the tests:
 
 ### Unit Tests
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
 
 ```shell
 % bundle exec rake spec
 ```
 
-<<<<<<< HEAD
 This will execute all the [rspec tests](http://rspec-puppet.com/) tests
 under [spec/defines](./spec/defines), [spec/classes](./spec/classes),
 and so on. rspec tests may have the same kind of dependencies as the
@@ -289,7 +269,6 @@ scenarios. In order to run these, you will need both of those tools
 installed on your system.
 
 You can run them by issuing the following command
-=======
 This executes all the [rspec tests](http://rspec-puppet.com/) in the directories defined [here](https://github.com/puppetlabs/puppetlabs_spec_helper/blob/699d9fbca1d2489bff1736bb254bb7b7edb32c74/lib/puppetlabs_spec_helper/rake_tasks.rb#L17) and so on. 
 rspec tests may have the same kind of dependencies as the module they are testing. Although the module defines these dependencies in its [metadata.json](./metadata.json),
 rspec tests define them in [.fixtures.yml](./fixtures.yml).
@@ -301,7 +280,6 @@ Some Puppet modules also come with acceptance tests, which use [beaker][]. These
 scenarios. In order to run these, you need both Virtualbox and Vagrant installed on your system.
 
 Run the tests by issuing the following command
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
 
 ```shell
 % bundle exec rake spec_clean
@@ -309,7 +287,6 @@ Run the tests by issuing the following command
 ```
 
 This will now download a pre-fabricated image configured in the [default node-set](./spec/acceptance/nodesets/default.yml),
-<<<<<<< HEAD
 install puppet, copy this module and install its dependencies per [spec/spec_helper_acceptance.rb](./spec/spec_helper_acceptance.rb)
 and then run all the tests under [spec/acceptance](./spec/acceptance).
 
@@ -343,7 +320,6 @@ Additional Resources
 
 * [GitHub pull request documentation](http://help.github.com/send-pull-requests/)
 
-=======
 install Puppet, copy this module, and install its dependencies per [spec/spec_helper_acceptance.rb](./spec/spec_helper_acceptance.rb)
 and then run all the tests under [spec/acceptance](./spec/acceptance).
 
@@ -422,4 +398,3 @@ The record of someone performing the merge is the record that they performed the
 [rspec-puppet_docs]: http://rspec-puppet.com/documentation/
 [beaker]: https://github.com/puppetlabs/beaker
 [beaker-rspec]: https://github.com/puppetlabs/beaker-rspec
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19

@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "CHANGELOG.md": "4f69f3c4349d9e152f2a3543ffa0d097",
   "CONTRIBUTING.md": "b78f71c1104f00538d50ad2775f58e95",
   "Gemfile": "b1c33fd8c3b681b38d87264a11f4e875",
@@ -11,7 +10,6 @@
   "RELEASE_PROCESS.markdown": "94b92bc99ac4106ba1a74d5c04e520f9",
   "Rakefile": "6db744f1deed7ae0746abe59e3d50863",
   "examples/file_line.pp": "48f7f162127beffea8f8e3e58db2355a",
-=======
   "CHANGELOG.md": "e51208519c13999f1e9551090c0c4fc6",
   "CONTRIBUTING.md": "4d17f3c942e7c93d1577cc4438a231e4",
   "Gemfile": "47f2bb73e730d42a921e7bca4449f5aa",
@@ -25,12 +23,10 @@
   "Rakefile": "892f5f56e24ac668b998bb74fb18035e",
   "appveyor.yml": "105dce352be3244a497e667f6b0403c7",
   "examples/file_line.pp": "d8126b139dd1dce21ff26910d1c5a245",
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
   "examples/has_interface_with.pp": "d69d520cf3ff4d0b495480afaca359ef",
   "examples/has_ip_address.pp": "32f42575e49aa66f0f2398a70ae2a9f4",
   "examples/has_ip_network.pp": "bfb8db068c58d77c4dd7ae9697536537",
   "examples/init.pp": "b52fd907330ddbd9c3e070cf39f7b317",
-<<<<<<< HEAD
   "lib/facter/facter_dot_d.rb": "d71e93183a680ac78bc0389fd50470a0",
   "lib/facter/package_provider.rb": "539766a71dfb2f65e94a7c91bf413fcf",
   "lib/facter/pe_version.rb": "60d47406026c8201e51394227ddf780d",
@@ -264,7 +260,6 @@
   "spec/acceptance/member_spec.rb": "d6088a4fa6321791a3067d9b9cf8914a",
   "spec/acceptance/merge_spec.rb": "5f168188fa0d6b31ba5b3dac49fb609c",
   "spec/acceptance/min_spec.rb": "152a7db28434a0d0378561d4f64cddcc",
-=======
   "lib/facter/facter_dot_d.rb": "9f65108ecd7b8c5ce9c90ab4cd9d45be",
   "lib/facter/package_provider.rb": "12d57e65f9b90c13e7808c347fbdc0b0",
   "lib/facter/pe_version.rb": "245bb8ea121e8a55e1a38668cc480530",
@@ -513,7 +508,6 @@
   "spec/acceptance/member_spec.rb": "92facc113e77834516361f7e91a6b07a",
   "spec/acceptance/merge_spec.rb": "a2d398f1b407736d576a01a350a7b378",
   "spec/acceptance/min_spec.rb": "b90fc74f13e90099e588b8de39bff084",
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
   "spec/acceptance/nodesets/centos-7-x64.yml": "a713f3abd3657f0ae2878829badd23cd",
   "spec/acceptance/nodesets/debian-8-x64.yml": "d2d2977900989f30086ad251a14a1f39",
   "spec/acceptance/nodesets/default.yml": "b42da5a1ea0c964567ba7495574b8808",
@@ -760,7 +754,6 @@
   "types/httpsurl.pp": "108225d0273e17d541b239882287ed15",
   "types/httpurl.pp": "4ba64825b11af75997c59b5acf07c62d",
   "types/unixpath.pp": "20b1f9301026a2ec3bc6166a2b3613d8",
-=======
   "spec/acceptance/num2bool_spec.rb": "a1c7ae1ae573238474264f512ceac029",
   "spec/acceptance/parsejson_spec.rb": "703943409a4942e143a9ee64428137d2",
   "spec/acceptance/parseyaml_spec.rb": "4c423fec2126c06d73b680ccedb2d92a",
@@ -1053,6 +1046,5 @@
   "types/port/unprivileged.pp": "85359128fa9261fe8bf58c8525574404",
   "types/port.pp": "b1edd08c4eff860b3ea8bd84cd48ba81",
   "types/unixpath.pp": "b64a48701e7adfda45d31fd80bee4ad0",
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
   "types/windowspath.pp": "4c1eda331ecb43de98c29ed22d0ad448"
 }
