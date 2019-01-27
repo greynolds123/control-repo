@@ -53,10 +53,14 @@ define ruby::bundle
   $command      = 'install',
   $option       = undef,
 <<<<<<< HEAD
+<<<<<<< HEAD
   $rails_env    = $ruby::params::rails_env,
 =======
   $rails_env    = undef,
 >>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
+=======
+  $rails_env    = undef,
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
   $multicore    = undef,
   $creates      = undef,
   $cwd          = undef,
@@ -75,8 +79,11 @@ define ruby::bundle
 ) {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   require ruby
 =======
+=======
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
   require ::ruby
 
   if $rails_env == undef {
@@ -84,7 +91,10 @@ define ruby::bundle
   } else {
     $rails_env_real = $rails_env
   }
+<<<<<<< HEAD
 >>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
+=======
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
 
   # ensure minimum path requirements for bundler
   if $path {
@@ -96,6 +106,7 @@ define ruby::bundle
   # merge the environment and rails_env parameters
   if $environment {
 <<<<<<< HEAD
+<<<<<<< HEAD
     $real_environment = unique(flatten([$environment, ["RAILS_ENV=${rails_env}"]]))
   } else {
     $real_environment = "RAILS_ENV=${rails_env}"
@@ -104,6 +115,11 @@ define ruby::bundle
   } else {
     $real_environment = "RAILS_ENV=${rails_env_real}"
 >>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
+=======
+    $real_environment = unique(flatten([$environment, ["RAILS_ENV=${rails_env_real}"]]))
+  } else {
+    $real_environment = "RAILS_ENV=${rails_env_real}"
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
   }
 
   if $multicore {
@@ -114,10 +130,14 @@ define ruby::bundle
     }
   } else {
 <<<<<<< HEAD
+<<<<<<< HEAD
     $multicore_str = ''
 =======
     $multicore_str = undef
 >>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
+=======
+    $multicore_str = undef
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
   }
 
   case $command {
@@ -132,10 +152,14 @@ define ruby::bundle
             '\s*--path=[a-zA-Z0-9\/\\:\.]+\s*',
             '\s*--no-prune\s*',
 <<<<<<< HEAD
+<<<<<<< HEAD
             '\s*--without [[a-z0-9]+ ]+\s*'
 =======
             '\s*--without [[a-z0-9]+ ]+\s*',
 >>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
+=======
+            '\s*--without [[a-z0-9]+ ]+\s*',
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
           ],
           'Only bundler options supported for the install command are: clean, deployment, gemfile, path, without, and no-prune'
         )
@@ -189,6 +213,7 @@ define ruby::bundle
     try_sleep   => $try_sleep,
     unless      => $real_unless,
 <<<<<<< HEAD
+<<<<<<< HEAD
     require     => Package['bundler']
   }
 
@@ -196,4 +221,8 @@ define ruby::bundle
     require     => Package['bundler'],
   }
 >>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
+=======
+    require     => Package['bundler'],
+  }
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
 }

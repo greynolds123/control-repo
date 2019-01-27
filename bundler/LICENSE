@@ -1,14 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-Copyright (C) 2012 Puppet Labs Inc
-=======
-Copyright (C) 2012-2016 Puppet Labs Inc
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
-=======
-Copyright (C) 2012-2016 Puppet Labs Inc
->>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
-
-Puppet Labs can be contacted at: info@puppetlabs.com
+Copyright 2013 Puppet Labs
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

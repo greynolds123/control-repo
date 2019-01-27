@@ -31,7 +31,10 @@ class ruby::params {
       $bundler_provider = 'gem'
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
     'Archlinux': {
       $ruby_package     = 'ruby'
       $rubygems_package = undef
@@ -44,16 +47,23 @@ class ruby::params {
       $bundler_package  = 'ruby-bundler'
       $bundler_provider = 'pacman'
     }
+<<<<<<< HEAD
 >>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
+=======
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
     'debian': {
       $ruby_dev         = [
         'ruby-dev',
         'ri',
 <<<<<<< HEAD
+<<<<<<< HEAD
         'pkg-config'
 =======
         'pkg-config',
 >>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
+=======
+        'pkg-config',
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
       ]
       $rake_ensure      = 'installed'
       $rake_package     = 'rake'
@@ -62,6 +72,7 @@ class ruby::params {
       $ruby_gem_base    = '/usr/bin/gem'
       $ruby_bin_base    = '/usr/bin/ruby'
       $bundler_provider = 'gem'
+<<<<<<< HEAD
 <<<<<<< HEAD
       if $::operatingsystem == 'Ubuntu'
       and $::operatingsystemrelease
@@ -73,6 +84,9 @@ class ruby::params {
 =======
       $bundler_package  = 'bundler'
 >>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
+=======
+      $bundler_package  = 'bundler'
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
       case $::operatingsystemrelease {
         '10.04': {
           $bundler_ensure   = '0.9.9'

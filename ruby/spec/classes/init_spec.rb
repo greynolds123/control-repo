@@ -1738,7 +1738,10 @@ describe 'ruby', :type => :class do
   end
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
   context 'On a Archlinux family operating system' do
     let :facts do
       {
@@ -1775,7 +1778,10 @@ describe 'ruby', :type => :class do
     end
   end
 
+<<<<<<< HEAD
 >>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
+=======
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
   context 'With an Unkown operating system' do
     let :facts do
       {

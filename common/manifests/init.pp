@@ -95,6 +95,7 @@ class common (
     include ::motd
   }
 
+
   # validate type and convert string to boolean if necessary
   if is_string($enable_kresm) {
     $kream_enabled = str2bool($enable_kream)

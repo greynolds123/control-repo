@@ -1,6 +1,6 @@
 {
   "name": "puppetlabs-ruby",
-  "version": "0.5.0",
+  "version": "1.0.0",
   "author": "Puppet Labs",
   "summary": "Manages Ruby and Rubygems.",
   "license": "Apache-2.0",
@@ -8,10 +8,13 @@
   "project_page": "https://github.com/puppetlabs/puppetlabs-ruby",
   "issues_url": "https://tickets.puppetlabs.com/browse/MODULES",
   "dependencies": [
-    {"name":"puppetlabs/stdlib","version_requirement":">=3.2.0 <5.0.0"}
-  ],
     {"name":"puppetlabs/stdlib","version_requirement":">= 4.13.1 < 6.0.0"}
   ],
+<<<<<<< HEAD
+    {"name":"puppetlabs/stdlib","version_requirement":">= 4.13.1 < 6.0.0"}
+  ],
+=======
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
   "data_provider": null,
   "operatingsystem_support": [
     {
@@ -62,7 +65,10 @@
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
         "6",
+<<<<<<< HEAD
         "7"
+=======
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
         "7",
         "8"
       ]
@@ -79,7 +85,10 @@
   "requirements": [
     {
       "name": "puppet",
+<<<<<<< HEAD
       "version_requirement": "3.x"
+=======
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
       "version_requirement": ">= 4.7.0 < 5.0.0"
     }
   ]

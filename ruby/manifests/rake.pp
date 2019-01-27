@@ -64,10 +64,14 @@ define ruby::rake
 (
   $task,
 <<<<<<< HEAD
+<<<<<<< HEAD
   $rails_env    = $ruby::params::rails_env,
 =======
   $rails_env    = undef,
 >>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
+=======
+  $rails_env    = undef,
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
   $bundle       = false,
   $creates      = undef,
   $cwd          = undef,
@@ -86,8 +90,11 @@ define ruby::rake
 ) {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   require ruby
 =======
+=======
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
   require ::ruby
 
   if $rails_env == undef {
@@ -95,7 +102,10 @@ define ruby::rake
   } else {
     $rails_env_real = $rails_env
   }
+<<<<<<< HEAD
 >>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
+=======
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
 
   # Hmm this works on http://rubular.com/
   # validate_re($task, '^[a-z][a-z0-9]*((:[a-z][a-z0-9]*)?)*$', "The rake task '${task}' does not conform to an expected format.")
@@ -110,6 +120,7 @@ define ruby::rake
   # merge the environment and rails_env parameters
   if $environment {
 <<<<<<< HEAD
+<<<<<<< HEAD
     $real_environment = unique(flatten([$environment, ["RAILS_ENV=${rails_env}"]]))
   } else {
     $real_environment = "RAILS_ENV=${rails_env}"
@@ -118,6 +129,11 @@ define ruby::rake
   } else {
     $real_environment = "RAILS_ENV=${rails_env_real}"
 >>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
+=======
+    $real_environment = unique(flatten([$environment, ["RAILS_ENV=${rails_env_real}"]]))
+  } else {
+    $real_environment = "RAILS_ENV=${rails_env_real}"
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
   }
 
   $real_command = join(['rake', $task],' ')
@@ -129,10 +145,14 @@ define ruby::rake
       command     => 'exec',
       option      => $real_command,
 <<<<<<< HEAD
+<<<<<<< HEAD
       rails_env   => $rails_env,
 =======
       rails_env   => $rails_env_real,
 >>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
+=======
+      rails_env   => $rails_env_real,
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
       creates     => $creates,
       cwd         => $cwd,
       environment => $environment,
@@ -148,10 +168,14 @@ define ruby::rake
       try_sleep   => $try_sleep,
       unless      => $unless,
 <<<<<<< HEAD
+<<<<<<< HEAD
       require     => Package['rake']
 =======
       require     => Package['rake'],
 >>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
+=======
+      require     => Package['rake'],
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
     }
   } else {
     exec{"ruby_rake_${name}":
@@ -171,6 +195,7 @@ define ruby::rake
       try_sleep   => $try_sleep,
       unless      => $unless,
 <<<<<<< HEAD
+<<<<<<< HEAD
       require     => Package['rake']
     }
   }
@@ -180,4 +205,9 @@ define ruby::rake
     }
   }
 >>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
+=======
+      require     => Package['rake'],
+    }
+  }
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
 }

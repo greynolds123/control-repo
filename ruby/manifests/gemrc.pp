@@ -34,6 +34,7 @@
 
 class ruby::gemrc (
 <<<<<<< HEAD
+<<<<<<< HEAD
   $sources                    = undef,
   $verbose                    = undef,
   $update_sources             = undef,
@@ -75,6 +76,21 @@ class ruby::gemrc (
 ) inherits ruby::params {
 
 >>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
+=======
+  $sources                                              = undef,
+  Optional[Variant[Boolean, Enum[':really']]] $verbose  = undef,
+  Optional[Boolean] $update_sources                     = undef,
+  Optional[Boolean] $backtrace                          = undef,
+  Optional[Array[String]] $gempath                      = undef,
+  Optional[Hash] $gem_command                           = undef,
+  Stdlib::Absolutepath $gemrc                           = $::ruby::params::gemrc,
+  String $owner                                         = 'root',
+  String $group                                         = 'root',
+  Pattern[/[0-7]{4}/] $mode                             = '0644',
+  Optional[Boolean] $disable_default_gem_server         = undef
+) inherits ruby::params {
+
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
   $ensure = pick ($sources
       , $verbose
       , $update_sources

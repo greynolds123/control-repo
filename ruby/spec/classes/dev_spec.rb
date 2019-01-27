@@ -5,7 +5,10 @@ describe 'ruby::dev', :type => :class do
       'include ruby'
     end
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
     describe 'when called on an unsupported osfamily' do
       let (:facts) do
         {
@@ -20,7 +23,10 @@ describe 'ruby::dev', :type => :class do
         }.to raise_error(Puppet::Error, /Unsupported/)
       end
     end
+<<<<<<< HEAD
 >>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
+=======
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
     describe 'when called on Redhat' do
       let (:facts) do
         {
@@ -235,10 +241,14 @@ describe 'ruby::dev', :type => :class do
             should contain_package('bundler').with({
               'ensure'           => '0.9.9',
 <<<<<<< HEAD
+<<<<<<< HEAD
               'name'             => 'ruby-bundler',
 =======
               'name'             => 'bundler',
 >>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
+=======
+              'name'             => 'bundler',
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
               'provider'         => 'gem',
               'require'          => 'Package[ruby]'
             })
@@ -257,10 +267,14 @@ describe 'ruby::dev', :type => :class do
             should contain_package('bundler').with({
               'ensure'           => 'installed',
 <<<<<<< HEAD
+<<<<<<< HEAD
               'name'             => 'ruby-bundler',
 =======
               'name'             => 'bundler',
 >>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
+=======
+              'name'             => 'bundler',
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
               'provider'         => 'gem',
               'require'          => 'Package[ruby]'
             })
@@ -358,7 +372,10 @@ describe 'ruby::dev', :type => :class do
       end
     end
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
     describe 'when called on Arch Linux' do
       let (:facts) do
         {
@@ -381,7 +398,10 @@ describe 'ruby::dev', :type => :class do
         end
       end
     end
+<<<<<<< HEAD
 >>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
+=======
+>>>>>>> b234704ac85e5944ab85d8a528657f7c75be3c6d
   end
 
   describe 'with ruby 1.9.1' do
