@@ -67,6 +67,7 @@ fi
 <<<<<<< HEAD
 =======
  
+<<<<<<< HEAD:master/tool/files/remoteIPtables.sh
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -82,6 +83,10 @@ fi
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8142 -j ACCEPT
  
 >>>>>>> 2a13e139acaef3f5bf9988b169a970b4facdc60f
+=======
+ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8142 -j ACCEPT
+ 
+>>>>>>> 52ca1e871f69b13415a82a7b0c67bc44780324bf:tool/files/remoteIPtables.sh
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8143 -j ACCEPT
 >>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
 
@@ -113,7 +118,7 @@ fi
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8081 -j ACCEPT
 
-ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8082 -j ACCEPT
+ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8082 -j ACCEPT
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 749 -j ACCEPT
 
@@ -125,7 +130,7 @@ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8082 -j ACCEPT
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 5432 -j ACCEPT
 
-ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 25151 -j ACCEPT
+ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 25151 -j ACCEPT
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 69 -j ACCEPT
 
@@ -162,6 +167,8 @@ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 25151 -j ACCEPT
 <<<<<<< HEAD
 =======
 >>>>>>> 2a13e139acaef3f5bf9988b169a970b4facdc60f
+ ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 8142 -j ACCEPT
+ 
  ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 8142 -j ACCEPT
  
  ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 8143 -j ACCEPT
@@ -225,6 +232,7 @@ done
 
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 8140 -j ACCEPT
  
+<<<<<<< HEAD:master/tool/files/remoteIPtables.sh
 <<<<<<< HEAD
 <<<<<<< HEAD
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 8142 -j ACCEPT
@@ -239,6 +247,10 @@ done
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 8142 -j ACCEPT
  
 >>>>>>> 2a13e139acaef3f5bf9988b169a970b4facdc60f
+=======
+ ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 8142 -j ACCEPT
+ 
+>>>>>>> 52ca1e871f69b13415a82a7b0c67bc44780324bf:tool/files/remoteIPtables.sh
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 8143 -j ACCEPT
 
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 61613 -j ACCEPT

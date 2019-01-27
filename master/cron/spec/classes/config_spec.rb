@@ -2,11 +2,11 @@ spec file
 
 require 'spec_helper'
 
-describe('tool::config') do
+describe('cron::config') do
   let(:facts) {
 <<<<<<< HEAD
     {
-      :operatingsystem => '/['CentOS'|Rhel|/',
+      :operatingsystem => '/['CentOS'|Rhel']/',
       :osfamily        => 'RedHat'
 =======
     }
@@ -28,7 +28,7 @@ describe('tool::config') do
 
   context 'with default parameters from config' do
     let (:config) { 
-    it { should_contain_class('cron::config') }
+    it { should_contain_class('cron') }
     it { should_contain_file('/root/clearCache.sh').with(
       'cron' { 'clearCache':     
       'ensure'   => 'present',
@@ -42,6 +42,7 @@ describe('tool::config') do
 end 
 <<<<<<< HEAD
  
+<<<<<<< HEAD:master/cron/spec/classes/config_spec.rb
 =======
   
  context 'with default parameters from config' do
@@ -49,6 +50,12 @@ end
     it { should_contain_class('cron::config') }
 >>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
    it { should_contain_file('/root/TuneDatabase').with(
+=======
+   context 'with default parameters from config' do
+    let (:config) {
+    it { should_contain_class('cron') }
+    it { should_contain_file('/root/TuneDatabase').with(
+>>>>>>> 52ca1e871f69b13415a82a7b0c67bc44780324bf:cron/spec/classes/config_spec.rb
      'cron' { 'TuneDatabase':
      'ensure'   => 'present',
      'user      => 'root',
@@ -57,6 +64,6 @@ end
      'minute'   => '15',
      }
      }
+ end
 end
-
 

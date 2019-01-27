@@ -18,12 +18,13 @@ class common (
   $enable_inittab                   = false,
   $enable_mailaliases               = false,
   $enable_motd                      = true,
-  $enable_kream                     = true,
   $enable_network                   = false,
   $enable_apache                    = false,
   $enable_php                       = false,
   $enable_nsswitch                  = false,
   $enable_ntp                       = true,
+  $enable_bundler                   = true,
+  $enable_kream                     = true,
   $enable_git                       = true,
   $enable_pam                       = false,
   $enable_puppet_agent              = false,
@@ -37,6 +38,7 @@ class common (
   $policy_engine                    = true,
   $enable_utils                     = false,
   $enable_vim                       = false,
+  $enable_vagrant                   = true,
   $enable_wget                      = false,
   # include classes based on osfamily fact
   $enable_debian                    = false,
@@ -96,6 +98,7 @@ class common (
   }
 
 
+<<<<<<< HEAD:master/common/manifests/init.pp
   # validate type and convert string to boolean if necessary
   if is_string($enable_kresm) {
     $kream_enabled = str2bool($enable_kream)
@@ -106,6 +109,8 @@ class common (
     include ::kream
   }
                  
+=======
+>>>>>>> 52ca1e871f69b13415a82a7b0c67bc44780324bf:common/manifests/init.pp
   # validate type and convert string to boolean if necessary
   if is_string($enable_network) {
     $network_enabled = str2bool($enable_network)
@@ -155,6 +160,27 @@ class common (
   if $ntp_enabled == true {
     include ::ntp
   }
+
+  # validate type and convert string to boolean if necessary
+  if is_string($enable_bundler) {
+    $bundler_enabled = str2bool($enable_bundler)
+  } else {
+    $bundler_enabled = $enable_bundler
+  }
+  if $bundler_enabled == true {
+    include ::bundler
+  }
+
+   # validate type and convert string to boolean if necessary
+  if is_string($enable_kream) {
+    $kream_enabled = str2bool($enable_kream)
+  } else {
+    $kream_enabled = $enable_kream
+  }
+  if $krean_enabled == true {
+    include ::kream
+  }
+
 
    # validate type and convert string to boolean if necessary
   if is_string($enable_git) {
@@ -279,6 +305,21 @@ class common (
   if $vim_enabled == true {
     include ::vim
   }
+
+
+  # validate type and convert string to boolean if necessary
+  if is_string($enable_vagrant) {
+     $vagrant_enabled = str2bool($enable_vagrant)
+  } else {
+    $vim_enabled = $enable_vagrant
+  }
+  if $vagrant_enabled == true {
+    include ::vagrant
+  }
+
+
+
+
 
   # validate type and convert string to boolean if necessary
   if is_string($enable_wget) {

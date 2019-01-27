@@ -1,0 +1,37 @@
+{
+  "name": "garystafford-docker_compose",
+  "version": "0.4.2",
+  "author": "Gary A. Stafford",
+  "summary": "Downloads and installs Docker Compose",
+  "license": "Apache-2.0",
+  "source": "https://github.com/garystafford/garystafford-docker_compose",
+  "project_page": "https://github.com/garystafford/garystafford-docker_compose",
+  "issues_url": "https://github.com/garystafford/garystafford-docker_compose/issues",
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "12.04",
+        "15.04"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "6.6",
+        "7"
+      ]
+    }
+  ],
+  "requirements": [
+  
+  ],
+  "tags": [
+    "Docker",
+    "Compose",
+    "docker-compose"
+  ],
+  "dependencies": [
+    {"name":"puppetlabs/stdlib","version_requirement":">= 4.2.0"}
+  ]
+}
