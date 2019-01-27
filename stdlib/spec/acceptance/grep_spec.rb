@@ -1,8 +1,10 @@
+#! /usr/bin/env ruby -S rspec
 require 'spec_helper_acceptance'
 
-describe 'grep function' do
+describe 'grep function', :unless => UNSUPPORTED_PLATFORMS.include?(fact('operatingsystem')) do
   describe 'success' do
-    pp = <<-DOC
+    it 'greps arrays' do
+      pp = <<-EOS
       $a = ['aaabbb','bbbccc','dddeee']
       $b = 'bbb'
       $c = ['aaabbb','bbbccc']
@@ -10,10 +12,10 @@ describe 'grep function' do
       if $o == $c {
         notify { 'output correct': }
       }
-    DOC
-    it 'greps arrays' do
+      EOS
+
       apply_manifest(pp, :catch_failures => true) do |r|
-        expect(r.stdout).to match(%r{Notice: output correct})
+        expect(r.stdout).to match(/Notice: output correct/)
       end
     end
   end

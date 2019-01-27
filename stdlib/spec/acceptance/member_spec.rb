@@ -1,15 +1,17 @@
+#! /usr/bin/env ruby -S rspec
 require 'spec_helper_acceptance'
 
-describe 'member function' do
+describe 'member function', :unless => UNSUPPORTED_PLATFORMS.include?(fact('operatingsystem')) do
   shared_examples 'item found' do
-    it 'outputs correctly' do
+    it 'should output correctly' do
       apply_manifest(pp, :catch_failures => true) do |r|
-        expect(r.stdout).to match(%r{Notice: output correct})
+        expect(r.stdout).to match(/Notice: output correct/)
       end
     end
   end
   describe 'success' do
-    pp1 = <<-DOC
+    it 'members arrays' do
+      pp = <<-EOS
       $a = ['aaa','bbb','ccc']
       $b = 'ccc'
       $c = true
@@ -17,35 +19,30 @@ describe 'member function' do
       if $o == $c {
         notify { 'output correct': }
       }
-    DOC
-    it 'members arrays' do
-      apply_manifest(pp1, :catch_failures => true) do |r|
-        expect(r.stdout).to match(%r{Notice: output correct})
+      EOS
+
+      apply_manifest(pp, :catch_failures => true) do |r|
+        expect(r.stdout).to match(/Notice: output correct/)
       end
     end
-
     describe 'members array of integers' do
-      let(:pp) do
-        <<-DOC
-            if member( [1,2,3,4], 4 ){
-              notify { 'output correct': }
-            }
-        DOC
-      end
-
-      it_behaves_like 'item found' do
+      it_should_behave_like 'item found' do
+        let(:pp) { <<-EOS
+      if member( [1,2,3,4], 4 ){
+        notify { 'output correct': }
+      }
+        EOS
+        }
       end
     end
     describe 'members of mixed array' do
-      let(:pp) do
-        <<-DOC
-            if member( ['a','4',3], 'a' ){
-              notify { 'output correct': }
-            }
-        DOC
-      end
-
-      it_behaves_like 'item found' do
+      it_should_behave_like 'item found' do
+        let(:pp) { <<-EOS
+      if member( ['a','4',3], 'a' ){
+        notify { 'output correct': }
+}
+        EOS
+        }
       end
     end
     it 'members arrays without members'

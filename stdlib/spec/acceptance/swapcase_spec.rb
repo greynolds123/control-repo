@@ -1,14 +1,16 @@
+#! /usr/bin/env ruby -S rspec
 require 'spec_helper_acceptance'
 
-describe 'swapcase function' do
+describe 'swapcase function', :unless => UNSUPPORTED_PLATFORMS.include?(fact('operatingsystem')) do
   describe 'success' do
-    pp = <<-DOC
+    it 'works with strings' do
+      pp = <<-EOS
       $o = swapcase('aBcD')
       notice(inline_template('swapcase is <%= @o.inspect %>'))
-    DOC
-    it 'works with strings' do
+      EOS
+
       apply_manifest(pp, :catch_failures => true) do |r|
-        expect(r.stdout).to match(%r{swapcase is "AbCd"})
+        expect(r.stdout).to match(/swapcase is "AbCd"/)
       end
     end
     it 'works with arrays'

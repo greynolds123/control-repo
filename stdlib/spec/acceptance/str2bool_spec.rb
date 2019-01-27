@@ -1,14 +1,16 @@
+#! /usr/bin/env ruby -S rspec
 require 'spec_helper_acceptance'
 
-describe 'str2bool function' do
+describe 'str2bool function', :unless => UNSUPPORTED_PLATFORMS.include?(fact('operatingsystem')) do
   describe 'success' do
-    pp = <<-DOC
+    it 'works with "y"' do
+      pp = <<-EOS
       $o = str2bool('y')
       notice(inline_template('str2bool is <%= @o.inspect %>'))
-    DOC
-    it 'works with "y"' do
+      EOS
+
       apply_manifest(pp, :catch_failures => true) do |r|
-        expect(r.stdout).to match(%r{str2bool is true})
+        expect(r.stdout).to match(/str2bool is true/)
       end
     end
     it 'works with "Y"'

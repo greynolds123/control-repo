@@ -1,8 +1,10 @@
+#! /usr/bin/env ruby -S rspec
 require 'spec_helper_acceptance'
 
-describe 'has_key function' do
+describe 'has_key function', :unless => UNSUPPORTED_PLATFORMS.include?(fact('operatingsystem')) do
   describe 'success' do
-    pp1 = <<-DOC
+    it 'has_keys in hashes' do
+      pp = <<-EOS
       $a = { 'aaa' => 'bbb','bbb' => 'ccc','ddd' => 'eee' }
       $b = 'bbb'
       $c = true
@@ -10,14 +12,14 @@ describe 'has_key function' do
       if $o == $c {
         notify { 'output correct': }
       }
-    DOC
-    it 'has_keys in hashes' do
-      apply_manifest(pp1, :catch_failures => true) do |r|
-        expect(r.stdout).to match(%r{Notice: output correct})
+      EOS
+
+      apply_manifest(pp, :catch_failures => true) do |r|
+        expect(r.stdout).to match(/Notice: output correct/)
       end
     end
-
-    pp2 = <<-DOC
+    it 'has_keys not in hashes' do
+      pp = <<-EOS
       $a = { 'aaa' => 'bbb','bbb' => 'ccc','ddd' => 'eee' }
       $b = 'ccc'
       $c = false
@@ -25,10 +27,10 @@ describe 'has_key function' do
       if $o == $c {
         notify { 'output correct': }
       }
-    DOC
-    it 'has_keys not in hashes' do
-      apply_manifest(pp2, :catch_failures => true) do |r|
-        expect(r.stdout).to match(%r{Notice: output correct})
+      EOS
+
+      apply_manifest(pp, :catch_failures => true) do |r|
+        expect(r.stdout).to match(/Notice: output correct/)
       end
     end
   end

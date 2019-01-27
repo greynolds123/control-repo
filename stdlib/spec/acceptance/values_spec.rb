@@ -1,8 +1,10 @@
+#! /usr/bin/env ruby -S rspec
 require 'spec_helper_acceptance'
 
-describe 'values function', :if => Puppet::Util::Package.versioncmp(Puppet.version, '5.5.0') < 0 do
+describe 'values function', :unless => UNSUPPORTED_PLATFORMS.include?(fact('operatingsystem')) do
   describe 'success' do
-    pp1 = <<-DOC
+    it 'returns an array of values' do
+      pp = <<-EOS
       $arg = {
         'a' => 1,
         'b' => 2,
@@ -10,20 +12,24 @@ describe 'values function', :if => Puppet::Util::Package.versioncmp(Puppet.versi
       }
       $output = values($arg)
       notice(inline_template('<%= @output.sort.inspect %>'))
-    DOC
-    it 'returns an array of values' do
-      expect(apply_manifest(pp1, :catch_failures => true).stdout).to match(%r{\[1, 2, 3\]})
+      EOS
+      if is_future_parser_enabled?
+        expect(apply_manifest(pp, :catch_failures => true).stdout).to match(/\[1, 2, 3\]/)
+      else
+        expect(apply_manifest(pp, :catch_failures => true).stdout).to match(/\["1", "2", "3"\]/)
+      end
+
     end
   end
-
   describe 'failure' do
-    pp2 = <<-DOC
+    it 'handles non-hash arguments' do
+      pp = <<-EOS
       $arg = "foo"
       $output = values($arg)
       notice(inline_template('<%= @output.inspect %>'))
-    DOC
-    it 'handles non-hash arguments' do
-      expect(apply_manifest(pp2, :expect_failures => true).stderr).to match(%r{Requires hash})
+      EOS
+
+      expect(apply_manifest(pp, :expect_failures => true).stderr).to match(/Requires hash/)
     end
   end
 end

@@ -1,8 +1,10 @@
+#! /usr/bin/env ruby -S rspec
 require 'spec_helper_acceptance'
 
-describe 'chop function' do
+describe 'chop function', :unless => UNSUPPORTED_PLATFORMS.include?(fact('operatingsystem')) do
   describe 'success' do
-    pp1 = <<-DOC
+    it 'should eat the last character' do
+      pp = <<-EOS
       $input = "test"
       if size($input) != 4 {
         fail("Size of ${input} is not 4.")
@@ -11,12 +13,13 @@ describe 'chop function' do
       if size($output) != 3 {
         fail("Size of ${input} is not 3.")
       }
-    DOC
-    it 'eats the last character' do
-      apply_manifest(pp1, :catch_failures => true)
+      EOS
+
+      apply_manifest(pp, :catch_failures => true)
     end
 
-    pp2 = <<-'DOC'
+    it 'should eat the last two characters of \r\n' do
+      pp = <<-'EOS'
       $input = "test\r\n"
       if size($input) != 6 {
         fail("Size of ${input} is not 6.")
@@ -25,17 +28,18 @@ describe 'chop function' do
       if size($output) != 4 {
         fail("Size of ${input} is not 4.")
       }
-    DOC
-    it 'eats the last two characters of \r\n' do
-      apply_manifest(pp2, :catch_failures => true)
+      EOS
+
+      apply_manifest(pp, :catch_failures => true)
     end
 
-    pp3 = <<-DOC
+    it 'should not fail on empty strings' do
+      pp = <<-EOS
       $input = ""
       $output = chop($input)
-    DOC
-    it 'does not fail on empty strings' do
-      apply_manifest(pp3, :catch_failures => true)
+      EOS
+
+      apply_manifest(pp, :catch_failures => true)
     end
   end
 end

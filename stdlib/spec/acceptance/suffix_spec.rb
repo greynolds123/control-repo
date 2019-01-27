@@ -1,34 +1,36 @@
+#! /usr/bin/env ruby -S rspec
 require 'spec_helper_acceptance'
 
-describe 'suffix function' do
+describe 'suffix function', :unless => UNSUPPORTED_PLATFORMS.include?(fact('operatingsystem')) do
   describe 'success' do
-    pp1 = <<-DOC
+    it 'suffixes array of values' do
+      pp = <<-EOS
       $o = suffix(['a','b','c'],'p')
       notice(inline_template('suffix is <%= @o.inspect %>'))
-    DOC
-    it 'suffixes array of values' do
-      apply_manifest(pp1, :catch_failures => true) do |r|
-        expect(r.stdout).to match(%r{suffix is \["ap", "bp", "cp"\]})
+      EOS
+
+      apply_manifest(pp, :catch_failures => true) do |r|
+        expect(r.stdout).to match(/suffix is \["ap", "bp", "cp"\]/)
       end
     end
-
-    pp2 = <<-DOC
+    it 'suffixs with empty array' do
+      pp = <<-EOS
       $o = suffix([],'p')
       notice(inline_template('suffix is <%= @o.inspect %>'))
-    DOC
-    it 'suffixs with empty array' do
-      apply_manifest(pp2, :catch_failures => true) do |r|
-        expect(r.stdout).to match(%r{suffix is \[\]})
+      EOS
+
+      apply_manifest(pp, :catch_failures => true) do |r|
+        expect(r.stdout).to match(/suffix is \[\]/)
       end
     end
-
-    pp3 = <<-DOC
+    it 'suffixs array of values with undef' do
+      pp = <<-EOS
       $o = suffix(['a','b','c'], undef)
       notice(inline_template('suffix is <%= @o.inspect %>'))
-    DOC
-    it 'suffixs array of values with undef' do
-      apply_manifest(pp3, :catch_failures => true) do |r|
-        expect(r.stdout).to match(%r{suffix is \["a", "b", "c"\]})
+      EOS
+
+      apply_manifest(pp, :catch_failures => true) do |r|
+        expect(r.stdout).to match(/suffix is \["a", "b", "c"\]/)
       end
     end
   end

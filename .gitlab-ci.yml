@@ -1,10 +1,26 @@
 before_script:
+<<<<<<< HEAD
   - yum update -qq && yum install -y -qq puppet-lint nodejs
   - ruby -v
   - which ruby
   - gem install bundler --no-ri --no-rdoc
   - bundle install --jobs $(nproc)  "${FLAGS[@]}"
 
+=======
+  - yum update -qq &&  yum  install -y -qq golang-googlecode-sqlite-devel-0-0.9.hg74691fb6f837.el7.x86_64 qt5-qtwebchannel-examples-5.9.2-1.el7.x86_64
+  - ruby -v
+  - which ruby
+  - gem install bundler 
+  - bundle install --jobs $(nproc)  "${FLAGS[@]}"
+
+curl:
+  script:
+  - curl -X POST \
+     -F token=3a6b89fa86323f1d369c2000d48912  \
+     -F ref=production \
+   https://gitlab.com/api/v4/projects/8316533/trigger/pipeline
+
+>>>>>>> 21035f510db178ffdac932cdd79bd1f573c94a71
 rspec:
   script:
     - bundle exec rspec
@@ -13,3 +29,9 @@ rubocop:
   script:
     - bundle exec rubocop
 
+<<<<<<< HEAD
+=======
+After_script:
+   script:
+    - https://gitlab.com/api/v4/projects/8316533/ref/production/trigger/pipeline?token=3a6b89fa86323f1d369c2000d48912&variables
+>>>>>>> 21035f510db178ffdac932cdd79bd1f573c94a71

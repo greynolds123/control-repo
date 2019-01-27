@@ -1,8 +1,5 @@
-#
-# validate_email_address.rb
-#
 module Puppet::Parser::Functions
-  newfunction(:validate_email_address, :doc => <<-DOC
+  newfunction(:validate_email_address, :doc => <<-ENDHEREDOC
     Validate that all values passed are valid email addresses.
     Fail compilation if any value fails this check.
     The following values will pass:
@@ -13,7 +10,7 @@ module Puppet::Parser::Functions
     The following values will fail, causing compilation to abort:
     $some_array = [ 'bad_email@/d/efdf.com' ]
     validate_email_address($some_array)
-    DOC
+    ENDHEREDOC
              ) do |args|
     rescuable_exceptions = [ArgumentError]
 

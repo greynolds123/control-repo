@@ -1,8 +1,10 @@
+#! /usr/bin/env ruby -S rspec
 require 'spec_helper_acceptance'
 
-describe 'get_module_path function' do
+describe 'get_module_path function', :unless => UNSUPPORTED_PLATFORMS.include?(fact('operatingsystem')) do
   describe 'success' do
-    pp = <<-DOC
+    it 'get_module_paths dne' do
+      pp = <<-EOS
       $a = $::is_pe ? {
         'true'  => '/etc/puppetlabs/puppet/modules/dne',
         'false' => '/etc/puppet/modules/dne',
@@ -13,8 +15,8 @@ describe 'get_module_path function' do
       } else {
         notify { "failed; module path is '$o'": }
       }
-    DOC
-    it 'get_module_paths dne' do
+      EOS
+
       apply_manifest(pp, :expect_failures => true)
     end
   end

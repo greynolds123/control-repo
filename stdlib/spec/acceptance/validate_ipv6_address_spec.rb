@@ -1,22 +1,24 @@
+#! /usr/bin/env ruby -S rspec
 require 'spec_helper_acceptance'
 
-describe 'validate_ipv6_address function' do
+describe 'validate_ipv6_address function', :unless => UNSUPPORTED_PLATFORMS.include?(fact('operatingsystem')) do
   describe 'success' do
-    pp1 = <<-DOC
+    it 'validates a single argument' do
+      pp = <<-EOS
       $one = '3ffe:0505:0002::'
       validate_ipv6_address($one)
-    DOC
-    it 'validates a single argument' do
-      apply_manifest(pp1, :catch_failures => true)
-    end
+      EOS
 
-    pp2 = <<-DOC
+      apply_manifest(pp, :catch_failures => true)
+    end
+    it 'validates an multiple arguments' do
+      pp = <<-EOS
       $one = '3ffe:0505:0002::'
       $two = '3ffe:0505:0001::'
       validate_ipv6_address($one,$two)
-    DOC
-    it 'validates an multiple arguments' do
-      apply_manifest(pp2, :catch_failures => true)
+      EOS
+
+      apply_manifest(pp, :catch_failures => true)
     end
   end
   describe 'failure' do

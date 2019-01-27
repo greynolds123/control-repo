@@ -1,8 +1,10 @@
+#! /usr/bin/env ruby -S rspec
 require 'spec_helper_acceptance'
 
-describe 'getvar function' do
+describe 'getvar function', :unless => UNSUPPORTED_PLATFORMS.include?(fact('operatingsystem')) do
   describe 'success' do
-    pp = <<-DOC
+    it 'getvars from classes' do
+      pp = <<-EOS
       class a::data { $foo = 'aoeu' }
       include a::data
       $b = 'aoeu'
@@ -10,10 +12,10 @@ describe 'getvar function' do
       if $o == $b {
         notify { 'output correct': }
       }
-    DOC
-    it 'getvars from classes' do
+      EOS
+
       apply_manifest(pp, :catch_failures => true) do |r|
-        expect(r.stdout).to match(%r{Notice: output correct})
+        expect(r.stdout).to match(/Notice: output correct/)
       end
     end
   end

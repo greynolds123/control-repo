@@ -1,8 +1,10 @@
+#! /usr/bin/env ruby -S rspec
 require 'spec_helper_acceptance'
 
-describe 'intersection function' do
+describe 'intersection function', :unless => UNSUPPORTED_PLATFORMS.include?(fact('operatingsystem')) do
   describe 'success' do
-    pp = <<-DOC
+    it 'intersections arrays' do
+      pp = <<-EOS
       $a = ['aaa','bbb','ccc']
       $b = ['bbb','ccc','ddd','eee']
       $c = ['bbb','ccc']
@@ -10,10 +12,10 @@ describe 'intersection function' do
       if $o == $c {
         notify { 'output correct': }
       }
-    DOC
-    it 'intersections arrays' do
+      EOS
+
       apply_manifest(pp, :catch_failures => true) do |r|
-        expect(r.stdout).to match(%r{Notice: output correct})
+        expect(r.stdout).to match(/Notice: output correct/)
       end
     end
     it 'intersections empty arrays'

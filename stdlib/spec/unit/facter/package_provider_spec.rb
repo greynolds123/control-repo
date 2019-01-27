@@ -1,10 +1,11 @@
+#! /usr/bin/env ruby -S rspec
 require 'spec_helper'
 require 'puppet/type'
 require 'puppet/type/package'
 
 describe 'package_provider', :type => :fact do
-  before(:each) { Facter.clear }
-  after(:each) { Facter.clear }
+  before { Facter.clear }
+  after { Facter.clear }
 
   ['4.2.2', '3.7.1 (Puppet Enterprise 3.2.1)'].each do |puppetversion|
     describe "on puppet ''#{puppetversion}''" do
@@ -12,8 +13,8 @@ describe 'package_provider', :type => :fact do
         Facter.stubs(:value).returns puppetversion
       end
 
-      context 'when darwin' do
-        it 'returns pkgdmg' do
+      context "darwin" do
+        it "should return pkgdmg" do
           provider = Puppet::Type.type(:package).provider(:pkgdmg)
           Puppet::Type.type(:package).stubs(:defaultprovider).returns provider
 
@@ -21,8 +22,8 @@ describe 'package_provider', :type => :fact do
         end
       end
 
-      context 'when centos 7' do
-        it 'returns yum' do
+      context "centos 7" do
+        it "should return yum" do
           provider = Puppet::Type.type(:package).provider(:yum)
           Puppet::Type.type(:package).stubs(:defaultprovider).returns provider
 
@@ -30,8 +31,8 @@ describe 'package_provider', :type => :fact do
         end
       end
 
-      context 'when ubuntu' do
-        it 'returns apt' do
+      context "ubuntu" do
+        it "should return apt" do
           provider = Puppet::Type.type(:package).provider(:apt)
           Puppet::Type.type(:package).stubs(:defaultprovider).returns provider
 

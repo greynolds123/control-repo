@@ -1,16 +1,13 @@
-#
-# dirname.rb
-#
 module Puppet::Parser::Functions
-  newfunction(:dirname, :type => :rvalue, :doc => <<-DOC
+  newfunction(:dirname, :type => :rvalue, :doc => <<-EOS
     Returns the dirname of a path.
-    DOC
-             ) do |arguments|
+    EOS
+  ) do |arguments|
 
-    if arguments.empty?
-      raise(Puppet::ParseError, 'dirname(): No arguments given')
+    if arguments.size < 1 then
+      raise(Puppet::ParseError, "dirname(): No arguments given")
     end
-    if arguments.size > 1
+    if arguments.size > 1 then
       raise(Puppet::ParseError, "dirname(): Too many arguments given (#{arguments.size})")
     end
     unless arguments[0].is_a?(String)

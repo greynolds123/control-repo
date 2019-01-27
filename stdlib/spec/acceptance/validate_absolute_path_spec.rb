@@ -1,8 +1,9 @@
+#! /usr/bin/env ruby -S rspec
 require 'spec_helper_acceptance'
 
-describe 'validate_absolute_path function' do
+describe 'validate_absolute_path function', :unless => UNSUPPORTED_PLATFORMS.include?(fact('operatingsystem')) do
   describe 'success' do
-    %w[
+    %w{
       C:/
       C:\\\\
       C:\\\\WINDOWS\\\\System32
@@ -12,12 +13,13 @@ describe 'validate_absolute_path function' do
       /var/tmp
       /var/lib/puppet
       /var/opt/../lib/puppet
-    ].each do |path|
-      pp = <<-DOC
+    }.each do |path|
+      it "validates a single argument #{path}" do
+        pp = <<-EOS
         $one = '#{path}'
         validate_absolute_path($one)
-      DOC
-      it "validates a single argument #{path}" do
+        EOS
+
         apply_manifest(pp, :catch_failures => true)
       end
     end

@@ -1,20 +1,22 @@
 #
 # num2bool.rb
 #
-module Puppet::Parser::Functions
-  newfunction(:num2bool, :type => :rvalue, :doc => <<-DOC
-    This function converts a number or a string representation of a number into a
-    true boolean. Zero or anything non-numeric becomes false. Numbers higher then 0
-    become true.
-    DOC
-             ) do |arguments|
 
-    raise(Puppet::ParseError, "num2bool(): Wrong number of arguments given (#{arguments.size} for 1)") if arguments.size != 1
+module Puppet::Parser::Functions
+  newfunction(:num2bool, :type => :rvalue, :doc => <<-EOS
+This function converts a number or a string representation of a number into a
+true boolean. Zero or anything non-numeric becomes false. Numbers higher then 0
+become true.
+    EOS
+  ) do |arguments|
+
+    raise(Puppet::ParseError, "num2bool(): Wrong number of arguments " +
+      "given (#{arguments.size} for 1)") if arguments.size != 1
 
     number = arguments[0]
 
     case number
-    when Numeric # rubocop:disable Lint/EmptyWhen : Required for the module to work
+    when Numeric
       # Yay, it's a number
     when String
       begin

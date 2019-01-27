@@ -64,6 +64,8 @@ fi
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 22 -j ACCEPT
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8140 -j ACCEPT
+<<<<<<< HEAD
+=======
  
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -81,6 +83,7 @@ fi
  
 >>>>>>> 2a13e139acaef3f5bf9988b169a970b4facdc60f
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8143 -j ACCEPT
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 61613 -j ACCEPT
 
@@ -152,6 +155,8 @@ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 25151 -j ACCEPT
  ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 22 -j ACCEPT
 
  ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 8140 -j ACCEPT
+<<<<<<< HEAD
+=======
  
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -175,6 +180,7 @@ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 25151 -j ACCEPT
 =======
  
  ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 8143 -j ACCEPT
+<<<<<<< HEAD
 >>>>>>> 0b5e3ea5e7cc60a418529dd87446c6686ef1b3e0
 =======
  
@@ -184,6 +190,9 @@ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 25151 -j ACCEPT
 =======
  ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 8143 -j ACCEPT
 >>>>>>> 2a13e139acaef3f5bf9988b169a970b4facdc60f
+=======
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
+>>>>>>> 21035f510db178ffdac932cdd79bd1f573c94a71
 
  ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 61613 -j ACCEPT
 

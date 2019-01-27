@@ -1,8 +1,10 @@
+#! /usr/bin/env ruby -S rspec
 require 'spec_helper_acceptance'
 
-describe 'join function', :if => Puppet::Util::Package.versioncmp(Puppet.version, '5.5.0') < 0 do
+describe 'join function', :unless => UNSUPPORTED_PLATFORMS.include?(fact('operatingsystem')) do
   describe 'success' do
-    pp = <<-DOC
+    it 'joins arrays' do
+      pp = <<-EOS
       $a = ['aaa','bbb','ccc']
       $b = ':'
       $c = 'aaa:bbb:ccc'
@@ -10,10 +12,10 @@ describe 'join function', :if => Puppet::Util::Package.versioncmp(Puppet.version
       if $o == $c {
         notify { 'output correct': }
       }
-    DOC
-    it 'joins arrays' do
+      EOS
+
       apply_manifest(pp, :catch_failures => true) do |r|
-        expect(r.stdout).to match(%r{Notice: output correct})
+        expect(r.stdout).to match(/Notice: output correct/)
       end
     end
     it 'handles non arrays'
