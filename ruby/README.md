@@ -3,18 +3,34 @@
 This module manages Ruby and Rubygems.
 
 # Compatibility
+<<<<<<< HEAD
 Puppet v3 with Ruby 1.9.x, 2.1.x on the following platforms.
 
   * EL 5
   * EL 6
   * EL 7
   * SLES 11 SP1
+=======
+Puppet >= 4.7.0 with Ruby 2.1.9 and 2.4.1 on the following platforms.
+
+  * Debian 6
+  * Debian 7
+  * EL 5
+  * EL 6
+  * EL 7
+  * FreeBSD 10
+  * SLES 11 SP1
+  * Arch Linux
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
 
 
 # Dependencies
 
 * [PuppetLabs stdlib](https://forge.puppetlabs.com/puppetlabs/stdlib)
+<<<<<<< HEAD
 * [zleslie pkgng](https://forge.puppetlabs.com/zleslie/pkgng) must be installed for FreeBSD support on Puppet versions < 4.1.0
+=======
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
 
 ## Ruby Class
 
@@ -288,7 +304,11 @@ If the required Ruby version is not available for the distribution being used ch
     include ::apt
 
     ::apt::ppa { 'ppa:brightbox/ruby-ng-experimental': }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
     class { '::ruby':
       version        => '1.9.1',
       switch         => true,

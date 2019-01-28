@@ -52,7 +52,11 @@ define ruby::bundle
 (
   $command      = 'install',
   $option       = undef,
+<<<<<<< HEAD
   $rails_env    = $ruby::params::rails_env,
+=======
+  $rails_env    = undef,
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
   $multicore    = undef,
   $creates      = undef,
   $cwd          = undef,
@@ -70,7 +74,17 @@ define ruby::bundle
   $unless       = undef,
 ) {
 
+<<<<<<< HEAD
   require ruby
+=======
+  require ::ruby
+
+  if $rails_env == undef {
+    $rails_env_real = $ruby::params::rails_env
+  } else {
+    $rails_env_real = $rails_env
+  }
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
 
   # ensure minimum path requirements for bundler
   if $path {
@@ -81,9 +95,15 @@ define ruby::bundle
 
   # merge the environment and rails_env parameters
   if $environment {
+<<<<<<< HEAD
     $real_environment = unique(flatten([$environment, ["RAILS_ENV=${rails_env}"]]))
   } else {
     $real_environment = "RAILS_ENV=${rails_env}"
+=======
+    $real_environment = unique(flatten([$environment, ["RAILS_ENV=${rails_env_real}"]]))
+  } else {
+    $real_environment = "RAILS_ENV=${rails_env_real}"
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
   }
 
   if $multicore {
@@ -93,7 +113,11 @@ define ruby::bundle
       $multicore_str = " --jobs ${multicore}"
     }
   } else {
+<<<<<<< HEAD
     $multicore_str = ''
+=======
+    $multicore_str = undef
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
   }
 
   case $command {
@@ -107,7 +131,11 @@ define ruby::bundle
             '\s*--gemfile=[a-zA-Z0-9\/\\:\.]+\s*',
             '\s*--path=[a-zA-Z0-9\/\\:\.]+\s*',
             '\s*--no-prune\s*',
+<<<<<<< HEAD
             '\s*--without [[a-z0-9]+ ]+\s*'
+=======
+            '\s*--without [[a-z0-9]+ ]+\s*',
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
           ],
           'Only bundler options supported for the install command are: clean, deployment, gemfile, path, without, and no-prune'
         )
@@ -160,7 +188,12 @@ define ruby::bundle
     tries       => $tries,
     try_sleep   => $try_sleep,
     unless      => $real_unless,
+<<<<<<< HEAD
     require     => Package['bundler']
   }
 
+=======
+    require     => Package['bundler'],
+  }
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
 }
