@@ -49,7 +49,7 @@ define apt::key (
   }
 
   validate_re($_id, ['\A(0x)?[0-9a-fA-F]{8}\Z', '\A(0x)?[0-9a-fA-F]{16}\Z', '\A(0x)?[0-9a-fA-F]{40}\Z'])
-  validate_re($ensure, ['\Aabsent|present\Z',])
+  validate_re($ensure, ['\A(absent|present)\Z',])
 
   if $_content {
     validate_string($_content)
@@ -81,8 +81,8 @@ define apt::key (
           content => $_content,
           server  => $_server,
           options => $_options,
-        } ->
-        anchor { "apt_key ${_id} present": }
+        }
+        -> anchor { "apt_key ${_id} present": }
       }
     }
 
@@ -99,8 +99,8 @@ define apt::key (
           content => $_content,
           server  => $_server,
           options => $_options,
-        } ->
-        anchor { "apt_key ${_id} absent": }
+        }
+        -> anchor { "apt_key ${_id} absent": }
       }
     }
 

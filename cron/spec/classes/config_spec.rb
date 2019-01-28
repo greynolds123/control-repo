@@ -2,10 +2,10 @@ spec file
 
 require 'spec_helper'
 
-describe('tool::config') do
+describe('cron::config') do
   let(:facts) {
     {
-      :operatingsystem => '/['CentOS'|Rhel|/',
+      :operatingsystem => '/['CentOS'|Rhel']/',
       :osfamily        => 'RedHat'
     }
   }
@@ -22,7 +22,7 @@ describe('tool::config') do
 
   context 'with default parameters from config' do
     let (:config) { 
-    it { should_contain_class('cron::config') }
+    it { should_contain_class('cron') }
     it { should_contain_file('/root/clearCache.sh').with(
       'cron' { 'clearCache':     
       'ensure'   => 'present',
@@ -35,7 +35,10 @@ describe('tool::config') do
   end
 end 
  
-   it { should_contain_file('/root/TuneDatabase').with(
+   context 'with default parameters from config' do
+    let (:config) {
+    it { should_contain_class('cron') }
+    it { should_contain_file('/root/TuneDatabase').with(
      'cron' { 'TuneDatabase':
      'ensure'   => 'present',
      'user      => 'root',
@@ -44,6 +47,6 @@ end
      'minute'   => '15',
      }
      }
+ end
 end
-
 

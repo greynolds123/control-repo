@@ -14,10 +14,7 @@ define apt::ppa(
     fail('apt::ppa is not currently supported on Debian.')
   }
 
-  $ubuntu_release_year  = regsubst($::apt::xfacts['lsbdistrelease'], '\.\d+$', '', 'G') + 0
-  $ubuntu_release_month = regsubst($::apt::xfacts['lsbdistrelease'], '^\d+\.', '', 'G') + 0
-
-  if $ubuntu_release_year >= 15 and $ubuntu_release_month >= 10 {
+  if versioncmp($::apt::xfacts['lsbdistrelease'], '15.10') >= 0 {
     $distid = downcase($::apt::xfacts['lsbdistid'])
     $filename = regsubst($name, '^ppa:([^/]+)/(.+)$', "\\1-${distid}-\\2-${release}")
   } else {
@@ -51,7 +48,7 @@ define apt::ppa(
     exec { "add-apt-repository-${name}":
       environment => $_proxy_env,
       command     => "/usr/bin/add-apt-repository ${options} ${name}",
-      unless      => "/usr/bin/test -s ${::apt::sources_list_d}/${sources_list_d_filename}",
+      unless      => "/usr/bin/test -f ${::apt::sources_list_d}/${sources_list_d_filename}",
       user        => 'root',
       logoutput   => 'on_failure',
       notify      => Class['apt::update'],

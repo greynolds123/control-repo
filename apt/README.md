@@ -260,6 +260,8 @@ Main class, includes all other classes.
 
 ##### Parameters (all optional)
 
+* `confs`: Creates new `apt::conf` resources. Valid options: a hash to be passed to the [`create_resources` function](https://docs.puppetlabs.com/references/latest/function.html#createresources). Default: {}.
+
 * `keys`: Creates new `apt::key` resources. Valid options: a hash to be passed to the [`create_resources` function](https://docs.puppetlabs.com/references/latest/function.html#createresources). Default: {}.
 
 * `ppas`: Creates new `apt::ppa` resources. Valid options: a hash to be passed to the [`create_resources` function](https://docs.puppetlabs.com/references/latest/function.html#createresources). Default: {}.
@@ -420,12 +422,12 @@ Manages PPA repositories using `add-apt-repository`. Not supported on Debian.
 * `package_name`: Names the package that provides the `apt-add-repository` command. Valid options: a string. Defaults:
 
   * Lucid and Precise: 'python-software-properties'
-  * Trusty, Utopic, and Vivid: 'software-properties-common'
-  * All others: undef
+  * Trusty and newer: 'software-properties-common'
+  * All others: 'python-software-properties'
 
 * `release`: *Optional if lsb-release is installed (unless you're using a different release than indicated by lsb-release, e.g., Linux Mint).* Specifies the operating system of your node. Valid options: a string containing a valid LSB distribution codename. Default: "$lsbdistcodename".
 
-#### Defined Type: `apt:setting`
+#### Defined Type: `apt::setting`
 
 Manages Apt configuration files.
 
@@ -484,6 +486,8 @@ Manages the Apt sources in `/etc/apt/sources.list.d/`.
 * `key_source`: Specifies the source to be passed to `apt::key`. Default: undef. **Note**: This parameter is deprecated and will be removed in future versions of the module.
 
 * `trusted_source`: Specifies whether to authenticate packages from this release, even if the Release file is not signed or the signature can't be checked. Valid options: 'true' and 'false'. Default: undef. This parameter is **deprecated** and will be removed in a future version of the module.
+
+* `notify_update`: *Optional.* Specifies whether to trigger an `apt-get update` run. Valid options: 'true' and 'false'. Default: 'true'.
 
 #### Type: `apt_key`
 

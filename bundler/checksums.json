@@ -1,0 +1,9 @@
+{
+  "LICENSE": "d619768bccce138ace053fae9d6c4393",
+  "Modulefile": "7798600d5e03d084f73efba8aec60772",
+  "README.md": "cc224a3cce0b9f8de66a3f91a335f331",
+  "manifests/bundle.pp": "a81ca0f483f7e79ba71d22194ef8d8aa",
+  "manifests/init.pp": "dbe73cf72ab41fed6b32cb1024e66090",
+  "manifests/install.pp": "228fd74577ef6ff121424c8d12d7f1c8",
+  "templates/Gemfile": "aa3ee35c0d85a4156fff84b563954816"
+}

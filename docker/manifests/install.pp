@@ -1,78 +1,44 @@
 # == Class: docker
 #
 # Module to install an up-to-date version of Docker from a package repository.
-# This module currently works only on Debian, Red Hat
-# and Archlinux based distributions.
+# This module works only on Debian Red Hat and Windows based distributions.
 #
-class docker::install {
-  $docker_command = $docker::docker_command
-  validate_string($docker::version)
-  validate_re($::osfamily, '^(Debian|RedHat|Archlinux|Gentoo)$',
-              'This module only works on Debian or Red Hat based systems or on Archlinux as on Gentoo.')
-  validate_bool($docker::use_upstream_package_source)
+# === Parameters
+# [*version*]
+#   The package version to install, used to set the package name.
+#
+# [*nuget_package_provider_version*]
+#   The version of the NuGet Package provider
+#   Default: undef
+#
+# [*docker_msft_provider_version*]
+#   The version of the Microsoft Docker Provider Module
+#   Default: undef
+#
+# [*docker_ee_package_name*]
+#   The name of the Docker Enterprise Edition package
+#   Default: Docker
 
+
+class docker::install (
+  $version                        = $docker::version,
+  $nuget_package_provider_version = $docker::nuget_package_provider_version,
+  $docker_msft_provider_version   = $docker::docker_msft_provider_version,
+  $docker_ee_package_name         = $docker::docker_ee_package_name
+) {
+  $docker_start_command = $docker::docker_start_command
+  if $::osfamily {
+    assert_type(Pattern[/^(Debian|RedHat|windows)$/], $::osfamily) |$a, $b| {
+      fail translate(('This module only works on Debian, RedHat or Windows.'))
+    }
+  }
   if $docker::version and $docker::ensure != 'absent' {
     $ensure = $docker::version
   } else {
     $ensure = $docker::ensure
   }
 
-  case $::osfamily {
-    'Debian': {
-      if $::operatingsystem == 'Ubuntu' {
-        case $::operatingsystemrelease {
-          # On Ubuntu 12.04 (precise) install the backported 13.10 (saucy) kernel
-          '12.04': { $kernelpackage = [
-                                        'linux-image-generic-lts-trusty',
-                                        'linux-headers-generic-lts-trusty'
-                                      ]
-          }
-          # determine the package name for 'linux-image-extra-$(uname -r)' based
-          # on the $::kernelrelease fact
-          default: { $kernelpackage = "linux-image-extra-${::kernelrelease}" }
-        }
-        $manage_kernel = $docker::manage_kernel
-      } else {
-        # Debian does not need extra kernel packages
-        $manage_kernel = false
-      }
-    }
-    'RedHat': {
-      if $::operatingsystem == 'Amazon' {
-        if versioncmp($::operatingsystemrelease, '3.10.37-47.135') < 0 {
-          fail('Docker needs Amazon version to be at least 3.10.37-47.135.')
-        }
-      }
-      elsif versioncmp($::operatingsystemrelease, '6.5') < 0 {
-        fail('Docker needs RedHat/CentOS version to be at least 6.5.')
-      }
-      $manage_kernel = false
-    }
-    'Archlinux': {
-      $manage_kernel = false
-      if $docker::version {
-        notify { 'docker::version unsupported on Archlinux':
-          message => 'Versions other than latest are not supported on Arch Linux. This setting will be ignored.'
-        }
-      }
-    }
-    'Gentoo': {
-      $manage_kernel = false
-    }
-    default: {}
-  }
-
-  if $manage_kernel {
-    package { $kernelpackage:
-      ensure => present,
-    }
-    if $docker::manage_package {
-      Package[$kernelpackage] -> Package['docker']
-    }
-  }
-
   if $docker::manage_package {
-
     if empty($docker::repo_opt) {
       $docker_hash = {}
     } else {
@@ -85,28 +51,63 @@ class docker::install {
           $pk_provider = 'dpkg'
         }
         'RedHat' : {
-          $pk_provider = 'rpm'
+          $pk_provider = 'yum'
         }
-        'Gentoo' : {
-          $pk_provider = 'portage'
+        'windows' : {
+          fail translate('Custom package source is currently not implemented on windows.')
         }
         default : {
           $pk_provider = undef
         }
       }
+      case $docker::package_source {
+        /docker-engine/ : {
+          ensure_resource('package', 'docker', merge($docker_hash, {
+            ensure   => $ensure,
+            provider => $pk_provider,
+            source   => $docker::package_source,
+            name     => $docker::docker_engine_package_name,
+          }))
+        }
+        /docker-ce/ : {
+          ensure_resource('package', 'docker', merge($docker_hash, {
+            ensure   => $ensure,
+            provider => $pk_provider,
+            source   => $docker::package_source,
+            name     => $docker::docker_ce_package_name,
+          }))
+        }
+        default : {}
+      }
 
-      ensure_resource('package', 'docker', merge($docker_hash, {
-        ensure   => $ensure,
-        provider => $pk_provider,
-        source   => $docker::package_source,
-        name     => $docker::package_name,
-      }))
 
     } else {
-      ensure_resource('package', 'docker', merge($docker_hash, {
-        ensure => $ensure,
-        name   => $docker::package_name,
-      }))
+      if $::osfamily != 'windows' {
+        ensure_resource('package', 'docker', merge($docker_hash, {
+          ensure => $ensure,
+          name   => $docker::docker_package_name,
+        }))
+      } else {
+        $install_script_path = 'C:/Windows/Temp/install_powershell_provider.ps1'
+        file{ $install_script_path:
+          ensure  => present,
+          force   => true,
+          content => template('docker/windows/install_powershell_provider.ps1.erb'),
+          notify  => Exec['install-docker-package']
+        }
+        exec { 'install-docker-package':
+          command     => "& ${install_script_path}",
+          provider    => powershell,
+          refreshonly => true,
+          logoutput   => true,
+          notify      => Exec['service-restart-on-failure'],
+        }
+        exec { 'service-restart-on-failure':
+          command     => 'cmd /c "SC failure Docker reset= 432000 actions= restart/30000/restart/60000/restart/60000"',
+          refreshonly => true,
+          path        => 'c:/Windows/System32/'
+        }
+      }
     }
   }
 }

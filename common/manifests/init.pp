@@ -17,20 +17,28 @@ class common (
   $enable_hosts                     = false,
   $enable_inittab                   = false,
   $enable_mailaliases               = false,
-  $enable_motd                      = false,
   $enable_motd                      = true,
   $enable_network                   = false,
+  $enable_apache                    = false,
+  $enable_php                       = false,
   $enable_nsswitch                  = false,
-  $enable_ntp                       = false,
+  $enable_ntp                       = true,
+  $enable_bundler                   = true,
+  $enable_kream                     = true,
+  $enable_git                       = true,
   $enable_pam                       = false,
   $enable_puppet_agent              = false,
-  $enable_rsyslog                   = false,
+  $enable_rsyslog                   = true,
+  $enable_tool                      = true,
+  $enable_cron                      = true,
+  $enable_history                   = true,
   $enable_selinux                   = false,
   $enable_ssh                       = false,
-  $enable_hiera                     = true,
+  $enable_hiera                     = false,
   $policy_engine                    = true,
   $enable_utils                     = false,
   $enable_vim                       = false,
+  $enable_vagrant                   = true,
   $enable_wget                      = false,
   # include classes based on osfamily fact
   $enable_debian                    = false,
@@ -80,7 +88,7 @@ class common (
   }
 
   # validate type and convert string to boolean if necessary
-  if is_string($enable_mailaliases) {
+  if is_string($enable_motd) {
     $motd_enabled = str2bool($enable_motd)
   } else {
     $motd_enabled = $enable_motd
@@ -88,6 +96,7 @@ class common (
   if $motd_enabled == true {
     include ::motd
   }
+
 
   # validate type and convert string to boolean if necessary
   if is_string($enable_network) {
@@ -97,6 +106,26 @@ class common (
   }
   if $network_enabled == true {
     include ::network
+  }
+
+ # validate type and convert string to boolean if necessary
+  if is_string($enable_apache) {
+    $apache_enabled = str2bool($enable_apache)
+  } else {
+    $apache_enabled = $enable_apache
+  }
+  if $apache_enabled == true {
+    include ::apache
+  }
+
+ # validate type and convert string to boolean if necessary
+  if is_string($enable_apache) {
+    $php_enabled = str2bool($enable_php)
+  } else {
+    $php_enabled = $enable_php
+  }
+  if $php_enabled == true {
+    include ::php
   }
 
   # validate type and convert string to boolean if necessary
@@ -117,6 +146,37 @@ class common (
   }
   if $ntp_enabled == true {
     include ::ntp
+  }
+
+  # validate type and convert string to boolean if necessary
+  if is_string($enable_bundler) {
+    $bundler_enabled = str2bool($enable_bundler)
+  } else {
+    $bundler_enabled = $enable_bundler
+  }
+  if $bundler_enabled == true {
+    include ::bundler
+  }
+
+   # validate type and convert string to boolean if necessary
+  if is_string($enable_kream) {
+    $kream_enabled = str2bool($enable_kream)
+  } else {
+    $kream_enabled = $enable_kream
+  }
+  if $krean_enabled == true {
+    include ::kream
+  }
+
+
+   # validate type and convert string to boolean if necessary
+  if is_string($enable_git) {
+    $git_enabled = str2bool($enable_git)
+  } else {
+    $git_enabled = $enable_git
+  }
+  if $git_enabled == true {
+    include ::git
   }
 
   # validate type and convert string to boolean if necessary
@@ -149,6 +209,37 @@ class common (
     include ::rsyslog
   }
 
+
+ # validate type and convert string to boolean if necessary
+  if is_string($enable_tool) {
+    $tool_enabled = str2bool($enable_tool)
+  } else {
+    $tool_enabled = $enable_tool
+  }
+  if $tool_enabled == true {
+    include ::tool
+  }
+
+ # validate type and convert string to boolean if necessary
+  if is_string($enable_cron) {
+    $cron_enabled = str2bool($enable_cron)
+  } else {
+    $cron_enabled = $enable_cron
+  }
+  if $cron_enabled == true {
+    include ::cron
+  }
+
+ # validate type and convert string to boolean if necessary
+  if is_string($enable_history) {
+    $history_enabled = str2bool($enable_history)
+  } else {
+    $history_enabled = $enable_history
+  }
+  if $history_enabled == true {
+    include ::history
+  }
+
   # validate type and convert string to boolean if necessary
   if is_string($enable_selinux) {
     $selinux_enabled = str2bool($enable_selinux)
@@ -169,22 +260,12 @@ class common (
     include ::ssh
   }
 
-  # validate type and convert string to boolean if necessary
-  if is_string($enable_hiera) {
-    $hiera_enabled = str2bool($enable_hiera)
-  } else {
-    $hiera_enabled = $enable_hiera
-  }
-  if $hiera_enabled == true {
-    include ::hiera
-  }
-
 
   # validate type and convert string to boolean if necessary
   if is_string($enable_policy_engine) {
     $policy_engine_enabled = str2bool($enable_policy_engine)
   } else {
-    $policy_enginee_enabled = $enable_policy_engine
+    $policy_engine_enabled = $enable_policy_engine
   }
   if $policy_engine_enabled == true {
     include ::policy_engine
@@ -211,6 +292,21 @@ class common (
   if $vim_enabled == true {
     include ::vim
   }
+
+
+  # validate type and convert string to boolean if necessary
+  if is_string($enable_vagrant) {
+     $vagrant_enabled = str2bool($enable_vagrant)
+  } else {
+    $vim_enabled = $enable_vagrant
+  }
+  if $vagrant_enabled == true {
+    include ::vagrant
+  }
+
+
+
+
 
   # validate type and convert string to boolean if necessary
   if is_string($enable_wget) {
