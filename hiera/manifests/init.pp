@@ -121,6 +121,10 @@ class hiera (
   file {'/etc/puppetlabs/code/environments/stage/hieradata/stage.yaml':
   ensure   =>  present,
   content  =>  template('hiera/stage.yaml.erb'),
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9efba6f74fd2ad28af39d76b1cfd9531dfdba0fd
   file {'/etc/puppetlabs/code/environments/dev/hieradata/defaults.yaml':
   ensure   =>  present,
   content  =>  template('hiera/defaults.yaml.erb'),
@@ -130,6 +134,10 @@ class hiera (
    if [ '%{environment}' == $hieraenv ]  {
       if ('$mdir stage !~ /%\{.*\}/')  {
       file {[ '/etc/puppetlabs/code/environments/stage','/etc/puppetlabs/code/environments/stage/hieradata/environment','/etc/puppetlabs/code/environments/stage/hieradata/role' ]:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9efba6f74fd2ad28af39d76b1cfd9531dfdba0fd
       if ('$mdir dev !~ /%\{.*\}/')  {
       file {[ '/etc/puppetlabs/code/environments/dev','/etc/puppetlabs/code/environments/dev/hieradata/environment','/etc/puppetlabs/code/environments/dev/hieradata/role' ]:
       ensure => directory,
@@ -137,17 +145,37 @@ class hiera (
      }
     }
  
+<<<<<<< HEAD
      file {'/etc/puppetlabs/code/environments/stage/hieradata/environment/upoint_dv.yaml':
      file {'/etc/puppetlabs/code/environments/dev/hieradata/environment/upoint_dv.yaml':
      ensure  => present,
      content => template('hiera/upoint_dv.yaml.erb'),
      }
+=======
+>>>>>>> 9efba6f74fd2ad28af39d76b1cfd9531dfdba0fd
 
 #include $::roles
 
 
 
+<<<<<<< HEAD
       file {  [ '/etc/puppetlabs/code/environments/stage/hieradata','/etc/puppetlabs/code/environments/dev/hieradata' ]: 
+=======
+      file {  [ '/etc/puppetlabs/code/environments/stage/hieradata' ]: 
+      ensure  => 'directory',
+      owner  => 'root',
+      group  => 'wheel',
+      mode   => '0755',
+      #path   => "/etc/puppetlabs/code/",
+      #section => 'main',
+      #setting => 'hiera_config',
+      #value   => $hieraenv,
+      }
+     }
+     
+
+      file {  [ '/etc/puppetlabs/code/environments/dev/hieradata' ]: 
+>>>>>>> 9efba6f74fd2ad28af39d76b1cfd9531dfdba0fd
       ensure  => 'directory',
       owner  => 'root',
       group  => 'wheel',
