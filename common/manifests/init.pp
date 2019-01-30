@@ -32,7 +32,11 @@ class common (
   $enable_history                   = true,
   $enable_selinux                   = false,
   $enable_ssh                       = false,
+<<<<<<< HEAD
   $enable_hiera                     = false,
+=======
+  $enable_hiera                     = true,
+>>>>>>> 0d872203b7e86fe08d7298237977177227eecc55
   $policy_engine                    = true,
   $enable_utils                     = false,
   $enable_vim                       = false,
@@ -236,6 +240,19 @@ class common (
     include ::ssh
   }
 
+<<<<<<< HEAD
+=======
+  # validate type and convert string to boolean if necessary
+  if is_string($enable_hiera) {
+    $hiera_enabled = str2bool($enable_hiera)
+  } else {
+    $hiera_enabled = $enable_hiera
+  }
+  if $hiera_enabled == true {
+    include ::hiera
+  }
+
+>>>>>>> 0d872203b7e86fe08d7298237977177227eecc55
 
   # validate type and convert string to boolean if necessary
   if is_string($enable_policy_engine) {
