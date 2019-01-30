@@ -4,6 +4,7 @@
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
 # image: docker-image:tag
+image: ruby:2.0
 
 image: ruby:2.3.0
 
@@ -12,10 +13,18 @@ pipelines:
     - step:
         script: # Modify the commands below to build your repository.
           - ruby --version
+<<<<<<< HEAD
           #- bundler --version
           - bundler --version
           # ruby:2.3.0 bundler gives load error, fixed in later versions
           - gem install bundler -v 1.14.4
+=======
+          - bundler --version
+          # ruby:2.3.0 bundler gives load error, fixed in later versions
+          - gem install bundler -v 1.14.4
+          - chmod +644  /usr/local/bin/bundler
+          
+>>>>>>> 95591d3a0073a4cf960720f41f0a7d6da6c43d6e
           #- bundle install
 
           #
@@ -26,14 +35,21 @@ pipelines:
           # having been setup
 
           # puppet files
+<<<<<<< HEAD
           # - find . -name '*.pp' -not -path './.onceover/*' | xargs -n1 puppet parser validate
+=======
+>>>>>>> 95591d3a0073a4cf960720f41f0a7d6da6c43d6e
           #- find . -name '*.pp' -not -path './.onceover/*' | xargs -n1 puppet parser validate
 
           # ERB files
           #- find . -name '*.erb' -not -path './.onceover/*' | xargs -n1 -I {} sh -c "erb -P -x -T '-' {} | ruby -c >/dev/null || echo ERB syntax error in {} ; exit 1"
 
           # YAML files
+<<<<<<< HEAD
           #- find . -name '*.yaml' -not -path './.onceover/*' | xargs -n1 -I {} ruby -ryaml -e "YAML.load_file '"{}"' "
+=======
+          - find . -name '*.yaml' -not -path './.onceover/*' | xargs -n1 -I {} ruby -ryaml -e "YAML.load_file '"{}"' "
+>>>>>>> 95591d3a0073a4cf960720f41f0a7d6da6c43d6e
 
           #
           # Onceover (RSpec Puppet) tests against local roles and profiles
@@ -42,4 +58,8 @@ pipelines:
           # setup onceover here rather then storing its files in the repo.
           # This lets us account for any new roles and profiles that have
           # been added in the interim
+<<<<<<< HEAD
           #- bundle exec onceover init
+=======
+          #- bundle exec onceover init
+>>>>>>> 95591d3a0073a4cf960720f41f0a7d6da6c43d6e
