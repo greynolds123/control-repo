@@ -62,4 +62,8 @@ pipelines:
           #- bundle exec onceover init
 =======
           #- bundle exec onceover init
+<<<<<<< HEAD
 >>>>>>> 95591d3a0073a4cf960720f41f0a7d6da6c43d6e
+=======
+          
+>>>>>>> 335daccba85f97cfdf49bc31c95014ee4847a97e
