@@ -114,7 +114,11 @@ class ruby (
   case $::osfamily {
     'Debian': {
       case $ruby_package {
+<<<<<<< HEAD
         installed: {
+=======
+        'installed': {
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
           $real_ruby_package = $ruby_package
         }
         default:{
@@ -173,10 +177,19 @@ class ruby (
     $rubygems_ensure = $gems_version
   }
 
+<<<<<<< HEAD
   package { 'rubygems':
     ensure  => $rubygems_ensure,
     name    => $rubygems_package,
     require => Package['ruby'],
+=======
+  if $rubygems_package {
+    package { 'rubygems':
+      ensure  => $rubygems_ensure,
+      name    => $rubygems_package,
+      require => Package['ruby'],
+    }
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
   }
 
   if $rubygems_update {
@@ -287,7 +300,11 @@ class ruby (
 
   if $gem_integration {
     case $::osfamily {
+<<<<<<< HEAD
       Debian: {
+=======
+      'Debian': {
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
         if ! $suppress_warnings and $::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '13.04') < 0 {
           warning('No package for rubygems_integration available from default repositories')
         }

@@ -63,7 +63,11 @@
 define ruby::rake
 (
   $task,
+<<<<<<< HEAD
   $rails_env    = $ruby::params::rails_env,
+=======
+  $rails_env    = undef,
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
   $bundle       = false,
   $creates      = undef,
   $cwd          = undef,
@@ -81,7 +85,17 @@ define ruby::rake
   $unless       = undef,
 ) {
 
+<<<<<<< HEAD
   require ruby
+=======
+  require ::ruby
+
+  if $rails_env == undef {
+    $rails_env_real = $ruby::params::rails_env
+  } else {
+    $rails_env_real = $rails_env
+  }
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
 
   # Hmm this works on http://rubular.com/
   # validate_re($task, '^[a-z][a-z0-9]*((:[a-z][a-z0-9]*)?)*$', "The rake task '${task}' does not conform to an expected format.")
@@ -95,9 +109,15 @@ define ruby::rake
 
   # merge the environment and rails_env parameters
   if $environment {
+<<<<<<< HEAD
     $real_environment = unique(flatten([$environment, ["RAILS_ENV=${rails_env}"]]))
   } else {
     $real_environment = "RAILS_ENV=${rails_env}"
+=======
+    $real_environment = unique(flatten([$environment, ["RAILS_ENV=${rails_env_real}"]]))
+  } else {
+    $real_environment = "RAILS_ENV=${rails_env_real}"
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
   }
 
   $real_command = join(['rake', $task],' ')
@@ -108,7 +128,11 @@ define ruby::rake
     ruby::bundle{"ruby_rake_${name}":
       command     => 'exec',
       option      => $real_command,
+<<<<<<< HEAD
       rails_env   => $rails_env,
+=======
+      rails_env   => $rails_env_real,
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
       creates     => $creates,
       cwd         => $cwd,
       environment => $environment,
@@ -123,7 +147,11 @@ define ruby::rake
       tries       => $tries,
       try_sleep   => $try_sleep,
       unless      => $unless,
+<<<<<<< HEAD
       require     => Package['rake']
+=======
+      require     => Package['rake'],
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
     }
   } else {
     exec{"ruby_rake_${name}":
@@ -142,8 +170,14 @@ define ruby::rake
       tries       => $tries,
       try_sleep   => $try_sleep,
       unless      => $unless,
+<<<<<<< HEAD
       require     => Package['rake']
     }
   }
 
+=======
+      require     => Package['rake'],
+    }
+  }
+>>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
 }
