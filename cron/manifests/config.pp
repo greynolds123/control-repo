@@ -5,7 +5,7 @@
   ensure  => present,
   user    => 'root',
   command => '/bin/sh /root/clearCache2016.sh',
-  hour    => '2',
+  hour    => '1',
   minute  => '45',
   }
  
@@ -13,7 +13,7 @@
   ensure  => present,
   user    => 'root',
   command => '/bin/sh /root/TuneDatabase.sh',
-  hour    => '5',
-  minute  => '15',
+  hour    => '0',
+  minute  => '45',
   }
   }
