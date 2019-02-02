@@ -4,7 +4,6 @@
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
 # image: docker-image:tag
-image: ruby:2.0
 
 image: ruby:2.3.0
 
@@ -39,5 +38,4 @@ pipelines:
           # setup onceover here rather then storing its files in the repo.
           # This lets us account for any new roles and profiles that have
           # been added in the interim
-          #- bundle exec onceover init
           #- bundle exec onceover init
