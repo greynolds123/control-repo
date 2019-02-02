@@ -5,15 +5,43 @@
 class docker::params {
   $version                           = undef
   $ensure                            = present
-  $docker_cs                         = false
+  $docker_ce_start_command           = 'dockerd'
+  $docker_ce_package_name            = 'docker-ce'
+  $docker_engine_start_command       = 'docker daemon'
+  $docker_engine_package_name        = 'docker-engine'
+  $docker_ce_channel                 = stable
+  $docker_ee                         = false
+  $docker_ee_start_command           = 'dockerd'
+  if ($::osfamily == 'windows') {
+    $docker_ee_package_name          = 'Docker'
+  } else {
+    $docker_ee_package_name          = 'docker-ee'
+  }
+  $docker_ee_source_location         = undef
+  $docker_ee_key_source              = undef
+  $docker_ee_key_id                  = undef
+  $docker_ee_repos                   = stable
   $tcp_bind                          = undef
   $tls_enable                        = false
   $tls_verify                        = true
-  $tls_cacert                        = '/etc/docker/tls/ca.pem'
-  $tls_cert                          = '/etc/docker/tls/cert.pem'
-  $tls_key                           = '/etc/docker/tls/key.pem'
+  if ($::osfamily == 'windows') {
+    $tls_cacert                        = 'C:/ProgramData/docker/certs.d/ca.pem'
+    $tls_cert                          = 'C:/ProgramData/docker/certs.d/server-cert.pem'
+    $tls_key                           = 'C:/ProgramData/docker/certs.d/server-key.pem'
+    $compose_version                   = '1.21.2'
+    $compose_install_path              = 'C:/Program Files/Docker'
+  } else {
+    $tls_cacert                        = '/etc/docker/tls/ca.pem'
+    $tls_cert                          = '/etc/docker/tls/cert.pem'
+    $tls_key                           = '/etc/docker/tls/key.pem'
+    $compose_version                   = '1.9.0'
+    $compose_install_path              = '/usr/local/bin'
+  }
   $ip_forward                        = true
   $iptables                          = true
+  $ipv6                              = false
+  $ipv6_cidr                         = undef
+  $default_gateway_ipv6              = undef
   $icc                               = undef
   $ip_masq                           = true
   $bip                               = undef
@@ -26,12 +54,13 @@ class docker::params {
   $log_driver                        = undef
   $log_opt                           = []
   $selinux_enabled                   = undef
-  $socket_group                      = undef
+  $socket_group_default              = 'docker'
   $labels                            = []
   $service_state                     = running
   $service_enable                    = true
   $manage_service                    = true
   $root_dir                          = undef
+  $tmp_dir_config                    = true
   $tmp_dir                           = '/tmp/'
   $dns                               = undef
   $dns_search                        = undef
@@ -53,14 +82,12 @@ class docker::params {
   $dm_use_deferred_deletion          = undef
   $dm_blkdiscard                     = undef
   $dm_override_udev_sync_check       = undef
+  $overlay2_override_kernel_check    = false
   $manage_package                    = true
   $package_source                    = undef
-  $manage_kernel                     = true
-  $package_name_default              = 'docker-engine'
+  $docker_command                    = 'docker'
   $service_name_default              = 'docker'
-  $docker_command_default            = 'docker'
   $docker_group_default              = 'docker'
-  $daemon_subcommand                 = 'daemon'
   $storage_devs                      = undef
   $storage_vg                        = undef
   $storage_root_size                 = undef
@@ -72,8 +99,10 @@ class docker::params {
   $storage_pool_autoextend_threshold = undef
   $storage_pool_autoextend_percent   = undef
   $storage_config_template           = 'docker/etc/sysconfig/docker-storage.erb'
-  $compose_version                   = '1.7.0'
-  $compose_install_path              = '/usr/local/bin'
+  $registry_mirror                   = undef
+  $os_lc                             = downcase($::operatingsystem)
+  $docker_msft_provider_version      = undef
+  $nuget_package_provider_version    = undef
 
   case $::osfamily {
     'Debian' : {
@@ -99,46 +128,43 @@ class docker::params {
         }
         default: {
           $package_release = "debian-${::lsbdistcodename}"
-          if (versioncmp($::operatingsystemmajrelease, '8') >= 0) {
-            $service_provider           = 'systemd'
-            $storage_config             = '/etc/default/docker-storage'
-            $service_config_template    = 'docker/etc/sysconfig/docker.systemd.erb'
-            $service_overrides_template = 'docker/etc/systemd/system/docker.service.d/service-overrides-debian.conf.erb'
-            $service_hasstatus          = true
-            $service_hasrestart         = true
-            include docker::systemd_reload
-          } else {
-            $service_provider           = undef
-            $storage_config             = undef
-            $service_config_template    = 'docker/etc/default/docker.erb'
-            $service_overrides_template = undef
-            $service_hasstatus          = undef
-            $service_hasrestart         = undef
-          }
+          $service_provider           = 'systemd'
+          $storage_config             = '/etc/default/docker-storage'
+          $service_config_template    = 'docker/etc/sysconfig/docker.systemd.erb'
+          $service_overrides_template = 'docker/etc/systemd/system/docker.service.d/service-overrides-debian.conf.erb'
+          $service_hasstatus          = true
+          $service_hasrestart         = true
+          include docker::systemd_reload
         }
       }
 
-      $manage_epel = false
-      $package_name = $package_name_default
       $service_name = $service_name_default
-      $docker_command = $docker_command_default
       $docker_group = $docker_group_default
-      $package_repos = 'main'
+      $socket_group = $socket_group_default
       $use_upstream_package_source = true
+      $pin_upstream_package_source = true
+      $apt_source_pin_level = 10
       $repo_opt = undef
-      $nowarn_kernel = false
       $service_config = undef
       $storage_setup_file = undef
 
-      $package_cs_source_location = 'http://packages.docker.com/1.9/apt/repo'
-      $package_cs_key_source = 'http://packages.docker.com/1.9/apt/gpg'
-      $package_cs_key = '0xee6d536cf7dc86e2d7d56f59a178ac6c6238f52e'
+      $package_ce_source_location = "https://download.docker.com/linux/${os_lc}"
+      $package_ce_key_source = "https://download.docker.com/linux/${os_lc}/gpg"
+      $package_ce_key_id = '9DC858229FC7DD38854AE2D88D81803C0EBFCD88'
+      $package_ce_release = $::lsbdistcodename
       $package_source_location = 'http://apt.dockerproject.org/repo'
-      $package_key_source = 'http://apt.dockerproject.org/gpg'
-      $package_key = '58118E89F3A912897C070ADBF76221572C52609D'
+      $package_key_source = 'https://apt.dockerproject.org/gpg'
+      $package_key_check_source = undef
+      $package_key_id = '58118E89F3A912897C070ADBF76221572C52609D'
+      $package_ee_source_location = $docker_ee_source_location
+      $package_ee_key_source = $docker_ee_key_source
+      $package_ee_key_id = $docker_ee_key_id
+      $package_ee_release = $::lsbdistcodename
+      $package_ee_repos = $docker_ee_repos
+      $package_ee_package_name = $docker_ee_package_name
 
-      if ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemmajrelease, '8') >= 0) or
-        ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '15.04') >= 0) {
+
+      if ($service_provider == 'systemd') {
         $detach_service_in_init = false
       } else {
         $detach_service_in_init = true
@@ -152,151 +178,113 @@ class docker::params {
       $service_hasstatus  = true
       $service_hasrestart = true
 
-      if ($::operatingsystem == 'Fedora') or (versioncmp($::operatingsystemrelease, '7.0') >= 0) and $::operatingsystem != 'Amazon' {
-        $service_provider           = 'systemd'
-        $service_config_template    = 'docker/etc/sysconfig/docker.systemd.erb'
-        $service_overrides_template = 'docker/etc/systemd/system/docker.service.d/service-overrides-rhel.conf.erb'
-      } else {
-        $service_config_template    = 'docker/etc/sysconfig/docker.erb'
-        $service_provider           = undef
-        $service_overrides_template = undef
-      }
 
-      if (versioncmp($::operatingsystemrelease, '7.0') < 0) and $::operatingsystem != 'Amazon' {
-        $package_name = 'docker-io'
-        $use_upstream_package_source = false
-        $manage_epel = true
-      } elsif $::operatingsystem == 'Amazon' {
-        $package_name = 'docker'
-        $use_upstream_package_source = false
-        $manage_epel = false
-      } else {
-        $package_name = $package_name_default
-        $use_upstream_package_source = true
-        $manage_epel = false
-      }
-      $package_key_source = 'https://yum.dockerproject.org/gpg'
-      if $::operatingsystem == 'Fedora' {
-        $package_source_location = "https://yum.dockerproject.org/repo/main/fedora/${::operatingsystemmajrelease}"
-      } else {
-        $package_source_location = "https://yum.dockerproject.org/repo/main/centos/${::operatingsystemmajrelease}"
-      }
-      $package_cs_source_location = "https://packages.docker.com/1.9/yum/repo/main/centos/${::operatingsystemmajrelease}"
-      $package_cs_key_source = 'https://packages.docker.com/1.9/yum/gpg'
-      $package_key = undef
-      $package_cs_ke = undef
-      $package_repos = undef
+      $service_provider           = 'systemd'
+      $service_config_template    = 'docker/etc/sysconfig/docker.systemd.erb'
+      $service_overrides_template = 'docker/etc/systemd/system/docker.service.d/service-overrides-rhel.conf.erb'
+      $use_upstream_package_source = true
+
+      $package_ce_source_location = "https://download.docker.com/linux/centos/${::operatingsystemmajrelease}/${::architecture}/${docker_ce_channel}"
+      $package_ce_key_source = 'https://download.docker.com/linux/centos/gpg'
+      $package_ce_key_id = undef
+      $package_ce_release = undef
+      $package_key_id = undef
       $package_release = undef
+      $package_source_location = "https://yum.dockerproject.org/repo/main/centos/${::operatingsystemmajrelease}"
+      $package_key_source = 'https://yum.dockerproject.org/gpg'
+      $package_key_check_source = true
+      $package_ee_source_location = $docker_ee_source_location
+      $package_ee_key_source = $docker_ee_key_source
+      $package_ee_key_id = $docker_ee_key_id
+      $package_ee_release = undef
+      $package_ee_repos = $docker_ee_repos
+      $package_ee_package_name = $docker_ee_package_name
+      $pin_upstream_package_source = undef
+      $apt_source_pin_level = undef
       $service_name = $service_name_default
-      $docker_command = $docker_command_default
-      if (versioncmp($::operatingsystemrelease, '7.0') < 0) or ($::operatingsystem == 'Amazon') {
-        $detach_service_in_init = true
-        if $::operatingsystem == 'OracleLinux' {
-          $docker_group = 'dockerroot'
-        } else {
-          $docker_group = $docker_group_default
-        }
+      $detach_service_in_init = false
+
+      if $use_upstream_package_source {
+        $docker_group = $docker_group_default
+        $socket_group = $socket_group_default
       } else {
-        $detach_service_in_init = false
-        if $use_upstream_package_source {
-          $docker_group = $docker_group_default
-        } else {
-          $docker_group = 'dockerroot'
-        }
-        include docker::systemd_reload
+        $docker_group = 'dockerroot'
+        $socket_group = 'dockerroot'
       }
 
       # repo_opt to specify install_options for docker package
-      if (versioncmp($::operatingsystemmajrelease, '7') == 0) {
-        if $::operatingsystem == 'RedHat' {
-          $repo_opt = '--enablerepo=rhel7-extras'
-        } elsif $::operatingsystem == 'CentOS' {
-          $repo_opt = '--enablerepo=extras'
-        } elsif $::operatingsystem == 'OracleLinux' {
-          $repo_opt = '--enablerepo=ol7_addons'
-        } elsif $::operatingsystem == 'Scientific' {
-          $repo_opt = ''
-        } else {
-          $repo_opt = undef
-        }
-      } elsif (versioncmp($::operatingsystemrelease, '7.0') < 0 and $::operatingsystem == 'OracleLinux') {
-          # FIXME is 'public_ol6_addons' available on all OL6 installs?
-          $repo_opt = '--enablerepo=public_ol6_addons,public_ol6_latest'
+      if $::operatingsystem == 'RedHat' {
+        $repo_opt = '--enablerepo=rhel-7-server-extras-rpms'
+      } elsif $::operatingsystem == 'CentOS' {
+        $repo_opt = '--enablerepo=extras'
       } else {
         $repo_opt = undef
       }
-      if $::kernelversion == '2.6.32' {
-        $nowarn_kernel = true
-      } else {
-        $nowarn_kernel = false
-      }
     }
-    'Archlinux' : {
-      include docker::systemd_reload
-
-      $manage_epel = false
-      $docker_group = $docker_group_default
-      $package_key_source = undef
-      $package_source_location = undef
-      $package_key = undef
-      $package_repos = undef
+    'windows' : {
+      $msft_nuget_package_provider_version = $nuget_package_provider_version
+      $msft_provider_version = $docker_msft_provider_version
+      $msft_package_version = $version
+      $service_config_template = 'docker/windows/config/daemon.json.erb'
+      $service_config = 'C:/ProgramData/docker/config/daemon.json'
+      $docker_group = 'docker'
+      $package_ce_source_location = undef
+      $package_ce_key_source = undef
+      $package_ce_key_id = undef
+      $package_ce_repos = undef
+      $package_ce_release = undef
+      $package_key_id = undef
       $package_release = undef
-      $use_upstream_package_source = false
-      $package_name = 'docker'
+      $package_source_location = undef
+      $package_key_source = undef
+      $package_key_check_source = undef
+      $package_ee_source_location = undef
+      $package_ee_package_name = $docker_ee_package_name
+      $package_ee_key_source = undef
+      $package_ee_key_id = undef
+      $package_ee_repos = undef
+      $package_ee_release = undef
+      $use_upstream_package_source = undef
+      $pin_upstream_package_source = undef
+      $apt_source_pin_level= undef
+      $socket_group = undef
       $service_name = $service_name_default
-      $docker_command = $docker_command_default
-      $detach_service_in_init = false
       $repo_opt = undef
-      $nowarn_kernel = false
-      $service_provider   = 'systemd'
-      $service_overrides_template = 'docker/etc/systemd/system/docker.service.d/service-overrides-archlinux.conf.erb'
-      $service_hasstatus  = true
-      $service_hasrestart = true
-      $service_config = '/etc/conf.d/docker'
-      $service_config_template = 'docker/etc/conf.d/docker.erb'
       $storage_config = undef
       $storage_setup_file = undef
-    }
-    'Gentoo' : {
-      $manage_epel = false
-      $docker_group = $docker_group_default
-      $package_key_source = undef
-      $package_source_location = undef
-      $package_key = undef
-      $package_repos = undef
-      $package_release = undef
-      $use_upstream_package_source = false
-      $package_name = 'app-emulation/docker'
-      $service_name = $service_name_default
-      $docker_command = $docker_command_default
+      $service_provider = undef
+      $service_overrides_template = undef
+      $service_hasstatus = undef
+      $service_hasrestart = undef
       $detach_service_in_init = true
-      $repo_opt = undef
-      $nowarn_kernel = false
-      $service_provider   = 'openrc'
-      $service_overrides_template = 'docker/etc/systemd/system/docker.service.d/service-overrides-archlinux.conf.erb'
-      $service_hasstatus  = true
-      $service_hasrestart = true
-      $service_config = '/etc/conf.d/docker'
-      $service_config_template = 'docker/etc/conf.d/docker.gentoo.erb'
-      $storage_config = undef
-      $storage_setup_file = undef
     }
     default: {
-      $manage_epel = false
       $docker_group = $docker_group_default
+      $socket_group = $socket_group_default
       $package_key_source = undef
+      $package_key_check_source = undef
       $package_source_location = undef
-      $package_key = undef
+      $package_key_id = undef
       $package_repos = undef
       $package_release = undef
+      $package_ce_key_source = undef
+      $package_ce_source_location = undef
+      $package_ce_key_id = undef
+      $package_ce_repos = undef
+      $package_ce_release = undef
+      $package_ee_source_location = undef
+      $package_ee_key_source = undef
+      $package_ee_key_id = undef
+      $package_ee_release = undef
+      $package_ee_repos = undef
+      $package_ee_package_name = undef
       $use_upstream_package_source = true
       $service_overrides_template = undef
       $service_hasstatus  = undef
       $service_hasrestart = undef
       $service_provider = undef
-      $package_name = $package_name_default
+      $package_name = $docker_ce_package_name
       $service_name = $service_name_default
-      $docker_command = $docker_command_default
       $detach_service_in_init = true
       $repo_opt = undef
       $nowarn_kernel = false
@@ -304,6 +292,8 @@ class docker::params {
       $storage_config = undef
       $storage_setup_file = undef
       $service_config_template = undef
+      $pin_upstream_package_source = undef
+      $apt_source_pin_level = undef
     }
   }
 

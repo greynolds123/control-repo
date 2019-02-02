@@ -15,7 +15,6 @@ pipelines:
           - ruby --version
 <<<<<<< HEAD
           #- bundler --version
-          - bundler --version
           # ruby:2.3.0 bundler gives load error, fixed in later versions
           - gem install bundler -v 1.14.4
 =======
@@ -37,19 +36,26 @@ pipelines:
           # puppet files
 <<<<<<< HEAD
           # - find . -name '*.pp' -not -path './.onceover/*' | xargs -n1 puppet parser validate
+<<<<<<< HEAD
 =======
 >>>>>>> 95591d3a0073a4cf960720f41f0a7d6da6c43d6e
           #- find . -name '*.pp' -not -path './.onceover/*' | xargs -n1 puppet parser validate
+=======
+>>>>>>> 2287e1566e6118e90e2ae9c89b8253c6a3a6fc95
 
           # ERB files
           #- find . -name '*.erb' -not -path './.onceover/*' | xargs -n1 -I {} sh -c "erb -P -x -T '-' {} | ruby -c >/dev/null || echo ERB syntax error in {} ; exit 1"
 
           # YAML files
 <<<<<<< HEAD
+<<<<<<< HEAD
           #- find . -name '*.yaml' -not -path './.onceover/*' | xargs -n1 -I {} ruby -ryaml -e "YAML.load_file '"{}"' "
 =======
           - find . -name '*.yaml' -not -path './.onceover/*' | xargs -n1 -I {} ruby -ryaml -e "YAML.load_file '"{}"' "
 >>>>>>> 95591d3a0073a4cf960720f41f0a7d6da6c43d6e
+=======
+          - find . -name '*.yaml' -not -path './.onceover/*' | xargs -n1 -I {} ruby -ryaml -e "YAML.load_file '"{}"' "
+>>>>>>> 2287e1566e6118e90e2ae9c89b8253c6a3a6fc95
 
           #
           # Onceover (RSpec Puppet) tests against local roles and profiles

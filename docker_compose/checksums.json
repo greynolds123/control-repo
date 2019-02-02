@@ -1,0 +1,13 @@
+{
+  "CHANGELOG.md": "dd11fa0888d7d7fa7ff31506707f25e4",
+  "IMG_3369.PNG": "56003344f4ec840e83799887a6f8a693",
+  "LICENSE": "fa818a259cbed7ce8bc2a22d35a464fc",
+  "README.markdown": "ff447e78c4fbf3e93a1679c83d5ba9e3",
+  "Rakefile": "f37e6131fe7de9a49b09d31596f5fbf1",
+  "manifests/init.pp": "a09b3108073533815396cc2795e11136",
+  "manifests/params.pp": "bd9c61916f0d0270f5dcbad8d9b2abc1",
+  "metadata.json": "25563c231188f56331d84fa89dadb8a5",
+  "spec/spec.opts": "a600ded995d948e393fbe2320ba8e51c",
+  "spec/spec_helper.rb": "3ea886dd135e120afa31e0aab12e85b0",
+  "tests/init.pp": "033a6f55ede14cf1737b43d5fe9d4b6e"
+}
