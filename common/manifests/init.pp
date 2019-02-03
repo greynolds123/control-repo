@@ -32,12 +32,8 @@ class common (
   $enable_history                   = true,
   $enable_selinux                   = false,
   $enable_ssh                       = false,
-<<<<<<< HEAD
   $enable_hiera                     = false,
-=======
-  $enable_hiera                     = true,
->>>>>>> 0d872203b7e86fe08d7298237977177227eecc55
-  $policy_engine                    = true,
+  $enable_policyengine              = true,
   $enable_utils                     = false,
   $enable_vim                       = false,
   $enable_wget                      = false,
@@ -109,7 +105,7 @@ class common (
     include ::network
   }
 
- # validate type and convert string to boolean if necessary
+  # validate type and convert string to boolean if necessary
   if is_string($enable_apache) {
     $apache_enabled = str2bool($enable_apache)
   } else {
@@ -119,7 +115,7 @@ class common (
     include ::apache
   }
 
- # validate type and convert string to boolean if necessary
+  # validate type and convert string to boolean if necessary
   if is_string($enable_apache) {
     $php_enabled = str2bool($enable_php)
   } else {
@@ -149,7 +145,7 @@ class common (
     include ::ntp
   }
 
-   # validate type and convert string to boolean if necessary
+  # validate type and convert string to boolean if necessary
   if is_string($enable_git) {
     $git_enabled = str2bool($enable_git)
   } else {
@@ -190,7 +186,7 @@ class common (
   }
 
 
- # validate type and convert string to boolean if necessary
+  # validate type and convert string to boolean if necessary
   if is_string($enable_tool) {
     $tool_enabled = str2bool($enable_tool)
   } else {
@@ -200,7 +196,7 @@ class common (
     include ::tool
   }
 
- # validate type and convert string to boolean if necessary
+  # validate type and convert string to boolean if necessary
   if is_string($enable_cron) {
     $cron_enabled = str2bool($enable_cron)
   } else {
@@ -210,7 +206,7 @@ class common (
     include ::cron
   }
 
- # validate type and convert string to boolean if necessary
+  # validate type and convert string to boolean if necessary
   if is_string($enable_history) {
     $history_enabled = str2bool($enable_history)
   } else {
@@ -240,8 +236,6 @@ class common (
     include ::ssh
   }
 
-<<<<<<< HEAD
-=======
   # validate type and convert string to boolean if necessary
   if is_string($enable_hiera) {
     $hiera_enabled = str2bool($enable_hiera)
@@ -252,15 +246,13 @@ class common (
     include ::hiera
   }
 
->>>>>>> 0d872203b7e86fe08d7298237977177227eecc55
-
   # validate type and convert string to boolean if necessary
-  if is_string($enable_policy_engine) {
-    $policy_engine_enabled = str2bool($enable_policy_engine)
+  if is_string($enable_policyengine) {
+    $policyengine_enabled = str2bool($enable_policyengine)
   } else {
-    $policy_engine_enabled = $enable_policy_engine
+    $policyengine_enabled = $enable_policyengine
   }
-  if $policy_engine_enabled == true {
+  if $policyengine_enabled == true {
     include ::policy_engine
   }
 

@@ -1,31 +1,19 @@
 # Puppet class that controls the Kubelet service
 
 class kubernetes::service (
-
-  Boolean $controller                = $kubernetes::controller,
-  Boolean $bootstrap_controller      = $kubernetes::bootstrap_controller,
-  String $container_runtime          = $kubernetes::container_runtime,
-  String $kube_dns_ip                = $kubernetes::kube_dns_ip,
-  Optional[String] $etcd_ip          = $kubernetes::etcd_ip,
+  String $container_runtime         = $kubernetes::container_runtime,
+  Boolean $controller               = $kubernetes::controller,
+  Boolean $manage_docker            = $kubernetes::manage_docker,
+  Boolean $manage_etcd              = $kubernetes::manage_etcd,
+  String $kubernetes_version        = $kubernetes::kubernetes_version,
+  Optional[String] $cloud_provider  = $kubernetes::cloud_provider,
+  Optional[String] $cloud_config    = $kubernetes::cloud_config,
 ){
-
-  $peeruls = inline_template("'{\"peerURLs\":[\"http://${etcd_ip}:2380\"]}'")
-
-  file {'/etc/systemd/system/kubelet.service.d':
-    ensure => 'directory',
+  file { '/etc/systemd/system/kubelet.service.d':
+    ensure => directory,
   }
 
-  file {'/etc/systemd/system/kubelet.service.d/kubernetes.conf':
-    ensure  => 'file',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => template('kubernetes/kubernetes.conf.erb'),
-    require => File['/etc/systemd/system/kubelet.service.d'],
-    notify  => Exec['Reload systemd'],
-  }
-
-  exec { 'Reload systemd':
+  exec { 'kubernetes-systemd-reload':
     path        => '/bin',
     command     => 'systemctl daemon-reload',
     refreshonly => true,
@@ -33,39 +21,40 @@ class kubernetes::service (
 
   case $container_runtime {
     'docker': {
-      service { 'docker':
-        ensure => running,
-        enable => true,
+
+      if $manage_docker == true {
+        service { 'docker':
+          ensure => running,
+          enable => true,
+        }
       }
 
-      service {'kubelet':
-        ensure    => running,
-        enable    => true,
-        subscribe => File['/etc/systemd/system/kubelet.service.d/kubernetes.conf'],
-        require   => Service['docker'],
-      }
     }
 
     'cri_containerd': {
-      service {'containerd':
-        ensure  => running,
-        enable  => true,
-        require => Exec['Reload systemd'],
-        before  => Service['kubelet'],
+      file { '/etc/systemd/system/kubelet.service.d/0-containerd.conf':
+        ensure  => file,
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0644',
+        content => template('kubernetes/0-containerd.conf.erb'),
+        require => File['/etc/systemd/system/kubelet.service.d'],
+        notify  => Exec['kubernetes-systemd-reload'],
       }
 
-      service {'cri-containerd':
-        ensure  => running,
-        enable  => true,
-        require => Exec['Reload systemd'],
-        before  => Service['kubelet'],
+      file { '/etc/systemd/system/containerd.service':
+        ensure  => file,
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0644',
+        content => template('kubernetes/containerd.service.erb'),
+        notify  => Exec['kubernetes-systemd-reload'],
       }
 
-      service {'kubelet':
-        ensure    => running,
-        enable    => true,
-        subscribe => File['/etc/systemd/system/kubelet.service.d/kubernetes.conf'],
-        require   => [Service['containerd'], Service['cri-containerd']],
+      service { 'containerd':
+        ensure  => running,
+        enable  => true,
+        require => File['/etc/systemd/system/kubelet.service.d/0-containerd.conf'],
       }
     }
 
@@ -74,17 +63,47 @@ class kubernetes::service (
     }
   }
 
-  if $bootstrap_controller {
-
-    exec {'Checking for the Kubernetes cluster to be ready':
-      path        => ['/usr/bin', '/bin'],
-      command     => 'kubectl get nodes | grep -w NotReady',
-      tries       => 50,
-      try_sleep   => 10,
-      logoutput   => true,
-      unless      => 'kubectl get nodes',
-      environment => [ 'HOME=/root', 'KUBECONFIG=/root/admin.conf'],
-      require     => [ Service['kubelet'], File['/root/admin.conf']],
+  if $controller and $manage_etcd {
+    service { 'etcd':
+      ensure  => running,
+      enable  => true,
+      require => File['/etc/systemd/system/etcd.service']
     }
+  }
+
+  # RedHat needs to have CPU and Memory accounting enabled to avoid systemd proc errors
+  if $facts['os']['family'] == 'RedHat' {
+    file { '/etc/systemd/system/kubelet.service.d/11-cgroups.conf':
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      content => "[Service]\nCPUAccounting=true\nMemoryAccounting=true\n",
+      require => File['/etc/systemd/system/kubelet.service.d'],
+      notify  => Exec['kubernetes-systemd-reload'],
+    }
+  }
+
+  # v1.12 and up get the cloud config parameters from config file
+  if $kubernetes_version =~ /1.1(0|1)/ and !empty($cloud_provider) {
+    # Cloud config is not used by all providers, but will cause service startup fail if specified but missing
+    if empty($cloud_config) {
+      $kubelet_extra_args = "--cloud-provider=${cloud_provider}"
+    } else {
+      $kubelet_extra_args = "--cloud-provider=${cloud_provider} --cloud-config=${cloud_config}"
+    }
+    file { '/etc/systemd/system/kubelet.service.d/20-cloud.conf':
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      content => template('kubernetes/20-cloud.conf.erb'),
+      require => File['/etc/systemd/system/kubelet.service.d'],
+      notify  => Exec['kubernetes-systemd-reload'],
+    }
+  }
+
+  service { 'kubelet':
+    enable => true
   }
 }
