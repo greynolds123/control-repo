@@ -9,15 +9,16 @@ build:
     - psql -c 'create role shippable with superuser;' -U postgres
     - psql -c 'create database myapp_test;' -U postgres                     
 
-env:      
+env:     
+  - Dev_docker 
   - dev                                          
   - production                          
   - stage                                                                
-
+  
 build:                                                  
   pre_ci:                               
   pre_ci_boot:                          
-    image_name: Ruby 2.3.0
+    image_name: Ruby 2.0.0p648
     image_tag: ruby
     pull:
     options:
