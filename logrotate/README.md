@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 What is it?
-===========
 
 A Puppet module that manages logrotate and associated rules
 
@@ -38,7 +36,6 @@ Contribute:
 * Push new topic branch
 * Submit a PR
 
-=======
 # Logrotate module for Puppet
 
 [![Build Status](https://secure.travis-ci.org/rodjek/puppet-logrotate.png)](http://travis-ci.org/rodjek/puppet-logrotate)
@@ -169,4 +166,3 @@ logrotate::rule { 'apache':
   postrotate    => '/etc/init.d/httpd restart',
 }
 ```
->>>>>>> 9efba6f74fd2ad28af39d76b1cfd9531dfdba0fd

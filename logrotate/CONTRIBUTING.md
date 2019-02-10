@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 This module has grown over time based on a range of contributions from
 people using it. If you follow these contributing guidelines your patch
 will likely make it into a release a little quicker.
@@ -89,7 +88,6 @@ can use `BEAKER_DESTROY=no` and `BEAKER_PROVISION=no`. On the first run you will
 at least need `BEAKER_PROVISION` set to yes (the default). The Vagrantfile
 for the created virtual machines will be in `.vagrant/beaker_vagrant_files`.
 
-=======
 Thanks for contributing to puppet-logrotate! A couple of notes to help you out:
 
  * Please don't bump the module version number.
@@ -118,4 +116,3 @@ script/cibuild
 
 This will run all the rspec-puppet tests followed by puppet-lint to catch any
 style issues.
->>>>>>> 9efba6f74fd2ad28af39d76b1cfd9531dfdba0fd
