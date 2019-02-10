@@ -7,19 +7,11 @@
 # Time: 11:31:26
 ###########################
 
-<<<<<<< HEAD
 IP='/root/myserver.txt'
 
 cwd='/sbin/iptables'
 
 myip='/root/myserver.txt'
-=======
-IP=~root/myserver.txt
-
-cwd='/sbin/iptables'
-
-myip=~root/myserver.txt
->>>>>>> 9efba6f74fd2ad28af39d76b1cfd9531dfdba0fd
 
 iptsave='/sbin/service iptables status'
 
@@ -38,11 +30,7 @@ read -p "Set ssh key for root? [y/n] " rk
 
     if [ $rk = n ]; then
 
-<<<<<<< HEAD
       exit 1
-=======
-      !$k
->>>>>>> 9efba6f74fd2ad28af39d76b1cfd9531dfdba0fd
 fi
  fi
 
@@ -62,11 +50,7 @@ fi
 
    echo $d;
 
-<<<<<<< HEAD
   ssh-copy-id root@$d
-=======
- ssh-copy-id root@$d
->>>>>>> 9efba6f74fd2ad28af39d76b1cfd9531dfdba0fd
 
        done
 
@@ -80,8 +64,6 @@ fi
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 22 -j ACCEPT
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8140 -j ACCEPT
- 
- ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8142 -j ACCEPT
  
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8143 -j ACCEPT
 
@@ -104,20 +86,16 @@ fi
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 82 -j ACCEPT
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8080 -j ACCEPT
-<<<<<<< HEAD
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8082 -j ACCEPT
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8081 -j ACCEPT
 
-=======
- 
->>>>>>> 9efba6f74fd2ad28af39d76b1cfd9531dfdba0fd
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8082 -j ACCEPT
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8081 -j ACCEPT
 
-ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8082 -j ACCEPT
+ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8082 -j ACCEPT
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 749 -j ACCEPT
 
@@ -129,7 +107,7 @@ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8082 -j ACCEPT
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 5432 -j ACCEPT
 
-ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 25151 -j ACCEPT
+ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 25151 -j ACCEPT
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 69 -j ACCEPT
 
@@ -140,7 +118,6 @@ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 25151 -j ACCEPT
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 5000 -j ACCEPT
 
  ssh root@$d  $cwd -A INPUT  -p udp -s $i --dport 8009 -j ACCEPT
-<<<<<<< HEAD
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8000 -j ACCEPT
 
@@ -149,11 +126,6 @@ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 25151 -j ACCEPT
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 2377 -j ACCEPT
 
 
-=======
- 
- ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8000 -j ACCEPT
-
->>>>>>> 9efba6f74fd2ad28af39d76b1cfd9531dfdba0fd
  ssh root@$d  $cwd -A INPUT -m limit --limit 15/minute -j LOG --log-level 7 --log-prefix "Dropped";
 
        done
@@ -166,13 +138,8 @@ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 25151 -j ACCEPT
 
  ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 8140 -j ACCEPT
  
-<<<<<<< HEAD
- ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 8142 -j ACCEPT
- 
  ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 8143 -j ACCEPT
  
-=======
->>>>>>> 209d587b6584a51303b8c7fc06031149c81fd4e8
  ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 8143 -j ACCEPT
 
  ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 61613 -j ACCEPT
@@ -192,11 +159,7 @@ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 25151 -j ACCEPT
  ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 8080 -j ACCEPT
 
  ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 8082 -j ACCEPT
-<<<<<<< HEAD
 
-=======
- 
->>>>>>> 9efba6f74fd2ad28af39d76b1cfd9531dfdba0fd
  ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 8000 -j ACCEPT
 
 
@@ -206,24 +169,9 @@ done
 
     do
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 22 -j ACCEPT
-=======
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 22 -j ACCEPT
->>>>>>> 9efba6f74fd2ad28af39d76b1cfd9531dfdba0fd
-=======
- ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 22 -j ACCEPT
->>>>>>> 693807604e73971572b820d7fb653583c6c74653
 
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 8140 -j ACCEPT
- 
-<<<<<<< HEAD
- ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 8142 -j ACCEPT
- 
-=======
->>>>>>> 209d587b6584a51303b8c7fc06031149c81fd4e8
- ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 8143 -j ACCEPT
 
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 61613 -j ACCEPT
 
@@ -247,11 +195,7 @@ ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 22 -j ACCEPT
 
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 8082 -j ACCEPT
 
-<<<<<<< HEAD
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 749 -j ACCEPT
-=======
-ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 749 -j ACCEPT
->>>>>>> 9efba6f74fd2ad28af39d76b1cfd9531dfdba0fd
 
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 88 -j ACCEPT
 
@@ -259,11 +203,7 @@ ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 749 -j ACCEPT
 
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 5222 -j ACCEPT
 
-<<<<<<< HEAD
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 5432 -j ACCEPT
-=======
-ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 5432 -j ACCEPT
->>>>>>> 9efba6f74fd2ad28af39d76b1cfd9531dfdba0fd
 
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 25151 -j ACCEPT
 
@@ -274,17 +214,12 @@ ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 5432 -j ACCEPT
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 5000 -j ACCEPT
 
  ssh root@$d  $cwd -A OUTPUT  -p udp -s $o --dport 8009 -j ACCEPT
-<<<<<<< HEAD
 
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 8000 -j ACCEPT
  
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 2376 -j ACCEPT
  
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 2377 -j ACCEPT
-=======
- 
- ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 8000 -j ACCEPT
->>>>>>> 9efba6f74fd2ad28af39d76b1cfd9531dfdba0fd
 
  ssh root@$d  $cwd -A OUTPUT -m limit --limit 15/minute -j LOG --log-level 7 --log-prefix "Dropped";
 
@@ -297,7 +232,4 @@ ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 5432 -j ACCEPT
 fi
 
    exit 0
-<<<<<<< HEAD
 
-=======
->>>>>>> 9efba6f74fd2ad28af39d76b1cfd9531dfdba0fd
