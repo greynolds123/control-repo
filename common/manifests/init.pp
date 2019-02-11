@@ -1,4 +1,4 @@
-# == Class: common
+# == Class:common
 #
 # This class is applied to *ALL* nodes
 #
@@ -17,8 +17,6 @@ class common (
   $enable_hosts                     = false,
   $enable_inittab                   = false,
   $enable_mailaliases               = false,
-  $enable_motd                      = false,
-  $enable_motd                      = false,
   $enable_motd                      = true,
   $enable_network                   = false,
   $enable_nsswitch                  = false,
