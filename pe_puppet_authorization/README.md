@@ -205,8 +205,8 @@ pe_puppet_authorization::rule { 'catalog_request':
   path                       => '/etc/puppetlabs/puppetserver/conf.d/auth.conf',
   notify                     => Service['pe-puppetserver'],
 }
-~~~
->>>>>>> foss/master
+
+foss/master
 
 ## Reference
 

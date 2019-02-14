@@ -1,4 +1,4 @@
-# == Class: common
+# == Class:common
 #
 # This class is applied to *ALL* nodes
 #
@@ -17,15 +17,7 @@ class common (
   $enable_hosts                     = false,
   $enable_inittab                   = false,
   $enable_mailaliases               = false,
-<<<<<<< HEAD
-  $enable_motd                      = false,
-=======
-<<<<<<< HEAD
-  $enable_motd                      = false,
-=======
   $enable_motd                      = true,
->>>>>>> 5e468abb61fdb21f96c229f413b658c9451e7a7e
->>>>>>> 65278082df726ecc5bc5bf5888db3bb047ac06d4
   $enable_network                   = false,
   $enable_nsswitch                  = false,
   $enable_ntp                       = false,
@@ -34,14 +26,8 @@ class common (
   $enable_rsyslog                   = false,
   $enable_selinux                   = false,
   $enable_ssh                       = false,
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
   $enable_hiera                     = true,
   $policy_engine                    = true,
->>>>>>> 5e468abb61fdb21f96c229f413b658c9451e7a7e
->>>>>>> 65278082df726ecc5bc5bf5888db3bb047ac06d4
   $enable_utils                     = false,
   $enable_vim                       = false,
   $enable_wget                      = false,
@@ -183,10 +169,7 @@ class common (
   }
 
   # validate type and convert string to boolean if necessary
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
+  
   if is_string($enable_hiera) {
     $hiera_enabled = str2bool($enable_hiera)
   } else {
@@ -210,8 +193,6 @@ class common (
 
 
   # validate type and convert string to boolean if necessary
->>>>>>> 5e468abb61fdb21f96c229f413b658c9451e7a7e
->>>>>>> 65278082df726ecc5bc5bf5888db3bb047ac06d4
   if is_string($enable_utils) {
     $utils_enabled = str2bool($enable_utils)
   } else {
