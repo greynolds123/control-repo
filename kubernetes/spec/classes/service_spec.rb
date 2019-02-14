@@ -1,98 +1,143 @@
 require 'spec_helper'
 describe 'kubernetes::service', :type => :class do
+  let(:pre_condition) { 'include kubernetes; include kubernetes::config' }
   let(:facts) do
     {
-      :osfamily         => 'Debian',
-      :operatingsystem  => 'Ubuntu',
+      :kernel           => 'Linux',
       :os               => {
+        :family => "Debian",
         :name    => 'Ubuntu',
         :release => {
           :full => '16.04',
         },
+        :distro => {
+          :codename => "xenial",
+        },
+      },
+      :ec2_metadata     => {
+        :hostname => 'ip-10-10-10-1.ec2.internal',
       },
     }
   end
- let(:pre_condition) { 'class {"kubernetes::config":
-    kubernetes_version => "1.7.3",
-    container_runtime => "docker",
-    cni_cluster_cidr => "10.0.0.0/24",
-    cni_node_cidr => true,
-    cluster_service_cidr => "10.0.0.0/24",
-    kube_dns_ip => "10.0.0.10",
-    kube_dns_version => "1.14.2",
-    kube_proxy_version => "1.6.6",
-    controller => true,
-    bootstrap_controller => false,
-    bootstrap_controller_ip => "127.0.0.1",
-    worker => false,
-    node_name => "kube_host",
-    kube_api_advertise_address => "127.0.0.1",
-    etcd_version => "3.0.17",
-    etcd_ip => "127.0.01",
-    etcd_initial_cluster => "foo",
-    bootstrap_token => "foo",
-    bootstrap_token_name => "foo",
-    bootstrap_token_description => "foo",
-    bootstrap_token_id => "foo",
-    bootstrap_token_secret => "foo",
-    bootstrap_token_usage_bootstrap_authentication => "foo",
-    bootstrap_token_usage_bootstrap_signing => "foo",
-    bootstrap_token_expiration => "foo",
-    certificate_authority_data => "foo",
-    client_certificate_data_controller => "foo",
-    client_certificate_data_controller_manager => "foo",
-    client_certificate_data_scheduler => "foo",
-    client_certificate_data_worker => "foo",
-    client_certificate_data_admin => "foo",
-    client_key_data_controller => "foo",
-    client_key_data_controller_manager => "foo",
-    client_key_data_scheduler => "foo",
-    client_key_data_worker => "foo",
-    client_key_data_admin => "foo",
-    apiserver_kubelet_client_crt => "foo",
-    apiserver_kubelet_client_key => "foo",
-    apiserver_crt => "foo",
-    apiserver_key => "foo",
-    apiserver_extra_arguments => ["--some-extra-arg=foo"],
-    kubernetes_fqdn => "kube.foo.dev",
-    ca_crt => "foo",
-    ca_key => "foo",
-    front_proxy_ca_crt => "foo",
-    front_proxy_ca_key => "foo",
-    front_proxy_client_crt => "foo",
-    front_proxy_client_key => "foo",
-    sa_key => "foo",
-    sa_pub => "foo" }
-    ' }
-  context 'with defaults for all params' do
+
+  context 'with controller => true and container_runtime => cri_containerd and manage_etcd => true' do
     let(:params) do
       {
-        'container_runtime' => 'docker',
-	      'controller' => false,
-        'bootstrap_controller' => false,
-        'etcd_ip' => '127.0.0.1',
-        'kube_dns_ip' => '10.0.0.10',
+        'kubernetes_version' => '1.10.2',
+        'container_runtime' => 'cri_containerd',
+        'controller' => true,
+        'cloud_provider' => '',
+        'cloud_config' => '',
+        'manage_docker' => true,
+        'manage_etcd' => true,
       }
     end
+   it { should contain_file('/etc/systemd/system/kubelet.service.d')}
+   it { should contain_file('/etc/systemd/system/kubelet.service.d/0-containerd.conf')}
+   it { should contain_file('/etc/systemd/system/containerd.service')}
+   it { is_expected.to_not contain_file('/etc/systemd/system/kubelet.service.d/20-cloud.conf')}
+   it { should contain_exec('kubernetes-systemd-reload')}
+   it { should contain_service('containerd')}
+   it { should contain_service('etcd')}
+   it { should contain_service('kubelet')}
 
-   it { should contain_service('docker') }
-   it { should contain_file('/etc/systemd/system/kubelet.service.d') }
-   it { should contain_file('/etc/systemd/system/kubelet.service.d/kubernetes.conf') }
-   it { should contain_exec('Reload systemd') }
-   it { should contain_service('kubelet') }
   end
 
-  context 'with bootstrap_controller => yes' do
+  context 'with controller => true and container_runtime => docker and manage_docker => true and manage_etcd => false' do
     let(:params) do
       {
+        'kubernetes_version' => '1.10.2',
         'container_runtime' => 'docker',
-	      'bootstrap_controller' => true,
         'controller' => true,
-        'etcd_ip' => '127.0.0.1',
-        'kube_dns_ip' => '10.0.0.10',
+        'cloud_provider' => '',
+        'cloud_config' => '',
+        'manage_docker' => true,
+        'manage_etcd' => false,
       }
     end
+    it { should contain_service('docker')}
+    it { should_not contain_service('etcd')}
+    it { should contain_service('kubelet')}
 
-    it { should contain_exec('Checking for the Kubernetes cluster to be ready')}
+  end
+
+  context 'with controller => true and container_runtime => docker and manage_docker => false and manage_etcd => true' do
+    let(:params) do
+        {
+            'kubernetes_version' => '1.10.2',
+            'container_runtime' => 'docker',
+            'controller' => true,
+            'cloud_provider' => '',
+            'cloud_config' => '',
+            'manage_docker' => false,
+            'manage_etcd' => true,
+        }
+    end
+    it { should_not contain_service('docker')}
+    it { should contain_service('etcd')}
+    it { should contain_service('kubelet')}
+  end
+
+  context 'with os.family => RedHat' do
+    let(:facts) do
+      super().merge({ :os => { :family => 'RedHat' }})
+    end
+
+    it { is_expected.to contain_file('/etc/systemd/system/kubelet.service.d/11-cgroups.conf') }
+  end
+
+  context 'with version => 1.10 and cloud_provider => aws and cloud_config => undef' do
+    let(:params) do
+        {
+            'kubernetes_version' => '1.10.2',
+            'container_runtime' => 'docker',
+            'controller' => true,
+            'manage_docker' => true,
+            'manage_etcd' => true,
+            'cloud_provider' => 'aws',
+            'cloud_config' => '',
+        }
+    end
+    it { is_expected.to contain_file('/etc/systemd/system/kubelet.service.d/20-cloud.conf') \
+      .with_content(/--cloud-provider=aws/)
+    }
+    it { is_expected.to_not contain_file('/etc/systemd/system/kubelet.service.d/20-cloud.conf') \
+      .with_content(/--cloud-config=/)
+    }
+  end
+
+  context 'with version => 1.10 and cloud_provider => openstack and cloud_config => /etc/kubernetes/cloud.conf' do
+    let(:params) do
+        {
+            'kubernetes_version' => '1.10.2',
+            'container_runtime' => 'docker',
+            'controller' => true,
+            'manage_docker' => true,
+            'manage_etcd' => true,
+            'cloud_provider' => 'openstack',
+            'cloud_config' => '/etc/kubernetes/cloud.conf',
+        }
+    end
+    it { is_expected.to contain_file('/etc/systemd/system/kubelet.service.d/20-cloud.conf') \
+      .with_content(/--cloud-provider=openstack/)
+    }
+    it { is_expected.to contain_file('/etc/systemd/system/kubelet.service.d/20-cloud.conf') \
+      .with_content(%r|--cloud-config=/etc/kubernetes/cloud.conf|)
+    }
+  end
+
+  context 'with version => 1.12 and cloud_provider => aws' do
+    let(:params) do
+        {
+            'kubernetes_version' => '1.12.3',
+            'container_runtime' => 'docker',
+            'controller' => true,
+            'manage_docker' => true,
+            'manage_etcd' => true,
+            'cloud_provider' => 'aws',
+            'cloud_config' => '',
+        }
+    end
+    it { is_expected.to_not contain_file('/etc/systemd/system/kubelet.service.d/20-cloud.conf')}
   end
 end

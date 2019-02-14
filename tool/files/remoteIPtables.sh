@@ -95,7 +95,7 @@ fi
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8081 -j ACCEPT
 
-ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8082 -j ACCEPT
+ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8082 -j ACCEPT
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 749 -j ACCEPT
 
@@ -107,7 +107,7 @@ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8082 -j ACCEPT
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 5432 -j ACCEPT
 
-ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 25151 -j ACCEPT
+ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 25151 -j ACCEPT
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 69 -j ACCEPT
 
@@ -169,7 +169,7 @@ done
 
     do
 
-ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 22 -j ACCEPT
+ ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 22 -j ACCEPT
 
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 8140 -j ACCEPT
 

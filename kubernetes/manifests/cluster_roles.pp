@@ -1,43 +1,40 @@
-# This class configures the RBAC roles fro Kubernetes 1.6
+# This class configures the RBAC roles for Kubernetes 1.10.x
 
 class kubernetes::cluster_roles (
+  Optional[Boolean] $controller = $kubernetes::controller,
+  Optional[Boolean] $worker = $kubernetes::worker,
+  String $node_name = $kubernetes::node_name,
+  String $container_runtime = $kubernetes::container_runtime,
+  Optional[Array] $ignore_preflight_errors = []
+) {
+  $path = ['/usr/bin','/bin','/sbin','/usr/local/bin']
+  $env_controller = ['HOME=/root', 'KUBECONFIG=/etc/kubernetes/admin.conf']
+  #Worker nodes do not have admin.conf present
+  $env_worker = ['HOME=/root', 'KUBECONFIG=/etc/kubernetes/kubelet.conf']
 
-  Boolean $bootstrap_controller = $kubernetes::bootstrap_controller,
-  String $kubernetes_version    = $kubernetes::kubernetes_version,
-){
-
-  if $bootstrap_controller {
-
-  Exec {
-    path        => ['/usr/bin', '/bin'],
-    environment => [ 'HOME=/root', 'KUBECONFIG=/root/admin.conf'],
-    logoutput   => true,
-    tries       => 5,
-    try_sleep   => 5,
-    }
-
-  exec { 'Create kube bootstrap token':
-    command     => 'kubectl create -f bootstraptoken.yaml',
-    cwd         => '/etc/kubernetes/secrets',
-    subscribe   => File['/etc/kubernetes/secrets/bootstraptoken.yaml'],
-    refreshonly => true,
-    require     => File['/etc/kubernetes/secrets/bootstraptoken.yaml'],
+  if $container_runtime == 'cri_containerd' {
+    $preflight_errors = flatten(['Service-Docker',$ignore_preflight_errors])
+    $cri_socket = '/run/containerd/containerd.sock'
+  } else {
+    $preflight_errors = $ignore_preflight_errors
+    $cri_socket = undef
   }
 
-  exec { 'Create kube proxy cluster bindings':
-    command     => 'kubectl create -f clusterRoleBinding.yaml',
-    cwd         => '/etc/kubernetes/manifests',
-    subscribe   => File['/etc/kubernetes/manifests/clusterRoleBinding.yaml'],
-    refreshonly => true,
-    require     => File['/etc/kubernetes/manifests/clusterRoleBinding.yaml'],
+
+  if $controller {
+    kubernetes::kubeadm_init { $node_name:
+      path                    => $path,
+      env                     => $env_controller,
+      ignore_preflight_errors => $preflight_errors,
+      }
     }
 
-  if $kubernetes_version =~ /1[.](8|9)[.]\d/ {
-
-    exec { 'Create role binding for system nodes':
-      command => 'kubectl set subject clusterrolebinding system:node --group=system:nodes',
-      unless  => 'kubectl describe clusterrolebinding system:node | tr -s \' \' | grep \'Group system:nodes\'',
-      }
+  if $worker {
+    kubernetes::kubeadm_join { $node_name:
+      path                    => $path,
+      env                     => $env_worker,
+      cri_socket              => $cri_socket,
+      ignore_preflight_errors => $preflight_errors,
     }
   }
 }
