@@ -8,7 +8,6 @@
   hour    => '2',
   minute  => '45',
   }
-  }
  
   cron { 'TuneDatabase':
   ensure  => present,
@@ -17,4 +16,4 @@
   hour    => '5',
   minute  => '15',
   }
-
+  }
