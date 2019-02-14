@@ -1,0 +1,48 @@
+{
+  "name": "puppetlabs-ciscopuppet",
+  "version": "1.7.0",
+  "author": "cisco",
+  "summary": "Cisco Puppet providers and types for NX-OS devices",
+  "license": "Apache-2.0",
+  "source": "https://github.com/cisco/cisco-network-puppet-module",
+  "project_page": "https://github.com/cisco/cisco-network-puppet-module",
+  "issues_url": "https://github.com/cisco/cisco-network-puppet-module/issues",
+  "dependencies": [
+    {"name":"puppetlabs/netdev_stdlib","version_requirement":">=0.12.0"}
+  ],
+  "data_provider": null,
+  "requirements": [
+    {
+      "name": "pe",
+      "version_requirement": "2015.2.x"
+    },
+    {
+      "name": "puppet",
+      "version_requirement": "4.x"
+    }
+  ],
+  "tags": [
+    "cisco",
+    "nxos",
+    "nx-os",
+    "network"
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "NX-OS",
+      "operatingsystemrelease": [
+        "7.0(3)I2",
+        "7.0(3)I3",
+        "7.0(3)I4",
+        "7.0(3)I5",
+        "7.0(3)I6",
+        "7.3(0)N1",
+        "7.3(0)D1",
+        "7.0(3)F1",
+        "7.0(3)F2",
+        "8.0(1)",
+        "8.1(1)"
+      ]
+    }
+  ]
+}
