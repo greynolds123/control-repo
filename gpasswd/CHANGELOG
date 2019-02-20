@@ -1,0 +1,5 @@
+* Thu Feb 12 2015 Trevor Vaughan <tvaughan@onyxpoint.com> - 1.0.0-1
+- Migrated to the simp environment
+
+* Wed Apr 23 2014 Trevor Vaughan <tvaughan@onyxpoint.com> - 1.0.0-0
+- First RPM build
