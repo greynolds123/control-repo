@@ -1,6 +1,4 @@
 require 'puppetlabs_spec_helper/module_spec_helper'
-<<<<<<< HEAD
-=======
 
 RSpec.configure do |config|
   config.hiera_config = 'spec/fixtures/hiera/hiera.yaml'
@@ -19,4 +17,3 @@ RSpec.configure do |config|
     :operatingsystem           => 'RedHat',
   }
 end
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19

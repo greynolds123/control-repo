@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 ## Release 1.0.0
 ### Summary
 First major release. Brings it into the modern age with puppet 4, and into the future with archlinux.
@@ -25,7 +23,6 @@ This release includes support for Puppet 4 AIO, test fixes and cleanup.
 - Remove unused metadata
 - Use community style
 
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
 ## Release 0.5.0
 ### Summary
 This release includes several new OS support features/bugfixes and multiple updates to Gemfile, Rakefile and metadata.

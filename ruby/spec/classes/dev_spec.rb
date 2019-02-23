@@ -4,8 +4,6 @@ describe 'ruby::dev', :type => :class do
     let :pre_condition do
       'include ruby'
     end
-<<<<<<< HEAD
-=======
     describe 'when called on an unsupported osfamily' do
       let (:facts) do
         {
@@ -20,7 +18,6 @@ describe 'ruby::dev', :type => :class do
         }.to raise_error(Puppet::Error, /Unsupported/)
       end
     end
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
     describe 'when called on Redhat' do
       let (:facts) do
         {
@@ -234,11 +231,7 @@ describe 'ruby::dev', :type => :class do
           it {
             should contain_package('bundler').with({
               'ensure'           => '0.9.9',
-<<<<<<< HEAD
-              'name'             => 'ruby-bundler',
-=======
               'name'             => 'bundler',
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
               'provider'         => 'gem',
               'require'          => 'Package[ruby]'
             })
@@ -256,11 +249,7 @@ describe 'ruby::dev', :type => :class do
           it {
             should contain_package('bundler').with({
               'ensure'           => 'installed',
-<<<<<<< HEAD
-              'name'             => 'ruby-bundler',
-=======
               'name'             => 'bundler',
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
               'provider'         => 'gem',
               'require'          => 'Package[ruby]'
             })
@@ -357,8 +346,6 @@ describe 'ruby::dev', :type => :class do
         }
       end
     end
-<<<<<<< HEAD
-=======
     describe 'when called on Arch Linux' do
       let (:facts) do
         {
@@ -381,7 +368,6 @@ describe 'ruby::dev', :type => :class do
         end
       end
     end
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
   end
 
   describe 'with ruby 1.9.1' do

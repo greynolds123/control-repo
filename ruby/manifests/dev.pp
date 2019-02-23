@@ -35,25 +35,6 @@
 # include ruby::dev
 #
 class ruby::dev (
-<<<<<<< HEAD
-  $ensure             = 'installed',
-  $ruby_dev_packages  = undef,
-  $rake_ensure        = $ruby::params::rake_ensure,
-  $rake_package       = $ruby::params::rake_package,
-  $rake_provider      = $ruby::params::rake_provider,
-  $bundler_ensure     = $ruby::params::bundler_ensure,
-  $bundler_package    = $ruby::params::bundler_package,
-  $bundler_provider   = $ruby::params::bundler_provider,
-) inherits ruby::params {
-  require ruby
-
-  # as the package ensure covers _multiple_ packages
-  # specifying a version may cause issues.
-  validate_re($ensure,['^installed$', '^present$', '^absent$', '^latest$'])
-  validate_re($bundler_provider,['^gem$','^apt$'])
-
-  case $::osfamily {
-=======
   Enum['installed', 'present', 'absent', 'latest'] $ensure  = 'installed',
   $ruby_dev_packages                                        = undef,
   $rake_ensure                                              = $ruby::params::rake_ensure,
@@ -69,7 +50,6 @@ class ruby::dev (
     default: {
       fail("Detected osfamily is <${::osfamily}> and supported values are 'Debian', 'RedHat', 'Archlinux' and 'Amazon'")
     }
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
     'Debian': {
       if $ruby_dev_packages {
         $ruby_dev = $ruby_dev_packages
@@ -79,44 +59,28 @@ class ruby::dev (
             $ruby_dev = [
               'ruby1.8-dev',
               'ri1.8',
-<<<<<<< HEAD
-              'pkg-config'
-=======
               'pkg-config',
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
             ]
           }
           /^1\.9.*$/:{
             $ruby_dev = [
               'ruby1.9.1-dev',
               'ri1.9.1',
-<<<<<<< HEAD
-              'pkg-config'
-=======
               'pkg-config',
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
             ]
           }
           /^2\.0.*$/:{
             $ruby_dev = [
               'ruby2.0-dev',
               'ri',
-<<<<<<< HEAD
-              'pkg-config'
-=======
               'pkg-config',
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
             ]
           }
           /^2\.1.*$/:{
             $ruby_dev = [
               'ruby2.1-dev',
               'ri',
-<<<<<<< HEAD
-              'pkg-config'
-=======
               'pkg-config',
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
             ]
           }
           default: {
@@ -137,13 +101,10 @@ class ruby::dev (
         $ruby_dev = $::ruby::params::ruby_dev
       }
     }
-<<<<<<< HEAD
-=======
     'Archlinux': {
       $ruby_dev_gems = undef
       $ruby_dev = undef
     }
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
   }
 
   # The "version" switch seems to do nothing on a non-Debian distro. This is
@@ -152,26 +113,6 @@ class ruby::dev (
   # available. It's a bit misleading for the user, though, since they can
   # specify a version and it will just silently continue installing the
   # default version.
-<<<<<<< HEAD
-  package { $ruby_dev:
-    ensure  => $ensure,
-    before  => Package['rake', 'bundler'],
-    require => Package['ruby'],
-  }
-
-  package { 'rake':
-    ensure   => $rake_ensure,
-    name     => $rake_package,
-    provider => $rake_provider,
-    require  => Package['ruby'],
-  }
-
-  package { 'bundler':
-    ensure   => $bundler_ensure,
-    name     => $bundler_package,
-    provider => $bundler_provider,
-    require  => Package['ruby'],
-=======
   if $ruby_dev {
     package { $ruby_dev:
       ensure  => $ensure,
@@ -196,7 +137,6 @@ class ruby::dev (
       provider => $bundler_provider,
       require  => Package['ruby'],
     }
->>>>>>> f3fab20366c13fba7b36956f886163721fed8b19
   }
 
   if $ruby_dev_gems {
