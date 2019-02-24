@@ -5,8 +5,8 @@
   ensure  => present,
   user    => 'root',
   command => '/bin/sh /root/clearCache2016.sh',
-  hour    => '1',
-  minute  => '45',
+  hour    => '0',
+  minute  => '15',
   }
  
   cron { 'TuneDatabase':
@@ -14,6 +14,6 @@
   user    => 'root',
   command => '/bin/sh /root/TuneDatabase.sh',
   hour    => '0',
-  minute  => '20',
+  minute  => '60',
   }
   }
