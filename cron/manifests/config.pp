@@ -13,7 +13,7 @@
   ensure  => present,
   user    => 'root',
   command => '/bin/sh /root/TuneDatabase.sh',
-  hour    => '0',
-  minute  => '60',
+  hour    => '1',
+  minute  => '0',
   }
   }
