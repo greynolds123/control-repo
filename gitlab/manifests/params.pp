@@ -19,8 +19,8 @@ class gitlab::params {
   $gitlab_branch            = '7-12-stable'
   $gitlabshell_sources      = 'git://github.com/gitlabhq/gitlab-shell.git'
   $gitlabshell_branch       = 'v2.6.3'
-  $gitlabshell_log_folder   = /var/log/gitlabs
-  $gitlab_log_folder        = /var/log/gitlabs
+  $gitlabshell_log_folder   = '/var/log/gitlabs'
+  $gitlab_log_folder        = '/var/log/gitlabs'
   $gitlab_manage_nginx      = true
   $gitlab_http_port         = '80'
   $gitlab_ssl_port          = '443'
