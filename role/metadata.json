@@ -1,12 +1,12 @@
 {
-  "name": "Aon-role",
+  "name": "role",
   "version": "0.1.0",
   "author": "Aon",
   "summary": "It provides the roles for the production environments.",
   "license": "Apache-2.0",
-  "source": "http://10.80.31.216:9382/projects/UDO/repos/puppet/browse/role",
-  "project_page": "http://10.80.31.216:9382/projects/UDO/repos/puppet/browse/role/manifests",
-  "issues_url": "http://10.80.31.216:9382/projects/UDO/repos/puppet/browse/role",
+  "source": "https://github.com/greynolds123/control-repo/tree/production/role",
+  "project_page": "https://github.com/greynolds123/control-repo/tree/production/role",
+  "issues_url": "https://github.com/greynolds123/control-repo/tree/production/role",
   "dependencies": [
     {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
   ],
