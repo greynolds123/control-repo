@@ -14,6 +14,10 @@
   user    => 'root',
   command => '/bin/sh /root/TuneDatabase.sh',
   hour    => '0',
+<<<<<<< HEAD
   minute  => '20',
+=======
+  minute  => '45',
+>>>>>>> 0c0034f2ee3f3f278ef694aba1da0f2bfa8f8cb0
   }
   }

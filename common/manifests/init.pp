@@ -35,10 +35,13 @@ class common (
 <<<<<<< HEAD
   $enable_hiera                     = false,
   $enable_policyengine              = true,
+<<<<<<< HEAD
 =======
   $enable_hiera                     = true,
   $policy_engine                    = true,
 >>>>>>> 1d466c61786d61d0b42574be5d16b4f10a4d399a
+=======
+>>>>>>> 0c0034f2ee3f3f278ef694aba1da0f2bfa8f8cb0
   $enable_utils                     = false,
   $enable_vim                       = false,
   $enable_wget                      = false,
@@ -243,9 +246,12 @@ class common (
 
   # validate type and convert string to boolean if necessary
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   
 >>>>>>> 1d466c61786d61d0b42574be5d16b4f10a4d399a
+=======
+>>>>>>> 0c0034f2ee3f3f278ef694aba1da0f2bfa8f8cb0
   if is_string($enable_hiera) {
     $hiera_enabled = str2bool($enable_hiera)
   } else {
