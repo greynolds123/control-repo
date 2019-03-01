@@ -1,7 +1,7 @@
-# Class: role
+# Class: profile
 # ===========================
 #
-# Full description of class role here.
+# Full description of class profile here.
 #
 # Parameters
 # ----------
@@ -28,7 +28,7 @@
 # --------
 #
 # @example
-#    class { 'role':
+#    class { 'profile':
 #      servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
 #    }
 #
@@ -42,12 +42,5 @@
 #
 # Copyright 2016 Your name here, unless otherwise noted.
 #
-class role {
-  include role::databases, 
-  role::dev, 
-  role::region, 
-  role::secure,
-  role::software,
-  role::stage,
-  role::webserver
+class profile {
 }
