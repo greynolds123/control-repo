@@ -1,4 +1,4 @@
-# == Class: common
+# == Class:common
 #
 # This class is applied to *ALL* nodes
 #
@@ -32,8 +32,13 @@ class common (
   $enable_history                   = true,
   $enable_selinux                   = false,
   $enable_ssh                       = false,
+<<<<<<< HEAD
   $enable_hiera                     = false,
   $enable_policyengine              = true,
+=======
+  $enable_hiera                     = true,
+  $policy_engine                    = true,
+>>>>>>> 1d466c61786d61d0b42574be5d16b4f10a4d399a
   $enable_utils                     = false,
   $enable_vim                       = false,
   $enable_wget                      = false,
@@ -237,6 +242,10 @@ class common (
   }
 
   # validate type and convert string to boolean if necessary
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 1d466c61786d61d0b42574be5d16b4f10a4d399a
   if is_string($enable_hiera) {
     $hiera_enabled = str2bool($enable_hiera)
   } else {
