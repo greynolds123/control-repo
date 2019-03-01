@@ -1,6 +1,26 @@
 # Changelog
 
+## 2.4.0
+
+- Revert broken exists? implementation
+- Remove support for Puppet 4
+- Update supported OSes in metadata.json
+
+## 2.3.0
+
+- Support Puppet 6 (GH #11)
+- Update metadata.json to reflect supported Ubuntu versions
+
+## 2.1.5
+
+- Allow puppetlabs/stdlib 5.x (GH #9)
+
+## 2.1.4
+
+- Upped supported Puppet versions to include Puppet 5
+
 ## 2.1.3
+
 - Test and list compatibility with Puppet 4 and latest OSes
 - Fix catalog building in spec helper under Puppet 4.6
 - Various fixes to test suite and gemset
