@@ -87,6 +87,14 @@
 #  The URL to download the etcd archive
 #  Defaults to https://github.com/coreos/etcd/releases/download/v${etcd_version}/${etcd_archive}
 #
+# [*etcd_install_method*]
+#  The method on how to install etcd. Can be either wget (using etcd_source) or package (using $etcd_package_name)
+#  Defaults to wget
+# 
+# [*etcd_package_name*]
+#  The system package name for installing etcd
+#  Defaults to etcd-server
+#
 # [*runc_version*]
 #  The version of runc to install
 #  Defaults to 1.0.0-rc5
@@ -112,6 +120,11 @@
 #    This will tell etcd how many nodes will be in the cluster and is passed as a string.
 #   An example with hiera would be kubernetes::etcd_initial_cluster: etcd-kube-master=http://172.17.10.101:2380,etcd-kube-replica-master-01=http://172.17.10.210:2380,etcd-kube-replica-master-02=http://172.17.10.220:2380
 #   Defaults to undef
+#
+# [*etcd_initial_cluster_state*]
+#     This will tell etcd the initial state of the cluster. Useful for adding a node to the cluster. Allowed values are
+#   "new" or "existing"
+#   Defaults to "new"
 #
 # [*etcd_ca_key*]
 #   This is the ca certificate key data for the etcd cluster. This must be passed as string not as a file.
@@ -330,6 +343,7 @@ class kubernetes (
   Optional[String] $etcd_ip                    = undef,
   Optional[Array] $etcd_peers                  = undef,
   Optional[String] $etcd_initial_cluster       = undef,
+  Optional[Enum['new','existing']] $etcd_initial_cluster_state = 'new',
   String $etcd_ca_key                          = undef,
   String $etcd_ca_crt                          = undef,
   String $etcdclient_key                       = undef,
@@ -367,7 +381,9 @@ class kubernetes (
   Optional[String] $containerd_source          =
     "https://github.com/containerd/containerd/releases/download/v${containerd_version}/${containerd_archive}",
   String $etcd_archive                         = "etcd-v${etcd_version}-linux-amd64.tar.gz",
+  String $etcd_package_name                    = 'etcd-server',
   String $etcd_source                          = "https://github.com/coreos/etcd/releases/download/v${etcd_version}/${etcd_archive}",
+  String $etcd_install_method                  = 'wget',
   Optional[String] $kubernetes_apt_location    = undef,
   Optional[String] $kubernetes_apt_release     = undef,
   Optional[String] $kubernetes_apt_repos       = undef,

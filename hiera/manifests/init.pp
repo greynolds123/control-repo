@@ -188,6 +188,7 @@ class hiera (
       'gpg_gnupghome'     => $gpg_gnupghome,
       'gpg_recipients'    => $eyaml_gpg_recipients,
     }),
+<<<<<<< HEAD
   }
   $yaml_options = { 'yaml' => { 'datadir' => $datadir } }
   # all the backend options are merged together into a single hash
@@ -203,6 +204,23 @@ class hiera (
     fail("The supplied backends: ${missing_backends} are missing from the backend_options hash:\n ${backend_options}\n
     or you might be using symbols in your hiera data")
   }
+=======
+  }
+  $yaml_options = { 'yaml' => { 'datadir' => $datadir } }
+  # all the backend options are merged together into a single hash
+  # the user can override anything via the backend_options hash parameter
+  # which will override any data set in the eyaml or yaml parameters above.
+  # the template will only use the backends that were defined in the backends
+  # array even if there is info in the backend data hash
+  $backend_data = deep_merge($yaml_options, $eyaml_options, $backend_options)
+  # if for some reason the user mispelled the backend in the backend_options lets
+  # catch that error here and notify the user
+  $missing_backends = difference($backends, keys($backend_data))
+  if count($missing_backends) > 0 {
+    fail("The supplied backends: ${missing_backends} are missing from the backend_options hash:\n ${backend_options}\n
+    or you might be using symbols in your hiera data")
+  }
+>>>>>>> 420d26fc4711d1cbca28d3032e57a69a49a122c7
 
   # Template uses:
   # - $backends
@@ -233,6 +251,7 @@ class hiera (
       setting => 'hiera_config',
       value   => $hiera_yaml,
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
  
 <<<<<<< HEAD
@@ -299,6 +318,8 @@ include $::roles
    #subscribe +> $master_subscribe,
  #}
 =======
+=======
+>>>>>>> 420d26fc4711d1cbca28d3032e57a69a49a122c7
     $master_subscribe = [
       File[$hiera_yaml],
       Ini_setting['puppet.conf hiera_config main section'],
@@ -312,4 +333,7 @@ include $::roles
     subscribe +> $master_subscribe,
   }
 }
+<<<<<<< HEAD
 >>>>>>> fb2f99b2f2043baacdb5d8b1cf516d2cbdc032ce
+=======
+>>>>>>> 420d26fc4711d1cbca28d3032e57a69a49a122c7

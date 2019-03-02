@@ -2,6 +2,7 @@
 class kubernetes::config (
   String $config_file = $kubernetes::config_file,
   Boolean $manage_etcd = $kubernetes::manage_etcd,
+  String $etcd_install_method = $kubernetes::etcd_install_method,
   String $kubernetes_version  = $kubernetes::kubernetes_version,
   String $etcd_ca_key = $kubernetes::etcd_ca_key,
   String $etcd_ca_crt = $kubernetes::etcd_ca_crt,
@@ -16,6 +17,7 @@ class kubernetes::config (
   String $cni_pod_cidr = $kubernetes::cni_pod_cidr,
   String $kube_api_advertise_address = $kubernetes::kube_api_advertise_address,
   String $etcd_initial_cluster = $kubernetes::etcd_initial_cluster,
+  String $etcd_initial_cluster_state = $kubernetes::etcd_initial_cluster_state,
   Integer $api_server_count = $kubernetes::api_server_count,
   String $etcd_version = $kubernetes::etcd_version,
   String $token = $kubernetes::token,
@@ -42,8 +44,9 @@ class kubernetes::config (
   $pki = ['ca.crt', 'ca.key','sa.pub','sa.key']
   $kube_dirs.each | String $dir |  {
     file  { $dir :
-      ensure => directory,
-
+      ensure  => directory,
+      mode    => '0600',
+      recurse => true,
     }
   }
 
@@ -51,21 +54,28 @@ class kubernetes::config (
     $etcd.each | String $etcd_files | {
       file { "/etc/kubernetes/pki/etcd/${etcd_files}":
         ensure  => present,
-        mode    => '0644',
         content => template("kubernetes/etcd/${etcd_files}.erb"),
+        mode    => '0600',
       }
     }
-    file { '/etc/systemd/system/etcd.service':
-      ensure  => present,
-      content => template('kubernetes/etcd/etcd.service.erb'),
+    if $etcd_install_method == 'wget' {
+      file { '/etc/systemd/system/etcd.service':
+        ensure  => present,
+        content => template('kubernetes/etcd/etcd.service.erb'),
+      }
+    } else {
+      file { '/etc/default/etcd':
+        ensure  => present,
+        content => template('kubernetes/etcd/etcd.erb'),
+      }
     }
   }
 
   $pki.each | String $pki_files | {
     file {"/etc/kubernetes/pki/${pki_files}":
       ensure  => present,
-      mode    => '0644',
       content => template("kubernetes/pki/${pki_files}.erb"),
+      mode    => '0600',
     }
   }
 
@@ -118,6 +128,7 @@ class kubernetes::config (
   file { $config_file:
     ensure  => present,
     content => template("kubernetes/config-${template}.yaml.erb"),
+    mode    => '0600',
   }
 
 }

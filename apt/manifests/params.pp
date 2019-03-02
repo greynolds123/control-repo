@@ -1,43 +1,33 @@
+# @summary Provides defaults for the Apt module parameters.
+# 
+# @api private
+#
 class apt::params {
 
   if $::osfamily != 'Debian' {
-    fail('This module only works on Debian or derivatives like Ubuntu')
-  }
-
-  # prior to puppet 3.5.0, defined() couldn't test if a variable was defined.
-  # strict_variables wasn't added until 3.5.0, so this should be fine.
-  if $::puppetversion and versioncmp($::puppetversion, '3.5.0') < 0 {
-    $xfacts = {
-      'lsbdistcodename'     => $::lsbdistcodename,
-      'lsbdistrelease'      => $::lsbdistrelease,
-      'lsbdistid'           => $::lsbdistid,
-    }
-  } else {
-    # Strict variables facts lookup compatibility
-    $xfacts = {
-      'lsbdistcodename' => defined('$lsbdistcodename') ? {
-        true    => $::lsbdistcodename,
-        default => undef,
-      },
-      'lsbdistrelease' => defined('$lsbdistrelease') ? {
-        true    => $::lsbdistrelease,
-        default => undef,
-      },
-      'lsbdistid' => defined('$lsbdistid') ? {
-        true    => $::lsbdistid,
-        default => undef,
-      },
-    }
+    fail(translate('This module only works on Debian or derivatives like Ubuntu'))
   }
 
   $root           = '/etc/apt'
   $provider       = '/usr/bin/apt-get'
   $sources_list   = "${root}/sources.list"
   $sources_list_d = "${root}/sources.list.d"
+  $trusted_gpg_d  = "${root}/trusted.gpg.d"
   $conf_d         = "${root}/apt.conf.d"
   $preferences    = "${root}/preferences"
   $preferences_d  = "${root}/preferences.d"
   $keyserver      = 'keyserver.ubuntu.com'
+  $confs          = {}
+  $update         = {}
+  $purge          = {}
+  $proxy          = {}
+  $sources        = {}
+  $keys           = {}
+  $ppas           = {}
+  $pins           = {}
+  $settings       = {}
+  $manage_auth_conf = true
+  $auth_conf_entries = []
 
   $config_files = {
     'conf'   => {
@@ -56,6 +46,7 @@ class apt::params {
 
   $update_defaults = {
     'frequency' => 'reluctantly',
+    'loglevel'  => undef,
     'timeout'   => undef,
     'tries'     => undef,
   }
@@ -65,6 +56,7 @@ class apt::params {
     'host'   => undef,
     'port'   => 8080,
     'https'  => false,
+    'direct' => false,
   }
 
   $purge_defaults = {
@@ -86,57 +78,43 @@ class apt::params {
     'src' => false,
   }
 
-  case $xfacts['lsbdistid'] {
-    'debian': {
-      case $xfacts['lsbdistcodename'] {
-        'squeeze': {
+  case $facts['os']['name']{
+    'Debian': {
           $backports = {
-            'location' => 'http://httpredir.debian.org/debian-backports',
+            'location' => 'http://deb.debian.org/debian',
             'key'      => 'A1BD8E9D78F7FE5C3E65D8AF8B48AD6246925553',
             'repos'    => 'main contrib non-free',
           }
-        }
-        default: {
-          $backports = {
-            'location' => 'http://httpredir.debian.org/debian',
-            'key'      => 'A1BD8E9D78F7FE5C3E65D8AF8B48AD6246925553',
-            'repos'    => 'main contrib non-free',
-          }
-        }
-      }
-
       $ppa_options = undef
       $ppa_package = undef
-
+      if versioncmp($facts['os']['release']['major'], '9') >= 0 {
+        $auth_conf_owner = '_apt'
+      } else {
+        $auth_conf_owner = 'root'
+      }
     }
-    'ubuntu': {
+    'Ubuntu': {
       $backports = {
         'location' => 'http://archive.ubuntu.com/ubuntu',
         'key'      => '630239CC130E1A7FD81A27B140976EAF437D05B5',
         'repos'    => 'main universe multiverse restricted',
       }
-
-      if $xfacts['lsbdistcodename'] == 'lucid' {
-          $ppa_options        = undef
-          $ppa_package        = 'python-software-properties'
-      } elsif $xfacts['lsbdistcodename'] == 'precise' {
-          $ppa_options        = '-y'
-          $ppa_package        = 'python-software-properties'
-      } elsif versioncmp($xfacts['lsbdistrelease'], '14.04') >= 0 {
-          $ppa_options        = '-y'
-          $ppa_package        = 'software-properties-common'
+      $ppa_options        = '-y'
+      $ppa_package        = 'software-properties-common'
+      if versioncmp($facts['os']['release']['full'], '16.04') >= 0 {
+        $auth_conf_owner = '_apt'
       } else {
-          $ppa_options        = '-y'
-          $ppa_package        = 'python-software-properties'
+        $auth_conf_owner = 'root'
       }
     }
     undef: {
-      fail('Unable to determine lsbdistid, please install lsb-release first')
+      fail(translate('Unable to determine value for fact os[\"name\"]'))
     }
     default: {
       $ppa_options = undef
       $ppa_package = undef
       $backports   = undef
+      $auth_conf_owner = 'root'
     }
   }
 }
