@@ -1,6 +1,7 @@
 # Configuration file for centos_7
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   class vcsrepo::config  { 
   file {'/etc/yum.d/repos.d/*': 
 =======
@@ -10,3 +11,11 @@
   provider => git,
   }
   }
+=======
+  class vcsrepo::config {
+  file { '/etc/yum.d/repos.d/*': 
+  ensure   => present,
+  provider => git,
+}
+}
+>>>>>>> cd0651225b9de60c3a9ce2c0edbcdb51587cdbd7
