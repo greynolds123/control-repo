@@ -19,7 +19,7 @@ for s in $(gawk -F: '{print}' < "$networks");
 
 echo $s
 
-nmap -sn $s -oG -;
+nmap -sn $s -oG -A -iflist;
 
     done
 
