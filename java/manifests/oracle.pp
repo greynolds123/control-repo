@@ -10,11 +10,20 @@
 # the licensing terms.
 # wget --no-cookies --no-check-certificate --header \
 # "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" \
-# "http://download.oracle.com/otn-pub/java/jdk/8u25-b17/jre-8u25-linux-x64.tar.gz"
+# "http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz"
 #
 # Parameters
 # [*version*]
-# Version of Java to install
+# Version of Java to install, e.g. '7' or '8'. Default values for major and minor
+# versions will be used.
+#
+# [*version_major*]
+# Major version which should be installed, e.g. '8u101'. Must be used together with
+# version_minor.
+#
+# [*version_minor*]
+# Minor version which should be installed, e.g. 'b12'. Must be used together with
+# version_major.
 #
 # [*java_se*]
 # Type of Java Standard Edition to install, jdk or jre.
@@ -24,6 +33,12 @@
 #
 # [*oracle_url*]
 # Official Oracle URL to download binaries from.
+#
+# [*proxy_server*]
+# Specify a proxy server, with port number if needed. ie: https://example.com:8080. (passed to archive)
+#
+# [*proxy_type*]
+# Proxy server type (none|http|https|ftp). (passed to archive)
 #
 # Variables
 # [*release_major*]
@@ -65,91 +80,147 @@
 #
 # [*url*]
 # Full URL, including oracle_url, release_major, release_minor and package_name, to
-# download the Oracle java_se installer.
+# download the Oracle java_se installer. Originally present but not used, activated
+# to workaround MODULES-5058
+#
+# [*url_hash*]
+# Directory hash used by the download.oracle.com site.  This value is a 32 character string
+# which is part of the file URL returned by the JDK download site.
+#
+# [*jce*]
+# Install Oracles Java Cryptographic Extensions into the JRE or JDK
 #
 # ### Author
 # mike@marseglia.org
 #
 define java::oracle (
-  $ensure       = 'present',
-  $version      = '8',
-  $java_se      = 'jdk',
-  $oracle_url   = 'http://download.oracle.com/otn-pub/java/jdk/',
+  $ensure        = 'present',
+  $version       = '8',
+  $version_major = undef,
+  $version_minor = undef,
+  $java_se       = 'jdk',
+  $oracle_url    = 'http://download.oracle.com/otn-pub/java/jdk/',
+  $proxy_server  = undef,
+  $proxy_type    = undef,
+  $url           = undef,
+  $url_hash      = undef,
+  $jce           = false,
 ) {
 
   # archive module is used to download the java package
   include ::archive
-
-  ensure_resource('class', 'stdlib')
 
   # validate java Standard Edition to download
   if $java_se !~ /(jre|jdk)/ {
     fail('Java SE must be either jre or jdk.')
   }
 
-  # determine oracle Java major and minor version, and installation path
-  case $version {
-    '6' : {
-      $release_major = '6u45'
-      $release_minor = 'b06'
-      $install_path = "${java_se}1.6.0_45"
+  if $jce {
+    $jce_download = $version ? {
+      '8'     => 'http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip',
+      '7'     => 'http://download.oracle.com/otn-pub/java/jce/7/UnlimitedJCEPolicyJDK7.zip',
+      '6'     => 'http://download.oracle.com/otn-pub/java/jce_policy/6/jce_policy-6.zip',
+      default => undef
     }
-    '7' : {
-      $release_major = '7u80'
-      $release_minor = 'b15'
-      $install_path = "${java_se}1.7.0_80"
+  }
+
+  # determine Oracle Java major and minor version, and installation path
+  if $version_major and $version_minor {
+
+    $release_major = $version_major
+    $release_minor = $version_minor
+    $release_hash  = $url_hash
+
+    if $release_major =~ /(\d+)u(\d+)/ {
+      # Required for CentOS systems where Java8 update number is >= 171 to ensure
+      # the package is visible to Puppet
+      if $facts['os']['family'] == 'RedHat' and $2 >= '171' {
+        $install_path = "${java_se}1.${1}.0_${2}-amd64"
+      } else {
+        $install_path = "${java_se}1.${1}.0_${2}"
+      }
+    } else {
+      $install_path = "${java_se}${release_major}${release_minor}"
     }
-    '8' : {
-      $release_major = '8u51'
-      $release_minor = 'b16'
-      $install_path = "${java_se}1.8.0_51"
-    }
-    default : {
-      $release_major = '8u51'
-      $release_minor = 'b16'
-      $install_path = "${java_se}1.8.0_51"
+  } else {
+    # use default versions if no specific major and minor version parameters are provided
+    case $version {
+      '6' : {
+        $release_major = '6u45'
+        $release_minor = 'b06'
+        $install_path = "${java_se}1.6.0_45"
+        $release_hash  = undef
+      }
+      '7' : {
+        $release_major = '7u80'
+        $release_minor = 'b15'
+        $install_path = "${java_se}1.7.0_80"
+        $release_hash  = undef
+      }
+      '8' : {
+        $release_major = '8u192'
+        $release_minor = 'b12'
+        $install_path = "${java_se}1.8.0_192"
+        $release_hash  = '750e1c8617c5452694857ad95c3ee230'
+      }
+      default : {
+        $release_major = '8u192'
+        $release_minor = 'b12'
+        $install_path = "${java_se}1.8.0_192"
+        $release_hash  = '750e1c8617c5452694857ad95c3ee230'
+      }
     }
   }
 
   # determine package type (exe/tar/rpm), destination directory based on OS
-  case $::kernel {
+  case $facts['kernel'] {
     'Linux' : {
-      case $::operatingsystem {
-        'CentOS', 'RedHat' : {
+      case $facts['os']['family'] {
+        'RedHat', 'Amazon' : {
           # Oracle Java 6 comes in a special rpmbin format
           if $version == '6' {
             $package_type = 'rpmbin'
           } else {
             $package_type = 'rpm'
           }
+          $creates_path = "/usr/java/${install_path}"
+        }
+        'Debian' : {
+            $package_type = 'tar.gz'
+            $creates_path = "/usr/lib/jvm/${install_path}"
         }
         default : {
-          fail ("unsupported platform ${::operatingsystem}") }
+          fail ("unsupported platform ${$facts['os']['name']}") }
       }
 
       $os = 'linux'
       $destination_dir = '/tmp/'
-      $creates_path = "/usr/java/${install_path}"
     }
     default : {
-      fail ( "unsupported platform ${::kernel}" ) }
+      fail ( "unsupported platform ${$facts['kernel']}" ) }
+  }
+
+  # Install required unzip packages for jce
+  if $jce {
+    ensure_resource('package', 'unzip', { 'ensure' => 'present' })
   }
 
   # set java architecture nomenclature
-  case $::architecture {
+  case $facts['os']['architecture'] {
     'i386' : { $arch = 'i586' }
     'x86_64' : { $arch = 'x64' }
+    'amd64' : { $arch = 'x64' }
     default : {
-      fail ("unsupported platform ${::architecture}")
+      fail ("unsupported platform ${$facts['os']['architecture']}")
     }
   }
 
   # following are based on this example:
-  # http://download.oracle.com/otn/java/jdk/7u80-b15/jre-7u80-linux-i586.rpm
+  # http://download.oracle.com/otn-pub/java/jdk/7u80-b15/jre-7u80-linux-i586.rpm
   #
   # JaveSE 6 distributed in .bin format
-  # http://download.oracle.com/otn/java/jdk/6u45-b06/jdk-6u45-linux-i586-rpm.bin
-  # http://download.oracle.com/otn/java/jdk/6u45-b06/jdk-6u45-linux-i586.bin
+  # http://download.oracle.com/otn-pub/java/jdk/6u45-b06/jdk-6u45-linux-i586-rpm.bin
+  # http://download.oracle.com/otn-pub/java/jdk/6u45-b06/jdk-6u45-linux-i586.bin
   # package name to download from Oracle's website
   case $package_type {
     'bin' : {
@@ -161,9 +232,23 @@ define java::oracle (
     'rpm' : {
       $package_name = "${java_se}-${release_major}-${os}-${arch}.rpm"
     }
+    'tar.gz' : {
+      $package_name = "${java_se}-${release_major}-${os}-${arch}.tar.gz"
+    }
     default : {
       $package_name = "${java_se}-${release_major}-${os}-${arch}.rpm"
     }
+  }
+
+  # if complete URL is provided, use this value for source in archive resource
+  if $url {
+    $source = $url
+  }
+  elsif $release_hash != undef {
+    $source = "${oracle_url}/${release_major}-${release_minor}/${release_hash}/${package_name}"
+  }
+  else {
+    $source = "${oracle_url}/${release_major}-${release_minor}/${package_name}"
   }
 
   # full path to the installer
@@ -180,6 +265,9 @@ define java::oracle (
     'rpm' : {
       $install_command = "rpm --force -iv ${destination}"
     }
+    'tar.gz' : {
+      $install_command = "tar -zxf ${destination} -C /usr/lib/jvm"
+    }
     default : {
       $install_command = "rpm -iv ${destination}"
     }
@@ -189,21 +277,58 @@ define java::oracle (
     'present' : {
       archive { $destination :
         ensure       => present,
-        source       => "${oracle_url}${release_major}-${release_minor}/${package_name}",
-        cleanup      => false,
-        extract_path => '/tmp',
+        source       => $source,
         cookie       => 'gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie',
-      }->
-      case $::kernel {
+        extract_path => '/tmp',
+        cleanup      => false,
+        creates      => $creates_path,
+        proxy_server => $proxy_server,
+        proxy_type   => $proxy_type,
+      }
+      case $facts['kernel'] {
         'Linux' : {
-          exec { "Install Oracle java_se ${java_se} ${version}" :
+          case $facts['os']['family'] {
+            'Debian' : {
+              ensure_resource('file', '/usr/lib/jvm', {
+                ensure => directory,
+              })
+              $install_requires = [Archive[$destination], File['/usr/lib/jvm']]
+            }
+            default : {
+              $install_requires = [Archive[$destination]]
+            }
+          }
+          exec { "Install Oracle java_se ${java_se} ${version} ${release_major} ${release_minor}" :
             path    => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
             command => $install_command,
             creates => $creates_path,
+            require => $install_requires
+          }
+
+          if ($jce and $jce_download != undef) {
+            $jce_path = $java_se ? {
+              'jre' => "${creates_path}/lib/security",
+              'jdk' => "${creates_path}/jre/lib/security"
+            }
+            archive { "/tmp/jce-${version}.zip":
+              source        => $jce_download,
+              cookie        => 'gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie',
+              extract       => true,
+              extract_path  => $jce_path,
+              extract_flags => '-oj',
+              creates       => "${jce_path}/US_export_policy.jar",
+              cleanup       => false,
+              proxy_server  => $proxy_server,
+              proxy_type    => $proxy_type,
+              require       => [
+                Package['unzip'],
+                Exec["Install Oracle java_se ${java_se} ${version} ${release_major} ${release_minor}"]
+              ]
+            }
           }
         }
         default : {
-          fail ("unsupported platform ${::kernel}")
+          fail ("unsupported platform ${$facts['kernel']}")
         }
       }
     }
