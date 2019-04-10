@@ -1,0 +1,33 @@
+{
+  "name": "jgazeley-freeradius",
+  "version": "2.3.0",
+  "author": "jgazeley",
+  "summary": "Install and configure FreeRADIUS",
+  "license": "Apache-2.0",
+  "source": "https://github.com/djjudas21/puppet-freeradius",
+  "project_page": "https://github.com/djjudas21/puppet-freeradius",
+  "issues_url": "https://github.com/djjudas21/puppet-freeradius/issues",
+  "dependencies": [
+    {"name":"puppetlabs/stdlib"},
+    {"name":"puppetlabs/firewall"},
+    {"name":"saz/rsyslog"},
+    {"name":"rodjek/logrotate"},
+    {"name":"puppetlabs/concat"}
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Fedora",
+      "operatingsystemrelease": [
+        "21",
+        "22",
+        "23"
+      ]
+    }
+  ]
+}
