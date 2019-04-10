@@ -1,4 +1,8 @@
 vagrant
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> c9b52c6393265c3a51bd8b3201b3bfbe07fcc044
 
 This Puppet module installs the Vagrant software package from the releases
 provided by the [Vagrant downloads](https://www.vagrantup.com/downloads.html) page.

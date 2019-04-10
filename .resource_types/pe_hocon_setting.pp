@@ -1,4 +1,4 @@
-# This file was automatically generated on 2017-02-13 04:11:50 -0800.
+# This file was automatically generated on 2019-03-02 14:49:17 -0800.
 # Use the 'puppet generate types' command to regenerate this file.
 
 Puppet::Resource::ResourceType3.new(
@@ -16,14 +16,11 @@ Puppet::Resource::ResourceType3.new(
     Puppet::Resource::Param(Any, 'value')
   ],
   [
-    # An arbitrary name used as the identity of the resource.
-    Puppet::Resource::Param(Any, 'name', true),
-
     # The name of the setting to be defined.
-    Puppet::Resource::Param(Any, 'setting'),
+    Puppet::Resource::Param(Any, 'setting', true),
 
     # The file Puppet will ensure contains the specified setting.
-    Puppet::Resource::Param(Any, 'path'),
+    Puppet::Resource::Param(Any, 'path', true),
 
     # The specific backend to use for this `pe_hocon_setting`
     # resource. You will seldom need to specify this --- Puppet will usually
@@ -34,7 +31,7 @@ Puppet::Resource::ResourceType3.new(
     Puppet::Resource::Param(Any, 'provider')
   ],
   {
-    /(.*)/ => ['name']
+    /(?m-ix:(.*))/ => ['setting']
   },
   true,
   false)

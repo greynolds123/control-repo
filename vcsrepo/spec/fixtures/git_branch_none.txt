@@ -4,10 +4,14 @@
   feature/quux
   only/local
   master
+<<<<<<< HEAD
   Dev
   Dev_docker
   production
   stage
+=======
+* (no branch)  
+>>>>>>> c9b52c6393265c3a51bd8b3201b3bfbe07fcc044
   refactor/foo
   origin/HEAD
   origin/feature/foo
