@@ -1,4 +1,4 @@
-# This file was automatically generated on 2017-02-13 04:11:50 -0800.
+# This file was automatically generated on 2019-03-02 14:49:17 -0800.
 # Use the 'puppet generate types' command to regenerate this file.
 
 Puppet::Resource::ResourceType3.new(
@@ -37,7 +37,7 @@ Puppet::Resource::ResourceType3.new(
     Puppet::Resource::Param(Any, 'provider')
   ],
   {
-    /(.*)/ => ['name']
+    /(?m-ix:(.*))/ => ['name']
   },
   true,
   false)
