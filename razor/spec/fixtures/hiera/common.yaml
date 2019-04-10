@@ -1,4 +1,0 @@
----
-hiera::active: true
-
-razor::database_password: 'secret'
