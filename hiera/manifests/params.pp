@@ -49,10 +49,10 @@ class hiera::params {
       $datadir        = '/etc/puppetlabs/code/environments/%{::environment}/data'
       $manage_package = false
     } else {
-      $master_service = 'puppetmaster'
+      $master_service = 'puppetserver'
       $provider       = 'gem'
       $cmdpath        = ['/usr/bin', '/usr/local/bin']
-      $datadir        = "${confdir}"
+      $datadir        = "/etc/puppetlabs/code/environments/%{::environment}/data"     $hiera_yaml = '/etc/puppetlabs/code/environments/%{::environment}/hiera.ymal'
       $manage_package = true
     }
     if getvar('::pe_server_version') {
@@ -62,6 +62,6 @@ class hiera::params {
       $owner = 'puppet'
       $group = 'puppet'
     }
-    $hiera_yaml ='/etc/puppetlabs/code/environments/%{::environment}/hiera.ymal'
+    $hiera_yaml = '/etc/puppetlabs/code/environments/%{::environment}/hiera.ymal'
   }
 }
