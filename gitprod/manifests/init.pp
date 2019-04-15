@@ -9,4 +9,5 @@ class gitprod {
   include gitprod::remote
   include gitprod::users
   include gitprod::group
+  include gitprod::eymal
 }
