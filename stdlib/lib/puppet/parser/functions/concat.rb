@@ -12,6 +12,13 @@ module Puppet::Parser::Functions
     Would result in:
 
       ['1','2','3','4','5','6','7','8','9']
+<<<<<<< HEAD
+=======
+
+    Note: Since Puppet 4.0 concatenation of arrays and hashes can be done with the + operator.
+
+      ['1','2','3'] + ['4','5','6'] + ['7','8','9']
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   DOC
              ) do |arguments|
 

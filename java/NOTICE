@@ -1,9 +1,15 @@
+<<<<<<< HEAD
 java puppet module
 
 Copyright (C) 2011-2016 Puppet Labs, Inc.
 
 Puppet Labs can be contacted at: info@puppetlabs.com
 
+=======
+Puppet Module - puppetlabs-java
+
+Copyright 2018 Puppet, Inc.
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,4 +21,8 @@ Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
+<<<<<<< HEAD
 limitations under the License.
+=======
+limitations under the License.
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70

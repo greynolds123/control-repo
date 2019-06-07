@@ -46,6 +46,7 @@ class hiera::params {
         $provider       = 'puppet_gem'
       }
       $cmdpath        = ['/opt/puppetlabs/puppet/bin', '/usr/bin', '/usr/local/bin']
+<<<<<<< HEAD
       $datadir        = '/etc/puppetlabs/code/environments/%{::environment}/hieradata'
       $manage_package = false
     } else {
@@ -53,6 +54,15 @@ class hiera::params {
       $provider       = 'gem'
       $cmdpath        = ['/usr/bin', '/usr/local/bin']
       $datadir        = "${confdir}/hieradata"
+=======
+      $datadir        = '/etc/puppetlabs/code/environments/%{::environment}/data'
+      $manage_package = false
+    } else {
+      $master_service = 'puppetserver'
+      $provider       = 'gem'
+      $cmdpath        = ['/usr/bin', '/usr/local/bin']
+      $datadir        = "/etc/puppetlabs/code/environments/%{::environment}/data"     $hiera_yaml = '/etc/puppetlabs/code/environments/%{::environment}/hiera.ymal'
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
       $manage_package = true
     }
     if getvar('::pe_server_version') {
@@ -62,6 +72,10 @@ class hiera::params {
       $owner = 'puppet'
       $group = 'puppet'
     }
+<<<<<<< HEAD
     $hiera_yaml = "${confdir}/hiera.yaml"
+=======
+    $hiera_yaml = '/etc/puppetlabs/code/environments/%{::environment}/hiera.ymal'
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   }
 }

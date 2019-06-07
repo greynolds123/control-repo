@@ -9,6 +9,16 @@ class java::config ( ) {
           unless  => "test /etc/alternatives/java -ef '${java::use_java_alternative_path}'",
         }
       }
+<<<<<<< HEAD
+=======
+      if $java::use_java_home != undef {
+        file_line { 'java-home-environment':
+          path  => '/etc/environment',
+          line  => "JAVA_HOME=${$java::use_java_home}",
+          match => 'JAVA_HOME=',
+        }
+      }
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     }
     'RedHat': {
       if $java::use_java_alternative != undef and $java::use_java_alternative_path != undef {
@@ -29,6 +39,57 @@ class java::config ( ) {
           unless  => "test /etc/alternatives/java -ef '${java::use_java_alternative_path}'",
         }
       }
+<<<<<<< HEAD
+=======
+      if $java::use_java_home != undef {
+        file_line { 'java-home-environment':
+          path  => '/etc/environment',
+          line  => "JAVA_HOME=${$java::use_java_home}",
+          match => 'JAVA_HOME=',
+        }
+      }
+    }
+    'Suse': {
+      if $java::use_java_home != undef {
+        file_line { 'java-home-environment':
+          path  => '/etc/environment',
+          line  => "JAVA_HOME=${$java::use_java_home}",
+          match => 'JAVA_HOME=',
+        }
+      }
+    }
+    'FreeBSD': {
+      if $java::use_java_home != undef {
+        file_line { 'java-home-environment-profile':
+          path  => '/etc/profile',
+          line  => "JAVA_HOME=${$java::use_java_home}; export JAVA_HOME",
+          match => 'JAVA_HOME=',
+        }
+        file_line { 'java-home-environment-cshrc':
+          path  => '/etc/csh.login',
+          line  => "setenv JAVA_HOME ${$java::use_java_home}",
+          match => 'setenv JAVA_HOME',
+        }
+      }
+    }
+    'Solaris': {
+      if $java::use_java_home != undef {
+        file_line { 'java-home-environment':
+          path  => '/etc/profile',
+          line  => "JAVA_HOME=${$java::use_java_home}",
+          match => 'JAVA_HOME=',
+        }
+      }
+    }
+    'Archlinux': {
+      if $java::use_java_home != undef {
+        file_line { 'java-home-environment':
+          path  => '/etc/profile',
+          line  => "JAVA_HOME=${$java::use_java_home}",
+          match => 'JAVA_HOME=',
+        }
+      }
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     }
     default: {
       # Do nothing.

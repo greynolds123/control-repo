@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 HOSTS:
   ubuntu-1404-x64:
     roles:
@@ -8,3 +9,23 @@ HOSTS:
     box: puppetlabs/ubuntu-14.04-64-nocm
 CONFIG:
   type: foss
+=======
+---
+HOSTS:
+  windows2012-64-1:
+    pe_dir:
+    pe_ver:
+    pe_upgrade_dir:
+    pe_upgrade_ver:
+    hypervisor: vmpooler
+    platform: windows-2012-64
+    ruby_arch: x64
+    template: win-2012-x86_64
+    roles:
+    - agent
+    - default
+CONFIG:
+  nfs_server: none
+  consoleport: 443
+  pooling_api: http://vmpooler.delivery.puppetlabs.net/
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70

@@ -19,6 +19,25 @@ module Puppet::Parser::Functions
 
         delete('abracadabra', 'bra')
         Would return: 'acada'
+<<<<<<< HEAD
+=======
+
+    Note that from Puppet 4.0.0 the minus (-) operator deletes values from arrays and keys from a hash:
+
+        ['a', 'b', 'c', 'b'] - 'b'
+        # would return ['a', 'c']
+
+        {'a'=>1,'b'=>2,'c'=>3} - ['b','c'])
+        # would return {'a' => '1'}
+
+    A global delete from a string can be performed with the regsubst() function:
+
+        'abracadabra'.regsubst(/bra/, '', 'G')
+        # would return 'acada'
+
+    In general, the filter() function can filter out entries from arrays and hashes based on keys and/or values.
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   DOC
              ) do |arguments|
 

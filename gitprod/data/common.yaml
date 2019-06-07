@@ -1,0 +1,5 @@
+---
+  profile::hiera.prod.yaml
+  profile::hiera.dev.yaml
+  profile::hiera.Dev_docker.yaml
+  profile::hiera.stage.yaml

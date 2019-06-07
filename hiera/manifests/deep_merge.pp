@@ -18,7 +18,11 @@ class hiera::deep_merge {
   $manage_package     = $::hiera::manage_package
 
   if $manage_package {
+<<<<<<< HEAD
     ::hiera::install { 'deep_merge':
+=======
+    ::hiera::install { 'deeper':
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
       gem_name    => $deep_merge_name,
       provider    => $provider,
       gem_version => $deep_merge_version,

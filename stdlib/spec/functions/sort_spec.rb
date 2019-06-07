@@ -1,6 +1,10 @@
 require 'spec_helper'
 
+<<<<<<< HEAD
 describe 'sort' do
+=======
+describe 'sort', :if => Puppet::Util::Package.versioncmp(Puppet.version, '6.0.0') < 0 do
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   describe 'signature validation' do
     it { is_expected.not_to eq(nil) }
     it { is_expected.to run.with_params.and_raise_error(Puppet::ParseError, %r{wrong number of arguments}i) }
@@ -22,7 +26,11 @@ describe 'sort' do
   context 'when called with an array' do
     it { is_expected.to run.with_params([]).and_return([]) }
     it { is_expected.to run.with_params(['a']).and_return(['a']) }
+<<<<<<< HEAD
     it { is_expected.to run.with_params(%w[c b a]).and_return(%w[a b c]) }
+=======
+    it { is_expected.to run.with_params(['c', 'b', 'a']).and_return(['a', 'b', 'c']) }
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   end
 
   context 'when called with a string' do

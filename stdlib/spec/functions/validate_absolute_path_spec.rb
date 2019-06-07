@@ -8,7 +8,11 @@ describe 'validate_absolute_path' do
   # Checking for deprecation warning
   it 'displays a single deprecation' do
     ENV['STDLIB_LOG_DEPRECATIONS'] = 'true'
+<<<<<<< HEAD
     scope.expects(:warning).with(includes('This method is deprecated'))
+=======
+    expect(scope).to receive(:warning).with(include('This method is deprecated'))
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     is_expected.to run.with_params('c:/')
   end
 
@@ -18,6 +22,7 @@ describe 'validate_absolute_path' do
   end
 
   describe 'valid paths handling' do
+<<<<<<< HEAD
     %w[
       C:/
       C:\\
@@ -31,6 +36,9 @@ describe 'validate_absolute_path' do
       /var/tmp
       /var/opt/../lib/puppet
     ].each do |path|
+=======
+    ['C:/', 'C:\\', 'C:\\WINDOWS\\System32', 'C:/windows/system32', 'X:/foo/bar', 'X:\\foo\\bar', '\\\\host\\windows', '//host/windows', '/', '/var/tmp', '/var/opt/../lib/puppet'].each do |path|
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
       it { is_expected.to run.with_params(path) }
       it { is_expected.to run.with_params(['/tmp', path]) }
     end
@@ -53,6 +61,7 @@ describe 'validate_absolute_path' do
     end
 
     context 'with relative paths' do
+<<<<<<< HEAD
       %w[
         relative1
         .
@@ -63,6 +72,9 @@ describe 'validate_absolute_path' do
         opt/puppet/bin
         relative\\windows
       ].each do |path|
+=======
+      ['relative1', '.', '..', './foo', '../foo', 'etc/puppetlabs/puppet', 'opt/puppet/bin', 'relative\\windows'].each do |path|
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
         it { is_expected.to run.with_params(path).and_raise_error(Puppet::ParseError, %r{is not an absolute path}) }
         it { is_expected.to run.with_params([path]).and_raise_error(Puppet::ParseError, %r{is not an absolute path}) }
         it { is_expected.to run.with_params(['/tmp', path]).and_raise_error(Puppet::ParseError, %r{is not an absolute path}) }

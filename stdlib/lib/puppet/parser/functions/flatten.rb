@@ -11,6 +11,12 @@ module Puppet::Parser::Functions
         flatten(['a', ['b', ['c']]])
 
     Would return: ['a','b','c']
+<<<<<<< HEAD
+=======
+
+    Note: from Puppet 5.5.0, the compatible function with the same name in Puppet core
+    will be used instead of this function.
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   DOC
              ) do |arguments|
 

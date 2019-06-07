@@ -18,12 +18,20 @@ describe 'delete_at' do
   it { is_expected.to run.with_params([0, 1, 2], 1).and_return([0, 2]) }
   it { is_expected.to run.with_params([0, 1, 2], -1).and_return([0, 1]) }
   it { is_expected.to run.with_params([0, 1, 2], -4).and_return([0, 1, 2]) }
+<<<<<<< HEAD
   it { is_expected.to run.with_params(%w[ƒờở βāř ьầż], 1).and_return(%w[ƒờở ьầż]) }
+=======
+  it { is_expected.to run.with_params(['ƒờở', 'βāř', 'ьầż'], 1).and_return(['ƒờở', 'ьầż']) }
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
   it 'leaves the original array intact' do
     argument = [1, 2, 3]
     original = argument.dup
+<<<<<<< HEAD
     _result = subject.call([argument, 2])
+=======
+    _result = subject.execute(argument, 2)
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     expect(argument).to eq(original)
   end
 end

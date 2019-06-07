@@ -3,6 +3,7 @@ require 'spec_helper'
 if Puppet::Util::Package.versioncmp(Puppet.version, '4.5.0') >= 0
   describe 'Stdlib::Windowspath' do
     describe 'valid handling' do
+<<<<<<< HEAD
       %w[
         C:\\
         C:\\WINDOWS\\System32
@@ -13,6 +14,9 @@ if Puppet::Util::Package.versioncmp(Puppet.version, '4.5.0') >= 0
         X:/var/ůťƒ8
         X:/var/ネット
       ].each do |value|
+=======
+      ['C:\\', 'C:\\WINDOWS\\System32', 'C:/windows/system32', 'X:/foo/bar', 'X:\\foo\\bar', '\\\\host\\windows', 'X:/var/ůťƒ8', 'X:/var/ネット'].each do |value|
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
         describe value.inspect do
           it { is_expected.to allow_value(value) }
         end

@@ -1,6 +1,13 @@
 require 'spec_helper'
 
 describe 'dig44' do
+<<<<<<< HEAD
+=======
+  let(:undef_value) do
+    (Puppet::Util::Package.versioncmp(Puppet.version, '6.0.0') < 0) ? :undef : nil
+  end
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   let(:data) do
     {
       'a' => {
@@ -19,7 +26,11 @@ describe 'dig44' do
       'b' => true,
       'c' => false,
       'd' => '1',
+<<<<<<< HEAD
       'e' => :undef,
+=======
+      'e' => undef_value,
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
       'f' => nil,
     }
   end
@@ -80,11 +91,19 @@ describe 'dig44' do
 
   context 'with structured values' do
     it 'is able to extract a deeply nested hash value' do
+<<<<<<< HEAD
       is_expected.to run.with_params(data, %w[a g], 'default').and_return('2')
     end
 
     it 'returns the default value if the path is too long' do
       is_expected.to run.with_params(data, %w[a g c d], 'default').and_return('default')
+=======
+      is_expected.to run.with_params(data, ['a', 'g'], 'default').and_return('2')
+    end
+
+    it 'returns the default value if the path is too long' do
+      is_expected.to run.with_params(data, ['a', 'g', 'c', 'd'], 'default').and_return('default')
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     end
 
     it 'supports an array index (number) in the path' do
@@ -92,6 +111,7 @@ describe 'dig44' do
     end
 
     it 'supports an array index (string) in the path' do
+<<<<<<< HEAD
       is_expected.to run.with_params(data, %w[a e 1], 'default').and_return('f1')
     end
 
@@ -109,6 +129,25 @@ describe 'dig44' do
 
     it 'returns "nil" if value is not found and no default value is provided' do
       is_expected.to run.with_params(data, %w[a 1]).and_return(nil)
+=======
+      is_expected.to run.with_params(data, ['a', 'e', '1'], 'default').and_return('f1')
+    end
+
+    it 'returns the default value if an array index is not a number' do
+      is_expected.to run.with_params(data, ['a', 'b', 'c'], 'default').and_return('default')
+    end
+
+    it 'returns the default value if and index is out of array length' do
+      is_expected.to run.with_params(data, ['a', 'e', '5'], 'default').and_return('default')
+    end
+
+    it 'is able to path though both arrays and hashes' do
+      is_expected.to run.with_params(data, ['a', 'e', '2', 'x', 'y'], 'default').and_return('z')
+    end
+
+    it 'returns "nil" if value is not found and no default value is provided' do
+      is_expected.to run.with_params(data, ['a', '1']).and_return(nil)
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     end
   end
 

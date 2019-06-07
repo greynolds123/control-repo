@@ -2,6 +2,7 @@ require 'spec_helper_acceptance'
 
 describe 'validate_absolute_path function' do
   describe 'success' do
+<<<<<<< HEAD
     %w[
       C:/
       C:\\\\
@@ -13,6 +14,9 @@ describe 'validate_absolute_path function' do
       /var/lib/puppet
       /var/opt/../lib/puppet
     ].each do |path|
+=======
+    ['C:/', 'C:\\\\', 'C:\\\\WINDOWS\\\\System32', 'C:/windows/system32', 'X:/foo/bar', 'X:\\\\foo\\\\bar', '/var/tmp', '/var/lib/puppet', '/var/opt/../lib/puppet'].each do |path|
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
       pp = <<-DOC
         $one = '#{path}'
         validate_absolute_path($one)

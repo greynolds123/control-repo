@@ -2,6 +2,7 @@
 
 #### 目次
 
+<<<<<<< HEAD
 1. [モジュールの説明 - モジュールの機能とその有益性](#モジュールの説明)
 1. [セットアップ - stdlib導入の基本](#セットアップ)
 1. [使用 - 設定オプションと追加機能](#使用方法)
@@ -17,13 +18,33 @@
 
 
 ## モジュールの説明
+=======
+1. [説明 - モジュールの機能とその有益性](#module-description)
+1. [セットアップ - stdlib導入の基本](#setup)
+1. [使用方法 - 設定オプションと追加機能](#usage)
+1. [参考 - モジュールの機能と動作について](#reference)
+    1. [クラス](#classes)
+    1. [定義できるタイプ](#defined-types)
+    1. [データタイプ](#data-types)
+    1. [Facts](#facts)
+    1. [関数](#functions)
+1. [制約事項 - OSの互換性など](#limitations)
+1. [開発 - モジュール貢献についてのガイド](#development)
+1. [コントリビュータ](#contributors)
+
+## モジュールの概要
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 このモジュールでは、Puppetモジュールリソースの標準ライブラリを提供しています。Puppetモジュールでは、この標準ライブラリを広く使用しています。stdlibモジュールは、以下のリソースをPuppetに追加します。
 
  * ステージ
  * Facts
  * 関数
+<<<<<<< HEAD
  * 定義タイプ
+=======
+ * 定義された型
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
  * データタイプ
  * プロバイダ
 
@@ -31,9 +52,15 @@
 
 ## セットアップ
 
+<<<<<<< HEAD
 stdlibモジュールを[インストール](https://docs.puppet.com/puppet/latest/modules_installing.html)し、この標準ライブラリの関数、Facts、リソースをPuppetに追加します。
 
 stdlibに依存するモジュールを記述する場合は、必ずmetadata.jsonで[依存関係を特定](https://docs.puppet.com/puppet/latest/modules_metadata.html#specifying-dependencies)してください。
+=======
+stdlibモジュールを[インストール](https://puppet.com/docs/puppet/latest/modules_installing.html)し、この標準ライブラリの関数、Facts、リソースをPuppetに追加します。
+
+stdlibに依存するモジュールを記述する場合は、必ずmetadata.jsonで[依存関係を特定](https://puppet.com/docs/puppet/latest/modules_metadata.html#specifying-dependencies-in-modules)してください。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 ## 使用方法
 
@@ -43,7 +70,11 @@ stdlibのほとんどの機能は、Puppetに自動的にロードされます�
 
 `stdlib::stages`クラスは、インフラストラクチャ、言語ランタイム、アプリケーションレイヤの配備に関する各種のランステージを宣言します。ハイレベルステージは、以下のとおりです(順番どおり)。
 
+<<<<<<< HEAD
   * setup
+=======
+  * セットアップ
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   * main
   * runtime
   * setup_infra
@@ -61,6 +92,7 @@ node default {
 }
 ```
 
+<<<<<<< HEAD
 ## 参考
 
 * [パブリッククラス](#パブリッククラス)
@@ -69,6 +101,16 @@ node default {
 * [データタイプ](#データタイプ)
 * [Facts](#facts)
 * [関数](#関数)
+=======
+## リファレンス
+
+* [パブリッククラス](#public-classes)
+* [プライベートクラス](#private-classes)
+* [定義された型](#defined-types)
+* [データタイプ](#data-types)
+* [Facts](#facts)
+* [関数](#functions)
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 ### クラス
 
@@ -80,7 +122,11 @@ node default {
 
 * `stdlib::stages`: Puppetのランステージの標準セットを管理します。
 
+<<<<<<< HEAD
 ### 定義タイプ
+=======
+### 定義された型
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 #### `file_line`
 
@@ -299,6 +345,7 @@ C:\\WINDOWS\\System32
 
 サービスリソースの使用可能なensure値と一致します。
 
+<<<<<<< HEAD
 使用可能なインプット例:    
 
 ```shell
@@ -307,6 +354,16 @@ C:\\WINDOWS\\System32
 ```
 
 使用不可能なインプット例:   
+=======
+使用可能なインプット例:
+
+```shell
+stopped
+running
+```
+
+使用不可能なインプット例:
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 ```shell
 true
@@ -315,12 +372,21 @@ false
 
 #### `Stdlib::Httpsurl`
 
+<<<<<<< HEAD
 HTTPS URLに一致します。
+=======
+HTTPS URLに一致します。この一致では、大文字と小文字は区別されません。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 使用可能なインプット例:
 
 ```shell
 https://hello.com
+<<<<<<< HEAD
+=======
+
+HTTPS://HELLO.COM
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 ```
 
 使用不可能なインプット例:
@@ -331,7 +397,11 @@ httds://notquiteright.org`
 
 #### `Stdlib::Httpurl`
 
+<<<<<<< HEAD
 HTTPSおよびHTTP URLの両方に一致します。
+=======
+HTTPSとHTTPの両方のURLに一致します。この一致では、大文字と小文字は区別されません。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 使用可能なインプット例:
 
@@ -339,6 +409,11 @@ HTTPSおよびHTTP URLの両方に一致します。
 https://hello.com
 
 http://hello.com
+<<<<<<< HEAD
+=======
+
+HTTP://HELLO.COM
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 ```
 
 使用不可能なインプット例:
@@ -353,7 +428,11 @@ httds://notquiteright.org
 
 #### `Stdlib::Unixpath`
 
+<<<<<<< HEAD
 Unixオペレーティングシステムのパスに一致します。
+=======
+Unixオペレーティングシステムの絶対パスに一致します。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 使用可能なインプット例:
 
@@ -367,11 +446,22 @@ Unixオペレーティングシステムのパスに一致します。
 
 ```shell
 C:/whatever
+<<<<<<< HEAD
+=======
+
+some/path
+
+../some/other/path
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 ```
 
 #### `Stdlib::Filemode`
 
+<<<<<<< HEAD
 ８進数で有効な4桁モードと一致します。
+=======
+1から4までの数字とシンボリックファイルモードからなる8進ファイルモードに一致します。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 使用可能なインプット例:
 
@@ -383,10 +473,21 @@ C:/whatever
 1777
 ```
 
+<<<<<<< HEAD
 使用不可能なインプット例:
 
 ```shell
 644
+=======
+```shell
+a=Xr,g=w
+```
+
+使用不可能なインプット例:
+
+```shell
+x=r,a=wx
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 ```
 
 ```shell
@@ -411,7 +512,11 @@ C:\\
 
 #### `Stdlib::Filesource`
 
+<<<<<<< HEAD
 puppetファイルタイプのソースパラメータの有効な値のパスに一致します。
+=======
+Puppetファイルタイプのソースパラメータの有効な値のパスに一致します。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 使用可能なインプット例:
 
@@ -640,8 +745,12 @@ CIDRプレフィックスの有無に関わらず、ドット区切りの4つの
 
 #### `Stdlib::IP::Address::V4::CIDR`
 
+<<<<<<< HEAD
 CIDRフォーマットで記述されたIPv4アドレスに一致します。アドレスにアドレスプレフィックスが含まれる場合のみ一致します(たとえば、'192.168.0.6/24'には一致しますが、
 '192.168.0.6'には一致しません)。
+=======
+CIDR形式のIPv4アドレスに一致します。アドレスにアドレスプレフィックスが含まれている場合にのみ一致します(例えば、'192.168.0.6/24'には一致しますが、'192.168.0.6'には一致しません)。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 有効な値: CIDRが提供されたIPv4アドレス、たとえば'192.186.8.101/105'など。これは、'192.186.8.101'～'192.168.8.105'を含むすべてに一致します。
 
@@ -679,7 +788,11 @@ CIDRフォーマットで記述されたIPv4アドレスに一致します。ア
 
 [RFC 2373](https://www.ietf.org/rfc/rfc2373.txt)の2.2.2に規定された0を圧縮する記法である`::`を含む可能性のあるIPv6アドレスに一致します。[RFC 2373](https://www.ietf.org/rfc/rfc2373.txt)の2.3に規定されたアドレスプレフィックスを持たないアドレスにのみ一致します。
 
+<<<<<<< HEAD
 ### ファクト
+=======
+### Facts
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 #### `package_provider`
 
@@ -731,6 +844,11 @@ Puppetがこのシステムのサービス管理に使用するデフォルト�
 
 #### `abs`
 
+<<<<<<< HEAD
+=======
+**非推奨:** この関数は、Puppet 6.0.0で、内蔵の[`abs`](https://puppet.com/docs/puppet/latest/function.html#abs)関数に置き換えられました。
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 数字の絶対値を返します。たとえば、'-34.56'は'34.56'になります。
 
 引数: 整数値または浮動小数点値のいずれかの単一の引数。
@@ -741,6 +859,22 @@ Puppetがこのシステムのサービス管理に使用するデフォルト�
 
 任意のオブジェクトを、そのオブジェクトを含む配列に変換します。空の引数リストは空の配列に変換されます。ハッシュは、キーと値が交互になった配列に変換されます。配列は変換されません。
 
+<<<<<<< HEAD
+=======
+Puppet 5.0.0以降では、タイプシステムを使用してほとんどすべてのデータタイプの新しい値を作成できます。内蔵の[`Array.new`](https://puppet.com/docs/puppet/latest/function.html#conversion-to-array-and-tuple)関数を使用して新しい配列を作成できます。
+
+    $hsh = {'key' => 42, 'another-key' => 100}
+    notice(Array($hsh))
+
+`[['key', 42], ['another-key', 100]]`を通知します
+
+配列のデータタイプには、"まだ配列でない場合は配列を作成する"という特別なモードもあります。
+
+    notice(Array({'key' => 42, 'another-key' => 100}, true))
+
+`true`フラグはハッシュが配列に変換されないようにするため、`[{'key' => 42, 'another-key' => 100}]`を通知します。
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 *タイプ*: 右辺値
 
 #### `any2bool`
@@ -754,6 +888,11 @@ Puppetがこのシステムのサービス管理に使用するデフォルト�
 * undef値は`false`を返します。
 * それ以外はすべて`true`を返します。
 
+<<<<<<< HEAD
+=======
+詳細については、内蔵の[`Boolean.new`](https://puppet.com/docs/puppet/latest/function.html#conversion-to-boolean)を参照してください。
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 *タイプ*: 右辺値
 
 #### `assert_private`
@@ -776,23 +915,46 @@ assert_private("You're not supposed to do that!")
 
 下位互換性を得るには、`method`を`default`に設定します(指定されていない場合)。
 
+<<<<<<< HEAD
 *注:* この関数はRubyクラスの実装にあたり、UTF8との互換性がない可能性があります。互換性を確保するには、Ruby 2.4.0以降でこの関数を使用してください。
+=======
+> **注:** この関数はRubyクラスの実装にあたり、UTF8との互換性がない可能性があります。互換性を確保するには、Ruby 2.4.0以降でこの関数を使用してください。
+
+Puppet 4.8.0以降では、ベース64 でエンコードされた文字列の生成に、`バイナリ`データタイプを使用できます。
+
+詳細については、内蔵の[`String.new`](https://puppet.com/docs/puppet/latest/function.html#binary-value-to-string)関数と[`Binary.new`](https://puppet.com/docs/puppet/latest/function.html#creating-a-binary)関数を参照してください。
+
+バイナリ(非UTF-8)コンテンツを含むファイルの読み取りについては、内蔵の[`binary_file`](https://puppet.com/docs/puppet/latest/function.html#binary_file)関数を参照してください。
+
+    # encode a string as if it was binary
+    $encodestring = String(Binary('thestring', '%s'))
+    # decode a Binary assuming it is an UTF-8 String
+    $decodestring = String(Binary("dGhlc3RyaW5n"), "%s")
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 **例:**
 
 ```puppet
 base64('encode', 'hello')
 base64('encode', 'hello', 'default')
+<<<<<<< HEAD
 # リターン: "aGVsbG8=\n"
 
 base64('encode', 'hello', 'strict')
 # リターン: "aGVsbG8="
+=======
+# return: "aGVsbG8=\n"
+
+base64('encode', 'hello', 'strict')
+# return: "aGVsbG8="
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 base64('decode', 'aGVsbG8=')
 base64('decode', 'aGVsbG8=\n')
 base64('decode', 'aGVsbG8=', 'default')
 base64('decode', 'aGVsbG8=\n', 'default')
 base64('decode', 'aGVsbG8=', 'strict')
+<<<<<<< HEAD
 # リターン: "hello"
 
 base64('encode', 'https://puppetlabs.com', 'urlsafe')
@@ -800,6 +962,15 @@ base64('encode', 'https://puppetlabs.com', 'urlsafe')
 
 base64('decode', 'aHR0cHM6Ly9wdXBwZXRsYWJzLmNvbQ==', 'urlsafe')
 # リターン: "https://puppetlabs.com"
+=======
+# return: "hello"
+
+base64('encode', 'https://puppetlabs.com', 'urlsafe')
+# return: "aHR0cHM6Ly9wdXBwZXRsYWJzLmNvbQ=="
+
+base64('decode', 'aHR0cHM6Ly9wdXBwZXRsYWJzLmNvbQ==', 'urlsafe')
+# return: "https://puppetlabs.com"
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 ```
 
 *タイプ*: 右辺値
@@ -808,9 +979,17 @@ base64('decode', 'aHR0cHM6Ly9wdXBwZXRsYWJzLmNvbQ==', 'urlsafe')
 
 パスの`basename`を返します。オプションの引数で拡張子が外れます。例:
 
+<<<<<<< HEAD
   * ('/path/to/a/file.ext')は'file.ext'を返します。
   * ('relative/path/file.ext')は'file.ext'を返します。
   * ('/path/to/a/file.ext', '.ext')は'file'を返します。
+=======
+```puppet
+basename('/path/to/a/file.ext')            => 'file.ext'
+basename('relative/path/file.ext')         => 'file.ext'
+basename('/path/to/a/file.ext', '.ext')    => 'file'
+```
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 *タイプ*: 右辺値
 
@@ -823,6 +1002,15 @@ base64('decode', 'aHR0cHM6Ly9wdXBwZXRsYWJzLmNvbQ==', 'urlsafe')
 
 引数: インプットとして、単一のブーリアンまたは文字列。
 
+<<<<<<< HEAD
+=======
+Puppet 5.0.0以降では、 タイプシステムを使用しているほとんどすべてのデータタイプに関して値を作成できます。内蔵の[`Numeric.new`](https://puppet.com/docs/puppet/latest/function.html#conversion-to-numeric)、 [`Integer.new`](https://puppet.com/docs/puppet/latest/function.html#conversion-to-integer)、および[`Float.new`](https://puppet.com/docs/puppet/latest/function.html#conversion-to-float)
+の各関数を使用して数値に変換できます。
+
+    notice(Integer(false)) # Notices 0
+    notice(Float(true))    # Notices 1.0
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 *タイプ*: 右辺値
 
 #### `bool2str`
@@ -839,20 +1027,47 @@ bool2str(false, 't', 'f')         => 'f'
 
 引数: ブーリアン。
 
+<<<<<<< HEAD
+=======
+Since Puppet 5.0.0, you can create new values for almost any
+data type using the type system — you can use the built-in
+[`String.new`](https://puppet.com/docs/puppet/latest/function.html#boolean-to-string)
+function to convert to String, with many different format options:
+
+    notice(String(false))         # Notices 'false'
+    notice(String(true))          # Notices 'true'
+    notice(String(false, '%y'))   # Notices 'yes'
+    notice(String(true, '%y'))    # Notices 'no'
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 *タイプ*: 右辺値
 
 #### `camelcase`
 
+<<<<<<< HEAD
+=======
+**非推奨:**この関数は、Puppet 6.0.0で、内蔵の[`camelcase`](https://puppet.com/docs/puppet/latest/function.html#camelcase)関数に置き換えられました。
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 配列内の1つの文字列またはすべての文字列の大文字と小文字の別をCamelCase(大小文字混在)に変換します。
 
 引数: 配列または文字列のいずれか。受け取ったものと同じタイプの引数を返しますが、CamelCaseの形式で返します。
 
 *注:* この関数はRubyクラスの実装にあたり、UTF8との互換性がない可能性があります。互換性を確保するには、Ruby 2.4.0以降でこの関数を使用してください。
 
+<<<<<<< HEAD
  *タイプ*: 右辺値
 
 #### `capitalize`
 
+=======
+*タイプ*: 右辺値
+
+#### `capitalize`
+
+**非推奨:**この関数は、Puppet 6.0.0で、内蔵の[`capitalize`](https://puppet.com/docs/puppet/latest/function.html#capitalize)関数に置き換えられました。
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 文字列または複数文字列の配列の最初の文字を大文字にし、各文字列の残りの文字を小文字にします。
 
 引数: インプットとして、単一文字列または配列。*タイプ*: 右辺値
@@ -861,6 +1076,11 @@ bool2str(false, 't', 'f')         => 'f'
 
 #### `ceiling`
 
+<<<<<<< HEAD
+=======
+**非推奨:**この関数は、Puppet 6.0.0で、内蔵の[`ceiling`](https://puppet.com/docs/puppet/latest/function.html#ceiling)関数に置き換えられました。
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 引数以上の最小整数を返します。
 
 引数: 単一の数値。
@@ -869,6 +1089,11 @@ bool2str(false, 't', 'f')         => 'f'
 
 #### `chomp`
 
+<<<<<<< HEAD
+=======
+**非推奨:**この関数は、Puppet 6.0.0で、内蔵の[`chomp`](https://puppet.com/docs/puppet/latest/function.html#chomp)関数に置き換えられました。
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 文字列または複数文字列の配列の最後から、レコード分離文字を削除します。たとえば、'hello\n'は'hello'になります。
 
 引数: 単一の文字または配列。
@@ -877,6 +1102,11 @@ bool2str(false, 't', 'f')         => 'f'
 
 #### `chop`
 
+<<<<<<< HEAD
+=======
+**非推奨:**この関数は、Puppet 6.0.0で、内蔵の[`chop`](https://puppet.com/docs/puppet/latest/function.html#chop)関数に置き換えられました。
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 最後の文字を削除した新しい文字列を返します。文字列が'\r\n'で終わる場合は、両方の文字が削除されます。`chop`を空文字列に適用すると、空文字列が返されます。レコード分離文字のみを削除する場合は、`chomp`関数を使用してください。
 
 引数: インプットとして、文字列または複数文字列の配列。
@@ -893,6 +1123,13 @@ bool2str(false, 't', 'f')         => 'f'
 
 引数: 文字列、配列、数字。
 
+<<<<<<< HEAD
+=======
+Puppet 6.0.0以降では、内蔵の関数を使用して同じ結果を得ることができます。
+
+    [$minval, $maxval, $value_to_clamp].sort[1]
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 *タイプ*: 右辺値
 
 #### `concat`
@@ -902,6 +1139,15 @@ bool2str(false, 't', 'f')         => 'f'
   * `concat(['1','2','3'],'4')`は['1','2','3','4']を返します。
   * `concat(['1','2','3'],'4',['5','6','7'])`は['1','2','3','4','5','6','7']を返します。
 
+<<<<<<< HEAD
+=======
+Puppet 4.0以降では、配列の連結とハッシュのマージのために`+`演算子を使い、`<<`演算子を使って追加することができます。
+
+    ['1','2','3'] + ['4','5','6'] + ['7','8','9'] # returns ['1','2','3','4','5','6','7','8','9']
+    [1, 2, 3] << 4 # returns [1, 2, 3, 4]
+    [1, 2, 3] << [4, 5] # returns [1, 2, 3, [4, 5]]
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 *タイプ*: 右辺値
 
 #### `convert_base`
@@ -911,9 +1157,36 @@ bool2str(false, 't', 'f')         => 'f'
   * `convert_base(5, 2)`は'101'になります。
   * `convert_base('254', '16')`は'fe'になります。
 
+<<<<<<< HEAD
 #### `count`
 
 配列のみで呼び出した場合は、空または`undef`**ではない**要素の数をカウントします。第2の引数を用いて呼び出した場合は、第2の引数にマッチする配列内の要素の数をカウントします。
+=======
+Puppet 4.5.0以降では、内蔵の[`String.new`](https://puppet.com/docs/puppet/latest/function.html#integer-to-string)関数を使って、さまざまな形式のオプションでこれを行うことができます。
+
+    $binary_repr = String(5, '%b') # results in "101"
+    $hex_repr = String(254, '%x')  # results in "fe"
+    $hex_repr = String(254, '%#x') # results in "0xfe"
+
+#### `count`
+
+配列を最初の引数とオプションの2番目の引数と解釈します。
+2番目の引数に等しい配列内の要素の数をカウントします。
+配列のみで呼び出された場合は、nil/undef/empty-string以外の要素の数をカウントします。
+
+> **注意**: 等値はRubyメソッドでテストされます。これはRubyが
+等値とみなす対象になります。文字列の場合、等値は大文字と小文字を区別します。
+
+Puppetコアでは、 内蔵の
+[`filter`](https://puppet.com/docs/puppet/latest/function.html#filter) (Puppet 4.0.0以降)および
+[`length`](https://puppet.com/docs/puppet/latest/function.html#length) (Puppet 5.5.0以降、それ以前ではstdlib)の各関数の組み合わせを使用してカウントが行われます。
+
+この例では、`undef`でない値のカウントを行う方法を示しています。
+
+    notice([42, "hello", undef].filter |$x| { $x =~ NotUndef }.length)
+
+2を通知します。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 *タイプ*: 右辺値
 
@@ -964,6 +1237,26 @@ if ! defined_with_params(User[dan], {'ensure' => 'present' }) {
 * `delete({'a' => 1,'b' => 2,'c' => 3},['b','c'])`は{'a'=> 1}を返します。
 * `delete(['ab', 'b'], 'b')`は['ab']を返します。
 
+<<<<<<< HEAD
+=======
+Puppet 4.0.0以降では、マイナス(`-`)演算子によって、配列から値を削除し、ハッシュからキーを削除します。
+
+    ['a', 'b', 'c', 'b'] - 'b'
+    # would return ['a', 'c']
+
+    {'a'=>1,'b'=>2,'c'=>3} - ['b','c'])
+    # would return {'a' => '1'}
+
+内蔵の
+[`regsubst`](https://puppet.com/docs/puppet/latest/function.html#regsubst)関数で、文字列からグローバル削除を実行できます。
+
+    'abracadabra'.regsubst(/bra/, '', 'G')
+    #は、'acada'を返します。
+
+通常、内蔵の
+[`filter`](https://puppet.com/docs/puppet/latest/function.html#filter) 関数によって、キーと値との組み合わせに基づき、配列とハッシュからエントリをフィルタリングできます。
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 *タイプ*: 右辺値
 
 #### `delete_at`
@@ -972,6 +1265,24 @@ if ! defined_with_params(User[dan], {'ensure' => 'present' }) {
 
 例: `delete_at(['a','b','c'], 1)`は['a','c']を返します。
 
+<<<<<<< HEAD
+=======
+Puppet 4以降では、内蔵の
+[`filter`](https://puppet.com/docs/puppet/latest/function.html#filter)関数を使って、これを行うことができます。
+
+    ['a', 'b', 'c'].filter |$pos, $val | { $pos != 1 } # returns ['a', 'c']
+    ['a', 'b', 'c', 'd'].filter |$pos, $val | { $pos % 2 != 0 } # returns ['b', 'd']
+
+あるいは、配列の最初もしくは最後から、または両端から同時に削除したい場合は、スライス演算子`[ ]`を使用します。
+
+    $array[0, -1] # すべての値と同じ
+    $array[2, -1] # 最初の2つの要素を除くすべて
+    $array[0, -3] # 最後の2つの要素を除くすべて
+
+    $array[1, -2] # 最初と最後の要素を除くすべて
+
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 *タイプ*: 右辺値
 
 #### `delete_regex`
@@ -988,6 +1299,14 @@ if ! defined_with_params(User[dan], {'ensure' => 'present' }) {
 * `delete_regex(['abf', 'ab', 'ac'], '^ab.*')`は['ac']を返します。
 * `delete_regex(['ab', 'b'], 'b')`は['ab']を返します。
 
+<<<<<<< HEAD
+=======
+Puppet 4.0.0以降では、内蔵の[`filter`](https://puppet.com/docs/puppet/latest/function.html#filter)関数で同等の処理を行います。
+
+    ["aaa", "aba", "aca"].filter |$val| { $val !~ /b/ }
+    # ['aaa', 'aca']を返します
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 *タイプ*: 右辺値
 
 #### `delete_values`
@@ -998,6 +1317,14 @@ if ! defined_with_params(User[dan], {'ensure' => 'present' }) {
 
 * `delete_values({'a'=>'A','b'=>'B','c'=>'C','B'=>'D'}, 'B')`は{'a'=>'A','c'=>'C','B'=>'D'}を返します。
 
+<<<<<<< HEAD
+=======
+Puppet 4.0.0以降では、内蔵の[`filter`](https://puppet.com/docs/puppet/latest/function.html#filter)関数で同等の処理を行います。
+
+    $array.filter |$val| { $val != 'B' }
+    $hash.filter |$key, $val| { $val != 'B' }
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 *タイプ*: 右辺値
 
 #### `delete_undef_values`
@@ -1008,6 +1335,14 @@ if ! defined_with_params(User[dan], {'ensure' => 'present' }) {
 
 * `$hash = delete_undef_values({a=>'A', b=>'', c=>`undef`, d => false})`は{a => 'A', b => '', d => false}を返します。
 
+<<<<<<< HEAD
+=======
+Puppet 4.0.0以降では、内蔵の[`filter`](https://puppet.com/docs/puppet/latest/function.html#filter)関数で同等の処理を行います。
+
+    $array.filter |$val| { $val =~ NotUndef }
+    $hash.filter |$key, $val| { $val =~ NotUndef }
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 *タイプ*: 右辺値
 
 #### `deprecation`
@@ -1029,9 +1364,15 @@ deprecation(key, message)
 
 Puppetの他の設定は、stdlibの`deprecation`関数に影響を与えます。
 
+<<<<<<< HEAD
 * [`disable_warnings`](https://docs.puppet.com/puppet/latest/reference/configuration.html#disablewarnings)
 * [`max_deprecations`](https://docs.puppet.com/puppet/latest/reference/configuration.html#maxdeprecations)
 * [`strict`](https://docs.puppet.com/puppet/latest/reference/configuration.html#strict):
+=======
+* [`disable_warnings`](https://puppet.com/docs/puppet/latest/configuration.html#disablewarnings)
+* [`max_deprecations`](https://puppet.com/docs/puppet/latest/configuration.html#maxdeprecations)
+* [`strict`](https://puppet.com/docs/puppet/latest/configuration.html#strict):
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
     * `error`: 非推奨メッセージにより、ただちに機能しなくなります。
     * `off`: メッセージがアウトプットされません。
@@ -1055,11 +1396,23 @@ Puppetの他の設定は、stdlibの`deprecation`関数に影響を与えます�
 
 * `difference(["a","b","c"],["b","c","d"])`は["a"]を返します。
 
+<<<<<<< HEAD
+=======
+Puppet 4以降では、Puppet言語のマイナス(`-`)演算子は同じことを行います。
+
+    ['a', 'b', 'c'] - ['b', 'c', 'd']
+    # ['a']を返します
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 *タイプ*: 右辺値
 
 #### `dig`
 
+<<<<<<< HEAD
 **非推奨:**この関数は、Puppet 4.5.0で、内蔵の[`dig`](https://docs.puppet.com/puppet/latest/function.html#dig)関数に置き換えられました。下位互換性を得るには、[`dig44()`](#dig44)を使用するか、新しいバージョンを使用してください。
+=======
+**非推奨:**この関数は、Puppet 4.5.0で、内蔵の[`dig`](https://puppet.com/docs/puppet/latest/function.html#dig)関数に置き換えられました。下位互換性を得るには、[`dig44()`](#dig44)を使用するか、新しいバージョンを使用してください。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 パスを含むキー配列を通じて、複数レイヤーのハッシュおよびアレイ内の値を探します。この関数は各パスコンポーネントにより構造内を移動し、パスの最後で値を返すよう試みます。
 
@@ -1079,11 +1432,19 @@ $data = {
 $value = dig($data, ['a', 'b', 2])
 # $value = 'b3'
 
+<<<<<<< HEAD
 # 可能なすべてのオプションを使用
 $value = dig($data, ['a', 'b', 2], 'not_found')
 # $value = 'b3'
 
 # デフォルト値を使用
+=======
+# with all possible options
+$value = dig($data, ['a', 'b', 2], 'not_found')
+# $value = 'b3'
+
+# using the default value
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 $value = dig($data, ['a', 'b', 'c', 'd'], 'not_found')
 # $value = 'not_found'
 ```
@@ -1116,11 +1477,19 @@ $data = {
 $value = dig44($data, ['a', 'b', 2])
 # $value = 'b3'
 
+<<<<<<< HEAD
 # 可能なすべてのオプションを使用
 $value = dig44($data, ['a', 'b', 2], 'not_found')
 # $value = 'b3'
 
 # デフォルト値を使用
+=======
+# with all possible options
+$value = dig44($data, ['a', 'b', 2], 'not_found')
+# $value = 'b3'
+
+# using the default value
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 $value = dig44($data, ['a', 'b', 'c', 'd'], 'not_found')
 # $value = 'not_found'
 ```
@@ -1155,6 +1524,11 @@ file { $config_file:
 
 #### `downcase`
 
+<<<<<<< HEAD
+=======
+**非推奨:**この関数は、Puppet 5.5.0で、内蔵の[`downcase`](https://puppet.com/docs/puppet/latest/function.html#downcase)関数に置き換えられました。
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 配列内の1つの文字列またはすべての文字列の大文字と小文字の別を、小文字に変換します。
 
 *注:* この関数はRubyクラスの実装にあたり、UTF8との互換性がない可能性があります。互換性を確保するには、Ruby 2.4.0以降でこの関数を使用してください。
@@ -1163,7 +1537,11 @@ file { $config_file:
 
 #### `empty`
 
+<<<<<<< HEAD
 **非推奨:**この関数は、Puppet 5.5.0で、内蔵の[`empty`](https://docs.puppet.com/puppet/latest/function.html#empty)関数に置き換えられました。
+=======
+**非推奨:**この関数は、Puppet 5.5.0で、内蔵の[`empty`](https://puppet.com/docs/puppet/latest/function.html#empty)関数に置き換えられました。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 引数が要素を含まない配列かハッシュ、または空文字列である場合に、`true`を返します。引数が数値の場合に`false`を返します。
 
@@ -1276,7 +1654,11 @@ fact('vmware."VRA.version"')
 
 #### `flatten`
 
+<<<<<<< HEAD
 **非推奨:**この関数は、Puppet 5.5.0で、内蔵の[`flatten`](https://docs.puppet.com/puppet/latest/function.html#flatten)関数に置き換えられました。
+=======
+**非推奨:**この関数は、Puppet 5.5.0で、内蔵の[`flatten`](https://puppet.com/docs/puppet/latest/function.html#flatten)関数に置き換えられました。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 ネストの深いアレイを平坦化し、結果として単一のフラット配列を返します。
 
@@ -1286,6 +1668,11 @@ fact('vmware."VRA.version"')
 
 #### `floor`
 
+<<<<<<< HEAD
+=======
+**非推奨:**この関数は、Puppet 5.5.0で、内蔵の[`floor`](https://puppet.com/docs/puppet/latest/function.html#floor)関数に置き換えられました。
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 引数以下の最大整数を返します。
 
 引数: 単一の数値。
@@ -1355,14 +1742,23 @@ DNSネームスペースのFQDN文字列をもとに、[RFC 4122](https://tools.
 $module_path = get_module_path('stdlib')
 ```
 
+<<<<<<< HEAD
 *タイプ*: 右辺値
 
 #### `getparam`
 
+=======
+Puppet 5.4.0以降では、内蔵の [`module_directory`](https://puppet.com/docs/puppet/latest/function.html#module_directory)関数は同じことを行い、複数の値または配列が与えられている場合、最初に見つかったモジュールへのパスを返します。
+
+*タイプ*: 右辺値
+
+#### `getparam`
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 リソースのパラメータの値を返します。
 
 引数: リソースリファレンスおよびパラメータの名前。
 
+<<<<<<< HEAD
 たとえば、以下の場合は'param_value'を返します:
 
 ```puppet
@@ -1379,6 +1775,46 @@ getparam(Example_resource["example_resource_instance"], "param")
 *タイプ*: 右辺値
 
 #### `getvar`
+=======
+> 注意: ユーザ定義のリソースタイプは遅れて評価されます。
+
+*例:*
+
+```puppet
+# define a resource type with a parameter
+define example_resource($param) {
+}
+
+# declare an instance of that type
+example_resource { "example_resource_instance":
+    param => "'the value we are getting in this example''"
+}
+
+# Because of order of evaluation, a second definition is needed
+# that will be evaluated after the first resource has been declared
+#
+define example_get_param {
+  # This will notice the value of the parameter
+  notice(getparam(Example_resource["example_resource_instance"], "param"))
+}
+
+# Declare an instance of the second resource type - this will call notice
+example_get_param { 'show_notify': }
+```
+
+'この例で取得している値'を通知します
+
+Puppet 4.0.0以降では、データタイプ
+と[ ]演算子を使用してパラメータ値を取得できます。次の例は、getparam()の呼び出しと同じです。
+
+```puppet
+Example_resource['example_resource_instance']['param']
+```
+
+#### `getvar`
+**非推奨:** この関数は、Puppet 6.0.0で、内蔵の[`getvar`](https://puppet.com/docs/puppet/latest/function.html#getvar)
+関数に置き換えられました。新しいバージョンでも、構造化された値への掘り下げがサポートされます。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 リモートネームスペースの変数を調べます。
 
@@ -1386,7 +1822,11 @@ getparam(Example_resource["example_resource_instance"], "param")
 
 ```puppet
 $foo = getvar('site::data::foo')
+<<<<<<< HEAD
 # $foo = $site::data::fooに相当
+=======
+# $foo = $site::data::fooと同等
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 ```
 
 この関数は、ネームスペースそのものが文字列に保存されている場合に役立ちます:
@@ -1394,7 +1834,11 @@ $foo = getvar('site::data::foo')
 ```puppet
 $datalocation = 'site::data'
 $bar = getvar("${datalocation}::bar")
+<<<<<<< HEAD
 # $bar = $site::data::barに相当
+=======
+# Equivalent to $bar = $site::data::bar
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 ```
 
 *タイプ*: 右辺値
@@ -1417,6 +1861,13 @@ $confs = glob(['/etc/**/*.conf', '/opt/**/*.conf'])
 
 たとえば、`grep(['aaa','bbb','ccc','aaaddd'], 'aaa')`は['aaa','aaaddd']を返します。
 
+<<<<<<< HEAD
+=======
+Puppet 4.0.0以降では、内蔵の[`filter`](https://puppet.com/docs/puppet/latest/function.html#filter)関数は同じことを行います。正規表現とは対照的に、どのロジックでもフィルタリングに使用できます。
+
+    ['aaa', 'bbb', 'ccc', 'aaaddd']. filter |$x| { $x =~ 'aaa' }
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 *タイプ*: 右辺値
 
 #### `has_interface_with`
@@ -1460,6 +1911,10 @@ has_interface_with("lo")                        => true
 *タイプ*: 右辺値
 
 #### `has_key`
+<<<<<<< HEAD
+=======
+**非推奨:** この関数は、内蔵の`in`演算子に置き換えられました。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 ハッシュに特定のキー値があるかどうかを判定します。
 
@@ -1475,13 +1930,34 @@ if has_key($my_hash, 'key_one') {
 }
 ```
 
+<<<<<<< HEAD
+=======
+Puppet 4.0.0以降では、これは、Puppet言語において、次の同等の式を用いて実現できます。
+
+    $my_hash = {'key_one' => 'value_one'}
+    if 'key_one' in $my_hash {
+      notice('this will be printed')
+    }
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 *タイプ*: 右辺値
 
 #### `hash`
 
+<<<<<<< HEAD
 配列をハッシュに変換します。
 
 たとえば、`hash(['a',1,'b',2,'c',3])`は{'a'=>1,'b'=>2,'c'=>3}を返します。
+=======
+**非推奨:** この関数は、ほとんどすべてのデータタイプの新しい値を作成する内蔵の機能に置き換えられました。
+Puppetに内蔵の[`Hash.new`](https://puppet.com/docs/puppet/latest/function.html#conversion-to-hash-and-struct)関数を参照してください。
+
+配列をハッシュに変換します。
+
+例えば(非推奨)、`hash(['a',1,'b',2,'c',3])`は、 {'a'=>1,'b'=>2,'c'=>3}を返します。
+
+例えば(内蔵)、`Hash(['a',1,'b',2,'c',3])`は、{'a'=>1,'b'=>2,'c'=>3}を返します。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 *タイプ*: 右辺値
 
@@ -1513,8 +1989,13 @@ if $baz.is_a(String) {
 }
 ```
 
+<<<<<<< HEAD
 * タイプに関する詳細は、[Puppetタイプシステム](https://docs.puppetlabs.com/latest/type.html#about-resource-types)を参照してください。
 * 値のタイプを特定する各種の方法については、[`assert_type()`](https://docs.puppetlabs.com/latest/function.html#asserttype)関数を参照してください。
+=======
+* タイプに関する詳細は、[Puppetタイプシステム](https://puppet.com/docs/puppet/latest/lang_data.html)を参照してください。
+* 値のタイプを特定する各種の方法については、[`assert_type()`](https://puppet.com/docs/puppet/latest/function.html#asserttype)関数を参照してください。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 #### `is_absolute_path`
 
@@ -1635,7 +2116,11 @@ if $baz.is_a(String) {
 
 #### `join`
 
+<<<<<<< HEAD
 **非推奨:**この関数は、Puppet 5.5.0で、内蔵の[`join`](https://docs.puppet.com/puppet/latest/function.html#join)関数に置き換えられました。
+=======
+**非推奨:** この関数は、Puppet 5.5.0で、内蔵の[`join`](https://puppet.com/docs/puppet/latest/function.html#join)関数に置き換えられました。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 区切り文字を用いて、配列を文字列に結合します。たとえば、`join(['a','b','c'], ",")`は"a,b,c"になります。
 
@@ -1649,11 +2134,21 @@ if $baz.is_a(String) {
 
 たとえば、`join_keys_to_values({'a'=>1,'b'=>[2,3]}, " is ")`は["a is 1","b is 2","b is 3"]になります。
 
+<<<<<<< HEAD
+=======
+Puppet 5.0.0以降では、書式の制御が強化されています（インデントや改行、配列とハッシュエントリ、ハッシュエントリのキー/値の間の区切り、配列における値の個々の
+書式など)。内蔵の[`String.new`](https://docs.puppet.com/puppet/latest/function.html#conversion-to-string)関数、および`配列`と`ハッシュ`の書式設定オプションを参照してください。
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 *タイプ*: 右辺値
 
 #### `keys`
 
+<<<<<<< HEAD
 **非推奨:**この関数は、Puppet 5.5.0で、内蔵の[`keys`](https://docs.puppet.com/puppet/latest/function.html#keys)関数に置き換えられました。
+=======
+**非推奨:** この関数は、Puppet 5.5.0で、内蔵の[`keys`](https://puppet.com/docs/puppet/latest/function.html#keys)関数に置き換えられました。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 ハッシュのキーを配列として返します。
 
@@ -1661,7 +2156,11 @@ if $baz.is_a(String) {
 
 #### `length`
 
+<<<<<<< HEAD
 **非推奨:**この関数は、Puppet 5.5.0で、内蔵の[`length`](https://docs.puppet.com/puppet/latest/function.html#length)関数に置き換えられました。
+=======
+**非推奨:** この関数は、Puppet 5.5.0で、内蔵の[`length`](https://puppet.com/docs/puppet/latest/function.html#length)関数に置き換えられました。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 与えられた文字列、配列、ハッシュの長さを返します。廃止された`size()`関数に代わるものです。
 
@@ -1693,6 +2192,11 @@ $myhash = loadyaml('no-file.yaml', {'default'=>'value'})
 
 例:　
 
+<<<<<<< HEAD
+=======
+最初のパラメータは、絶対ファイルパスまたはURLです。
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 ```puppet
 $myhash = loadjson('/etc/puppet/data/myhash.json')
 ```
@@ -1721,7 +2225,11 @@ notify { $metadata['author']: }
 ```
 $metadata = load_module_metadata('mysql', true)
 if empty($metadata) {
+<<<<<<< HEAD
   notify { "This module does not have a metadata.json file.": }
+=======
+  notify { "このモジュールにはmetadata.jsonファイルがありません。": }
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 }
 ```
 
@@ -1729,6 +2237,7 @@ if empty($metadata) {
 
 #### `lstrip`
 
+<<<<<<< HEAD
 文字列の左側のスペースを取り除きます。
 
 *タイプ*: 右辺値
@@ -1743,14 +2252,38 @@ if empty($metadata) {
 
 #### `member`
 
+=======
+**非推奨:** この関数は、Puppet 6.0.0で、内蔵の[`lstrip`](https://puppet.com/docs/puppet/latest/function.html#lstrip) 関数に置き換えられました。
+文字列の左側のスペースを取り除きます。
+*タイプ*: 右辺値#### `max`
+**非推奨:** この関数は、Puppet 6.0.0で、内蔵の[`max`](https://puppet.com/docs/puppet/latest/function.html#max) 関数に置き換えられました。
+すべての引数の最大値を返します。少なくとも1つの引数が必要です。
+引数: 数字または数字を表す文字列。
+*タイプ*: 右辺値
+#### `member`
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 変数が配列の構成要素かどうかを判定します。変数には文字列、配列、fixnumが使用できます。
 
 たとえば、`member(['a','b'], 'b')`および`member(['a','b','c'], ['b','c'])`は`true`を返し、`member(['a','b'], 'c')`および`member(['a','b','c'], ['c','d'])`は`false`を返します。
 
 *注*: この関数は、ネスト化した配列には対応していません。最初の引数にネスト化した配列が含まれている場合は、再帰的処理は行われません。
 
+<<<<<<< HEAD
 *タイプ*: 右辺値
 
+=======
+Puppet 4.0.0以降では、Puppet言語において同じことを実行できます。値が単一の場合には、
+`in`演算子を使用します。
+
+    'a' in ['a', 'b']  # true
+
+また、配列の場合には、`-`演算子を使用してdiffを計算します。
+    ['d', 'b'] - ['a', 'b', 'c'] == []  # 'd'が減算されないため、false
+    ['a', 'b'] - ['a', 'b', 'c'] == []  # 'a'と'b'の両方が減算されるため、true
+また、Puppet 5.2.0以降では、配列やハッシュの内容をテストする一般的な形式は、内蔵されている[`any`](https://puppet.com/docs/puppet/latest/function.html#any)および[`all`](https://puppet.com/docs/puppet/latest/function.html#all)の各関数を使用することです。
+
+*タイプ*: 右辺値
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 #### `merge`
 
 2つ以上のハッシュを統合し、その結果得られたハッシュを返します。
@@ -1761,12 +2294,17 @@ if empty($metadata) {
 $hash1 = {'one' => 1, 'two' => 2}
 $hash2 = {'two' => 'dos', 'three' => 'tres'}
 $merged_hash = merge($hash1, $hash2)
+<<<<<<< HEAD
 # 得られるハッシュは、以下に相当します:
+=======
+# The resulting hash is equivalent to:
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 # $merged_hash =  {'one' => 1, 'two' => 'dos', 'three' => 'tres'}
 ```
 
 重複キーが存在する場合は、最右のハッシュのキーが上位になります。
 
+<<<<<<< HEAD
 *タイプ*: 右辺値
 
 #### `min`
@@ -1780,6 +2318,23 @@ $merged_hash = merge($hash1, $hash2)
 #### `num2bool`
 
 数字または数字の文字列表現を正当なブーリアンに変換します。0または非数字は`false`になります。0より大きい数字は`true`になります。
+=======
+Puppet 4.0.0以降では、+ 演算子を使用して同じマージを実行することができます。
+
+    $merged_hash = $hash1 + $hash2
+
+*タイプ*: 右辺値
+
+#### `min`
+
+**非推奨:** この関数は、Puppet 6.0.0で、内蔵の[`min`](https://puppet.com/docs/puppet/latest/function.html#min)関数に置き換えられました。
+
+すべての引数の最小値を返します。少なくとも1つの引数が必要です。
+
+引数: 数字または数字を表す文字列。*タイプ*: 右辺値#### `num2bool`数字または数字の文字列表現を正当なブーリアンに変換します。0または非数字は`false`になります。0より大きい数字は`true`になります。Puppet 5.0.0以降では、タイプシステムを使用して同じことが行えます。利用可能な多くのタイプ変換については、Puppetの[`Boolean.new`](https://puppet.com/docs/puppet/latest/function.html#conversion-to-boolean) 
+関数を参照してください。 Boolean(0) # false
+    Boolean(1) # true
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 *タイプ*: 右辺値
 
@@ -1828,6 +2383,14 @@ $real_jenkins_version = pick($::jenkins_version, '1.449')
 * `prefix(['a','b','c'], 'p')`は['pa','pb','pc']を返します。
 * `prefix({'a'=>'b','b'=>'c','c'=>'d'}, 'p')`は{'pa'=>'b','pb'=>'c','pc'=>'d'}を返します。
 
+<<<<<<< HEAD
+=======
+Puppet 4.0.0以降では、内蔵の[`map`](https://docs.puppet.com/puppet/latest/function.html#map)関数を使用して配列の値を変更します。
+この例は、上記の最初の例と同じです。
+
+        ['a', 'b', 'c'].map |$x| { "p${x}" }
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 *タイプ*: 右辺値
 
 #### `pry`
@@ -1874,8 +2437,13 @@ crypt関数を用いてパスワードをハッシュします。ほとんどの
 
 非整数文字列を使用できます:
 
+<<<<<<< HEAD
 * `range("a", "c")`は["a","b","c"]を返します。
 * `range("host01", "host10")`は["host01", "host02", ..., "host09", "host10"]を返します。
+=======
+* `range("a", "c")`は、["a","b","c"]を返します。
+* `range("host01", "host10")`は、["host01", "host02", ..., "host09", "host10"]を返します。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 末尾のゼロを明示的に含める必要があります。そうでないと、下層のRuby関数が適切に機能しません。
 
@@ -1883,6 +2451,15 @@ crypt関数を用いてパスワードをハッシュします。ほとんどの
 
 * `range("0", "9", "2")`は["0","2","4","6","8"]を返します。
 
+<<<<<<< HEAD
+=======
+> 注意: Puppet言語では、タイプシステムを使用して、`整数`と`フロート`の範囲をサポートしています。これらは、指定された回数の反復に適しています。
+
+値のスキップについては、Puppetに内蔵の[`step`](https://docs.puppet.com/puppet/latest/function.html#step)関数を参照してください。
+
+   整数[0, 9]。それぞれの|$x| { notice($x) } #は、0, 1, 2, ... 9を通知します。
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 *タイプ*: 右辺値
 
 #### `regexpescape`
@@ -1897,20 +2474,44 @@ crypt関数を用いてパスワードをハッシュします。ほとんどの
 
 たとえば、`reject(['aaa','bbb','ccc','aaaddd'], 'aaa')`は['bbb','ccc']を返します。
 
+<<<<<<< HEAD
+=======
+Puppet 4.0.0以降では、Puppetに内蔵の[`filter`](https://docs.puppet.com/puppet/latest/function.html#filter)関数にも同じことが当てはまります。
+stdlibの`reject`関数に相当します。
+
+    ['aaa','bbb','ccc','aaaddd'].filter |$x| { $x !~ /aaa/ }
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 *タイプ*: 右辺値
 
 #### `reverse`
 
 文字列または配列の順序を逆転します。
 
+<<<<<<< HEAD
 #### `round`
 
  数値を最も近い整数に丸めます。
+=======
+> *注意*: Puppetでは、内蔵の[`reverse_each`](https://docs.puppet.com/puppet/latest/function.html#reverse_each)関数を使って同じことが行えます。
+
+
+#### `round`
+
+**非推奨:**この関数は、Puppet 5.5.0で、内蔵の[`round`](https://puppet.com/docs/puppet/latest/function.html#round)関数に置き換えられました。
+
+数値を最も近い整数に丸めます。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 *タイプ*: 右辺値
 
 #### `rstrip`
 
+<<<<<<< HEAD
+=======
+**非推奨:**この関数は、Puppet 5.5.0で、内蔵の[`rstrip`](https://puppet.com/docs/puppet/latest/function.html#`rstrip`)関数に置き換えられました。
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 文字列の右側のスペースを取り除きます。
 
 *タイプ*: 右辺値
@@ -1921,6 +2522,13 @@ crypt関数を用いてパスワードをハッシュします。ほとんどの
 
 *タイプ*: 右辺値
 
+<<<<<<< HEAD
+=======
+#### `seeded_rand_string`
+
+(シード値に基づいて)一貫性のあるランダムな文字列を生成します。異なるホストに一致するパスワードを生成する場合に便利です。
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 #### `shell_escape`
 
 文字列をエスケープし、Bourneシェルコマンドラインで安全に使用できるようにします。得られる文字列はクォートなしで使用する必要があり、ダブルクォートまたはシングルクォートでの使用は意図されていません。この関数は、Rubyの`Shellwords.shellescape()`関数と同様に挙動します。[Rubyドキュメント](http://ruby-doc.org/stdlib-2.3.0/libdoc/shellwords/rdoc/Shellwords.html#method-c-shellescape)を参照してください。
@@ -1965,12 +2573,22 @@ shell_split('foo\ bar ba\"z') => ['foo bar', 'ba"z']
 
 #### `size`
 
+<<<<<<< HEAD
+=======
+**非推奨:** この関数は、Puppet 6.0.0で、内蔵の[`size`](https://puppet.com/docs/puppet/latest/function.html#size) 関数に置き換えられました(`サイズ`は、`長さ`のエイリアスです)。
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 文字列、配列、ハッシュの要素数を返します。この関数は、今後のリリースでは廃止されます。Puppet 4では、`length`関数を使用してください。
 
 *タイプ*: 右辺値
 
 #### `sprintf_hash`
 
+<<<<<<< HEAD
+=======
+**非推奨:** Puppet 4.10.10および5.3.4では、内蔵の[`sprintf`](https://docs.puppet.com/puppet/latest/function.html#sprintf)関数を使って同じ機能を達成できます。この関数は、今後のリリースでは削除されます。
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 名前が指定されたテキストのリファレンスでprintfスタイルのフォーマットを実行します。
 
 最初のパラメータは、ハッシュ内での残りのパラメータのフォーマット方法を記述するフォーマット文字列です。詳細については、Rubyの[`Kernel::sprintf`](https://ruby-doc.org/core-2.4.2/Kernel.html#method-i-sprintf)機能のマニュアルを参照してください。
@@ -1987,11 +2605,20 @@ $output = sprintf_hash('String: %<foo>s / number converted to binary: %<number>b
 
 #### `sort`
 
+<<<<<<< HEAD
+=======
+**非推奨:**この関数は、Puppet 5.5.0で、内蔵の[`sort`](https://puppet.com/docs/puppet/latest/function.html#sort)関数に置き換えられました。
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 文字列と配列を語彙的に分類します。
 
 *タイプ*: 右辺値
 
+<<<<<<< HEAD
 *注:* この関数はRubyクラスの実装にあたり、UTF8との互換性がない可能性があります。互換性を確保するには、Ruby 2.4.0以降でこの関数を使用してください。
+=======
+>*注:* この関数はRubyクラスの実装にあたり、UTF8との互換性がない可能性があります。互換性を確保するには、Ruby 2.4.0以降でこの関数を使用してください。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 #### `squeeze`
 
@@ -2003,11 +2630,17 @@ $output = sprintf_hash('String: %<foo>s / number converted to binary: %<number>b
 
 特定の文字列をブーリアンに変換します。値'1'、'true'、't'、'y'、'yes'を含む文字列は`true`に変換されます。値'0'、'false'、'f'、'n'、'no'を含む文字列、および空文字列または未定義文字列は`false`に変換されます。その他の値の場合、エラーが生じます。このチェックでは、大文字と小文字は区別されません。
 
+<<<<<<< HEAD
+=======
+Puppet 5.0.0以降では、タイプシステムを使用して同じことが行えます。利用可能な多くのタイプ変換については、Puppetの[`Boolean.new`](https://puppet.com/docs/puppet/latest/function.html#conversion-to-boolean) 
+関数を参照してください。Boolean('false'), Boolean('n'), Boolean('no') # すべてfalse Boolean('true'), Boolean('y'), Boolean('yes') # すべてtrue
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 *タイプ*: 右辺値
 
 #### `str2saltedsha512`
 
 OS Xバージョン10.7以上で使用されるソルト付きSHA512パスワードハッシュに文字列を変換します。hexバージョンのソルト付きSHA512パスワードハッシュを返します。これは、有効なパスワード属性としてPuppetマニフェストに挿入することができます。
+<<<<<<< HEAD
 
 *タイプ*: 右辺値
 
@@ -2015,6 +2648,15 @@ OS Xバージョン10.7以上で使用されるソルト付きSHA512パスワー
 
 #### `strftime`
 
+=======
+*タイプ*: 右辺値
+>*注:* この関数はRubyクラスの実装にあたり、UTF8との互換性がない可能性があります。互換性を確保するには、Ruby 2.4.0以降でこの関数を使用してください。
+
+#### `strftime`
+
+**非推奨:**この関数は、Puppet 5.5.0で、内蔵の[`strftime`](https://puppet.com/docs/puppet/latest/function.html#`strftime`)関数に置き換えられました。
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 フォーマットされた時刻を返します。
 
 たとえば、`strftime("%s")`はUnixエポックからの経過時間を返し、`strftime("%Y-%m-%d")`は日付を返します。
@@ -2023,11 +2665,19 @@ OS Xバージョン10.7以上で使用されるソルト付きSHA512パスワー
 
 *タイプ*: 右辺値
 
+<<<<<<< HEAD
 *注:* この関数はRubyクラスの実装にあたり、UTF8との互換性がない可能性があります。互換性を確保するには、Ruby 2.4.0以降でこの関数を使用してください。
 
 *フォーマット:*
 
 * `%a`: 曜日の名称の短縮形('Sun')
+=======
+>*注:* この関数はRubyクラスの実装にあたり、UTF8との互換性がない可能性があります。互換性を確保するには、Ruby 2.4.0以降でこの関数を使用してください。
+
+*フォーマット:*
+
+*  `%a`: 曜日の名称の短縮形('Sun')
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 * `%A`: 曜日の完全な名称('Sunday')
 * `%b`: 月の名称の短縮形('Jan')
 * `%B`: 月の完全な名称('January')
@@ -2075,6 +2725,11 @@ OS Xバージョン10.7以上で使用されるソルト付きSHA512パスワー
 
 #### `strip`
 
+<<<<<<< HEAD
+=======
+**非推奨:**この関数は、Puppet 5.5.0で、内蔵の[`strip`](https://puppet.com/docs/puppet/latest/function.html#`strip`)関数に置き換えられました。
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 1つの文字列、または配列内のすべての文字列から、冒頭および末尾の空白を削除します。たとえば、`strip("    aaa   ")`は"aaa"になります。
 
 *タイプ*: 右辺値
@@ -2088,6 +2743,13 @@ OS Xバージョン10.7以上で使用されるソルト付きSHA512パスワー
 * `suffix(['a','b','c'], 'p')`は['ap','bp','cp']を返します。
 * `suffix({'a'=>'b','b'=>'c','c'=>'d'}, 'p')`は{'ap'=>'b','bp'=>'c','cp'=>'d'}を返します。
 
+<<<<<<< HEAD
+=======
+Puppet 4.0.0以降では、内蔵の[`map`](https://docs.puppet.com/puppet/latest/function.html#map)関数を使用して配列の値を変更します。この例は、上記の最初の例と同じです。
+
+    ['a', 'b', 'c'].map |$x| { "${x}p" }
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 *タイプ*: 右辺値
 
 #### `swapcase`
@@ -2096,7 +2758,11 @@ OS Xバージョン10.7以上で使用されるソルト付きSHA512パスワー
 
 *タイプ*: 右辺値
 
+<<<<<<< HEAD
 *注:* この関数はRubyクラスの実装にあたり、UTF8との互換性がない可能性があります。互換性を確保するには、Ruby 2.4.0以降でこの関数を使用してください。
+=======
+>*注:* この関数はRubyクラスの実装にあたり、UTF8との互換性がない可能性があります。互換性を確保するには、Ruby 2.4.0以降でこの関数を使用してください。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 #### `time`
 
@@ -2104,6 +2770,13 @@ OS Xバージョン10.7以上で使用されるソルト付きSHA512パスワー
 
 たとえば、`time()`は'1311972653'などを返します。
 
+<<<<<<< HEAD
+=======
+Puppet 4.8.0以降、Puppet言語には、``Timestamp` (時点)と`Timespan` (期間)の各データタイプがあります。次の例は、引数なしで`time()`を呼び出すのと同じです。
+
+タイムスタンプ()
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 *タイプ*: 右辺値
 
 #### `to_bytes`
@@ -2150,7 +2823,11 @@ OS Xバージョン10.7以上で使用されるソルト付きSHA512パスワー
 
 * 第1の引数として、パスを含む文字列。この引数は、ゼロではじまり、パス区切り文字(デフォルトは"/")で区切ったハッシュキーまたは配列インデックスの文字列として提示してください。この関数は各パスコンポーネントにより構造内を移動し、パスの最後で値を返すよう試みます。
 
+<<<<<<< HEAD
 *デフォルトの第2の引数。パスが正しくない場合や、値が見つからない場合、その他のエラーが生じた場合は、この引数が返されます。
+=======
+* デフォルトの第2の引数。パスが正しくない場合や、値が見つからない場合、その他のエラーが生じた場合は、この引数が返されます。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 * 最後の引数として、パス区切り文字。
 
 ```ruby
@@ -2167,6 +2844,7 @@ $data = {
 $value = try_get_value($data, 'a/b/2')
 # $value = 'b3'
 
+<<<<<<< HEAD
 # 可能なすべてのオプションを使用
 $value = try_get_value($data, 'a/b/2', 'not_found', '/')
 # $value = 'b3'
@@ -2176,6 +2854,17 @@ $value = try_get_value($data, 'a/b/c/d', 'not_found')
 # $value = 'not_found'
 
 # カスタム区切りを使用
+=======
+# with all possible options
+$value = try_get_value($data, 'a/b/2', 'not_found', '/')
+# $value = 'b3'
+
+# using the default value
+$value = try_get_value($data, 'a/b/c/d', 'not_found')
+# $value = 'not_found'
+
+# using custom separator
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 $value = try_get_value($data, 'a|b', [], '|')
 # $value = ['b1','b2','b3']
 ```
@@ -2208,7 +2897,11 @@ $value = try_get_value($data, 'a|b', [], '|')
 
 #### `type_of`
 
+<<<<<<< HEAD
 この関数は下位互換性を得るために提供されていますが、Puppetで提供されている内蔵の[type()関数](https://docs.puppet.com/puppet/latest/reference/function.html#type)の使用を推奨します。
+=======
+この関数は下位互換性を得るために提供されていますが、Puppetで提供されている内蔵の[type()関数](https://puppet.com/docs/puppet/latest/function.html#type)の使用を推奨します。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 与えられた値のリテラル型を返します。Puppet 4が必要です。`if type_of($some_value) <= Array[String] { ... }`のように(これは`if $some_value =~ Array[String] { ... }`に相当します)、`<=`を用いたタイプの比較に役立ちます。
 
@@ -2247,6 +2940,11 @@ file { $config_file:
 
 #### `upcase`
 
+<<<<<<< HEAD
+=======
+**非推奨:**この関数は、Puppet 5.5.0で、内蔵の[`upcase`](https://puppet.com/docs/puppet/latest/function.html#upcase)関数に置き換えられました。
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 オブジェクト、配列、オブジェクトのハッシュを大文字に変換します。変換されるオブジェクトは、大文字化に対応するものでなければなりません。
 
 たとえば、`upcase('abcd')`は'ABCD'を返します。
@@ -2263,7 +2961,11 @@ file { $config_file:
 
 *タイプ*: 右辺値
 
+<<<<<<< HEAD
 *注:* この関数はRubyクラスの実装にあたり、UTF8との互換性がない可能性があります。互換性を確保するには、Ruby 2.4.0以降でこの関数を使用してください。
+=======
+>*注:* この関数はRubyクラスの実装にあたり、UTF8との互換性がない可能性があります。互換性を確保するには、Ruby 2.4.0以降でこの関数を使用してください。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 #### `validate_absolute_path`
 
@@ -2291,8 +2993,12 @@ validate_absolute_path('var/lib/puppet')
 validate_absolute_path([ 'var/lib/puppet', '/var/foo' ])
 validate_absolute_path([ '/var/lib/puppet', 'var/foo' ])
 $undefined = `undef`
+<<<<<<< HEAD
 validate_absolute_path($undefined)
 ```
+=======
+validate_absolute_path($undefined)```
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 *タイプ*: ステートメント
 
@@ -2353,8 +3059,12 @@ validate_augeas($sudoerscontent, 'Sudoers.lns', [], 'Failed to validate sudoers 
 
 **非推奨:**今後のバージョンのstdlibでは削除されます。[`validate_legacy`](#validate_legacy)を参照してください。
 
+<<<<<<< HEAD
 渡されたすべての値が`true`または`false`のいずれかであることを確認します。
 このチェックで不合格となった値がある場合は、カタログコンパイルが中止されます。
+=======
+渡されたすべての値が`true`または`false`であることを確認します。このチェックで不合格となった値がある場合は、カタログコンパイルが中止されます。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 以下の値が渡されます:
 
@@ -2385,12 +3095,20 @@ validate_bool($some_array)
 * オプションの第3の引数として、ユーザに表示するエラーメッセージ。
 
 ```puppet
+<<<<<<< HEAD
 # デフォルトのパス末尾
+=======
+# Defaults to end of path
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 validate_cmd($sudoerscontent, '/usr/sbin/visudo -c -f', 'Visudo failed to validate sudoers content')
 ```
 
 ```puppet
+<<<<<<< HEAD
 # ファイルロケーションとして%を使用
+=======
+# % as file location
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 validate_cmd($haproxycontent, '/usr/sbin/haproxy -f % -c', 'Haproxy failed to validate config content')
 ```
 
@@ -2477,7 +3195,11 @@ validate_hash($undefined)
 
 * 第1の引数として、整数または整数の配列。
 * オプションの第2の引数として、最大値。第1の引数(のすべての要素)は、この最大値以下でなければなりません。
+<<<<<<< HEAD
 * オプションの第3の引数として、最小値。第1の引数(のすべての要素)は、この最小値以上でなければなりません。
+=======
+* オプションの第3の引数として、最小値。第1の引数(のすべての要素)は、この最大値以上でなければなりません。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 第1の引数が整数または整数の配列でない場合や、第2または第3の引数が整数に変換できない場合は、この関数は失敗になります。ただし、最小値が与えられている場合は(この場合に限られます)、第2の引数を空文字列または`undef`にすることが可能です。これは、最小チェックを確実に行うためのプレースホルダーとして機能します。
 
@@ -2587,14 +3309,22 @@ validate_legacy('Optional[String]', 'validate_re', 'Value to be validated', ["."
 
 Puppet 4を使用している場合、`validate_legacy`関数を使えば、非推奨のPuppet 3の`validate_*`関数を探し、分離することができます。これらの関数は、stdlibバージョン4.13時点で非推奨になっており、今後のstdlibバージョンでは削除されます。
 
+<<<<<<< HEAD
 Puppet 4では、[データタイプ](https://docs.puppet.com/puppet/latest/reference/lang_data.html)を用いた改良版の定義タイプチェックが可能です。データタイプでは、Puppet 3の`validate_*`関数で見られた、矛盾につながるいくつかの問題を回避できます。たとえば、[validate_numeric](#validate_numeric)では、数字だけでなく、数字の配列や数字のように見える文字列も意図せず許可されていました。
+=======
+Puppet 4では、[データタイプ](https://puppet.com/docs/puppet/latest/lang_data.html)を用いた改良版のユーザ定義タイプのチェックが可能です。データタイプでは、Puppet 3の`validate_*`関数で見られた、不整合につながるいくつかの問題を回避できます。例えば、[validate_numeric](#validate_numeric)では、数字だけでなく、数字の配列や数字のように見える文字列も意図に反して許可されていました。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 Puppet 4とともに、非推奨の `validate_*`関数を用いたモジュールを使用している場合は、非推奨メッセージが表示されることがあります。`validate_legacy`関数を使えば、そうした差異を可視化し、より明快なPuppet 4構文に簡単に移行することができます。
 
 表示される非推奨メッセージは、使用しているモジュールやデータによって異なることがあります。以下の非推奨メッセージは、Puppet 4でのみデフォルトで表示されます:
 
 * `Notice: Accepting previously invalid value for target type '<type>'`: このメッセージは、情報提供の目的のみで表示されるものです。使用している値は、新形式で許可されていますが、旧確認関数では無効となります。
+<<<<<<< HEAD
 * `Warning: This method is deprecated, please use the stdlib validate_legacy function`: モジュールがまだ`validate_legacy`にアップグレードされていません。[deprecation](#deprecation)オプションを使用してさしあたり警告を解除するか、モジュールの開発者によりフィックスを提出してください。この問題の解決方法については、以下の[モジュール開発者へ](#モジュール開発者へ)を参照してください。
+=======
+* `Warning: This method is deprecated, please use the stdlib validate_legacy function`: モジュールがまだ`validate_legacy`にアップグレードされていません。[deprecation](#deprecation)オプションを使用してさしあたり警告を解除するか、モジュールの開発者に修正版を提出させてください。この問題の解決方法については、以下の[モジュール開発者へ](#モジュール開発者へ)を参照してください。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 * `Warning: validate_legacy(<function>) expected <type> value, got <actual type>_`: コードが渡す値は、Puppet 3形式の確認では認められますが、次バージョンのモジュールでは認められません。ほとんどの場合、数字またはブーリアンからクォートを削除すれば、この問題を解決することができます。
 * `Error: Evaluation Error: Error while evaluating a Resource Statement, Evaluation Error: Error while evaluating a Function Call, validate_legacy(<function>) expected <type> value, got <actual type>`: コードの渡す値は、新形式の確認でも旧形式の確認でも認められません。
 
@@ -2602,14 +3332,23 @@ Puppet 4とともに、非推奨の `validate_*`関数を用いたモジュー�
 
 `validate_legacy`関数は、モジュールユーザの使用している機能を中断させずに、 Puppet 3形式の確認からPuppet 4形式の確認に移行するのに役立ちます。
 
+<<<<<<< HEAD
 Puppet 4形式の確認に移行すれば、[データタイプ](https://docs.puppet.com/puppet/latest/reference/lang_data.html)を用いた、より明確な定義タイプチェックが可能になります。Puppet 3の`validate_*` 関数の多くは、確認という点で驚くほど多くの穴があります。たとえば、[validate_numeric](#validate_numeric)では、細部をコントロールできないため、数字だけでなく、数字の配列や数字のように見える文字列も許可されます。
+=======
+Puppet 4形式の確認に移行すれば、[データタイプ](https://puppet.com/docs/puppet/latest/lang_data.html)を用いた、より明確なユーザ定義タイプのチェックが可能になります。Puppet 3の`validate_*` 関数の多くは、確認という点で驚くほど多くの穴があります。例えば、[validate_numeric](#validate_numeric)では、細部をコントロールできないため、数字だけでなく、数字の配列や数字のように見える文字列も許可されます。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 クラスおよび定義タイプの各パラメータについて、使用する新しいPuppet 4データタイプを選択してください。たいていの場合、新しいデータタイプにより、元の`validate_*`関数とは異なる値のセットを使用できるようになります。以下のような状況になります:
 
 |              | `validate_` pass | `validate_` fail |
 | ------------ | ---------------- | ---------------- |
+<<<<<<< HEAD
 | マッチタイプ | パス             | パス、通告     |
 | 失敗タイプ   | パス、非推奨 | 失敗             |
+=======
+| タイプに一致します | 成功             | 成功、通知     |
+| タイプの失敗   | 成功、廃止予定 | 失敗             |
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 現在のところ、確認後のコードでも、すべての可能な値に対処する必要がありますが、新形式にマッチする値のみを渡すように、コードのユーザがマニフェストを変更することができます。
 
@@ -2625,7 +3364,11 @@ class example($value) {
 得られる確認コードは、以下のようになります:
 
 ```puppet
+<<<<<<< HEAD
 class example(
+=======
+クラスの例(
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   Variant[Stdlib::Compat::Numeric, Numeric] $value
 ) {
   validate_legacy(Numeric, 'validate_numeric', $value)
@@ -2752,7 +3495,11 @@ validate_string(true)
 validate_string([ 'some', 'array' ])
 ```
 
+<<<<<<< HEAD
 *注:* validate_string(`undef`)は、このバージョンの関数APIでは失敗しません。
+=======
+注:* validate_string(`undef`)は、このバージョンの関数APIでは失敗しません。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 代わりに、以下を使用してください:
 
@@ -2766,8 +3513,12 @@ validate_string([ 'some', 'array' ])
 
 #### `validate_x509_rsa_key_pair`
 
+<<<<<<< HEAD
 OpenSSLにより、PEMフォーマットされたX.509認証およびプライベートキーを確認します。
 認証の署名が提供されたキーから作成されたものであることを確認します。
+=======
+OpenSSLにより、PEMフォーマットされたX.509認証および秘密鍵を確認します。認証の署名が提供された鍵から作成されたものであることを確認します。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 このチェックに失敗した値がある場合は、カタログコンパイルが中止されます。
 
@@ -2784,7 +3535,11 @@ validate_x509_rsa_key_pair($cert, $key)
 
 #### `values`
 
+<<<<<<< HEAD
 **非推奨:**この関数は、Puppet 5.5.0で、内蔵の[`values`](https://docs.puppet.com/puppet/latest/function.html#values)関数に置き換えられました。
+=======
+**非推奨:**この関数は、Puppet 5.5.0で、内蔵の[`values`](https://puppet.com/docs/puppet/latest/function.html#values)関数に置き換えられました。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 与えられたハッシュの値を返します。
 
@@ -2810,6 +3565,18 @@ validate_x509_rsa_key_pair($cert, $key)
 * `values_at(['a','b','c'], ["0-1"])`は['a','b']を返します。
 * `values_at(['a','b','c','d','e'], [0, "2-3"])`は['a','c','d']を返します。
 
+<<<<<<< HEAD
+=======
+Puppet 4.0.0以降では、インデックスで配列をスライスし、言語で直接カウントすることができます。
+負の値は、配列の"最後から"と解釈されます。例えば、次のようになります。
+
+```puppet
+['a', 'b', 'c', 'd'][1, 2]   # results in ['b', 'c']
+['a', 'b', 'c', 'd'][2, -1]  # results in ['c', 'd']
+['a', 'b', 'c', 'd'][1, -2]  # results in ['b', 'c']
+```
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 *タイプ*: 右辺値
 
 #### `zip`
@@ -2820,25 +3587,48 @@ validate_x509_rsa_key_pair($cert, $key)
 
 Puppet Enterprise 3.7では、stdlibモジュールがPEに含まれていません。PEユーザは、Puppetと互換性のあるstdlibの最新リリースをインストールする必要があります。
 
+<<<<<<< HEAD
+=======
+サポートされているオペレーティングシステムの一覧については、[metadata.json](https://github.com/puppetlabs/puppetlabs-stdlib/blob/master/metadata.json)を参照してください。
+
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 ### バージョン互換性
 
 バージョン | Puppet 2.6 | Puppet 2.7 | Puppet 3.x | Puppet 4.x |
 :---------------|:-----:|:---:|:---:|:----:
+<<<<<<< HEAD
 **stdlib 2.x**  | **あり** | **あり** | なし | なし
 **stdlib 3.x**  | なし    | **あり**  | **あり** | なし
 **stdlib 4.x**  | なし    | **あり**  | **あり** | なし
 **stdlib 4.6+**  | なし    | **あり**  | **あり** | **あり**
 **stdlib 5.x**  | なし    | なし  | **あり**  | **あり**
+=======
+**stdlib 2.x**  | **yes** | **yes** | いいえ | いいえ
+**stdlib 3.x**  | いいえ    | **yes**  | **yes** | いいえ
+**stdlib 4.x**  | いいえ    | **yes**  | **yes** | いいえ
+**stdlib 4.6+**  | いいえ    | **yes**  | **yes** | **yes**
+**stdlib 5.x**  | いいえ    | いいえ  | **yes**  | **yes**
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 **stdlib 5.x**:  stdlib 5.xのリリース時には、Puppet 2.7.xのサポートが廃止されます。[この説明](https://github.com/puppetlabs/puppetlabs-stdlib/pull/176#issuecomment-30251414)を参照してください。
 
 ## 開発
 
+<<<<<<< HEAD
 Puppet Forgeに公開されているPuppet Labsモジュールはオープンプロジェクトのため、維持するにはコミュニティの貢献が不可欠です。Puppetは、現在私たちがアクセスできない無数のプラットフォームやハードウェア、ソフトウェア、デプロイ構成にも利用されることを目的としています。私たちの目標は、できる限り簡単に変更に貢献し、みなさまの環境で私たちのモジュールが機能できるようにすることです。最高の状態を維持するため、コントリビュータにはいくつかのガイドラインを守っていただく必要があります。詳細については、[モジュールコントリビューションガイド](https://docs.puppetlabs.com/forge/contributing.html)を参照してください。
 
 このモジュールのバグの報告または調査は、
+=======
+Puppet ForgeのPuppet Labsモジュールはオープンプロジェクトで、良い状態に保つためには、コミュニティの貢献が必要不可欠です。Puppetが役に立つはずでありながら、私たちがアクセスできないプラットフォームやハードウェア、ソフトウェア、デプロイ構成は無数にあります。私たちの目標は、できる限り簡単に変更に貢献し、みなさまの環境で私たちのモジュールが機能できるようにすることにあります。最高の状態を維持できるようにするために、コントリビュータが従う必要のあるいくつかのガイドラインが存在します。詳細については、[モジュールコントリビューションガイド](https://docs.puppetlabs.com/forge/contributing.html)を参照してください。
+
+このモジュールの一部に関するバグの報告または調査は、
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 [http://tickets.puppetlabs.com/browse/MODULES](http://tickets.puppetlabs.com/browse/MODULES)からお願いします。
 
 ## コントリビュータ
 
+<<<<<<< HEAD
 コントリビュータのリストは、[https://github.com/puppetlabs/puppetlabs-stdlib/graphs/contributors](https://github.com/puppetlabs/puppetlabs-stdlib/graphs/contributors)で見ることができます。
+=======
+コントリビュータのリストは、[https://github.com/puppetlabs/puppetlabs-stdlib/graphs/contributors](https://github.com/puppetlabs/puppetlabs-stdlib/graphs/contributors)で見ることができます。
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70

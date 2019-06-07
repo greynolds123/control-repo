@@ -39,7 +39,11 @@ describe 'delete_values' do
   it 'leaves the original argument intact' do
     argument = { 'key1' => 'value1', 'key2' => 'value2' }
     original = argument.dup
+<<<<<<< HEAD
     _result = subject.call([argument, 'value2'])
+=======
+    _result = subject.execute(argument, 'value2')
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     expect(argument).to eq(original)
   end
 end

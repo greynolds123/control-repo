@@ -18,8 +18,13 @@ describe 'shuffle' do
     it { is_expected.to run.with_params([]).and_return([]) }
     it { is_expected.to run.with_params(['a']).and_return(['a']) }
     it { is_expected.to run.with_params(['one']).and_return(['one']) }
+<<<<<<< HEAD
     it { is_expected.to run.with_params(%w[one two three]).and_return(%w[two one three]) }
     it { is_expected.to run.with_params(%w[one two three four]).and_return(%w[four three two one]) }
+=======
+    it { is_expected.to run.with_params(['one', 'two', 'three']).and_return(['two', 'one', 'three']) }
+    it { is_expected.to run.with_params(['one', 'two', 'three', 'four']).and_return(['four', 'three', 'two', 'one']) }
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
     it { is_expected.to run.with_params('').and_return('') }
     it { is_expected.to run.with_params('a').and_return('a') }

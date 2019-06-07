@@ -11,7 +11,11 @@ describe 'shell_join' do
 
   describe 'shell argument joining' do
     it { is_expected.to run.with_params(['foo']).and_return('foo') }
+<<<<<<< HEAD
     it { is_expected.to run.with_params(%w[foo bar]).and_return('foo bar') }
+=======
+    it { is_expected.to run.with_params(['foo', 'bar']).and_return('foo bar') }
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     it { is_expected.to run.with_params(['foo', 'bar baz']).and_return('foo bar\ baz') }
     it {
       is_expected.to run.with_params(['~`!@#$', '%^&*()_+-=', '[]\{}|;\':"', ',./<>?'])
@@ -19,7 +23,11 @@ describe 'shell_join' do
     }
 
     context 'with UTF8 and double byte characters' do
+<<<<<<< HEAD
       it { is_expected.to run.with_params(%w[μťƒ 8 ŧĕχť]).and_return('\\μ\\ť\\ƒ 8 \\ŧ\\ĕ\\χ\\ť') }
+=======
+      it { is_expected.to run.with_params(['μťƒ', '8', 'ŧĕχť']).and_return('\\μ\\ť\\ƒ 8 \\ŧ\\ĕ\\χ\\ť') }
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
       it { is_expected.to run.with_params(['スペー', 'スを含むテ', ' キスト']).and_return('\\ス\\ペ\\ー \\ス\\を\\含\\む\\テ \\ \\キ\\ス\\ト') }
     end
   end

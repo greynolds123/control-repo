@@ -1,6 +1,10 @@
 require 'spec_helper_acceptance'
 
+<<<<<<< HEAD
 describe 'floor function' do
+=======
+describe 'floor function', :if => Puppet::Util::Package.versioncmp(return_puppet_version, '6.0.0') < 0 do
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   describe 'success' do
     pp1 = <<-DOC
       $a = 12.8

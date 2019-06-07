@@ -14,11 +14,19 @@ describe 'keys', :if => Puppet::Util::Package.versioncmp(Puppet.version, '5.5.0'
   it { is_expected.to run.with_params('key' => 'value').and_return(['key']) }
   it 'returns the array of keys' do
     result = subject.call([{ 'key1' => 'value1', 'key2' => 'value2' }])
+<<<<<<< HEAD
     expect(result).to match_array(%w[key1 key2])
+=======
+    expect(result).to match_array(['key1', 'key2'])
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   end
 
   it 'runs with UTF8 and double byte characters' do
     result = subject.call([{ 'ҝểү' => '√ẳŀμệ', 'キー' => '値' }])
+<<<<<<< HEAD
     expect(result).to match_array(%w[ҝểү キー])
+=======
+    expect(result).to match_array(['ҝểү', 'キー'])
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   end
 end

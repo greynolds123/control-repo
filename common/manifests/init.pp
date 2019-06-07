@@ -13,7 +13,11 @@ class common (
   $root_password                    = '$1$cI5K51$dexSpdv6346YReZcK2H1k.', # puppet
   $create_opt_lsb_provider_name_dir = false,
   $lsb_provider_name                = 'UNSET',
+<<<<<<< HEAD
   $enable_dnsclient                 = false,
+=======
+  #$enable_dnsclient                 = false,
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   $enable_hosts                     = false,
   $enable_inittab                   = false,
   $enable_mailaliases               = false,
@@ -45,6 +49,7 @@ class common (
 ) {
 
   # validate type and convert string to boolean if necessary
+<<<<<<< HEAD
   if is_string($enable_dnsclient) {
     $dnsclient_enabled = str2bool($enable_dnsclient)
   } else {
@@ -53,6 +58,16 @@ class common (
   if $dnsclient_enabled == true {
     include ::dnsclient
   }
+=======
+  #if is_string($enable_dnsclient) {
+  #  $dnsclient_enabled = str2bool($enable_dnsclient)
+  #} else {
+  #  $dnsclient_enabled = $enable_dnsclient
+  #}
+  #if $dnsclient_enabled == true {
+  #  include ::dnsclient
+  #}
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
   # validate type and convert string to boolean if necessary
   if is_string($enable_hosts) {

@@ -1,6 +1,10 @@
 {
   "name": "puppetlabs-stdlib",
+<<<<<<< HEAD
   "version": "4.25.1",
+=======
+  "version": "5.2.0",
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   "author": "puppetlabs",
   "summary": "Standard library of resources for Puppet modules.",
   "license": "Apache-2.0",
@@ -39,7 +43,10 @@
     {
       "operatingsystem": "Scientific",
       "operatingsystemrelease": [
+<<<<<<< HEAD
         "5",
+=======
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
         "6",
         "7"
       ]
@@ -47,14 +54,23 @@
     {
       "operatingsystem": "SLES",
       "operatingsystemrelease": [
+<<<<<<< HEAD
         "11 SP1",
         "12"
+=======
+        "11",
+        "12",
+        "15"
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
       ]
     },
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
+<<<<<<< HEAD
         "7",
+=======
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
         "8",
         "9"
       ]
@@ -63,7 +79,12 @@
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
         "14.04",
+<<<<<<< HEAD
         "16.04"
+=======
+        "16.04",
+        "18.04"
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
       ]
     },
     {
@@ -76,6 +97,7 @@
     {
       "operatingsystem": "Windows",
       "operatingsystemrelease": [
+<<<<<<< HEAD
         "Server 2008",
         "Server 2008 R2",
         "Server 2012",
@@ -83,6 +105,15 @@
         "Server 2016",
         "7",
         "8",
+=======
+        "2008",
+        "2008 R2",
+        "2012",
+        "2012 R2",
+        "2016",
+        "7",
+        "8.1",
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
         "10"
       ]
     },
@@ -98,6 +129,7 @@
   "requirements": [
     {
       "name": "puppet",
+<<<<<<< HEAD
       "version_requirement": ">=2.7.20 < 6.0.0"
     }
   ],
@@ -105,4 +137,13 @@
   "pdk-version": "1.4.1",
   "template-url": "file:///opt/puppetlabs/pdk/share/cache/pdk-templates.git",
   "template-ref": "1.4.1-0-g52adbbb"
+=======
+      "version_requirement": ">= 2.7.20 < 7.0.0"
+    }
+  ],
+  "description": "Standard Library for Puppet Modules",
+  "pdk-version": "1.7.1",
+  "template-url": "https://github.com/puppetlabs/pdk-templates/",
+  "template-ref": "heads/master-0-g6814a87"
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 }

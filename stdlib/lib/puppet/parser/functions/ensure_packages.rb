@@ -39,9 +39,13 @@ module Puppet::Parser::Functions
       Puppet::Parser::Functions.function(:ensure_resource)
       packages.each do |package_name|
         raise(Puppet::ParseError, 'ensure_packages(): Empty String provided for package name') if package_name.empty?
+<<<<<<< HEAD
         unless findresource("Package[#{package_name}]")
           function_ensure_resource(['package', package_name, defaults])
         end
+=======
+        function_ensure_resource(['package', package_name, defaults])
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
       end
     end
   end

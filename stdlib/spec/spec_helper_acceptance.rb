@@ -1,9 +1,18 @@
+<<<<<<< HEAD
+=======
+require 'beaker-pe'
+require 'beaker-puppet'
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 require 'puppet'
 require 'beaker-rspec'
 require 'beaker/puppet_install_helper'
 require 'beaker/module_install_helper'
 
 run_puppet_install_helper
+<<<<<<< HEAD
+=======
+configure_type_defaults_on(hosts)
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 install_ca_certs unless ENV['PUPPET_INSTALL_TYPE'] =~ %r{pe}i
 install_module_on(hosts)
 install_module_dependencies_on(hosts)
