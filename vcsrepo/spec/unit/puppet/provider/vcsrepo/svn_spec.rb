@@ -52,7 +52,10 @@ describe Puppet::Type.type(:vcsrepo).provider(:svn) do
         provider.create
       end
     end
+<<<<<<< HEAD
+=======
     
+>>>>>>> c9b52c6393265c3a51bd8b3201b3bfbe07fcc044
     context "with depth" do
       it "should execute 'svn checkout' with a depth" do
         resource[:source] = 'exists'
@@ -63,7 +66,10 @@ describe Puppet::Type.type(:vcsrepo).provider(:svn) do
         provider.create
       end
     end
+<<<<<<< HEAD
+=======
     
+>>>>>>> c9b52c6393265c3a51bd8b3201b3bfbe07fcc044
     context "with trust_server_cert" do
       it "should execute 'svn checkout' without a trust-server-cert" do
         resource[:source] = 'exists'
