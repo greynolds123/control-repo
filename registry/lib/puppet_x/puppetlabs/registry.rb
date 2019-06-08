@@ -6,8 +6,6 @@ module Registry
   # For 64-bit OS, use 32-bit view. Ignored on 32-bit OS
   KEY_WOW64_32KEY = 0x200 unless defined? KEY_WOW64_32KEY
 
-<<<<<<< HEAD
-=======
   def self.hkeys
     {
       :hkcr => Win32::Registry::HKEY_CLASSES_ROOT,
@@ -42,7 +40,6 @@ module Registry
     name2type[name]
   end
 
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   # This is the base class for Path manipulation.  This class is meant to be
   # abstract, RegistryKeyPath and RegistryValuePath will customize and override
   # this class.
@@ -78,13 +75,10 @@ module Registry
       filter_path[:root]
     end
 
-<<<<<<< HEAD
-=======
     def subkey
       filter_path[:trailing_path]
     end
 
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     def ascend(&block)
       p = canonical
       while idx = p.rindex('\\')
@@ -102,24 +96,6 @@ module Registry
       result = {}
 
       path = @path
-<<<<<<< HEAD
-
-      result[:valuename] = case path[-1, 1]
-      when '\\'
-        result[:is_default] = true
-        ''
-      else
-        result[:is_default] = false
-        idx = path.rindex('\\') || 0
-        if idx > 0
-          path[idx+1..-1]
-        else
-          ''
-        end
-      end
-
-=======
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
       # Strip off any trailing slash.
       path = path.gsub(/\\*$/, '')
 
@@ -171,39 +147,6 @@ module Registry
   end
 
   class RegistryKeyPath < RegistryPathBase
-<<<<<<< HEAD
-    def subkey
-      filter_path[:trailing_path]
-    end
-  end
-
-  class RegistryValuePath < RegistryPathBase
-    def canonical
-      # This method gets called in the type and the provider.  We need to
-      # preserve the trailing backslash for the provider, otherwise it won't
-      # think this is a default value.
-      if default?
-        filter_path[:canonical] << "\\"
-      else
-        filter_path[:canonical]
-      end
-    end
-
-    def subkey
-      if default?
-        filter_path[:trailing_path]
-      else
-        filter_path[:trailing_path].gsub(/^(.*)\\.*$/, '\1')
-      end
-    end
-
-    def valuename
-      filter_path[:valuename]
-    end
-
-    def default?
-      !!filter_path[:is_default]
-=======
   end
 
   class RegistryValuePath < RegistryPathBase
@@ -258,7 +201,6 @@ module Registry
       raise ArgumentError, "Invalid registry key: #{path}" if result[:trailing_path].empty? && valuename.empty? && !default?
 
       result
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     end
   end
 end

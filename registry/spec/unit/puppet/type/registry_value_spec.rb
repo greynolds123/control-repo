@@ -17,11 +17,7 @@ describe Puppet::Type.type(:registry_value) do
 
   describe "path parameter" do
     it "should have a path parameter" do
-<<<<<<< HEAD
-      Puppet::Type.type(:registry_key).attrtype(:path).should == :param
-=======
       Puppet::Type.type(:registry_value).attrtype(:path).should == :param
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     end
 
     %w[hklm\propname hklm\software\propname].each do |path|
@@ -37,13 +33,9 @@ describe Puppet::Type.type(:registry_value) do
     end
 
     it "should strip trailling slashes from unnamed values" do
-<<<<<<< HEAD
-      described_class.new(:path => 'hklm\\software\\\\', :catalog => catalog)
-=======
       value = described_class.new(:path => 'hklm\\software\\\\', :catalog => catalog)
 
       expect(value[:path]).to eq('hklm\\software\\')
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     end
 
     %w[HKEY_DYN_DATA\\ HKEY_PERFORMANCE_DATA\name].each do |path|
@@ -54,12 +46,7 @@ describe Puppet::Type.type(:registry_value) do
 
     %w[hklm hkcr unknown\\name unknown\\subkey\\name].each do |path|
       it "should reject #{path} as invalid" do
-<<<<<<< HEAD
-        pending 'wrong message'
-        expect { described_class.new(:path => path, :catalog => catalog) }.should raise_error(Puppet::Error, /Invalid registry key/)
-=======
         expect { described_class.new(:path => path, :catalog => catalog) }.to raise_error(Puppet::Error, /Invalid registry key/)
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
       end
     end
 
@@ -70,8 +57,6 @@ describe Puppet::Type.type(:registry_value) do
       end
     end
 
-<<<<<<< HEAD
-=======
     %w[HKLM\Software\\\\nam\\e HKEY_LOCAL_MACHINE\Software\\\\nam\\e hklm\Software\\\\nam\\e].each do |root|
       it "should use a double backslash when canonicalizing value names with a backslash #{root}" do
         value = described_class.new(:path => root, :catalog => catalog)
@@ -91,22 +76,15 @@ describe Puppet::Type.type(:registry_value) do
       end
     end
 
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     it 'should validate the length of the value name'
     it 'should validate the length of the value data'
     it 'should be case-preserving'
     it 'should be case-insensitive'
-<<<<<<< HEAD
-    it 'should autorequire ancestor keys'
-=======
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     it 'should support 32-bit values' do
       value = described_class.new(:path => '32:hklm\software\foo', :catalog => catalog)
     end
   end
 
-<<<<<<< HEAD
-=======
   describe '#autorequire' do
     let(:subject) { described_class.new(:title => subject_title, :catalog => catalog) }
     [
@@ -151,7 +129,6 @@ describe Puppet::Type.type(:registry_value) do
     end
   end
 
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   describe "type property" do
     let (:value) { described_class.new(:path => 'hklm\software\foo', :catalog => catalog) }
 

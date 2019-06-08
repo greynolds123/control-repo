@@ -8,8 +8,6 @@ This module implements the type specification for the network device support
 program.  The goal of this module is to provide the Puppet types for writing
 provider implementations of these types for a specific network device model.
 
-<<<<<<< HEAD
-=======
 The modules supports legacy Puppet and [Resource API](https://github.com/puppetlabs/puppet-resource_api) versions of the types.
 
 Both versions of the types perform the same in the catalog, but stricter type checking is enabled with RSAPI versions.
@@ -18,23 +16,17 @@ Only one version can be loaded into an environment at a time.  On the master, RS
 
 On the agent, legacy types will be loaded if the operatingsystem is `aristaeos or ios_xr`, otherwise RSAPI version is loaded.
 
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 # Reference Information
 
 The following reference material is useful when developing providers for the
 types implemented in this module.
 
-<<<<<<< HEAD
-=======
  * [Resource API](https://github.com/puppetlabs/puppet-resource_api)
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
  * [Puppet Types and Providers by Dan Bode & Nan Liu][book]
  * [Custom Types Documentation][types doc]
  * [Seriously, What is this Provider Doing?][gary provider] Useful for an
    in-depth explanation of the instances class method for each provider.
 
-<<<<<<< HEAD
-=======
 # Reference
 ## Resource types
 * [`banner`](#banner): Configure banners for network devices
@@ -1294,7 +1286,6 @@ namevar
 
 The name of the tacacs server group.
 
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 # Getting Started for Development
 
 This section describes how to get started developing providers for the types
@@ -1580,11 +1571,7 @@ For more information on rspec, please see https://github.com/rspec/rspec
 
 # License
 
-<<<<<<< HEAD
-Copyright 2014-2017 [Puppet, Inc.][puppet]
-=======
 Copyright 2014-2018 [Puppet, Inc.][puppet]
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use
 this file except in compliance with the License.  You may obtain a copy of the

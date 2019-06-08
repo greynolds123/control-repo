@@ -1,26 +1,14 @@
 require 'puppet/type'
 begin
   require "puppet_x/puppetlabs/registry"
-<<<<<<< HEAD
-  require "puppet_x/puppetlabs/registry/provider_base"
-=======
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 rescue LoadError => detail
   require "pathname" # JJM WORK_AROUND #14073 and #7788
   module_base = Pathname.new(__FILE__).dirname + "../../../"
   require module_base + "puppet_x/puppetlabs/registry"
-<<<<<<< HEAD
-  require module_base + "puppet_x/puppetlabs/registry/provider_base"
-end
-
-Puppet::Type.type(:registry_value).provide(:registry) do
-  include PuppetX::Puppetlabs::Registry::ProviderBase
-=======
 end
 
 Puppet::Type.type(:registry_value).provide(:registry) do
   include Puppet::Util::Windows::Registry if Puppet.features.microsoft_windows?
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
   defaultfor :operatingsystem => :windows
   confine    :operatingsystem => :windows
@@ -29,8 +17,6 @@ Puppet::Type.type(:registry_value).provide(:registry) do
     []
   end
 
-<<<<<<< HEAD
-=======
   def hive
     PuppetX::Puppetlabs::Registry.hkeys[path.root]
   end
@@ -43,19 +29,13 @@ Puppet::Type.type(:registry_value).provide(:registry) do
     path.subkey
   end
 
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   def exists?
     Puppet.debug("Checking the existence of registry value: #{self}")
     found = false
     begin
       hive.open(subkey, Win32::Registry::KEY_READ | access) do |reg|
-<<<<<<< HEAD
-        from_string_to_wide_string(valuename) do |valuename_ptr|
-          status = RegQueryValueExW(reg.hkey, valuename_ptr,
-=======
         FFI::Pointer.from_string_to_wide_string(valuename) do |valuename_ptr|
           status = Puppet::Util::Windows::Registry.RegQueryValueExW(reg.hkey, valuename_ptr,
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
             FFI::MemoryPointer::NULL, FFI::MemoryPointer::NULL,
             FFI::MemoryPointer::NULL, FFI::MemoryPointer::NULL)
 
@@ -93,20 +73,7 @@ Puppet::Type.type(:registry_value).provide(:registry) do
 
   def destroy
     Puppet.debug("Destroying registry value: #{self}")
-<<<<<<< HEAD
-    # On Ruby 2.1.x, due to https://bugs.ruby-lang.org/issues/10820, we see
-    # a FileNotFound error - hence an FFI re-implementation inside destroy
-    hive.open(subkey, Win32::Registry::KEY_ALL_ACCESS | access) do |reg|
-      from_string_to_wide_string(valuename) do |valuename_ptr|
-        if RegDeleteValueW(reg.hkey, valuename_ptr) != 0
-          msg = "Failed to delete registry value #{valuename} at #{reg.keyname}"
-          raise Puppet::Util::Windows::Error.new(msg)
-        end
-      end
-    end
-=======
     hive.open(subkey, Win32::Registry::KEY_ALL_ACCESS | access) { |reg| self.delete_value(reg, valuename) }
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   end
 
   def type
@@ -129,13 +96,8 @@ Puppet::Type.type(:registry_value).provide(:registry) do
     unless @regvalue
       @regvalue = {}
       hive.open(subkey, Win32::Registry::KEY_READ | access) do |reg|
-<<<<<<< HEAD
-        from_string_to_wide_string(valuename) do |valuename_ptr|
-          if RegQueryValueExW(reg.hkey, valuename_ptr,
-=======
         FFI::Pointer.from_string_to_wide_string(valuename) do |valuename_ptr|
           if Puppet::Util::Windows::Registry.RegQueryValueExW(reg.hkey, valuename_ptr,
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
             FFI::MemoryPointer::NULL, FFI::MemoryPointer::NULL,
             FFI::MemoryPointer::NULL, FFI::MemoryPointer::NULL) == 0
             @regvalue[:type], @regvalue[:data] = from_native(reg.read(valuename))
@@ -166,11 +128,7 @@ Puppet::Type.type(:registry_value).provide(:registry) do
         pdata.first
       end
 
-<<<<<<< HEAD
-    return [name2type(ptype), ndata]
-=======
     return [PuppetX::Puppetlabs::Registry.name2type(ptype), ndata]
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   end
 
   # convert from native type and data to puppet
@@ -178,11 +136,7 @@ Puppet::Type.type(:registry_value).provide(:registry) do
     ntype, ndata = ary
 
     pdata =
-<<<<<<< HEAD
-      case type2name(ntype)
-=======
       case PuppetX::Puppetlabs::Registry.type2name(ntype)
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
       when :binary
         ndata.bytes.map{ |byte| "%02x" % byte }.join(' ')
       when :array
@@ -196,11 +150,7 @@ Puppet::Type.type(:registry_value).provide(:registry) do
     # always give an array to Puppet.  This is why we have the ternary operator
     # I'm not calling .to_a because Ruby issues a warning about the default
     # implementation of to_a going away in the future.
-<<<<<<< HEAD
-    return [type2name(ntype), pdata.kind_of?(Array) ? pdata : [pdata]]
-=======
     return [PuppetX::Puppetlabs::Registry.type2name(ntype), pdata.kind_of?(Array) ? pdata : [pdata]]
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   end
 
   private
@@ -230,17 +180,10 @@ Puppet::Type.type(:registry_value).provide(:registry) do
 
     case type
       when Win32::Registry::REG_SZ, Win32::Registry::REG_EXPAND_SZ
-<<<<<<< HEAD
-        bytes = wide_string(data).bytes.to_a
-      when Win32::Registry::REG_MULTI_SZ
-        # each wide string is already NULL terminated
-        bytes = data.map { |s| wide_string(s).bytes.to_a }.flat_map { |a| a }
-=======
         bytes = Puppet::Util::Windows::String.wide_string(data).bytes.to_a
       when Win32::Registry::REG_MULTI_SZ
         # each wide string is already NULL terminated
         bytes = data.map { |s| Puppet::Util::Windows::String.wide_string(s).bytes.to_a }.flat_map { |a| a }
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
         # requires an additional NULL terminator to terminate properly
         bytes << 0 << 0
       when Win32::Registry::REG_BINARY
@@ -259,11 +202,7 @@ Puppet::Type.type(:registry_value).provide(:registry) do
   end
 
   def write(reg, name, type, data)
-<<<<<<< HEAD
-    from_string_to_wide_string(valuename) do |name_ptr|
-=======
     FFI::Pointer.from_string_to_wide_string(valuename) do |name_ptr|
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
       bytes = data_to_bytes(type, data)
       FFI::MemoryPointer.new(:uchar, bytes.length) do |data_ptr|
         data_ptr.write_array_of_uchar(bytes)
@@ -275,8 +214,6 @@ Puppet::Type.type(:registry_value).provide(:registry) do
     end
   end
 
-<<<<<<< HEAD
-=======
   if Puppet.features.microsoft_windows?
     require 'ffi'
     extend FFI::Library
@@ -298,7 +235,6 @@ Puppet::Type.type(:registry_value).provide(:registry) do
     path.valuename
   end
 
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   def path
     @path ||= PuppetX::Puppetlabs::Registry::RegistryValuePath.new(resource.parameter(:path).value)
   end

@@ -24,11 +24,7 @@ Puppet::Type.newtype(:registry_key) do
 EOT
 
   def self.title_patterns
-<<<<<<< HEAD
-    [ [ /^(.*?)\Z/m, [ [ :path, lambda{|x| x} ] ] ] ]
-=======
     [ [ /^(.*?)\Z/m, [ [ :path ] ] ] ]
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   end
 
   ensurable
@@ -107,11 +103,7 @@ EOT
 
     # get the "should" names of registry values associated with this key
     should_values = catalog.relationship_graph.direct_dependents_of(self).select {|dep| dep.type == :registry_value }.map do |reg|
-<<<<<<< HEAD
-      PuppetX::Puppetlabs::Registry::RegistryValuePath.new(reg.parameter(:path).value).valuename
-=======
       PuppetX::Puppetlabs::Registry::RegistryValuePath.new(reg.parameter(:path).value).valuename.downcase
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     end
 
     # get the "is" names of registry values associated with this key
@@ -119,16 +111,11 @@ EOT
 
     # create absent registry_value resources for the complement
     resources = []
-<<<<<<< HEAD
-    (is_values - should_values).each do |name|
-      resources << Puppet::Type.type(:registry_value).new(:path => "#{self[:path]}\\#{name}", :ensure => :absent, :catalog => catalog)
-=======
     is_values.each do |is_value|
       unless should_values.include?(is_value.downcase)
         resource_path = PuppetX::Puppetlabs::Registry::RegistryValuePath.combine_path_and_value(self[:path], is_value)
         resources << Puppet::Type.type(:registry_value).new(:path => resource_path, :ensure => :absent, :catalog => catalog)
       end
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     end
     resources
   end

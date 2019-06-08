@@ -1,32 +1,6 @@
 # encoding: utf-8
 
 require 'spec_helper'
-<<<<<<< HEAD
-
-describe Puppet::Type.type(:ntp_server) do
-  let(:catalog) { Puppet::Resource::Catalog.new }
-  let(:type) { described_class.new(name: 'emanon', catalog: catalog) }
-  subject { described_class.attrclass(attribute) }
-
-  it_behaves_like 'name is the namevar'
-  it_behaves_like 'boolean', attribute: :prefer
-  it_behaves_like 'string', attribute: :source_interface
-  it_behaves_like 'string', attribute: :vrf
-
-  describe 'key' do
-    let(:attribute) { :key }
-    include_examples 'numeric parameter', min: 1, max: 65_535
-  end
-
-  describe 'maxpoll' do
-    let(:attribute) { :maxpoll }
-    include_examples 'numeric parameter', min: 0, max: 65_535
-  end
-
-  describe 'minpoll' do
-    let(:attribute) { :minpoll }
-    include_examples 'numeric parameter', min: 0, max: 65_535
-=======
 describe 'ntp_server' do
   describe 'old style' do
     fake_operatingsystem
@@ -62,6 +36,5 @@ describe 'ntp_server' do
         expect(Puppet::Type.type(:ntp_server)).not_to be_nil
       end
     end
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   end
 end

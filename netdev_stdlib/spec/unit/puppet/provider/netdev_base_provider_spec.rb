@@ -13,8 +13,9 @@ RSpec.describe Puppet::Provider::NetdevBaseProvider do
 
   let(:test_provider) { instance_double('Puppet::Provider::NetdevBaseProvider', 'test_provider') }
   let(:provider_class) { instance_double('Class', 'provider class') }
+  
   before(:each) do
-  allow(provider_class).to receive(:new).and_return(test_provider).once
+    allow(provider_class).to receive(:new).and_return(test_provider).once
     allow(provider_class).to receive(:const_get).with('Provider', false).and_return(provider_class).once
     allow(provider_class).to receive(:const_get).with('CiscoNexus', false).and_return(provider_class).once
     stub_const('Puppet::Provider', provider_class)
@@ -27,7 +28,8 @@ RSpec.describe Puppet::Provider::NetdevBaseProvider do
     it {expect(described_class.new).to delegate_method(:get).to(:device_provider) }
     it {expect(described_class.new).to delegate_method(:set).to(:device_provider) }
     it {expect(described_class.new).to delegate_method(:canonicalize).to(:device_provider) }
- end
+    
+  end
   context 'operating system is not nexus' do
     let(:os) { 'linux' }
 

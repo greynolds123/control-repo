@@ -1,10 +1,6 @@
 {
   "name": "puppetlabs-netdev_stdlib",
-<<<<<<< HEAD
-  "version": "0.13.0",
-=======
   "version": "0.18.0",
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   "author": "puppetlabs",
   "summary": "Type definitions for Networking Device (NetDev) Standard Library",
   "license": "Apache-2.0",

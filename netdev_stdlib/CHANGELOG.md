@@ -1,8 +1,6 @@
 # Change log
 All notable changes to this project will be documented in this file.
 
-<<<<<<< HEAD
-=======
 ## 0.18.0 - 2019-01-25
 ### Summary:
 This release adds support for unsetting appropriate values on Cisco Nexus devices.
@@ -71,7 +69,6 @@ On the agent, legacy types will be loaded if the operatingsystem is `aristaeos, 
 ### Fixed:
 - `network_trunk` range of of `untagged_vlan` now 0-4095
 
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 ## 0.13.0 - 2017-11-13
 ### Summary:
 This release enhances syslog, RADIUS, TACACS, and SNMP types

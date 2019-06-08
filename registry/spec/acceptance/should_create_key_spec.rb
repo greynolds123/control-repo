@@ -18,16 +18,20 @@ describe 'Registry Key Management' do
       registry_key { 'HKLM\\Software\\Vendor': ensure => present }
       Registry_key { ensure => present }
       Registry_value { ensure => present, data => 'Puppet Default Data' }
+    
       registry_key { '#{keypath}': }
       registry_key { '#{keypath}\\SubKey1': }
+    
       if $architecture == 'x64' {
         registry_key { '32:#{keypath}': }
         registry_key { '32:#{keypath}\\SubKey1': }
       }
+    
       registry_key   { '#{keypath}\\SubKeyToPurge': }
       registry_value { '#{keypath}\\SubKeyToPurge\\Value1': }
       registry_value { '#{keypath}\\SubKeyToPurge\\Value2': }
       registry_value { '#{keypath}\\SubKeyToPurge\\Value3': }
+    
       if $architecture == 'x64' {
         registry_key   { '32:#{keypath}\\SubKeyToPurge': }
         registry_value { '32:#{keypath}\\SubKeyToPurge\\Value1': }
@@ -39,7 +43,8 @@ PHASE1
     # Purge the keys in a subsequent run
     phase2 = <<PHASE2
       registry_key { 'HKLM\\Software\\Vendor': ensure => present }
-      Registry_key { ensure => present, purge_values => true
+      Registry_key { ensure => present, purge_values => true }
+    
       registry_key { '#{keypath}\\SubKeyToPurge': }
       if $architecture == 'x64' {
         registry_key { '32:#{keypath}\\SubKeyToPurge': }
@@ -50,6 +55,7 @@ PHASE2
     phase3 = <<PHASE3
       registry_key { 'HKLM\\Software\\Vendor': ensure => present }
       Registry_key { ensure => absent }
+    
       # These have relationships because autorequire break things when
       # ensure is absent.  REVISIT: Make this not a requirement.
       # REVISIT: This appears to work with explicit relationships but not with ->
@@ -59,6 +65,7 @@ PHASE2
       registry_key { '#{keypath}':
         require => Registry_key['#{keypath}\\SubKeyToPurge', '#{keypath}\\SubKey1'],
       }
+    
       if $architecture == 'x64' {
         registry_key { '32:#{keypath}\\SubKey1': }
         registry_key { '32:#{keypath}\\SubKeyToPurge': }

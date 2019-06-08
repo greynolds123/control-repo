@@ -5,13 +5,8 @@
 
 guard :rspec do
   watch(/^spec\/.+_spec\.rb$/)
-<<<<<<< HEAD
-  watch(/^lib\/(.+)\.rb$/)     { |m| "spec/unit/#{m[1]}_spec.rb" }
-  watch('spec/spec_helper.rb')  { 'spec' }
-=======
   watch(/^lib\/(.+)\.rb$/) { |m| "spec/unit/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb') { 'spec' }
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 end
 
 guard :rubocop do

@@ -1,14 +1,6 @@
 # encoding: utf-8
 
 require 'spec_helper'
-<<<<<<< HEAD
-
-describe Puppet::Type.type(:ntp_config) do
-  it_behaves_like 'name is the namevar'
-  it_behaves_like 'string', attribute: :source_interface
-  it_behaves_like 'boolean', attribute: :authenticate
-  it_behaves_like 'array of strings or integers property', attribute: :trusted_key
-=======
 describe 'ntp_config' do
   describe 'old style' do
     fake_operatingsystem
@@ -26,5 +18,4 @@ describe 'ntp_config' do
       end
     end
   end
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 end
