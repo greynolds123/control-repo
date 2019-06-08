@@ -3,11 +3,7 @@ HOSTS:
     roles:
       - agent
       - default
-<<<<<<< HEAD
-    platform: redhat-7-x86_64
-=======
     platform: el-7-x86_64
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     hypervisor: vagrant
     box: puppetlabs/centos-7.2-64-nocm
 CONFIG:

@@ -1,10 +1,35 @@
-<<<<<<< HEAD
-=======
 # Change log
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [3.3.0](https://github.com/puppetlabs/puppetlabs-java/tree/3.3.0) (2019-01-16)
+## [v4.1.0](https://github.com/puppetlabs/puppetlabs-java/tree/v4.1.0) (2019-05-29)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-java/compare/v4.0.0...v4.1.0)
+
+### Added
+
+- \(FM-8028\) Add RedHat 8 support [\#363](https://github.com/puppetlabs/puppetlabs-java/pull/363) ([eimlav](https://github.com/eimlav))
+
+## [v4.0.0](https://github.com/puppetlabs/puppetlabs-java/tree/v4.0.0) (2019-05-20)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-java/compare/3.3.0...v4.0.0)
+
+### Changed
+
+- pdksync - \(MODULES-8444\) - Raise lower Puppet bound [\#356](https://github.com/puppetlabs/puppetlabs-java/pull/356) ([david22swan](https://github.com/david22swan))
+
+### Added
+
+- \(FM-7921\) - Implement Puppet Strings [\#353](https://github.com/puppetlabs/puppetlabs-java/pull/353) ([david22swan](https://github.com/david22swan))
+- Update default version & java 8 version from 8u192 to 8u201 [\#347](https://github.com/puppetlabs/puppetlabs-java/pull/347) ([valentinsavenko](https://github.com/valentinsavenko))
+- Add ability to override basedir and package type for oracle java [\#345](https://github.com/puppetlabs/puppetlabs-java/pull/345) ([fraenki](https://github.com/fraenki))
+- MODULES-8613: Add option to set a custom JCE download URL [\#344](https://github.com/puppetlabs/puppetlabs-java/pull/344) ([HielkeJ](https://github.com/HielkeJ))
+
+### Fixed
+
+- MODULES-8698: Fix $install\_path on CentOS with tar.gz package type [\#349](https://github.com/puppetlabs/puppetlabs-java/pull/349) ([fraenki](https://github.com/fraenki))
+
+## [3.3.0](https://github.com/puppetlabs/puppetlabs-java/tree/3.3.0) (2019-01-17)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-java/compare/3.2.0...3.3.0)
 
@@ -143,7 +168,6 @@ This is a major release including some bug fixes, new parameters, and general mo
 - Order of operations for archives [MODULES-4751](https://tickets.puppetlabs.com/browse/https://tickets.puppetlabs.com/browse/MODULES-4751)
 - Increase Xmx setting for `java_version` fact [MODULES-4736](https://tickets.puppetlabs.com/browse/MODULES-4736)
 
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 ## Supported Release 1.6.0
 ### Summary
 
@@ -183,11 +207,7 @@ A release which has several support additions for different OSes. Also a couple 
 - Small README updates and syntax error fixes.
 
 ## Supported Release 1.4.3
-<<<<<<< HEAD
-###Summary
-=======
 ### Summary
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 Small release for support of newer PE versions. This increments the version of PE in the metadata.json file.
 
@@ -205,30 +225,18 @@ This release updates the metadata for the upcoming release of PE and update para
 #### Bugfixes:
 - Add missing OEL to params
 
-<<<<<<< HEAD
-##2015-07-07 - Supported Release 1.4.0
-###Summary
-This release adds several new features, bugfixes, documentation updates, and test improvements.
-
-####Features:
-=======
 ## 2015-07-07 - Supported Release 1.4.0
 ### Summary
 This release adds several new features, bugfixes, documentation updates, and test improvements.
 
 #### Features:
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 - Puppet 4 support and testing
 - Adds support for several Operating Systems
   - Ubuntu 15.04
   - OpenBSD 5.6, 5.7
   - Fedora 20, 21, 22
 
-<<<<<<< HEAD
-####Bugfixes:
-=======
 #### Bugfixes:
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 - Fixes java_version fact to work on large systems. (MODULES-1749)
 - Improves maintainability of java_version fact.
 - Fixes java package names on Fedora 21+.
@@ -236,19 +244,11 @@ This release adds several new features, bugfixes, documentation updates, and tes
 - Fixes create-java-alternatives commands on RedHat distros.
 - Fixes bug with Debian systems missing java-common package.
 
-<<<<<<< HEAD
-##2015-01-20 - Supported Release 1.3.0
-###Summary
-This release adds 3 new facts for determining Java version, adds RHEL alternatives support, adds utopic support, and fixes the flag for `update-java-alternatives` when installed from a headless pacakge.
-
-####Features
-=======
 ## 2015-01-20 - Supported Release 1.3.0
 ### Summary
 This release adds 3 new facts for determining Java version, adds RHEL alternatives support, adds utopic support, and fixes the flag for `update-java-alternatives` when installed from a headless pacakge.
 
 #### Features
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 - Added RHEL support for alternatives
 - New facts
   - java_major_version
@@ -256,21 +256,6 @@ This release adds 3 new facts for determining Java version, adds RHEL alternativ
   - java_version
 - Add support for utopic
 
-<<<<<<< HEAD
-####Bugfixes
-- Use `--jre-headless` in the `update-java-alternatives` command when installed from a `headless` package
-
-##2014-11-11 - Supported Version 1.2.0
-
-###Summary: 
-This release adds SLES 12 support and is tested for Future Parser Support
-
-####Bugfixes:
-- Several readme updates
-- Testcase flexability increased
-
-####Features:
-=======
 #### Bugfixes
 - Use `--jre-headless` in the `update-java-alternatives` command when installed from a `headless` package
 
@@ -284,49 +269,20 @@ This release adds SLES 12 support and is tested for Future Parser Support
 - Testcase flexability increased
 
 #### Features:
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 - Add SLES 12 support
 - Future Parser tested
 - Validated against PE 3.7  
 
-<<<<<<< HEAD
-##2014-08-25 - Supported Version 1.1.2
-
-###Summary: 
-This release begins the support coverage of the puppetlabs-java module.
-
-###Bugfixes:
-=======
 ## 2014-08-25 - Supported Version 1.1.2
 
 ### Summary:
 This release begins the support coverage of the puppetlabs-java module.
 
 ### Bugfixes:
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 - Update java alternative values from deprecated names
 - Readme updated
 - Testing updated
 
-<<<<<<< HEAD
-##2014-05-02 - Version 1.1.1
-
-###Summary:
-
-Add support for new versions of Debian and Ubuntu!
-
-####Features:
-- Add support for Ubuntu Trusty (14.04)
-- Add support for Debian Jessie (8.x)
-
-##2014-01-06 - Version 1.1.0
-
-####Summary:
-
-Primarily a release for Ubuntu users!
-
-####Features:
-=======
 ## 2014-05-02 - Version 1.1.1
 
 ### Summary:
@@ -344,35 +300,21 @@ Add support for new versions of Debian and Ubuntu!
 Primarily a release for Ubuntu users!
 
 #### Features:
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 - Add support for Ubuntu Saucy (13.10)
 - Add `java_home` parameter for centralized setting of JAVA_HOME.
 - Add Scientific Linux
 
-<<<<<<< HEAD
-###Bugfixes:
-- Plus signs are valid in debian/ubuntu package names.
-
-##2013-08-01 - Version 1.0.1
-=======
 #### Bugfixes:
 - Plus signs are valid in debian/ubuntu package names.
 
 ## 2013-08-01 - Version 1.0.1
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 Matthaus Owens <matthaus@puppetlabs.com>
 * Update java packages for Fedora systems
 
-<<<<<<< HEAD
-##2013-07-29 - Version 1.0.0
-
-####Detailed Changes
-=======
 ## 2013-07-29 - Version 1.0.0
 
 #### Detailed Changes
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 Krzysztof Suszyński <krzysztof.suszynski@coi.gov.pl>
 * Adding support for Oracle Enterprise Linux
@@ -397,33 +339,6 @@ Nathan R Valentine <nrvale0@gmail.com>
 Sharif Nassar <sharif@mediatemple.net>
 * Add support for Debian alternatives, and more than one JDK/JRE per platform.
 
-<<<<<<< HEAD
-##2013-04-04 - Version 0.3.0
-Reid Vandewiele <reid@puppetlabs.com> -
-* Refactor, introduce params pattern
-
-##2012-11-15 - Version 0.2.0
-Scott Schneider <sschneider@puppetlabs.com>
-* Add Solaris support
-
-##2011-06-16 - Version 0.1.5
-Jeff McCune <jeff@puppetlabs.com> 
-* Add Debian based distro (Lucid) support
-
-##2011-06-02 - Version 0.1.4
-Jeff McCune <jeff@puppetlabs.com> 
-* Fix class composition ordering problems
-
-##2011-05-28 - Version 0.1.3
-Jeff McCune <jeff@puppetlabs.com>
-* Remove stages
-
-##2011-05-26 - Version 0.1.2
-Jeff McCune <jeff@puppetlabs.com>
-* Changes JRE/JDK selection class parameter to $distribution
-
-##2011-05-25 - Version 0.1.1
-=======
 ## 2013-04-04 - Version 0.3.0
 Reid Vandewiele <reid@puppetlabs.com> -
 * Refactor, introduce params pattern
@@ -449,20 +364,10 @@ Jeff McCune <jeff@puppetlabs.com>
 * Changes JRE/JDK selection class parameter to $distribution
 
 ## 2011-05-25 - Version 0.1.1
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 Jeff McCune <jeff@puppetlabs.com>
 * Re-did versioning to follow semantic versioning
 * Add validation of class parameters
 
-<<<<<<< HEAD
-##2011-05-24 - Version 0.1.0
-Jeff McCune <jeff@puppetlabs.com> 
-* Default to JDK version 6u25
-
-##2011-05-24 - Version 0.0.1
-Jeff McCune <jeff@puppetlabs.com> 
-* Initial release
-=======
 ## 2011-05-24 - Version 0.1.0
 Jeff McCune <jeff@puppetlabs.com>
 * Default to JDK version 6u25
@@ -476,4 +381,3 @@ Jeff McCune <jeff@puppetlabs.com>
 
 
 \* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70

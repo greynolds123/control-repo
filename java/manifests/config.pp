@@ -1,4 +1,4 @@
-# On Debian systems, if alternatives are set, manually assign them.
+# @api private
 class java::config ( ) {
   case $::osfamily {
     'Debian': {
@@ -9,8 +9,6 @@ class java::config ( ) {
           unless  => "test /etc/alternatives/java -ef '${java::use_java_alternative_path}'",
         }
       }
-<<<<<<< HEAD
-=======
       if $java::use_java_home != undef {
         file_line { 'java-home-environment':
           path  => '/etc/environment',
@@ -18,7 +16,6 @@ class java::config ( ) {
           match => 'JAVA_HOME=',
         }
       }
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     }
     'RedHat': {
       if $java::use_java_alternative != undef and $java::use_java_alternative_path != undef {
@@ -39,8 +36,6 @@ class java::config ( ) {
           unless  => "test /etc/alternatives/java -ef '${java::use_java_alternative_path}'",
         }
       }
-<<<<<<< HEAD
-=======
       if $java::use_java_home != undef {
         file_line { 'java-home-environment':
           path  => '/etc/environment',
@@ -89,7 +84,6 @@ class java::config ( ) {
           match => 'JAVA_HOME=',
         }
       }
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     }
     default: {
       # Do nothing.

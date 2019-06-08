@@ -14,11 +14,8 @@
     },
     {
       "name": "puppetlabs-apt",
-<<<<<<< HEAD
       "version_requirement": ">= 4.1.0 < 6.4.0"
-=======
       "version_requirement": ">= 4.1.0 < 6.0.0"
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     },
     {
       "name": "puppet-archive",
