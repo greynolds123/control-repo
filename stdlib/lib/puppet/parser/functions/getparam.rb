@@ -5,22 +5,6 @@ Puppet::Parser::Functions.newfunction(:getparam,
                                       :type => :rvalue,
                                       :doc => <<-'DOC'
     Takes a resource reference and name of the parameter and
-<<<<<<< HEAD
-    returns value of resource's parameter.
-
-    *Examples:*
-
-        define example_resource($param) {
-        }
-
-        example_resource { "example_resource_instance":
-            param => "param_value"
-        }
-
-        getparam(Example_resource["example_resource_instance"], "param")
-
-    Would return: param_value
-=======
     returns value of resource's parameter. Note that user defined
     resource types are evaluated lazily.
 
@@ -53,7 +37,6 @@ Puppet::Parser::Functions.newfunction(:getparam,
 
         Example_resource['example_resource_instance']['param']
 
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   DOC
                                      ) do |vals|
   reference, param = vals

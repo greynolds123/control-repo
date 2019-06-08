@@ -2,8 +2,17 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org).
-<<<<<<< HEAD
-=======
+
+## Supported Release 6.0.0
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-stdlib/compare/5.2.0...v6.0.0)
+
+#### Changed
+- (MODULES-8444) - Raise lower Puppet bound
+
+#### Added
+- Add a stdlib::ip_in_range() function
+- (MODULES-8760) Add iterative feature to merge() function
 
 ## Supported Release 5.2.0
 ### Summary
@@ -166,7 +175,6 @@ This is a major release which removes support for the Scientific 5 and Debian 7 
 - Support has been removed for `Scientific 5` and `Debian 7` operating systems.
 - `Stdlib::(Ipv4|IPv6|Ip_address)` have been removed.
 
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 ## Supported Release 4.25.1
 ### Summary
 

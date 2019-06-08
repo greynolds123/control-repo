@@ -15,12 +15,9 @@ module Puppet::Parser::Functions
 
     When there is a duplicate key, the key in the rightmost hash will "win."
 
-<<<<<<< HEAD
-=======
     Note that since Puppet 4.0.0 the same merge can be achieved with the + operator.
 
         $merged_hash = $hash1 + $hash2
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     DOC
 
     if args.length < 2

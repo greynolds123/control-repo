@@ -12,11 +12,7 @@ describe 'validate_hash' do
       # Checking for deprecation warning
       it 'displays a single deprecation' do
         ENV['STDLIB_LOG_DEPRECATIONS'] = 'true'
-<<<<<<< HEAD
-        scope.expects(:warning).with(includes('This method is deprecated'))
-=======
         expect(scope).to receive(:warning).with(include('This method is deprecated'))
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
         is_expected.to run.with_params('key' => 'value')
       end
     end
@@ -37,6 +33,7 @@ describe 'validate_hash' do
       it { is_expected.to run.with_params({}, 1).and_raise_error(Puppet::ParseError, %r{is not a Hash}) }
       it { is_expected.to run.with_params({}, true).and_raise_error(Puppet::ParseError, %r{is not a Hash}) }
       it { is_expected.to run.with_params({}, 'one').and_raise_error(Puppet::ParseError, %r{is not a Hash}) }
+      it { is_expected.to run.with_params("{ 'number' => 'one' }").and_raise_error(Puppet::ParseError, %r{is not a Hash}) }
     end
   end
 end

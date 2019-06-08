@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-require 'puppetlabs_spec_helper/module_spec_helper'
-require 'rspec-puppet-facts'
-
-begin
-  require 'spec_helper_local' if File.file?(File.join(File.dirname(__FILE__), 'spec_helper_local.rb'))
-rescue LoadError => loaderror
-  warn "Could not require spec_helper_local: #{loaderror.message}"
-end
-=======
 RSpec.configure do |c|
   c.mock_with :rspec
 end
@@ -16,7 +6,6 @@ require 'puppetlabs_spec_helper/module_spec_helper'
 require 'rspec-puppet-facts'
 
 require 'spec_helper_local' if File.file?(File.join(File.dirname(__FILE__), 'spec_helper_local.rb'))
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 
 include RspecPuppetFacts
 
@@ -25,17 +14,6 @@ default_facts = {
   facterversion: Facter.version,
 }
 
-<<<<<<< HEAD
-default_facts_path = File.expand_path(File.join(File.dirname(__FILE__), 'default_facts.yml'))
-default_module_facts_path = File.expand_path(File.join(File.dirname(__FILE__), 'default_module_facts.yml'))
-
-if File.exist?(default_facts_path) && File.readable?(default_facts_path)
-  default_facts.merge!(YAML.safe_load(File.read(default_facts_path)))
-end
-
-if File.exist?(default_module_facts_path) && File.readable?(default_module_facts_path)
-  default_facts.merge!(YAML.safe_load(File.read(default_module_facts_path)))
-=======
 default_fact_files = [
   File.expand_path(File.join(File.dirname(__FILE__), 'default_facts.yml')),
   File.expand_path(File.join(File.dirname(__FILE__), 'default_module_facts.yml')),
@@ -45,22 +23,21 @@ default_fact_files.each do |f|
   next unless File.exist?(f) && File.readable?(f) && File.size?(f)
 
   begin
-    default_facts.merge!(YAML.safe_load(File.read(f)))
+    default_facts.merge!(YAML.safe_load(File.read(f), [], [], true))
   rescue => e
     RSpec.configuration.reporter.message "WARNING: Unable to load #{f}: #{e}"
   end
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 end
 
 RSpec.configure do |c|
   c.default_facts = default_facts
-<<<<<<< HEAD
-end
-=======
   c.before :each do
     # set to strictest setting for testing
     # by default Puppet runs at warning level
     Puppet.settings[:strict] = :warning
+  end
+  c.filter_run_excluding(bolt: true) unless ENV['GEM_BOLT']
+  c.after(:suite) do
   end
 end
 
@@ -72,4 +49,3 @@ def ensure_module_defined(module_name)
 end
 
 # 'spec_overrides' from sync.yml will appear below this line
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70

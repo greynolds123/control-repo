@@ -65,8 +65,6 @@ describe 'loadjson' do
       end
       it { is_expected.to run.with_params(filename, 'default' => 'value').and_return('default' => 'value') }
     end
-<<<<<<< HEAD
-=======
 
     context 'when an existing URL is specified' do
       let(:filename) do
@@ -140,6 +138,5 @@ describe 'loadjson' do
         is_expected.to run.with_params(filename, 'default' => 'value').and_return('default' => 'value')
       }
     end
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   end
 end

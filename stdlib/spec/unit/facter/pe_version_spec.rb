@@ -15,11 +15,7 @@ describe 'PE Version specs' do
 
   context 'when puppetversion is nil' do
     before :each do
-<<<<<<< HEAD
-      Facter.fact(:puppetversion).stubs(:value).returns(nil)
-=======
       allow(Facter.fact(:puppetversion)).to receive(:value).and_return(nil)
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     end
 
     it 'puppetversion is nil' do
@@ -32,19 +28,11 @@ describe 'PE Version specs' do
   end
 
   context 'when PE is installed' do
-<<<<<<< HEAD
-    %w[2.6.1 2.10.300].each do |version|
-      puppetversion = "2.7.19 (Puppet Enterprise #{version})"
-      context "puppetversion => #{puppetversion}" do
-        before :each do
-          Facter.fact(:puppetversion).stubs(:value).returns(puppetversion)
-=======
     ['2.6.1', '2.10.300'].each do |version|
       puppetversion = "2.7.19 (Puppet Enterprise #{version})"
       context "puppetversion => #{puppetversion}" do
         before :each do
           allow(Facter.fact(:puppetversion)).to receive(:value).and_return(puppetversion)
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
         end
 
         (major, minor, patch) = version.split('.')
@@ -74,11 +62,7 @@ describe 'PE Version specs' do
 
   context 'when PE is not installed' do
     before :each do
-<<<<<<< HEAD
-      Facter.fact(:puppetversion).stubs(:value).returns('2.7.19')
-=======
       allow(Facter.fact(:puppetversion)).to receive(:value).and_return('2.7.19')
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     end
 
     it 'is_pe is false' do

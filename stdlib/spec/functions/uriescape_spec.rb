@@ -15,11 +15,7 @@ describe 'uriescape' do
 
   describe 'handling normal strings' do
     it 'calls ruby\'s URI.escape function' do
-<<<<<<< HEAD
-      URI.expects(:escape).with('uri_string').returns('escaped_uri_string').once
-=======
       expect(URI).to receive(:escape).with('uri_string').and_return('escaped_uri_string').once
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
       is_expected.to run.with_params('uri_string').and_return('escaped_uri_string')
     end
   end
@@ -27,11 +23,7 @@ describe 'uriescape' do
   describe 'handling classes derived from String' do
     it 'calls ruby\'s URI.escape function' do
       uri_string = AlsoString.new('uri_string')
-<<<<<<< HEAD
-      URI.expects(:escape).with(uri_string).returns('escaped_uri_string').once
-=======
       expect(URI).to receive(:escape).with(uri_string).and_return('escaped_uri_string').once
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
       is_expected.to run.with_params(uri_string).and_return('escaped_uri_string')
     end
   end

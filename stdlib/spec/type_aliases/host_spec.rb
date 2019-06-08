@@ -3,23 +3,8 @@ require 'spec_helper'
 if Puppet::Util::Package.versioncmp(Puppet.version, '4.5.0') >= 0
   describe 'Stdlib::Host' do
     describe 'valid handling' do
-<<<<<<< HEAD
-      %w[
-        example
-        example.com
-        www.example.com
-        2001:0db8:85a3:0000:0000:8a2e:0370:7334
-        fa76:8765:34ac:0823:ab76:eee9:0987:1111
-        2001:0db8::1
-        224.0.0.0
-        255.255.255.255
-        0.0.0.0
-        192.88.99.0
-      ].each do |value|
-=======
       ['example', 'example.com', 'www.example.com', '2001:0db8:85a3:0000:0000:8a2e:0370:7334', 'fa76:8765:34ac:0823:ab76:eee9:0987:1111', '2001:0db8::1', '224.0.0.0', '255.255.255.255',
        '0.0.0.0', '192.88.99.0'].each do |value|
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
         describe value.inspect do
           it { is_expected.to allow_value(value) }
         end

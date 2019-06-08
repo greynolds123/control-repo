@@ -6,8 +6,6 @@ module Puppet::Parser::Functions
     This converts any object to an array containing that object. Empty argument
     lists are converted to an empty array. Arrays are left untouched. Hashes are
     converted to arrays of alternating keys and values.
-<<<<<<< HEAD
-=======
 
     Note that since Puppet 5.0.0 it is possible to create new data types for almost any
     datatype using the type system and the built-in
@@ -25,7 +23,6 @@ module Puppet::Parser::Functions
 
     Would notice `[{'key' => 42, 'another-key' => 100}]`, as the `true` flag prevents the hash from being
     transformed into an array.
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   DOC
              ) do |arguments|
 
@@ -35,10 +32,7 @@ module Puppet::Parser::Functions
 
     return arguments unless arguments.length == 1
     return arguments[0] if arguments[0].is_a?(Array)
-<<<<<<< HEAD
-=======
     return [] if arguments == ['']
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     if arguments[0].is_a?(Hash)
       result = []
       arguments[0].each do |key, value|

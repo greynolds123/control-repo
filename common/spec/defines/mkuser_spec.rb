@@ -1,8 +1,14 @@
 require 'spec_helper'
 
+clientversion = `facter puppetversion`
+
 describe 'common::mkuser' do
   let(:title) { 'alice' }
-  let(:facts) { { :osfamily => 'RedHat' } }
+  let(:facts) do
+    { :osfamily      => 'RedHat',
+      :puppetversion => clientversion,
+    }
+  end
 
   context 'user alice with default values' do
     let(:params) { { :uid => 1000 } }
@@ -24,6 +30,7 @@ describe 'common::mkuser' do
     it do
       should contain_file('/home/alice').with({
         'owner'   => 'alice',
+        'group'   => 'alice',
         'mode'    => '0700',
         'require' => 'Common::Mkdir_p[/home/alice]',
       })
@@ -82,6 +89,7 @@ describe 'common::mkuser' do
     it do
       should contain_file('/home/superu').with({
         'owner'   => 'alice',
+        'group'   => 'superusers',
         'mode'    => '0701',
         'require' => 'Common::Mkdir_p[/home/superu]',
       })
@@ -231,7 +239,8 @@ describe 'common::mkuser' do
     # set needed custom facts and variables
     let(:facts) do
       {
-        :osfamily => 'RedHat',
+        :osfamily      => 'RedHat',
+        :puppetversion => clientversion,
       }
     end
     let(:validation_params) do

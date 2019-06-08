@@ -6,12 +6,9 @@ module Puppet::Parser::Functions
   newfunction(:strftime, :type => :rvalue, :doc => <<-DOC
     This function returns formatted time.
 
-<<<<<<< HEAD
-=======
     Note that since Puppet 4.8.0 the function with the same name in Puppet will be used instead of this
     function. It also supports the Timestamp and Timespan data types in the Puppet language.
 
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     *Examples:*
 
     To return the time since epoch:

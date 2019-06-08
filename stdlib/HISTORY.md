@@ -1,6 +1,6 @@
 ## 5.0.0
 ### Summary
-This is a major release which removes support for the Scientific 5 and Debian 7 OS, as well as a removal of the `Stdlib::(Ipv4|IPv6|Ip_address)` data types in favour of `Stdlib::IP::*`.
+This is a major release which removes support for the Scientific 5 and Debian 7 OS, as well as a removal of the `Stdlib::(Ipv4|IPv6|Ip_address)` data types in favour of `Stdlib::IP::*`. 
 
 **In addition it contains a substantial piece of work centered around updating functions that have now been migrated into Puppet itself. Please note that this will be the last major release to support Puppet 2 and Puppet 3 and that they will soon be removed.**
 

@@ -15,8 +15,6 @@ module Puppet::Parser::Functions
     bool2str(false, 't', 'f')         => 'f'
 
     Requires a single boolean as an input.
-<<<<<<< HEAD
-=======
 
     Note that since Puppet 5.0.0 it is possible to create new data types for almost any
     datatype using the type system and the built-in
@@ -28,7 +26,6 @@ module Puppet::Parser::Functions
         notice(String(false, '%y'))   # Notices 'yes'
         notice(String(true, '%y'))    # Notices 'no'
 
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     DOC
              ) do |arguments|
 

@@ -8,12 +8,9 @@ module Puppet::Parser::Functions
     string returns an empty string. If you wish to merely remove record
     separators then you should use the `chomp` function.
     Requires a string or array of strings as input.
-<<<<<<< HEAD
-=======
 
     Note: from Puppet 6.0.0, the compatible function with the same name in Puppet core
     will be used instead of this function.
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     DOC
              ) do |arguments|
 

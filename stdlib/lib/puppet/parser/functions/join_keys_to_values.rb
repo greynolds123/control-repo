@@ -1,9 +1,5 @@
 #
-<<<<<<< HEAD
-# join.rb
-=======
 # join_keys_to_values.rb
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
 #
 module Puppet::Parser::Functions
   newfunction(:join_keys_to_values, :type => :rvalue, :doc => <<-DOC
@@ -21,14 +17,11 @@ module Puppet::Parser::Functions
         join_keys_to_values({'a'=>1,'b'=>[2,3]}, " is ")
 
     Would result in: ["a is 1","b is 2","b is 3"]
-<<<<<<< HEAD
-=======
 
     Note: Since Puppet 5.0.0 - for more detailed control over the formatting (including indentations and
     line breaks, delimiters around arrays and hash entries, between key/values in hash entries, and individual
     formatting of values in the array) - see the `new` function for `String` and its formatting
     options for `Array` and `Hash`.
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     DOC
              ) do |arguments|
 

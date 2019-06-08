@@ -31,13 +31,8 @@ describe 'values_at' do
   end
 
   context 'when requesting a single item using UTF8 and double byte characters' do
-<<<<<<< HEAD
-    it { is_expected.to run.with_params(%w[ẩ β с ď], 0).and_return(['ẩ']) }
-    it { is_expected.to run.with_params(%w[文 字 の 値], 2).and_return(['の']) }
-=======
     it { is_expected.to run.with_params(['ẩ', 'β', 'с', 'ď'], 0).and_return(['ẩ']) }
     it { is_expected.to run.with_params(['文', '字', 'の', '値'], 2).and_return(['の']) }
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   end
 
   context 'when requesting multiple items' do

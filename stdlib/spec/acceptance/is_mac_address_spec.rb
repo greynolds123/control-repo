@@ -29,8 +29,6 @@ describe 'is_mac_address function' do
         expect(r.stdout).to match(%r{Notice: output correct})
       end
     end
-<<<<<<< HEAD
-=======
 
     pp3 = <<-DOC
       $a = '80:00:02:09:fe:80:00:00:00:00:00:00:00:24:65:ff:ff:91:a3:12'
@@ -45,7 +43,6 @@ describe 'is_mac_address function' do
         expect(r.stdout).to match(%r{Notice: output correct})
       end
     end
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   end
   describe 'failure' do
     it 'handles improper argument counts'

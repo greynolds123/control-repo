@@ -25,8 +25,6 @@ module Puppet::Parser::Functions
         member(['a', 'b', 'c'], ['d', 'b'])
 
     would return: false
-<<<<<<< HEAD
-=======
 
     Note: Since Puppet 4.0.0 the same can be performed in the Puppet language. For single values
     the operator `in` can be used:
@@ -40,7 +38,6 @@ module Puppet::Parser::Functions
 
     Also note that since Puppet 5.2.0 the general form of testing content of an array or hash is to use the built-in
     `any` and `all` functions.
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     DOC
              ) do |arguments|
 

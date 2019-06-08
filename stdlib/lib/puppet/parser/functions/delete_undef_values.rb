@@ -15,14 +15,11 @@ module Puppet::Parser::Functions
 
     Would return: ['A','',false]
 
-<<<<<<< HEAD
-=======
     Note that since Puppet 4.0.0 the equivalent can be performed with the filter() function in Puppet:
 
         $array.filter |$val| { $val =~ NotUndef }
         $hash.filter |$key, $val| { $val =~ NotUndef }
 
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
       DOC
              ) do |args|
 
@@ -33,16 +30,10 @@ module Puppet::Parser::Functions
     end
     result = args[0].dup
     if result.is_a?(Hash)
-<<<<<<< HEAD
-      result.delete_if { |_key, val| val.equal? :undef }
-    elsif result.is_a?(Array)
-      result.delete :undef
-=======
       result.delete_if { |_, val| val.equal?(:undef) || val.nil? }
     elsif result.is_a?(Array)
       result.delete :undef
       result.delete nil
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     end
     result
   end

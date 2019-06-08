@@ -32,14 +32,11 @@ module Puppet::Parser::Functions
         range("0", "9", "2")
 
     Will return: [0,2,4,6,8]
-<<<<<<< HEAD
-=======
 
     The Puppet Language support Integer and Float ranges by using the type system. Those are suitable for
     iterating a given number of times. Also see the step() function in Puppet for skipping values.
 
         Integer[0, 9].each |$x| { notice($x) } # notices 0, 1, 2, ... 9
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
     DOC
              ) do |arguments|
 

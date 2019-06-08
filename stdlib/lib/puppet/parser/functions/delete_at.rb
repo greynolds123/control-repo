@@ -10,8 +10,6 @@ module Puppet::Parser::Functions
         delete_at(['a','b','c'], 1)
 
     Would return: ['a','c']
-<<<<<<< HEAD
-=======
 
     Note that since Puppet 4 this can be done in general with the filter function:
 
@@ -23,7 +21,6 @@ module Puppet::Parser::Functions
         $array[2, -1] # all but the first 2 elements
         $array[0, -3] # all but the last 2 elements
         $array[1, -2] # all but the first and last element
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   DOC
              ) do |arguments|
 
