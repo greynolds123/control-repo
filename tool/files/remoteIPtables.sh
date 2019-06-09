@@ -125,6 +125,8 @@ fi
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 2377 -j ACCEPT
 
+ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 4430 -j ACCEPT
+
 
  ssh root@$d  $cwd -A INPUT -m limit --limit 15/minute -j LOG --log-level 7 --log-prefix "Dropped";
 
@@ -161,7 +163,6 @@ fi
  ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 8082 -j ACCEPT
 
  ssh root@$d  $cwd -A FORWARD  -p tcp -s $f --dport 8000 -j ACCEPT
-
 
 done
 
@@ -220,8 +221,7 @@ done
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 2376 -j ACCEPT
  
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 2377 -j ACCEPT
-
- ssh root@$d  $cwd -A OUTPUT -m limit --limit 15/minute -j LOG --log-level 7 --log-prefix "Dropped";
+                                                                                 ssh root@$d  $cwd -A INPUT   -p tcp -s $o  --dport 4430 -j ACCEPT                                                                                               ssh root@$d  $cwd -A OUTPUT -m limit --limit 15/minute -j LOG --log-level 7 --log-prefix "Dropped";
 
   done
 
