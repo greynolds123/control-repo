@@ -1,4 +1,4 @@
-# This file was automatically generated on 2019-03-02 14:49:17 -0800.
+# This file was automatically generated on 2019-06-08 13:59:54 -0700.
 # Use the 'puppet generate types' command to regenerate this file.
 
 # Ensures that a given line is contained within a file.  The implementation

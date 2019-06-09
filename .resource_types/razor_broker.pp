@@ -1,30 +1,31 @@
-# This file was automatically generated on 2019-03-02 14:49:17 -0800.
+# This file was automatically generated on 2019-06-08 13:59:54 -0700.
 # Use the 'puppet generate types' command to regenerate this file.
 
+# Razor Broker
 Puppet::Resource::ResourceType3.new(
-  'pe_puppet_authorization_hocon_rule',
+  'razor_broker',
   [
     # The basic property that the resource should be in.
     # 
     # Valid values are `present`, `absent`.
     Puppet::Resource::Param(Enum['present', 'absent'], 'ensure'),
 
-    # The value of the setting to be defined.
-    Puppet::Resource::Param(Any, 'value')
+    # The broker type
+    Puppet::Resource::Param(Any, 'broker_type'),
+
+    # The broker configuration (Hash)
+    Puppet::Resource::Param(Any, 'configuration')
   ],
   [
-    # An arbitrary name used as the identity of the resource.
+    # The broker name
     Puppet::Resource::Param(Any, 'name', true),
 
-    # The file Puppet will ensure contains the specified setting.
-    Puppet::Resource::Param(Any, 'path'),
-
-    # The specific backend to use for this `pe_puppet_authorization_hocon_rule`
+    # The specific backend to use for this `razor_broker`
     # resource. You will seldom need to specify this --- Puppet will usually
     # discover the appropriate provider for your platform.Available providers are:
     # 
-    # ruby
-    # :
+    # rest
+    # : REST provider for Razor broker
     Puppet::Resource::Param(Any, 'provider')
   ],
   {
