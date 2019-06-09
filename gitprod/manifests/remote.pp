@@ -3,9 +3,8 @@
   class gitprod::remote {
   file { '$::envdir':
   ensure  => 'present',
-  }
 
-  if $::envdir == prod {
+  if environmentpath:environment/modules  == prod {
   require => User['pe-puppet'],
   require => Group['pe-puppet'],
   } elsif if $::envdir == dev {
@@ -19,4 +18,5 @@
   require => Group['pe-puppet'],
   } else {
   notice { 'This environment is not managed by this puppetmaster' }
+  }
   }

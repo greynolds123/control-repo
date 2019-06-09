@@ -6,7 +6,6 @@
 #   include gitprod
 class gitprod {
   include gitprod::config
-  include gitprod::remote
   include gitprod::users
   include gitprod::group
 }
