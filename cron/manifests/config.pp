@@ -1,3 +1,24 @@
+<<<<<<< HEAD
+# This class deploys the cron environment for your environment.
+
+  class cron::config {
+  cron { 'clearCache':
+  ensure  => present,
+  user    => 'root',
+  command => '/bin/sh /root/clearCache2016.sh',
+  hour    => '0',
+  minute  => '15',
+  }
+ 
+  cron { 'TuneDatabase':
+  ensure  => present,
+  user    => 'root',
+  command => '/bin/sh /root/TuneDatabase.sh',
+  hour    => '1',
+  minute  => '0',
+  }
+  }
+=======
 # This class deploys the cron environment for your environment.
 
   class cron::config {
@@ -16,3 +37,4 @@
   minute  => '15',
   }
   }
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70

@@ -24,7 +24,8 @@ describe 'Registry Value Management' do
         registry_key { '32:#{keypath}': }
         registry_key { '32:#{keypath}\\SubKey1': }
         registry_key { '32:#{keypath}\\SubKey2': }
-     }
+      }
+    
       # The Default Value
       registry_value { '#{keypath}\\SubKey1\\\\':
         data => "Default Data phase=#{phase}",
@@ -32,8 +33,9 @@ describe 'Registry Value Management' do
       registry_value { '#{keypath}\\SubKey2\\\\':
         type => array,
         data => [ "Default Data L1 phase=#{phase}", "Default Data L2 phase=#{phase}" ],
-     }
-     # String Values
+      }
+    
+      # String Values
       registry_value { '#{keypath}\\SubKey1\\ValueString1':
         data => "Should be a string phase=#{phase}",
       }
@@ -51,8 +53,9 @@ describe 'Registry Value Management' do
         type   => string,
         ensure => present,
       }
+    
       if $architecture == 'x64' {
-       # String Values
+        # String Values
         registry_value { '32:#{keypath}\\SubKey1\\ValueString1':
           data => "Should be a string phase=#{phase}",
         }
@@ -71,6 +74,7 @@ describe 'Registry Value Management' do
           ensure => present,
         }
       }
+    
       # Array Values
       registry_value { '#{keypath}\\SubKey1\\ValueArray1':
         type => array,
@@ -124,6 +128,7 @@ describe 'Registry Value Management' do
           ensure => present,
         }
       }
+    
       # Expand Values
       registry_value { '#{keypath}\\SubKey1\\ValueExpand1':
         type => expand,
@@ -145,6 +150,7 @@ describe 'Registry Value Management' do
           ensure => present,
         }
       }
+    
       # DWORD Values
       registry_value { '#{keypath}\\SubKey1\\ValueDword1':
         type => dword,
@@ -156,6 +162,7 @@ describe 'Registry Value Management' do
           data => #{phase},
         }
       }
+    
       # QWORD Values
       registry_value { '#{keypath}\\SubKey1\\ValueQword1':
         type => qword,
@@ -167,7 +174,8 @@ describe 'Registry Value Management' do
           data => #{phase},
         }
       }
-     # Binary Values
+    
+      # Binary Values
       registry_value { '#{keypath}\\SubKey1\\ValueBinary1':
         type => binary,
         data => "#{phase}",

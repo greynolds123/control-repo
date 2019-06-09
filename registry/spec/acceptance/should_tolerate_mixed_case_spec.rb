@@ -19,11 +19,13 @@ describe 'Registry Value Management (Mixed Case)' do
   keypath = "#{vendor_path}\\#{keyname}"
 
   phase1 = <<HERE
-  notify { fact_phase: message => "fact_phase: $fact_phase" }
-  registry_key { '#{vendor_path}': ensure => present }
+    notify { fact_phase: message => "fact_phase: $fact_phase" }
+  
+    registry_key { '#{vendor_path}': ensure => present }
     if $architecture == 'x64' {
       registry_key { '32:#{vendor_path}': ensure => present }
     }
+  
     Registry_key { ensure => present }
     registry_key { '#{keypath}': }
     registry_key { '#{keypath}\\SUBKEY1': }
@@ -34,11 +36,13 @@ describe 'Registry Value Management (Mixed Case)' do
       registry_key { '32:#{keypath}\\SUBKEY1': }
       registry_key { '32:#{keypath}\\SubKey1\\SUBKEY2': }
     }
+  
     # The Default Value
     # NOTE THE DIFFERENCE IN CASE IN SubKey1 and SUBKEY1 above
     registry_value { '#{keypath}\\SubKey1\\\\':
       data => "Default Data",
     }
+  
     # String Values
     registry_value { '#{keypath}\\SubKey1\\ValueString1':
       data => "Should be a string",
@@ -74,6 +78,7 @@ describe 'Registry Value Management (Mixed Case)' do
       type   => string,
       ensure => present,
     }
+  
     # The Default Value
     # NOTE THE DIFFERENCE IN CASE IN SubKey1 and SUBKEY1 above
     if $architecture == 'x64' {

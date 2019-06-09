@@ -1,7 +1,8 @@
 # Contributing to Puppet modules
 
 So you want to contribute to a Puppet module: Great! Below are some instructions to get you started doing
-that very thing while setting expectations around code quality as well as a few tips for making the process as easy as possible.
+that very thing while setting expectations around code quality as well as a few tips for making the
+process as easy as possible. 
 
 ### Table of Contents
 
@@ -26,20 +27,24 @@ that very thing while setting expectations around code quality as well as a few 
 
 - [x] my commit is a single logical unit of work
 
-- [x] I have checked for unnecessary whitespace with "git diff --check"
+- [x] I have checked for unnecessary whitespace with "git diff --check" 
 
 - [x] my commit does not include commented out code or unneeded files
 
 ### The Content
 
-- [x] my commit includes tests for the bug I fixed or feature I added my commit includes appropriate documentation changes if it is introducing anew feature or changing existing functionality  my code passes existing test suites
+- [x] my commit includes tests for the bug I fixed or feature I added
+
+- [x] my commit includes appropriate documentation changes if it is introducing a new feature or changing existing functionality
+    
+- [x] my code passes existing test suites
 
 ### The Commit Message
 
 - [x] the first line of my commit message includes:
 
-  - [x] an issue number (if applicable), e.g. "(MODULES-xxxx) This is the first line"
-
+  - [x] an issue number (if applicable), e.g. "(MODULES-xxxx) This is the first line" 
+  
   - [x] a short description (50 characters is the soft limit, excluding ticket number(s))
 
 - [x] the body of my commit message:
@@ -64,7 +69,8 @@ that very thing while setting expectations around code quality as well as a few 
 
 - [Open a Pull Request](https://help.github.com/articles/creating-a-pull-request-from-a-fork/) against the repository in the puppetlabs organization
 
-## More about commits
+## More about commits 
+
   1.  Make separate commits for logically separate changes.
 
       Please break your commits down into logically consistent units
@@ -128,7 +134,11 @@ that very thing while setting expectations around code quality as well as a few 
 
 ## Getting Started
 
-Our Puppet modules provide [`Gemfile`](./Gemfile)s, which can tell a Ruby package manager such as [bundler](http://bundler.io/) what Ruby packages, or Gems, are required to build, develop, and test this software. Please make sure you have [bundler installed](http://bundler.io/#getting-started) on your system, and then use it to install all dependencies needed for this project in the project root by running
+Our Puppet modules provide [`Gemfile`](./Gemfile)s, which can tell a Ruby package manager such as [bundler](http://bundler.io/) what Ruby packages,
+or Gems, are required to build, develop, and test this software.
+
+Please make sure you have [bundler installed](http://bundler.io/#getting-started) on your system, and then use it to 
+install all dependencies needed for this project in the project root by running
 
 ```shell
 % bundle install --path .bundle/gems
@@ -162,7 +172,10 @@ With all dependencies in place and up-to-date, run the tests:
 ```shell
 % bundle exec rake spec
 ```
-This executes all the [rspec tests](http://rspec-puppet.com/) in the directoriesdefined [here](https://github.com/puppetlabs/puppetlabs_spec_helper/blob/699d9fbca1d2489bff1736bb254bb7b7edb32c74/lib/puppetlabs_spec_helper/rake_tasks.rb#L17) andso on. rspec tests may have the same kind of dependencies as the module they are testing. Although the module defines these dependencies in its [metadata.json](./metadata.json), rspec tests define them in [.fixtures.yml](./fixtures.yml).
+
+This executes all the [rspec tests](http://rspec-puppet.com/) in the directories defined [here](https://github.com/puppetlabs/puppetlabs_spec_helper/blob/699d9fbca1d2489bff1736bb254bb7b7edb32c74/lib/puppetlabs_spec_helper/rake_tasks.rb#L17) and so on. 
+rspec tests may have the same kind of dependencies as the module they are testing. Although the module defines these dependencies in its [metadata.json](./metadata.json),
+rspec tests define them in [.fixtures.yml](./fixtures.yml).
 
 ### Acceptance Tests
 
@@ -184,7 +197,10 @@ and then run all the tests under [spec/acceptance](./spec/acceptance).
 ## Writing Tests
 
 ### Unit Tests
-When writing unit tests for Puppet, [rspec-puppet][] is your best friend. It provides tons of helper methods for testing your manifests against a catalog (e.g. contain_file, contain_package, with_params, etc). It would be ridiculous to try andtop rspec-puppet's [documentation][rspec-puppet_docs] but here's a tiny sample:
+
+When writing unit tests for Puppet, [rspec-puppet][] is your best friend. It provides tons of helper methods for testing your manifests against a 
+catalog (e.g. contain_file, contain_package, with_params, etc). It would be ridiculous to try and top rspec-puppet's [documentation][rspec-puppet_docs] 
+but here's a tiny sample:
 
 Sample manifest:
 
@@ -211,14 +227,15 @@ twice to check for idempotency or errors, then run expectations.
 ```ruby
 it 'does an end-to-end thing' do
   pp = <<-EOF
-  file { 'a test file':
+    file { 'a test file': 
       ensure  => present,
       path    => "/etc/sample",
       content => "test string",
     }
+    
   apply_manifest(pp, :catch_failures => true)
   apply_manifest(pp, :catch_changes => true)
-
+  
 end
 
 describe file("/etc/sample") do

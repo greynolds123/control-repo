@@ -8,6 +8,7 @@
   "project_page": "http://links.puppet.com/registry-module",
   "issues_url": "https://github.com/puppetlabs/puppetlabs-registry/issues",
   "dependencies": [
+  
   ],
   "data_provider": null,
   "operatingsystem_support": [

@@ -1,0 +1,21 @@
+{
+  "name": "hunner-pry",
+  "version": "1.0.0",
+  "source": "https://github.com/hunner/puppet-pry",
+  "author": "hunner",
+  "license": "Apache License, Version 2.0",
+  "summary": "Simple debugging function for puppet manifests",
+  "description": "Simple debugging function for puppet manifests",
+  "project_page": "https://github.com/hunner/puppet-pry",
+  "dependencies": [
+
+  ],
+  "types": [
+
+  ],
+  "checksums": {
+    "Modulefile": "8677f5d8e2cb91ce3428d7aa6aaa9ba6",
+    "README.md": "4fc42d54c2107b762c1a08834fc9683a",
+    "lib/puppet/parser/functions/pry.rb": "4e68fa844c3719f78f58b69768d63fdb"
+  }
+}
