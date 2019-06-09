@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> e0cd0bcdb8c8687bddd832d586a11a6e02cb138b
 # This class is the configuration file for kernel updates.
 
   class kernel::config (
@@ -29,11 +24,6 @@
   }
   }
     
-<<<<<<< HEAD
-=======
-=======
-=======
->>>>>>> 6d89235ccb2d2db172e2592a4d5ac80a8fb3c280
 # This class is the configuration file for kernel updates.
 
   class kernel::config (
@@ -60,10 +50,6 @@
   }
   }
     
-<<<<<<< HEAD
->>>>>>> c85f3f0a34a6f9d54ee4608b5f8d792152f48899
-=======
-=======
 # This class is the configuration file for kernel updates.
 
   class kernel::config (
@@ -90,6 +76,3 @@
   }
   }
     
->>>>>>> c9b52c6393265c3a51bd8b3201b3bfbe07fcc044
->>>>>>> 6d89235ccb2d2db172e2592a4d5ac80a8fb3c280
->>>>>>> e0cd0bcdb8c8687bddd832d586a11a6e02cb138b
