@@ -33,10 +33,7 @@ class git (
   $configs = {},
   $configs_defaults = {}
 ) {
-<<<<<<< HEAD
-=======
 
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
   if ( $package_manage ) {
     package { $package_name:
       ensure => $package_ensure,
