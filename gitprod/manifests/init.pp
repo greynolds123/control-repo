@@ -4,8 +4,6 @@
 #
 # @example
 #   include gitprod
-class gitprod {
+  class gitprod {
   include gitprod::config
-  include gitprod::users
-  include gitprod::group
-}
+  }
