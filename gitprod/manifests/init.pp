@@ -6,12 +6,8 @@
 #   include gitprod
   class gitprod {
   include gitprod::config
-<<<<<<< HEAD
-  }
-=======
   include gitprod::remote
   include gitprod::users
   include gitprod::group
   include gitprod::eymal
 }
->>>>>>> 5726a28c182b85c21d3ee5f7f4f0aed682700af7

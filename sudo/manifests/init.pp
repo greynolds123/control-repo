@@ -42,8 +42,5 @@ class sudo (
   package { 'sudo':
     ensure => present,
   }
-<<<<<<< HEAD
 }
-=======
 }
->>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
