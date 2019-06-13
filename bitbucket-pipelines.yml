@@ -16,6 +16,8 @@ pipelines:
           # ruby:2.3.0 bundler gives load error, fixed in later versions
           - gem install bundler -v 1.14.4
           - bundler --version
+          # ruby:2.3.0 bundler gives load error, fixed in later versions
+          - gem install bundler -v 1.14.4
           - chmod +644  /usr/local/bin/bundler 
           #- bundle install
           #

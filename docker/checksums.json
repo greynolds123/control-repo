@@ -1,20 +1,9 @@
 {
-<<<<<<< HEAD
   "CHANGELOG.md": "0c42b183f0c9d0ee6000362bb7982432",
   "CONTRIBUTING.md": "7c433386c0c90d838ffba6e02bdb2484",
   "CONTRIBUTORS.md": "9fe238dbf86940276151b28b279dab50",
   "Gemfile": "f2d9e0c258b9a338bfae4cdd3d3db349",
   "Guardfile": "30ffd144d79ac310c6096a007f7745c0",
-=======
-<<<<<<< HEAD
-  "CHANGELOG.md": "c8a976c9c06c2fb468a83d102b0f9f29",
-=======
-  "CHANGELOG.md": "022e0833526e055582e69075cd8491af",
->>>>>>> 0d872203b7e86fe08d7298237977177227eecc55
-  "CONTRIBUTING.md": "2e0bf76b0408e7a7595cea20b6d3c65c",
-  "Gemfile": "fde0500fcd1b8114bbf4843c0559fd35",
-  "Guardfile": "3886cf0104f5de976e3bcd3cfbaeff9d",
->>>>>>> 83954005ec1e8fdad42aa947e6c80062dd88ef25
   "LICENSE": "e7fff5d8ca4f44f1279782ead2da5925",
   "README.md": "4e1e204a61b9cbfbb4738486067f96f4",
   "Rakefile": "fe88ba96077891be771c9c6e7bc53256",
@@ -137,7 +126,6 @@
   "templates/etc/default/docker.erb": "10495862c87e0af3626bfa98c233bb81",
   "templates/etc/init.d/docker-run.erb": "42bc90a5b6937a41d978f6f5b674680e",
   "templates/etc/sysconfig/docker-storage-setup.erb": "258a17ec46b3a60e0e558000bfb6af30",
-<<<<<<< HEAD
   "templates/etc/sysconfig/docker-storage.erb": "7e1c985c056fc1c30e526436711fbcca",
   "templates/etc/sysconfig/docker.erb": "60d4764f5860b54a51e9edd30cc26207",
   "templates/etc/sysconfig/docker.systemd.erb": "eb91c691df86d7ed2488d8cab735cbc5",
@@ -151,18 +139,4 @@
   "templates/windows/download_docker_compose.ps1.erb": "4f795d495794f06973fd935436484826",
   "templates/windows/install_powershell_provider.ps1.erb": "35248f684bc7372e8771e36a3501616d",
   "templates/windows/update_docker_image.ps1.erb": "f5a617a70a03d41f6ce1237e8810ae29"
-=======
-  "templates/etc/sysconfig/docker-storage.erb": "8838e0ed2370abfe95c42170a3e4dc62",
-  "templates/etc/sysconfig/docker.erb": "e06b80444d881f8a8253ae8a24438988",
-  "templates/etc/sysconfig/docker.systemd.erb": "31acce1b99e0fa07626ccd4efd05c1a1",
-  "templates/etc/systemd/system/docker-run.erb": "7a1d9c85b0a052df81bc591a3d251fcf",
-  "templates/etc/systemd/system/docker.service.d/service-overrides-archlinux.conf.erb": "b366fd3053268e2e6738b1c3ebecb2d6",
-  "templates/etc/systemd/system/docker.service.d/service-overrides-debian.conf.erb": "db5bfafdd7bf2e61ba5c76963b809cb2",
-  "templates/etc/systemd/system/docker.service.d/service-overrides-rhel.conf.erb": "ec9c543d6f0c0e66e94f50a472e7e525",
-<<<<<<< HEAD
-  "templates/update_docker_image.sh.erb": "fb05ada566bc366840b2bf89b6a46de8"
-=======
-  "templates/update_docker_image.sh.erb": "87f007dd417278ebe73e345af01867e2"
->>>>>>> 0d872203b7e86fe08d7298237977177227eecc55
->>>>>>> 83954005ec1e8fdad42aa947e6c80062dd88ef25
 }

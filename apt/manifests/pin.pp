@@ -1,53 +1,24 @@
-# @summary Manages Apt pins. Does not trigger an apt-get update run.
-#
-# @see http://linux.die.net/man/5/apt_preferences for context on these parameters
-#
-# @param ensure
-#   Specifies whether the pin should exist. Valid options: 'file', 'present', and 'absent'.
-#
-# @param explanation
-#   Supplies a comment to explain the pin. Default: "${caller_module_name}: ${name}".
-#
-# @param order
-#   Determines the order in which Apt processes the pin file. Files with lower order numbers are loaded first.
-#
-# @param packages
-#   Specifies which package(s) to pin.
-#
-# @param priority
-#   Sets the priority of the package. If multiple versions of a given package are available, `apt-get` installs the one with the highest 
-#   priority number (subject to dependency constraints). Valid options: an integer.
-#
-# @param release
-#   Tells APT to prefer packages that support the specified release. Typical values include 'stable', 'testing', and 'unstable'.
-#
-# @param release_version
-#   Tells APT to prefer packages that support the specified operating system release version (such as Debian release version 7).
-#
-# @param component
-#   Names the licensing component associated with the packages in the directory tree of the Release file.
-#
-# @param originator
-#   Names the originator of the packages in the directory tree of the Release file.
-#
-# @param label
-#   Names the label of the packages in the directory tree of the Release file.
-#
+# pin.pp
+# pin a release in apt, useful for unstable repositories
+
 define apt::pin(
-  Optional[Enum['file', 'present', 'absent']] $ensure = present,
-  Optional[String] $explanation                       = undef,
-  Variant[Integer] $order                             = 50,
-  Variant[String, Array] $packages                    = '*',
-  Variant[Numeric, String] $priority                  = 0,
-  Optional[String] $release                           = '', # a=
-  Optional[String] $origin                            = '',
-  Optional[String] $version                           = '',
-  Optional[String] $codename                          = '', # n=
-  Optional[String] $release_version                   = '', # v=
-  Optional[String] $component                         = '', # c=
-  Optional[String] $originator                        = '', # o=
-  Optional[String] $label                             = '',  # l=
+  $ensure          = present,
+  $explanation     = undef,
+  $order           = 50,
+  $packages        = '*',
+  $priority        = 0,
+  $release         = '', # a=
+  $origin          = '',
+  $version         = '',
+  $codename        = '', # n=
+  $release_version = '', # v=
+  $component       = '', # c=
+  $originator      = '', # o=
+  $label           = ''  # l=
 ) {
+  if $order and !is_integer($order) {
+    fail('Only integers are allowed in the apt::pin order param')
+  }
 
   if $explanation {
     $_explanation = $explanation
@@ -65,14 +36,13 @@ define apt::pin(
     $release_version,
     $component,
     $originator,
-    $label,
-  ]
+    $label]
   $pin_release = join($pin_release_array, '')
 
   # Read the manpage 'apt_preferences(5)', especially the chapter
   # 'The Effect of APT Preferences' to understand the following logic
   # and the difference between specific and general form
-  if $packages =~ Array {
+  if is_array($packages) {
     $packages_string = join($packages, ' ')
   } else {
     $packages_string = $packages
@@ -81,14 +51,14 @@ define apt::pin(
   if $packages_string != '*' { # specific form
     if ( $pin_release != '' and ( $origin != '' or $version != '' )) or
       ( $version != '' and ( $pin_release != '' or $origin != '' )) {
-      fail(translate('parameters release, origin, and version are mutually exclusive'))
+      fail('parameters release, origin, and version are mutually exclusive')
     }
   } else { # general form
     if $version != '' {
-      fail(translate('parameter version cannot be used in general form'))
+      fail('parameter version cannot be used in general form')
     }
     if ( $pin_release != '' and $origin != '' ) {
-      fail(translate('parameters release and origin are mutually exclusive'))
+      fail('parameters release and origin are mutually exclusive')
     }
   }
 
@@ -101,28 +71,10 @@ define apt::pin(
   # be silently ignored.
   $file_name = regsubst($title, '[^0-9a-z\-_\.]', '_', 'IG')
 
-  $headertmp = epp('apt/_header.epp')
-
-  $pinpreftmp = epp('apt/pin.pref.epp', {
-      'name'            => $name,
-      'pin_release'     => $pin_release,
-      'release'         => $release,
-      'codename'        => $codename,
-      'release_version' => $release_version,
-      'component'       => $component,
-      'originator'      => $originator,
-      'label'           => $label,
-      'version'         => $version,
-      'origin'          => $origin,
-      'explanation'     => $_explanation,
-      'packages_string' => $packages_string,
-      'priority'        => $priority,
-  })
-
   apt::setting { "pref-${file_name}":
     ensure        => $ensure,
     priority      => $order,
-    content       => "${headertmp}${pinpreftmp}",
+    content       => template('apt/_header.erb', 'apt/pin.pref.erb'),
     notify_update => false,
   }
 }

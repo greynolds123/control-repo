@@ -18,9 +18,6 @@ RSpec.configure do |c|
     puppet_install
     puppet_master_install
 
-    puppet_module_install(
-      source: proj_root,
-      module_name: 'epel'
-    )
+    puppet_module_install(:source => proj_root, :module_name => 'epel')
   end
 end
