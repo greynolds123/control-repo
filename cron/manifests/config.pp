@@ -27,7 +27,7 @@
   cron { 'RsyncDev':
   ensure  => present,
   user    => 'root',
-  command => '/bin/rsync -razP /etc/puppetlabs/r10k/modules/puppet_Dev  /etc/puppetlabs/code/environments/dev/modules',
+  command => '/bin/rsync -razP /etc/puppetlabs/r10k/modules/puppet_Dev/*  /etc/puppetlabs/code/environments/dev/modules',
   hour    => '0',
   minute  => '10',
   }
@@ -35,7 +35,7 @@
   cron { 'RsyncDev_docker':
   ensure  => present,
   user    => 'root',
-  command => '/bin/rsync -razP /etc/puppetlabs/r10k/modules/puppet_Dev_docker/  /etc/puppetlabs/code/environments/Dev_docker/modules',
+  command => '/bin/rsync -razP /etc/puppetlabs/r10k/modules/puppet_Dev_docker/*  /etc/puppetlabs/code/environments/Dev_docker/modules',
   hour    => '0',
   minute  => '10',
   }
@@ -43,7 +43,7 @@
  cron { 'RsyncDevelopment':
   ensure  => present,
   user    => 'root',
-  command => '/bin/rsync -razP /etc/puppetlabs/r10k/modules/puppet_Development/  /etc/puppetlabs/code/environments/Development/modules',
+  command => '/bin/rsync -razP /etc/puppetlabs/r10k/modules/puppet_Development/*  /etc/puppetlabs/code/environments/Development/modules',
   hour    => '0',
   minute  => '10',
   }
@@ -51,7 +51,7 @@
    cron { 'RsyncLinux_Server':
    ensure  => present,
    user    => 'root',
-   command => '/bin/rsync -razP /etc/puppetlabs/r10k/modules/puppet_Linux_Server/  /etc/puppetlabs/code/environments/Linux_Server/modules',
+   command => '/bin/rsync -razP /etc/puppetlabs/r10k/modules/puppet_Linux_Server/*  /etc/puppetlabs/code/environments/Linux_Server/modules',
   hour     => '0',
   minute   => '10',
   }
@@ -59,7 +59,7 @@
  cron { 'Rsyncmaster':
   ensure  => present,
   user    => 'root',
-  command => '/bin/rsync -razP /etc/puppetlabs/r10k/modules/puppet_master/  /etc/puppetlabs/code/environments/master',
+  command => '/bin/rsync -razP /etc/puppetlabs/r10k/modules/puppet_master/*  /etc/puppetlabs/code/environments/master/',
   hour    => '0',
   minute  => '10',
   }
@@ -67,7 +67,7 @@
  cron { 'Rsyncproduction':
   ensure  => present,
   user    => 'root',
-  command => '/bin/rsync -razP /etc/puppetlabs/r10k/modules/puppet_production/  /etc/puppetlabs/code/environments/production/modules',
+  command => '/bin/rsync -razP /etc/puppetlabs/r10k/modules/puppet_production/*  /etc/puppetlabs/code/environments/production/modules',
   hour    => '0',
   minute  => '10',
   }
@@ -75,7 +75,7 @@
  cron { 'Rsyncstage':
   ensure  => present,
   user    => 'root',
-  command => '/bin/rsync -razP /etc/puppetlabs/r10k/modules/puppet_stage/  /etc/puppetlabs/code/environments/stage/modules',
+  command => '/bin/rsync -razP /etc/puppetlabs/r10k/modules/puppet_stage/*  /etc/puppetlabs/code/environments/stage/modules',
   hour    => '0',
   minute  => '10',
   }
