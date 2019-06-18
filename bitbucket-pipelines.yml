@@ -1,44 +1,32 @@
-# This is a sample build configurauion for all languages.
-# Check our guides at https://confluence.atlassian.com/x/VYk8Lw for more examples.
+# This is a sample build configuration for Ruby.
 # Only use spaces to indent your .yml configuration.
 # -----
-# You can specify a custom docker image from Docker Hub as your build environment.
-# image: docker-image:tag
-
-image: ruby:2.3.0
+# You can specify a custom docker image from Dockerhub as your build environment.
+image: ruby:2.3.5
 
 pipelines:
   default:
     - step:
+        caches:
+          - bundler
         script: # Modify the commands below to build your repository.
           - ruby --version
-          #- bundler --version
-          # ruby:2.3.0 bundler gives load error, fixed in later versions
-          - gem install bundler -v 1.14.4
-          #- bundle install
-
+          - bundler --version
+          - bundle install
           #
-          # Syntax tests
-          #
-
-          # These can be done as a pre-commit hook but we can't rely on this
+          # Syntax tests# These can be done as a pre-commit hook but we can't rely on this
           # having been setup
 
           # puppet files
-          # - find . -name '*.pp' -not -path './.onceover/*' | xargs -n1 puppet parser validate
+          - find . -name '*.pp' -not -path './.onceover/*' | xargs -n1 puppet parser validate
 
           # ERB files
-          #- find . -name '*.erb' -not -path './.onceover/*' | xargs -n1 -I {} sh -c "erb -P -x -T '-' {} | ruby -c >/dev/null || echo ERB syntax error in {} ; exit 1"
-
+          - find . -name '*.erb' -not -path './.onceover/*' | xargs -n1 -I {} sh -c "erb -P -x -T '-' {} | ruby -c >/dev/null || echo ERB syntax error in {} ; exit 1"
           # YAML files
           - find . -name '*.yaml' -not -path './.onceover/*' | xargs -n1 -I {} ruby -ryaml -e "YAML.load_file '"{}"' "
 
-          #
-          # Onceover (RSpec Puppet) tests against local roles and profiles
-          #
+          - bundle exec rake spec
 
-          # setup onceover here rather then storing its files in the repo.
-          # This lets us account for any new roles and profiles that have
-          # been added in the interim
-          #- bundle exec onceover init
-
+definitions:
+  caches:
+    bundler: vendor/bundle
