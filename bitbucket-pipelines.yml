@@ -41,10 +41,4 @@ pipelines:
           # This lets us account for any new roles and profiles that have
           # been added in the interim
           #- bundle exec onceover init
-deployment
-- step:
-    name: Deploy to test
-    deployment: production
-    trigger: manual
-    script:
-      - echo "Deploying to production environment"
+
