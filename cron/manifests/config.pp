@@ -64,6 +64,17 @@
   minute  => '10',
   }
 
+  cron { 'Rsyncmaster':
+  ensure  => present,
+  user    => 'root',
+  command => '/bin/rsync -razP /etc/puppetlabs/r10k/modules/puppet_master/*  /etc/puppetlabs/code/environments/master',
+  hour    => '0',
+  minute  => '10',
+  }
+
+
+
+
   cron { 'Rsyncstage':
   ensure  => present,
   user    => 'root',
