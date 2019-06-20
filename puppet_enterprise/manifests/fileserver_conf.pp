@@ -11,18 +11,30 @@
 define puppet_enterprise::fileserver_conf(
   $mountpoint,
   $path,
-  $allow = "*",
+  $allow  = '*',
+  Enum['present','absent'] $ensure = 'present',
 ) {
   $fileserver = '/etc/puppetlabs/puppet/fileserver.conf'
 
-  augeas { "fileserver.conf ${mountpoint}":
-    changes   => [
-      "set /files${fileserver}/${mountpoint}/path ${path}",
-      "set /files${fileserver}/${mountpoint}/allow *",
-    ],
-    incl      => $fileserver,
-    load_path => "${puppet_enterprise::puppet_share_dir}/augeas/lenses/dist",
-    lens      => 'PuppetFileserver.lns',
+  if $ensure == 'present' {
+    augeas { "fileserver.conf ${mountpoint}":
+      changes   => [
+        "set /files${fileserver}/${mountpoint}/path ${path}",
+        "set /files${fileserver}/${mountpoint}/allow *",
+      ],
+      incl      => $fileserver,
+      load_path => "${puppet_enterprise::puppet_share_dir}/augeas/lenses/dist",
+      lens      => 'PuppetFileserver.lns',
+    }
+  } else {
+    augeas { "fileserver.conf remove ${mountpoint}":
+      changes   => [
+        "rm /files${fileserver}/${mountpoint}",
+      ],
+      incl      => $fileserver,
+      load_path => "${puppet_enterprise::puppet_share_dir}/augeas/lenses/dist",
+      lens      => 'PuppetFileserver.lns',
+    }
   }
 
 }

@@ -5,15 +5,18 @@
 # This class is called internally by the Master profile, and should not be called
 # directly.
 #
-# @param puppetdb_host [String] The hostname of the puppetdb node.
-# @param puppetdB_port [Integer] The post that puppetdb listens on.
+# @param puppetdb_host Array[String] The hostname of the puppetdb node.
+# @param puppetdb_port Array[Integer] The post that puppetdb listens on.
+# @param command_broadcast [Boolean] Toggles the puppetdb.conf command_broadcast setting.
 # @param include_unchanged_resources [Boolean] Toggles the puppetdb.conf include_unchanged_resources setting.
 # @param soft_write_failure [Boolean] Toggles the puppetdb.conf soft_write_failure setting.
 # @param facts_terminus [String] The terminus to use to submit facts
 # @param report_processor_ensure [String] Toggles presence of the puppetdb report processor in puppet.conf
 class puppet_enterprise::profile::master::puppetdb(
-  $puppetdb_host,
-  $puppetdb_port,
+  Array[String] $puppetdb_host,
+  Array[Integer] $puppetdb_port,
+  $command_broadcast           = true,
+  $sticky_read_failover        = true,
   $include_unchanged_resources = true,
   $soft_write_failure          = false,
   $facts_terminus              = 'puppetdb',
@@ -36,15 +39,20 @@ class puppet_enterprise::profile::master::puppetdb(
     mode    => '0644',
   }
 
-  # For PuppetDB HA, a user may pass in an Array to specify their PuppetDBs
 
-  $pdb_server_urls = pe_format_urls('https', pe_any2array($puppetdb_host), pe_any2array($puppetdb_port))
+  $pdb_server_urls = pe_format_urls('https', $puppetdb_host, $puppetdb_port)
   pe_ini_setting { 'puppetdb.conf_server_urls':
     ensure  => present,
     path    => "${confdir}/puppetdb.conf",
     section => 'main',
     setting => 'server_urls',
     value   => pe_join($pdb_server_urls, ','),
+  }
+
+  pe_ini_setting { 'puppetdb.conf_command_broadcast':
+    path    => "${confdir}/puppetdb.conf",
+    setting => 'command_broadcast',
+    value   => $command_broadcast,
   }
 
   pe_ini_setting { 'puppetdb.conf_include_unchanged_resources':
@@ -57,6 +65,12 @@ class puppet_enterprise::profile::master::puppetdb(
     path    => "${confdir}/puppetdb.conf",
     setting => 'soft_write_failure',
     value   => $soft_write_failure,
+  }
+
+  pe_ini_setting { 'puppetdb.conf_sticky_read_failover':
+    path    => "${confdir}/puppetdb.conf",
+    setting => 'sticky_read_failover',
+    value   => $sticky_read_failover,
   }
   # End
 
