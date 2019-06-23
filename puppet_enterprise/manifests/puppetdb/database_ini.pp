@@ -9,7 +9,7 @@
 # @param database_properties [String] A url encoded string of JDBC options. This will replace the
 #        default database property string which enables SSL connections.
 # @param database_user [String] The user logging into the database
-# @param gc_interval [String] The interval, in minutes, at which garbage collection should occur
+# @param gc_interval The interval, in minutes, at which garbage collection should occur
 # @param node_purge_ttl [String] The amount of time that must elapse before a
 #        deactivated node is purged from PuppetDB
 # @param node_ttl [String] The amount of time that must elapse before a node is
@@ -19,18 +19,21 @@
 #        of actual connections to the database backend for write connections
 class puppet_enterprise::puppetdb::database_ini(
   $database_host,
+  $database_port,
+  Integer $write_maximum_pool_size,
   $confdir                    = $puppet_enterprise::params::puppetdb_confdir,
   $database_name              = $puppet_enterprise::params::puppetdb_database_name,
   Optional[String[1]] $database_password = undef,
-  $database_port,
   $database_properties        = '',
   $database_user              = $puppet_enterprise::params::puppetdb_database_user,
-  $gc_interval                = $puppet_enterprise::params::puppetdb_gc_interval,
-  $node_purge_ttl             = $puppet_enterprise::params::puppetdb_node_purge_ttl,
+  Variant[Pattern[/^[0-9]+$/],Integer] $gc_interval = $puppet_enterprise::params::puppetdb_gc_interval,
+  Optional[String] $node_purge_ttl = undef,
   $node_ttl                   = $puppet_enterprise::params::puppetdb_node_ttl,
   $report_ttl                 = $puppet_enterprise::params::puppetdb_report_ttl,
-  Integer $write_maximum_pool_size,
+  Array[String] $facts_blacklist = [],
+  Enum['literal','regex'] $facts_blacklist_type = 'literal',
 ) inherits puppet_enterprise::params {
+  include puppet_enterprise::packages
 
   $section = 'database'
   $config_file = "${confdir}/${section}.ini"
@@ -65,7 +68,13 @@ class puppet_enterprise::puppetdb::database_ini(
     value   => $node_ttl,
   }
 
+  $node_purge_ttl_ensure = pe_empty($node_purge_ttl) ? {
+    false => 'present',
+    true  => 'absent',
+  }
+
   pe_ini_setting {'puppetdb_node_purge_ttl':
+    ensure  => $node_purge_ttl_ensure,
     setting => 'node-purge-ttl',
     value   => $node_purge_ttl,
   }
@@ -73,5 +82,17 @@ class puppet_enterprise::puppetdb::database_ini(
   pe_ini_setting {'puppetdb_report_ttl':
     setting => 'report-ttl',
     value   => $report_ttl,
+  }
+
+  $joined_facts_blacklist = pe_join($facts_blacklist, ',')
+
+  pe_ini_setting {'puppetdb_facts_blacklist':
+    setting => 'facts-blacklist',
+    value   => $joined_facts_blacklist,
+  }
+
+  pe_ini_setting {'puppetdb_facts_blacklist_type':
+    setting => 'facts-blacklist-type',
+    value   => $facts_blacklist_type,
   }
 }

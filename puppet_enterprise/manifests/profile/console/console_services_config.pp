@@ -10,6 +10,7 @@
 # @param api_listen_port [Integer] The port that the console services api is listening on.
 # @param api_ssl_listen_port [Integer] The port that console services is listening on for ssl
 #        connections.
+# @param ssl_protocols [Array[String]] The list of SSL protocols to allow.
 # @param activity_url_prefix [String] The url prefix for the activity api.
 # @param classifier_url_prefix [String] The url prefix for the classifier api.
 # @param rbac_url_prefix [String] The url prefix for the rbac api.
@@ -22,11 +23,14 @@
 # @param tk_jetty_request-header_max_size [Integer] Sets the maximum size of an HTTP Request Header.
 # @param status_proxy_enabled [Boolean] Enabled the plaintext HTTP proxy for the status service
 # @param status_proxy_port [Integer] The port that the plaintext HTTP status proxy listens on.
+# @param replication_mode [Enum] One of "none", "source", or "replica", which indicates to console-services
+# what the app should expect when interacting with its database. Value must be the same as that provided to
+# the database profile or app behavior will be incorrect.
 class puppet_enterprise::profile::console::console_services_config (
   $activity_url_prefix                            = $puppet_enterprise::activity_url_prefix,
   $api_listen_port                                = $puppet_enterprise::params::console_services_api_listen_port,
   $api_ssl_listen_port                            = $puppet_enterprise::api_port,
-  $certname                                       = $::clientcert,
+  $certname                                       = $facts['clientcert'],
   $classifier_url_prefix                          = $puppet_enterprise::classifier_url_prefix,
   $listen_address                                 = $puppet_enterprise::params::plaintext_address,
   $listen_port                                    = $puppet_enterprise::params::console_services_listen_port,
@@ -34,11 +38,13 @@ class puppet_enterprise::profile::console::console_services_config (
   $rbac_url_prefix                                = $puppet_enterprise::rbac_url_prefix,
   $ssl_listen_address                             = $puppet_enterprise::params::ssl_address,
   $ssl_listen_port                                = $puppet_enterprise::params::console_services_ssl_listen_port,
+  Array[String] $ssl_protocols                    = $puppet_enterprise::ssl_protocols,
   $status_proxy_enabled                           = false,
   $status_proxy_port                              = 8123,
   Optional[Integer] $tk_jetty_max_threads_api     = undef,
   Optional[Integer] $tk_jetty_max_threads_console = undef,
   $tk_jetty_request_header_max_size               = 65536,
+  Puppet_enterprise::Replication_mode $replication_mode = 'none',
 ) inherits puppet_enterprise {
 
   File {
@@ -56,16 +62,16 @@ class puppet_enterprise::profile::console::console_services_config (
 
   Pe_hocon_setting {
     ensure  => present,
-    notify  => Service["pe-console-services"],
+    notify  => Service['pe-console-services'],
   }
 
+  $container = 'console-services'
   $cert_dir = $puppet_enterprise::console_services_ssl_dir
   # puppet_enterprise::certs { 'pe-console-services' : ... } -> creates these files
   $ssl_key = "${cert_dir}/${certname}.private_key.pem"
   $ssl_cert =  "${cert_dir}/${certname}.cert.pem"
 
   $confdir = '/etc/puppetlabs/console-services'
-  $access_log_config = "${confdir}/request-logging.xml"
   # Uses
   #   $listen_address
   #   $listen_port
@@ -74,7 +80,6 @@ class puppet_enterprise::profile::console::console_services_config (
   #   $ssl_key
   #   $ssl_cert
   #   $localcacert
-  #   $access_log_config
   #   $api_listen_port
   #   $api_ssl_listen_port
   #   $classifier_url_prefix
@@ -124,133 +129,53 @@ class puppet_enterprise::profile::console::console_services_config (
     setting => 'webserver.ssl-ca-cert',
   }
 
-  pe_hocon_setting{ 'webserver.console.access-log-config':
-    path    => "${confdir}/conf.d/webserver.conf",
-    setting => 'webserver.console.access-log-config',
-    value   => $access_log_config,
+  puppet_enterprise::trapperkeeper::webserver_settings { 'console' :
+    container          => $container,
+    ssl_listen_address => $ssl_listen_address,
+    ssl_listen_port    => Integer($ssl_listen_port),
+    ssl_cert           => $ssl_cert,
+    ssl_key            => $ssl_key,
+    ssl_protocols      => $ssl_protocols,
+    localcacert        => $localcacert,
+    access_log_config  => "${confdir}/request-logging.xml",
+    tk_jetty_max_threads => $tk_jetty_max_threads_console,
+    tk_jetty_request_header_max_size => $tk_jetty_request_header_max_size,
+    default_server     => true,
+    client_auth        => 'none',
   }
-  pe_hocon_setting{ 'webserver.console.host':
+
+  pe_hocon_setting{ "${container}.webserver.console.host":
     path    => "${confdir}/conf.d/webserver.conf",
     setting => 'webserver.console.host',
     value   => $listen_address,
   }
-  pe_hocon_setting{ 'webserver.console.port':
+  pe_hocon_setting{ "${container}.webserver.console.port":
     path    => "${confdir}/conf.d/webserver.conf",
     setting => 'webserver.console.port',
     value   => $listen_port,
   }
-  if $tk_jetty_max_threads_console {
-    $tk_jetty_max_threads_console_ensure = present
-  } else {
-    $tk_jetty_max_threads_console_ensure = absent
+
+  puppet_enterprise::trapperkeeper::webserver_settings { 'api' :
+    container            => $container,
+    ssl_listen_address   => $ssl_listen_address,
+    ssl_listen_port      => Integer($api_ssl_listen_port),
+    ssl_cert             => $ssl_cert,
+    ssl_key              => $ssl_key,
+    ssl_protocols        => $ssl_protocols,
+    localcacert          => $localcacert,
+    access_log_config    => "${confdir}/request-logging-api.xml",
+    tk_jetty_max_threads => $tk_jetty_max_threads_api,
   }
 
-  pe_hocon_setting{ 'webserver.console.max-threads':
-    ensure  => $tk_jetty_max_threads_console_ensure,
-    path    => "${confdir}/conf.d/webserver.conf",
-    setting => 'webserver.console.max-threads',
-    value   => $tk_jetty_max_threads_console,
-  }
-
-  pe_hocon_setting{ 'webserver.console.default-server':
-    path    => "${confdir}/conf.d/webserver.conf",
-    setting => 'webserver.console.default-server',
-    value   => true,
-  }
-  pe_hocon_setting{ 'webserver.console.request-header-max-size':
-    path    => "${confdir}/conf.d/webserver.conf",
-    setting => 'webserver.console.request-header-max-size',
-    value   => $tk_jetty_request_header_max_size,
-  }
-
-  pe_hocon_setting{ 'webserver.console.ssl-host':
-    path    => "${confdir}/conf.d/webserver.conf",
-    setting => 'webserver.console.ssl-host',
-    value   => $ssl_listen_address,
-  }
-  pe_hocon_setting{ 'webserver.console.ssl-port':
-    path    => "${confdir}/conf.d/webserver.conf",
-    setting => 'webserver.console.ssl-port',
-    value   => $ssl_listen_port,
-  }
-  pe_hocon_setting{ 'webserver.console.ssl-key':
-    path    => "${confdir}/conf.d/webserver.conf",
-    setting => 'webserver.console.ssl-key',
-    value   => $ssl_key,
-  }
-  pe_hocon_setting{ 'webserver.console.ssl-cert':
-    path    => "${confdir}/conf.d/webserver.conf",
-    setting => 'webserver.console.ssl-cert',
-    value   => $ssl_cert,
-  }
-  pe_hocon_setting{ 'webserver.console.ssl-ca-cert':
-    path    => "${confdir}/conf.d/webserver.conf",
-    setting => 'webserver.console.ssl-ca-cert',
-    value   => $localcacert,
-  }
-  pe_hocon_setting{ 'webserver.console.client-auth':
-    path    => "${confdir}/conf.d/webserver.conf",
-    setting => 'webserver.console.client-auth',
-    value   => 'none',
-  }
-
-  pe_hocon_setting{ 'webserver.api.access-log-config':
-    path    => "${confdir}/conf.d/webserver.conf",
-    setting => 'webserver.api.access-log-config',
-    value   => $access_log_config,
-  }
-  pe_hocon_setting{ 'webserver.api.host':
+  pe_hocon_setting{ "${container}.webserver.api.host":
     path    => "${confdir}/conf.d/webserver.conf",
     setting => 'webserver.api.host',
     value   => $listen_address,
   }
-  pe_hocon_setting{ 'webserver.api.port':
+  pe_hocon_setting{ "${container}.webserver.api.port":
     path    => "${confdir}/conf.d/webserver.conf",
     setting => 'webserver.api.port',
     value   => $api_listen_port,
-  }
-  if $tk_jetty_max_threads_api {
-    $tk_jetty_max_threads_api_ensure = present
-  } else {
-    $tk_jetty_max_threads_api_ensure = absent
-  }
-
-  pe_hocon_setting{ 'webserver.api.max-threads':
-    ensure  => $tk_jetty_max_threads_api_ensure,
-    path    => "${confdir}/conf.d/webserver.conf",
-    setting => 'webserver.api.max-threads',
-    value   => $tk_jetty_max_threads_api,
-  }
-
-  pe_hocon_setting{ 'webserver.api.ssl-host':
-    path    => "${confdir}/conf.d/webserver.conf",
-    setting => 'webserver.api.ssl-host',
-    value   => $ssl_listen_address,
-  }
-  pe_hocon_setting{ 'webserver.api.ssl-port':
-    path    => "${confdir}/conf.d/webserver.conf",
-    setting => 'webserver.api.ssl-port',
-    value   => $api_ssl_listen_port,
-  }
-  pe_hocon_setting{ 'webserver.api.ssl-key':
-    path    => "${confdir}/conf.d/webserver.conf",
-    setting => 'webserver.api.ssl-key',
-    value   => $ssl_key,
-  }
-  pe_hocon_setting{ 'webserver.api.ssl-cert':
-    path    => "${confdir}/conf.d/webserver.conf",
-    setting => 'webserver.api.ssl-cert',
-    value   => $ssl_cert,
-  }
-  pe_hocon_setting{ 'webserver.api.ssl-ca-cert':
-    path    => "${confdir}/conf.d/webserver.conf",
-    setting => 'webserver.api.ssl-ca-cert',
-    value   => $localcacert,
-  }
-  pe_hocon_setting{ 'webserver.api.client-auth':
-    path    => "${confdir}/conf.d/webserver.conf",
-    setting => 'webserver.api.client-auth',
-    value   => 'want',
   }
 
   $_status_proxy_ensure = $status_proxy_enabled ? {
@@ -258,7 +183,7 @@ class puppet_enterprise::profile::console::console_services_config (
     default => 'absent',
   }
 
-  pe_hocon_setting { 'webserver.status-proxy':
+  pe_hocon_setting { "${container}.webserver.status-proxy":
     ensure  => $_status_proxy_ensure,
     path    => "${confdir}/conf.d/webserver.conf",
     setting => 'webserver.status-proxy',
@@ -315,6 +240,13 @@ class puppet_enterprise::profile::console::console_services_config (
     value   => { route => '/status', server => 'status-proxy' },
   }
 
+  pe_hocon_setting{ 'web-router-service."puppetlabs.trapperkeeper.services.metrics.metrics-service/metrics-webservice"':
+    path    => "${confdir}/conf.d/webserver.conf",
+    setting => 'web-router-service."puppetlabs.trapperkeeper.services.metrics.metrics-service/metrics-webservice"',
+    type    => 'hash',
+    value   => { route => '/metrics', server => 'api' },
+  }
+
   pe_hocon_setting { 'status-proxy':
     ensure  => $_status_proxy_ensure,
     path    => "${confdir}/conf.d/webserver.conf",
@@ -346,30 +278,9 @@ class puppet_enterprise::profile::console::console_services_config (
   # End removal of PE 3.8 console-services web routes
   #######################################################################################
 
-  $log_config = "${confdir}/logback.xml"
-  $version_file = "${puppet_enterprise::puppet_server_dir}/pe_version"
-
-  # Uses
-  #   $log_config
-  #   $version_file
-  file { "${confdir}/conf.d/global.conf":
-    ensure => present,
+  puppet_enterprise::trapperkeeper::global_settings { $container :
+    version_path     => "${puppet_enterprise::puppet_server_dir}/pe_version",
+    login_path       => '/auth/login',
+    replication_mode => $replication_mode,
   }
-  pe_hocon_setting{ 'global.logging-config':
-    path    => "${confdir}/conf.d/global.conf",
-    setting => 'global.logging-config',
-    value   => $log_config,
-  }
-  pe_hocon_setting{ 'global.version-path':
-    path    => "${confdir}/conf.d/global.conf",
-    setting => 'global.version-path',
-    value   => $version_file,
-  }
-  pe_hocon_setting{ 'global.login-path':
-    path    => "${confdir}/conf.d/global.conf",
-    setting => 'global.login-path',
-    value   => '/auth/login',
-  }
-
-  pe_concat { "${confdir}/bootstrap.cfg" : }
 }
