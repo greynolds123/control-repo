@@ -28,8 +28,7 @@ class hiera::params {
     $group          = 'root'
     $eyaml_owner    = 'pe-puppet'
     $eyaml_group    = 'pe-puppet'
-  }
-  else {
+  } else {
     # It would probably be better to assume this is puppetserver, but that
     # would be a backwards-incompatible change.
     $master_service = 'puppetmaster'
@@ -40,7 +39,7 @@ class hiera::params {
     $eyaml_group    = 'puppet'
   }
   $cmdpath        = ['/opt/puppetlabs/puppet/bin', '/usr/bin', '/usr/local/bin']
-  $datadir        = '/etc/puppetlabs/code/environments/%{::environment}/hieradata'
+  $datadir        = '/etc/puppetlabs/code/environments/%{::environment}/data/'
   $manage_package = false
-  $hiera_yaml = "${confdir}/hiera.yaml"
+  $hiera_yaml = "${codedir}/${::environment}/hiera.yaml"
 }
