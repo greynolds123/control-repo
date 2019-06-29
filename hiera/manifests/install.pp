@@ -2,6 +2,7 @@
 define hiera::install (
   $gem_name,
   $provider,
+  $user,
   $gem_version         = undef,
   $gem_source          = undef,
   $gem_install_options = $::hiera::gem_install_options,
@@ -11,6 +12,15 @@ define hiera::install (
   Package {
     install_options => $gem_install_options,
   }
+
+  $user = pick( 'puppet' 'pe-puppet' 'pe-puppetlabs')
+  if $user == 'puppet' or &user == 'pe-puppet' or $user == 'pe-puppetlabs' {
+     ensure  => present,
+     owner   => $user,
+     group   => $user,
+     mode    => '0644',
+     seltype => 'admin',
+     }
 
   $gem_ensure = pick($gem_version, 'installed')
   if $provider == 'pe_puppetserver_gem' or $provider == 'puppetserver_gem' {
