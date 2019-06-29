@@ -21,7 +21,7 @@ class hiera::eyaml {
   $cmdpath       = $::hiera::cmdpath
   $confdir       = $::hiera::confdir
   $create_keys   = $::hiera::create_keys
-  $_keysdir      = $::hiera::_keysdir
+  $keysdir       = $::hiera::params::keydir
 
   $manage_package = $::hiera::manage_eyaml_package
 
@@ -44,7 +44,7 @@ class hiera::eyaml {
     group => $group,
   }
 
-  file { $_keysdir:
+  file { $keysdir:
     ensure => directory,
   }
 
