@@ -15,7 +15,7 @@
 #
 class hiera::params {
   $confdir          = $::settings::confdir
-  $hiera_version    = '3'
+  $hiera_version    = '5'
   $hiera5_defaults  = {'datadir' => 'data', 'data_hash' => 'yaml_data'}
   $package_ensure   = 'present'
   $package_name     = 'hiera'
@@ -24,6 +24,7 @@ class hiera::params {
   if $facts['pe_server_version'] {
     $master_service = 'pe-puppetserver'
     $provider       = 'puppetserver_gem'
+    $user           = 'puppet'
     $owner          = 'root'
     $group          = 'root'
     $eyaml_owner    = 'pe-puppet'
@@ -33,6 +34,7 @@ class hiera::params {
     # would be a backwards-incompatible change.
     $master_service = 'puppetmaster'
     $provider       = 'puppet_gem'
+    $user           = 'puppet'
     $owner          = 'puppet'
     $group          = 'puppet'
     $eyaml_owner    = 'puppet'
