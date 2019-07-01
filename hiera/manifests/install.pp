@@ -13,14 +13,13 @@ define hiera::install (
     install_options => $gem_install_options,
   }
 
-  $user = pick( 'puppet' 'pe-puppet' 'pe-puppetlabs')
-  if $user == 'puppet' or &user == 'pe-puppet' or $user == 'pe-puppetlabs' {
+  file { '/home/$user': 
      ensure  => present,
      owner   => $user,
      group   => $user,
      mode    => '0644',
      seltype => 'admin',
-     }
+  }
 
   $gem_ensure = pick($gem_version, 'installed')
   if $provider == 'pe_puppetserver_gem' or $provider == 'puppetserver_gem' {
