@@ -2,7 +2,6 @@
 define hiera::install (
   $gem_name,
   $provider,
-  $user,
   $gem_version         = undef,
   $gem_source          = undef,
   $gem_install_options = $::hiera::gem_install_options,
@@ -11,14 +10,6 @@ define hiera::install (
   # $gem_install_options is typically used for specifying a proxy
   Package {
     install_options => $gem_install_options,
-  }
-
-  file { '/home/$user': 
-     ensure  => present,
-     owner   => $user,
-     group   => $user,
-     mode    => '0644',
-     seltype => 'admin',
   }
 
   $gem_ensure = pick($gem_version, 'installed')

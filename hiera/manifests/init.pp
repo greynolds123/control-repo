@@ -80,7 +80,7 @@ class hiera (
   $logger                                   = 'console',
   $cmdpath                                  = $::hiera::params::cmdpath,
   $create_keys                              = true,
-  $keysdir                                  = $::hiera::params::keydir,
+  $keysdir                                  = undef,
   $deep_merge_name                          = 'deep_merge',
   $deep_merge_version                       = undef,
   $deep_merge_source                        = undef,
