@@ -1,0 +1,72 @@
+#!/bin/bash -e
+
+<%= scope.function_template(["pe_repo/partials/shared_functions.bash.erb"]) %>
+
+install_agent() {
+  doing_upgrade=$(is_upgrade)
+
+  PUPPET_HTTP_PROXY_HOST=''
+  PUPPET_HTTP_PROXY_PORT=3128
+
+  regex='(main|master|agent|user|custom_attributes|extension_requests):http_proxy_host=(\S*)'
+
+  if [[ $* =~ $regex ]]; then
+    PUPPET_HTTP_PROXY_HOST=${BASH_REMATCH[2]}
+  fi
+
+  regex='(main|master|agent|user|custom_attributes|extension_requests):http_proxy_port=(\S*)'
+
+  if [[ $* =~ $regex ]]; then
+    PUPPET_HTTP_PROXY_PORT=${BASH_REMATCH[2]}
+  fi
+
+  if [ -n "${PUPPET_HTTP_PROXY_HOST}" ]; then
+    PROXY="http://${PUPPET_HTTP_PROXY_HOST}:${PUPPET_HTTP_PROXY_PORT}"
+  else
+    DNF_MAJOR_VERSION=`dnf --version 2> /dev/null | cut -d. -f1 | head -n 1`
+    if [ -z "$DNF_MAJOR_VERSION" ] || [ "$DNF_MAJOR_VERSION" -lt 3 ] ; then
+      PROXY="_none_"
+    else
+      PROXY="None"
+    fi
+  fi
+
+  cat <<REPO > /etc/yum.repos.d/pe_repo.repo
+<%= scope.function_template(["pe_repo/el.repo.erb"]) %>
+REPO
+
+  if [ y = "${doing_upgrade}" ]; then
+    pxp_status=$(pxp_agent_status)
+    ensure_service pxp-agent stopped
+  fi
+
+  yum clean all --disablerepo="*" --enablerepo=pe_repo
+
+  # PE-13928 Use update if already installed
+  set -x
+  if yum list installed puppet-agent; then
+    yum update -y puppet-agent-<%= @agent_version %>
+  else
+    yum install -y puppet-agent-<%= @agent_version %>
+  fi
+  set +x
+
+  if [ ! y = "${doing_upgrade}" ]; then
+    puppet_config_set "$@"
+    manage_puppet_agent
+  else
+    ensure_service pxp-agent "${pxp_status}"
+  fi
+
+  ensure_agent_links
+}
+
+remove_repo_file() {
+  rm -f '/etc/yum.repos.d/pe_repo.repo'
+}
+
+trap remove_repo_file EXIT
+
+install_agent "$@"
+
+# vim: ft=sh

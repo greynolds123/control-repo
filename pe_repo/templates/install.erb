@@ -1,0 +1,19 @@
+#! /bin/bash
+set -u
+set -e
+
+<%# These erb templates are order dependant since `platform_check` relies on
+    functions that are now in the shared functions template.
+%>
+<%= scope.function_template(["pe_repo/partials/shared_functions.bash.erb"]) %>
+<%= scope.function_template(["pe_repo/partials/platform_check.bash.erb"]) %>
+
+<% if @enable_bulk_pluginsync  %>
+bulk_pluginsync "https://<%= @master %>:<%= @port %><%= @prefix %>/bulk_pluginsync.tar.gz"
+<% end %>
+run_agent_install_from_url "https://<%= @master %>:<%= @port %><%= @prefix %>/<%= @pe_version %>/${PLATFORM_TAG}.bash" "$@"
+
+# ...and we should be good.
+exit 0
+
+# vim: ft=sh
