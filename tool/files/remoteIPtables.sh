@@ -13,7 +13,7 @@ cwd='/sbin/iptables'
 
 myip='/root/myserver.txt'
 
-iptsave='/sbin/service iptables status'
+iptsave='/sbin/service iptables save'
 
 iptrestart='/sbin/service iptables restart'
 
