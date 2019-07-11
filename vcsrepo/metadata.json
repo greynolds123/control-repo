@@ -8,7 +8,6 @@
   "project_page": "https://github.com/puppetlabs/puppetlabs-vcsrepo",
   "issues_url": "https://tickets.puppetlabs.com/browse/MODULES",
   "dependencies": [
-  
   ],
   "data_provider": null,
   "operatingsystem_support": [

@@ -1,0 +1,135 @@
+#! /bin/bash
+set -u
+set -e
+
+<%# These erb templates are order dependant since `platform_check` relies on
+    functions that are now in the shared functions template.
+%>
+<%= scope.function_template(["pe_repo/partials/shared_functions.bash.erb"]) %>
+<%= scope.function_template(["pe_repo/partials/platform_check.bash.erb"]) %>
+
+check_package() {
+    pkg="${1?}"
+    output=$("$(puppet_bin_dir)/puppet" resource package "${pkg?}" 2> /dev/null)
+    case ${output?} in
+        *ensure*=\>*purged*)
+            return 1;;
+        *ensure*=\>*absent*)
+            return 1;;
+        *)
+            return 0;;
+    esac
+}
+
+# If you need to force the code migration during a compile master upgrade (say on
+# a second running of the upgrade script, if puppet-agent has already been installed), then you
+# can supply FORCE_PE_CODE_MIGRATION=1 in your environment to ensure that the
+# code migration script runs to update puppet.conf and hiera.yaml.
+run_pe_code_migration() {
+    t_code_migration_url="${1?}"
+
+    if [ "${FORCE_PE_CODE_MIGRATION:-false}" != "false" ]; then
+        echo " * Preparing to run script to update puppet.conf and hiera.yaml"
+        t_install_file=$(mktempfile)
+        if ! download_from_url "${t_code_migration_url?}" "${t_install_file?}"; then
+            fail "Unable to retrieve code migration script from '${t_code_migration_url?}'"
+        fi
+
+        "${PUPPET_BIN_DIR?}/ruby" "${t_install_file?}" || fail "Error running code migration script: ${t_install_file?}"
+    else
+        return 0
+    fi
+}
+
+# Discover services
+t_pe_services=(pe-puppetserver pe-console-services pe-puppetdb pe-orchestration-services pe-postgresql)
+t_puppet_agent_services=(puppet pxp-agent)
+t_shutdown_services=()
+
+if [ -e "$(puppet_bin_dir)/puppet" ]; then
+    t_pg_resource="$("$(puppet_bin_dir)"/puppet resource package pe-postgresql-server)"
+    if [ -z "${t_pg_resource}" ]; then
+      t_pg_resource="$("$(puppet_bin_dir)"/puppet resource package pe-postgresql96-server)"
+    fi
+    # NOTE: Awk pattern matches any line that starts with ensure and contains
+    #       four runs of digits separated with decimals. E.g: 2019.1.11.2
+    t_pg_ver=$(echo "${t_pg_resource}" | awk '/^.*ensure/ && /([[:digit:]]+\.){3}[[:digit:]]+/ {split($3,a,"."); print a[3]}')
+
+    # Pull master postgres version for comparison to replica
+    t_pg_primary_ver=$(echo "<%= @postgres_version %>" | cut -d'.' -f 1)
+
+    # A PE HA Replica shouldn't be updated from PG 9.6 to later major PG
+    # versions (11) without careful consideration.  If the upgrade is allowed
+    # to start, the HA deployment would be rendered ineffective for the
+    # duration of the upgrade. It is possible to override this safety by using
+    # the '--force' flag but be aware that failover will Not be possible during
+    # the upgrade window.
+    set +o nounset  
+    if [ "${1}" != "--force" ]; then
+        if [ -n "${t_pg_ver}" ]; then
+            if [ "${t_pg_ver}" -lt "${t_pg_primary_ver}" ]; then
+                fail "Warning: Replicas are unavailable for failover during upgrade of major Postgresql versions. Forget the existing replica, finish the upgrade on the master, and then provision and enable a new replica."
+            fi
+        fi
+    fi
+    set -u
+
+    for service in "${t_pe_services[@]?}"; do
+        if [ "${service}" == 'pe-postgresql' ]; then
+          if check_package 'pe-postgresql-server' || check_package "pe-postgresql96-server" || check_package "pe-postgresql${t_pg_ver}-server"; then
+              t_shutdown_services+=("${service?}")
+          fi
+        else
+          if check_package "${service?}"; then
+              t_shutdown_services+=("${service?}")
+          fi
+        fi
+    done
+
+    for service in "${t_puppet_agent_services[@]?}"; do
+        if [ "${service?}" == "puppet" ]; then
+            stop_puppet_agent
+        elif [ "${service?}" == "pxp-agent" ]; then
+            if pxp_present; then
+                ensure_service "${service?}" stopped
+            fi
+        else
+            ensure_service "${service?}" stopped
+        fi
+    done
+
+    # This magic guards against t_shutdown_services being an empty array,
+    # because with set -u the script aborts on unbound variable otherwise.
+    if [[ ${t_shutdown_services[*]:+${t_shutdown_services[*]}} ]]; then
+      for service in "${t_shutdown_services[@]}"; do
+          ensure_service "${service?}" stopped
+      done
+    fi
+fi
+
+t_remote_installer_url="https://<%= @master %>:<%= @port %><%= @prefix %>/<%= @pe_version %>"
+
+run_agent_install_from_url "${t_remote_installer_url?}/install.bash" "$@"
+
+# Package installation may have re-started the service
+stop_puppet_agent
+
+# Run puppet to get most up to date version of the node.  Do not use -t,
+# because there will be changes, and we don't want to halt the script here
+# because Puppet returns a 2 (we are running set -e)
+FACTER_pe_build=<%= @pe_version %> "${PUPPET_BIN_DIR?}/puppet" agent --onetime --verbose --no-use_cached_catalog --no-daemonize --no-usecacheonfailure --no-splay --show_diff
+
+# Expects:
+# * HIERA_YAML_BACKUP
+run_pe_code_migration "${t_remote_installer_url?}/pe-code-migration.rb"
+
+# Remove unnecessary logrotate.d configuration
+rm -f /etc/logrotate.d/pe-puppetserver
+
+# Restart puppet; other services will have been started by the prior agent run
+start_puppet_agent
+
+# ...and we should be good.
+exit 0
+
+# vim: ft=sh

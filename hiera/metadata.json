@@ -1,6 +1,6 @@
 {
   "name": "puppet-hiera",
-  "version": "2.4.0",
+  "version": "3.4.1",
   "author": "Vox Pupuli",
   "summary": "Deploy hiera.yaml with hierarchy, and datadir",
   "license": "Apache-2.0",
@@ -8,8 +8,14 @@
   "project_page": "https://github.com/voxpupuli/puppet-hiera",
   "issues_url": "https://github.com/voxpupuli/puppet-hiera/issues",
   "dependencies": [
-    {"name":"puppetlabs/stdlib","version_requirement":">= 4.6.0 < 5.0.0"},
-    {"name":"puppetlabs/inifile","version_requirement":">= 1.4.1 < 2.0.0"}
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 4.13.1 < 6.0.0"
+    },
+    {
+      "name": "puppetlabs/inifile",
+      "version_requirement": ">= 1.4.1 < 4.0.0"
+    }
   ],
   "data_provider": null,
   "operatingsystem_support": [
@@ -30,15 +36,12 @@
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "6",
-        "7",
         "8"
       ]
     },
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "12.04",
         "14.04",
         "16.04"
       ]
@@ -47,7 +50,7 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 3.8.7 < 5.0.0"
+      "version_requirement": ">= 4.10.0 < 7.0.0"
     }
   ]
 }

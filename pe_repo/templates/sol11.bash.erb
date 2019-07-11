@@ -1,0 +1,108 @@
+#!/bin/bash -e
+
+download_file() {
+  source_file="https://<%= @master %>:<%= @port %><%= @prefix %>/<%= @pe_version %>/<%= @installer_build %>/${1?}"
+  download_from_url "${source_file?}" "${staging_dir?}/${1?}"
+}
+
+download_packages() {
+  download_file "packages.txt"
+
+  for pkg in $(cat "${staging_dir?}/packages.txt"); do
+    download_file "${pkg?}"
+  done
+}
+
+create_repo() {
+  ips_repo_dir="/etc/puppetlabs/installer/solaris.repo"
+  ips_repo="file://${ips_repo_dir?}"
+
+  if [ -f "${ips_repo_dir?}/pkg5.repository" ] ; then
+    # The repo exists, so we remove its packages
+    pkgrepo remove -s "${ips_repo}" '*' || :
+  else
+    mkdir -p "${ips_repo_dir?}"
+    pkgrepo create ${ips_repo?}
+  fi
+
+  pkgrepo set -s ${ips_repo?} publisher/prefix=puppetlabs.com
+
+  for pkg in $(cat "${staging_dir?}/packages.txt"); do
+    pkgrecv -s "${staging_dir?}/${pkg?}" -d ${ips_repo?} '*' > /dev/null
+  done
+
+  # If the puppetlabs.com publisher exists, it may have been put in place
+  # by a global zone install after an install in this non-global zone.  As
+  # such we replace its uri(s) with (or at the very least add) ours.
+  if pkg publisher puppetlabs.com >&/dev/null; then
+    pkg set-publisher -G '*' -g "${ips_repo?}" puppetlabs.com
+  else
+    pkg set-publisher -p "${ips_repo?}" puppetlabs.com
+  fi
+}
+
+<%= scope.function_template(["pe_repo/partials/shared_functions.bash.erb"]) %>
+
+poll_svcs_for_puppet_service() {
+  MAX_RETRIES=10
+  retries=0
+  while [[ "${retries}" -lt "${MAX_RETRIES}" ]]; do
+    echo "Polling svcs to see if it has created the 'puppet' service object ..."
+    if svcs -H -o fmri "puppet" > /dev/null 2>&1; then
+      echo "The 'puppet' service object has been created! Proceeding with the rest of the installation ..."
+      return 0
+    fi
+
+    retries=$((retries+1))
+    sleep 2
+  done
+
+  echo ""
+  echo "Failed to detect the 'puppet' service object after polling svcs ${MAX_RETRIES}"
+  echo "times. This means that we were unable to set the puppet service to the"
+  echo "'${PUPPET_SERVICE_ENSURE}' state. However, we were still able to successfully install the"
+  echo "puppet agent, and verify that the installed files were correctly linked"
+  echo "together."
+  echo ""
+  echo "You can attempt to set the puppet service to '${PUPPET_SERVICE_ENSURE}' manually"
+  echo "by invoking the following command:"
+  echo "  $(puppet_bin_dir)/puppet resource service puppet ensure=\"${PUPPET_SERVICE_ENSURE}\" enable=\"${PUPPET_SERVICE_ENABLE}\""
+  exit 1
+}
+
+install_agent() {
+  doing_upgrade=$(is_upgrade)
+
+  staging_dir="$(mktemp -d)"
+
+  cleanup_add_cmd 'rm -rf '"${staging_dir}"
+
+  download_packages
+
+  create_repo
+
+  # Package names are of the form puppet-agent@1.2.6.100.72369,5.11-1.i386.p5p
+  # We only capture through the x.y.z components of the version...
+  #   NOTE: sed on solaris does not include extented-regexp, so more robust
+  #   matcher are not available (e.g. '+').
+  pkg install $(sed 's/^\([a-z0-9-]*\)@\([0-9]*\.[0-9]*\.[0-9]*\).*$/\1@\2/' "${staging_dir?}/packages.txt") > /dev/null
+
+  ensure_agent_links
+
+  if [ ! y = "${doing_upgrade}" ]; then
+    puppet_config_set "$@"
+    # PE-20250 found that in some cases it takes a bit of time for svcs,
+    # the service provider for Sol 11, to create the "puppet" service object.
+    # Thus, there is a chance that the "puppet resource service puppet"
+    # command in "manage_puppet_agent" will try to boot the "puppet"
+    # service using svcs before svcs has created the corresponding object.
+    # So we poll svcs to make sure that it has created the "puppet" service
+    # object before doing anything else.
+    poll_svcs_for_puppet_service
+    manage_puppet_agent
+  fi
+}
+
+install_agent "$@"
+
+# vim: ft=sh

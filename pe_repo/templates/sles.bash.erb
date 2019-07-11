@@ -1,0 +1,56 @@
+#!/bin/bash -e
+
+import_gpg_key() {
+  gpg_keys="GPG-KEY-puppetlabs GPG-KEY-puppet"
+  for gpg_key in ${gpg_keys}
+  do
+    gpg_file="$(mktemp)"
+
+    download_from_url "https://<%= @master %>:<%= @port %><%= @prefix %>/${gpg_key}" "${gpg_file?}"
+
+    rpm --import "${gpg_file?}"
+    rm -f "${gpg_file?}"
+  done
+}
+
+<%= scope.function_template(["pe_repo/partials/shared_functions.bash.erb"]) %>
+
+install_agent() {
+  doing_upgrade=$(is_upgrade)
+
+  import_gpg_key
+
+  if [ y = "${doing_upgrade}" ]; then
+    pxp_status=$(pxp_agent_status)
+    ensure_service "pxp-agent" stopped
+  fi
+
+  zypper rr puppet-enterprise
+  zypper addrepo -t rpm-md https://<%= @master %>:<%= @port %><%= @prefix %>/<%= @pe_version %>/<%= @installer_build %>?ssl_verify=no puppet-enterprise
+  zypper refresh puppet-enterprise
+  zypper --non-interactive dist-upgrade --from puppet-enterprise
+
+  set -x
+  zypper --non-interactive install puppet-agent=<%= @agent_version %>
+  set +x
+
+  if [ ! y = "${doing_upgrade}" ]; then
+    puppet_config_set "$@"
+    manage_puppet_agent
+  else
+    ensure_service pxp-agent "${pxp_status}"
+  fi
+
+  ensure_agent_links
+}
+
+remove_repo() {
+  ## rr stands for removerepo
+  zypper rr puppet-enterprise
+}
+
+trap remove_repo EXIT
+
+install_agent "$@"
+
+# vim: ft=sh

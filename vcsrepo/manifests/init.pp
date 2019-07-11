@@ -4,5 +4,6 @@
   file { '/etc/yum.repos.d':
   ensure   => directory,
   }
+  }
  }
 

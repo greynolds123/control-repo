@@ -1,6 +1,7 @@
 module AIOAgentBuild
   def self.get_aio_build
-    osfamily = Facter.value(:osfamily)
+    os = Facter.value(:os) || {}
+    osfamily = os['family']
     case osfamily
     when /windows/
       puppet_dir = Facter.value(:env_windows_installdir)

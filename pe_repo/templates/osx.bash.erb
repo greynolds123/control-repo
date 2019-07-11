@@ -1,0 +1,27 @@
+#!/bin/bash -e
+
+<%= scope.function_template(["pe_repo/partials/shared_functions.bash.erb"]) %>
+
+install_agent() {
+  doing_upgrade=$(is_upgrade)
+
+  mountpoint="$(mktemp -d -t puppet-enterprise-installer)"
+  dmg_file="https://<%= @master %>:<%= @port %><%= @prefix %>/<%= @pe_version %>/<%= @installer_build %>/<%= @dmg_file %>"
+
+  /usr/bin/hdiutil attach -insecurehttp "${dmg_file?}" -nobrowse -readonly -mountpoint "${mountpoint?}"
+
+  /usr/sbin/installer -pkg "${mountpoint?}/puppet-agent-<%= @agent_version %>-1-installer.pkg" -target /
+
+  /usr/bin/hdiutil detach "${mountpoint?}"
+
+  if [ ! y = "${doing_upgrade}" ]; then
+    puppet_config_set "$@"
+    manage_puppet_agent
+  fi
+
+  ensure_agent_links
+}
+
+install_agent "$@"
+
+# vim: ft=sh

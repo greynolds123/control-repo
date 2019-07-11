@@ -1,0 +1,13 @@
+#######################################################################
+# This file is managed by Puppet Enterprise during install and upgrade.
+# Do not modify.
+---
+version: 5
+defaults:  # Used for any hierarchy level that omits these keys.
+  datadir: /etc/puppetlabs/enterprise/conf.d
+  data_hash: 'puppet_enterprise::data'
+
+hierarchy:
+  - name: "Puppet Enterprise configuration"
+    path: "pe.conf"
+
