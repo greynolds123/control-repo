@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # This class deploys the cron environment for your environment.
 
   class cron::config {
@@ -18,25 +17,7 @@
   minute  => '0',
   }
   }
-=======
-# This class deploys the cron environment for your environment.
-  class cron::config {
-  cron { 'clearCache':
-  ensure  => present,
-  user    => 'root',
-  command => '/bin/sh /root/clearCache2016.sh',
-  hour    => '0',
-  minute  => '15',
-  }
-
-  cron { 'TuneDatabase':
-  ensure  => present,
-  user    => 'root',
-  command => '/bin/sh /root/TuneDatabase.sh',
-  hour    => '1',
-  minute  => '0',
-  }
-
+  
   cron { 'R10k':
   ensure  => absent,
   user    => 'root',
@@ -61,21 +42,6 @@
   minute  => '10',
   }
 
-  cron { 'RsyncDevelopment':
-  ensure  => absent,
-  user    => 'root',
-  command => '/bin/rsync -razP /etc/puppetlabs/code/modules/puppet_Development/*  /etc/puppetlabs/code/environments/Development/modules',
-  hour    => '0',
-  minute  => '10',
-  }
-
-  cron { 'RsyncLinux_Server':
-  ensure  => absent,
-  user    => 'root',
-  command => '/bin/rsync -razP /etc/puppetlabs/code/modules/puppet_Linux_Server/*  /etc/puppetlabs/code/environments/Linux_Server/modules',
-  hour    => '0',
-  minute  => '10',
-  }
 
   cron { 'Rsyncproduction':
   ensure  => absent,
@@ -101,6 +67,4 @@
   hour    => '0',
   minute  => '10',
   }
-  }
 
->>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c

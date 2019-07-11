@@ -37,5 +37,4 @@
 #
 class kernel {
  include kernel::config
-
 }
