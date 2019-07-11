@@ -1,0 +1,11 @@
+{
+  "CHANGELOG.md": "784d2595a33726dcff6a49dfa26a9c97",
+  "Gemfile": "183549d55a41bd882aef8dfa8218356c",
+  "README.md": "f1c9accd07043b31a98cb590a0c80b72",
+  "Rakefile": "1229bb6a344b98c0e53d34e9e01b5776",
+  "appveyor.yml": "d13932a8c86da5c417318e2cdfe9ba94",
+  "lib/puppet/functions/translate.rb": "01260ff1766361a919c1d065bc14e6d7",
+  "metadata.json": "688f9c9368749c9405265ce866bdb940",
+  "spec/functions/translate_spec.rb": "392ea6530d9cbf3730d472a854af7904",
+  "spec/spec_helper.rb": "898577ed31fbf848330924de64091e60"
+}

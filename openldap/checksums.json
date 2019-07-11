@@ -1,0 +1,11 @@
+{
+  "Gemfile": "92d6328f656eb2d6f95ffac9a49d301e",
+  "Gemfile.lock": "ec54be663d860f78676c828f72edee77",
+  "README.md": "3c9607e4d29741033daa8ea013b9900b",
+  "Rakefile": "7503e6764c68736c7e1eb065db5113a8",
+  "data/os/Debian.yaml": "7f7bfc404c641a3eaeeaaaced5c816e3",
+  "data/os/FreeBSD.yaml": "c0612580e1bfcbbc00047eed612151f9",
+  "hiera.yaml": "6eb61a49f2bbf4afa89799ea7313542c",
+  "manifests/server.pp": "19b13cc3077ffe87414b72a2324c385b",
+  "metadata.json": "871b19f888f24823ecd7d8b0483fd79b"
+}

@@ -1,0 +1,15 @@
+{
+  "name": "role",
+  "version": "0.1.0",
+  "author": "Aon",
+  "summary": "It provides the roles for the production environments.",
+  "license": "Apache-2.0",
+  "source": "https://github.com/greynolds123/control-repo/tree/production/role",
+  "project_page": "https://github.com/greynolds123/control-repo/tree/production/role",
+  "issues_url": "https://github.com/greynolds123/control-repo/tree/production/role",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+  ],
+  "data_provider": null
+}
+
