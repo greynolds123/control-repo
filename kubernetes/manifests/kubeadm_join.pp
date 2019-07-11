@@ -11,15 +11,9 @@ define kubernetes::kubeadm_join (
   Optional[String] $feature_gates          = undef,
   Optional[String] $cri_socket             = undef,
   Optional[String] $discovery_file         = undef,
-<<<<<<< HEAD
-  Optional[Array] $env                     = undef,
-  Optional[Array] $ignore_preflight_errors = undef,
-  Optional[Array] $path                    = undef,
-=======
   Optional[Array] $env                     = $kubernetes::environment,
   Optional[Array] $ignore_preflight_errors = undef,
   Array $path                              = $kubernetes::default_path,
->>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
   Boolean $skip_ca_verification            = false,
 ) {
 

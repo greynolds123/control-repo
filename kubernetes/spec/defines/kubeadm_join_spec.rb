@@ -1,10 +1,7 @@
 require 'spec_helper'
 
 describe 'kubernetes::kubeadm_join', :type => :define do
-<<<<<<< HEAD
-=======
   let(:pre_condition) { 'include kubernetes' }
->>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
   let(:title) { 'kubeadm join' }
   let(:facts) do
     {

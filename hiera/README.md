@@ -42,11 +42,7 @@ If you are using the eyaml backend on:
   module to install the eyaml gem using PE's gem command.
 * Puppet Enterprise 3.7 or 3.8 then you will need the [puppetlabs-pe_puppetserver_gem](https://forge.puppetlabs.com/puppetlabs/pe_puppetserver_gem)
   module.
-<<<<<<< HEAD
-* Puppet Enterprise 2015.x or FOSS puppetserver then you will need the [puppetlabs-puppetserver_gem](https://forge.puppetlabs.com/puppetlabs/puppetserver_gem)
-=======
 * Puppet Enterprise 201x.y (ex: 2017.3) or FOSS puppetserver then you will need the [puppetlabs-puppetserver_gem](https://forge.puppetlabs.com/puppetlabs/puppetserver_gem)
->>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
   module.
 
 ### Beginning with hiera
@@ -66,8 +62,6 @@ class { 'hiera':
   ],
 }
 ```
-<<<<<<< HEAD
-=======
 ### For Hiera version 5
 ```puppet
 class { 'hiera':
@@ -82,7 +76,6 @@ class { 'hiera':
 ```
 ** Note: For Hiera version 5 when calling the class, please remember to pass '5' to 'hiera_version' as in the example above. **
 ** Also please note that 'hierarchy' is an array of hash in version 5. **
->>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 
 The resulting output in /etc/puppet/hiera.yaml:
 
@@ -99,8 +92,6 @@ The resulting output in /etc/puppet/hiera.yaml:
 :yaml:
    :datadir: /etc/puppet/hieradata
 ```
-<<<<<<< HEAD
-=======
 ### Resulting output for Hiera 5
 
 ```yaml
@@ -122,7 +113,6 @@ hierarchy:
   - name: "Default yaml file"
     path: "common.yaml"
 ```
->>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 
 ## Usage
 
@@ -145,10 +135,7 @@ class { 'hiera':
   merge_behavior => 'deeper'
 }
 ```
-<<<<<<< HEAD
-=======
 ## For Hiera version 5 please see the example above in beginning with Hiera.
->>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 
 The resulting output in /etc/puppet/hiera.yaml:
 
@@ -290,8 +277,6 @@ The following parameters are available for the hiera class:
 * `hierarchy`
   The hiera hierarchy.
   Default: `[]`
-<<<<<<< HEAD
-=======
   For Hiera verison 5.
   Default: `[{}]`
 * `hiera5_defaults`
@@ -301,7 +286,6 @@ The following parameters are available for the hiera class:
   Version format to layout hiera.yaml.
   Should be a string.
   Default: `3`
->>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 * `backends`
   The list of backends.
   Default: `['yaml']`
@@ -352,10 +336,6 @@ The following parameters are available for the hiera class:
 * `datadir`
   The path to the directory where hiera will look for databases.
   Default:
-<<<<<<< HEAD
-    * `'/etc/puppet/hieradata'` for Puppet Open Source
-=======
->>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
     * `'/etc/puppetlabs/puppet/hieradata'` for PE Puppet < 4
     * `'/etc/puppetlabs/code/environments/%{::environment}/hieradata'` for Puppet >= 4
 * `datadir_manage`
@@ -405,26 +385,15 @@ The following parameters are available for the hiera class:
   A hash of options to set in hiera.yaml for the deep merge behavior.
   Default: `{}`
 * `manage_package`
-<<<<<<< HEAD
-  A boolean for wether the hiera package should be managed. Defaults to `true` on
-  FOSS 3 but `false` otherwise.
-=======
   A boolean for wether the hiera package should be managed.
   Default: `false`
->>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 * `package_name`
   Specifies the name of the hiera package. Default: 'hiera'
 * `package_ensure`
   Specifies the ensure value of the hiera package. Default: 'present'
 * `confdir`
   The path to Puppet's confdir.
-<<<<<<< HEAD
-  Default: `$::settings::confdir` which should be the following:
-    * `'/etc/puppet'` for Puppet Open Source
-    * `'/etc/puppetlabs/puppet'` for Puppet Enterprise
-=======
   Default: `$::settings::confdir` which should be `'/etc/puppetlabs/puppet'`
->>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 * `logger`
   Which hiera logger to use.
   **Note**: You need to manage any package/gem dependencies yourself.
@@ -470,13 +439,10 @@ The following parameters are available for the hiera class:
   hiera.yaml changes.
   **Note**: You must pass `master_service => 'puppetserver'` for FOSS puppetserver
   Default: 'pe-puppetserver' for PE 2015.x, otherwise 'puppetmaster'
-<<<<<<< HEAD
-=======
 * `gem_install_options`
   An array of install options to pass to the gem package resources.  Typically,
   this parameter is used to specify a proxy server. eg
   `gem_install_options => ['--http-proxy', 'http://proxy.example.com:3128']`
->>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 
 [eyaml]: https://github.com/TomPoulton/hiera-eyaml
 

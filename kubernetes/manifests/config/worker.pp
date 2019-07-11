@@ -3,10 +3,7 @@ class kubernetes::config::worker (
   String $node_name                        = $kubernetes::node_name,
   String $config_file                      = $kubernetes::config_file,
   String $kubernetes_version               = $kubernetes::kubernetes_version,
-<<<<<<< HEAD
-=======
   String $kubernetes_cluster_name          = $kubernetes::kubernetes_cluster_name,
->>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
   String $controller_address               = $kubernetes::controller_address,
   String $discovery_token_hash             = $kubernetes::discovery_token_hash,
   String $container_runtime                = $kubernetes::container_runtime,
@@ -21,32 +18,13 @@ class kubernetes::config::worker (
   Optional[Hash] $kubelet_extra_config     = $kubernetes::kubelet_extra_config,
   Optional[Array] $ignore_preflight_errors = undef,
   Boolean $skip_ca_verification            = false,
-<<<<<<< HEAD
-) {
-  # Need to merge the cloud configuration parameters into extra_arguments
-  if !empty($cloud_provider) {
-    $cloud_args = empty($cloud_config) ? {
-      true    => ["cloud-provider: ${cloud_provider}"],
-      default => ["cloud-provider: ${cloud_provider}", "cloud-config: ${cloud_config}"],
-    }
-    $kubelet_merged_extra_arguments = concat($kubelet_extra_arguments, $cloud_args)
-  }
-  else {
-    $kubelet_merged_extra_arguments = $kubelet_extra_arguments
-  }
-
-=======
   String $cgroup_driver                    = $kubernetes::cgroup_driver,
 ) {
->>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
   # to_yaml emits a complete YAML document, so we must remove the leading '---'
   $kubelet_extra_config_yaml = regsubst(to_yaml($kubelet_extra_config), '^---\n', '')
 
   $template = $kubernetes_version ? {
-<<<<<<< HEAD
-=======
     /1.1(3|4)/  => 'v1beta1',
->>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
     default => 'v1alpha3',
   }
 

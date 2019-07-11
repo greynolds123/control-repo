@@ -1,9 +1,4 @@
 require 'puppetlabs_spec_helper/rake_tasks'
-<<<<<<< HEAD
-require 'puppet_blacksmith/rake_tasks'
-require 'voxpupuli/release/rake_tasks'
-require 'puppet-strings/tasks'
-=======
 
 # load optional tasks for releases
 # only available if gem group releases is installed
@@ -13,7 +8,6 @@ begin
   require 'puppet-strings/tasks'
 rescue LoadError
 end
->>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 
 PuppetLint.configuration.log_format = '%{path}:%{line}:%{check}:%{KIND}:%{message}'
 PuppetLint.configuration.fail_on_warnings = true
@@ -32,15 +26,12 @@ exclude_paths = %w(
 PuppetLint.configuration.ignore_paths = exclude_paths
 PuppetSyntax.exclude_paths = exclude_paths
 
-<<<<<<< HEAD
-=======
 desc 'Auto-correct puppet-lint offenses'
 task 'lint:auto_correct' do
   PuppetLint.configuration.fix = true
   Rake::Task[:lint].invoke
 end
 
->>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 desc 'Run acceptance tests'
 RSpec::Core::RakeTask.new(:acceptance) do |t|
   t.pattern = 'spec/acceptance'
@@ -51,8 +42,6 @@ task test: [
   :metadata_lint,
   :release_checks,
 ]
-<<<<<<< HEAD
-=======
 
 desc "Run main 'test' task and report merged results to coveralls"
 task test_with_coveralls: [:test] do
@@ -100,5 +89,4 @@ begin
   end
 rescue LoadError
 end
->>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 # vim: syntax=ruby
