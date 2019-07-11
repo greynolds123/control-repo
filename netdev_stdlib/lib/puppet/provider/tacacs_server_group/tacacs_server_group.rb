@@ -1,5 +1,0 @@
-require_relative '../netdev_base_provider'
-
-module Puppet::Provider::TacacsServerGroup
-  class TacacsServerGroup < Puppet::Provider::NetdevBaseProvider; end
-end

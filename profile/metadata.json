@@ -5,13 +5,10 @@
   "summary": "Roles for the application",
   "license": "Apache-2.0",
   "source": "https://github.com/greynolds123/control-repo/tree/production/profile",
-  "project_page": "https://github.com/greynolds123/control-repo/tree/production/role",
-  "issues_url": "https://github.com/greynolds123/control-repo/tree/production/role",
-<<<<<<< HEAD
-=======
   "project_page": "https://github.com/greynolds123/control-repo/tree/production/profile",
   "issues_url": "https://github.com/greynolds123/control-repo/tree/production/profile",
->>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
+  "project_page": "https://github.com/greynolds123/control-repo/tree/production/role",
+  "issues_url": "https://github.com/greynolds123/control-repo/tree/production/role",
   "dependencies": [
     {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
   ],
