@@ -5,5 +5,3 @@
   ensure   => directory,
   }
   }
- }
-
