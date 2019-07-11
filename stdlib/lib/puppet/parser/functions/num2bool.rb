@@ -6,6 +6,15 @@ module Puppet::Parser::Functions
     This function converts a number or a string representation of a number into a
     true boolean. Zero or anything non-numeric becomes false. Numbers higher then 0
     become true.
+<<<<<<< HEAD
+=======
+
+    Note that since Puppet 5.0.0 the same can be achieved with the Puppet Type System.
+    See the new() function in Puppet for the many available type conversions.
+
+        Boolean(0) # false
+        Boolean(1) # true
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
     DOC
              ) do |arguments|
 

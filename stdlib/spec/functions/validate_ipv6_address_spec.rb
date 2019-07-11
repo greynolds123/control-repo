@@ -13,12 +13,20 @@ describe 'validate_ipv6_address' do
     # Checking for deprecation warning, which should only be provoked when the env variable for it is set.
     it 'displays a single deprecation' do
       ENV['STDLIB_LOG_DEPRECATIONS'] = 'true'
+<<<<<<< HEAD
       scope.expects(:warning).with(includes('This method is deprecated'))
+=======
+      expect(scope).to receive(:warning).with(include('This method is deprecated'))
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
       is_expected.to run.with_params('3ffe:0505:0002::')
     end
     it 'displays no warning for deprecation' do
       ENV['STDLIB_LOG_DEPRECATIONS'] = 'false'
+<<<<<<< HEAD
       scope.expects(:warning).with(includes('This method is deprecated')).never
+=======
+      expect(scope).to receive(:warning).with(include('This method is deprecated')).never
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
       is_expected.to run.with_params('3ffe:0505:0002::')
     end
   end

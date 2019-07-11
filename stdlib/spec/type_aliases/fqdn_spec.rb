@@ -3,11 +3,15 @@ require 'spec_helper'
 if Puppet::Util::Package.versioncmp(Puppet.version, '4.5.0') >= 0
   describe 'Stdlib::Fqdn' do
     describe 'valid handling' do
+<<<<<<< HEAD
       %w[
         example
         example.com
         www.example.com
       ].each do |value|
+=======
+      ['example', 'example.com', 'www.example.com'].each do |value|
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
         describe value.inspect do
           it { is_expected.to allow_value(value) }
         end

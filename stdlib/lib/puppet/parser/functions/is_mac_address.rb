@@ -14,6 +14,10 @@ module Puppet::Parser::Functions
     mac = arguments[0]
 
     return true if %r{^[a-f0-9]{1,2}(:[a-f0-9]{1,2}){5}$}i =~ mac
+<<<<<<< HEAD
+=======
+    return true if %r{^[a-f0-9]{1,2}(:[a-f0-9]{1,2}){19}$}i =~ mac
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
     return false
   end
 end

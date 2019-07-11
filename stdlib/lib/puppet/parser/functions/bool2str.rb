@@ -15,6 +15,20 @@ module Puppet::Parser::Functions
     bool2str(false, 't', 'f')         => 'f'
 
     Requires a single boolean as an input.
+<<<<<<< HEAD
+=======
+
+    Note that since Puppet 5.0.0 it is possible to create new data types for almost any
+    datatype using the type system and the built-in
+    [`String.new`](https://puppet.com/docs/puppet/latest/function.html#boolean-to-string)
+    function is used to convert to String with many different format options.
+
+        notice(String(false))         # Notices 'false'
+        notice(String(true))          # Notices 'true'
+        notice(String(false, '%y'))   # Notices 'yes'
+        notice(String(true, '%y'))    # Notices 'no'
+
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
     DOC
              ) do |arguments|
 

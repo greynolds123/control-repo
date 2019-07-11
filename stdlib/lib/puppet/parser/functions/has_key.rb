@@ -15,6 +15,15 @@ module Puppet::Parser::Functions
           notice('this will be printed')
         }
 
+<<<<<<< HEAD
+=======
+    Note: Since Puppet 4.0.0 this can be achieved in the Puppet language with the following equivalent expression:
+
+       $my_hash = {'key_one' => 'value_one'}
+       if 'key_one' in $my_hash {
+         notice('this will be printed')
+       }
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
     DOC
 
     unless args.length == 2

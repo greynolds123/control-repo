@@ -10,6 +10,14 @@
 #   ie api server,
 #   Defaults to  1.10.2
 #
+<<<<<<< HEAD
+=======
+# [*kubernetes_cluster_name*]
+#   The name of the cluster, for use when multiple clusters are accessed from the same source
+#   Only used by Kubernetes 1.12+
+#   Defaults to "kubernetes"
+#
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 # [*kubernetes_package_version*]
 #   The version of the packages the Kubernetes os packages to install
 #   ie kubectl and kubelet
@@ -47,7 +55,11 @@
 #
 # [*cni_network_provider*]
 #
+<<<<<<< HEAD
 #  The URL to get the cni providers yaml file. 
+=======
+#  The URL to get the cni providers yaml file.
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 #  Defaults to `undef`. `kube_tool` sets this value.
 #
 # [*cni_rbac_binding*]
@@ -77,7 +89,11 @@
 #
 # [*etcd_version*]
 #   The version of etcd that you would like to use.
+<<<<<<< HEAD
 #   Defaults to 3.1.12
+=======
+#   Defaults to 3.2.18
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 #
 # [*etcd_archive*]
 #  The name of the etcd archive
@@ -102,7 +118,16 @@
 # [*runc_source*]
 #  The URL to download runc
 #  Defaults to https://github.com/opencontainers/runc/releases/download/v${runc_version}/runc.amd64
+<<<<<<< HEAD
 #  
+=======
+#
+# [*etcd_hostname*]
+#   The name of the etcd instance.
+#   An example with hiera would be kubernetes::etcd_hostname: "%{::fqdn}"
+#   Defaults to hostname
+#
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 # [*etcd_ip*]
 #   The ip address that you want etcd to use for communications.
 #   An example with hiera would be kubernetes::etcd_ip: "%{::ipaddress_enp0s8}"
@@ -166,6 +191,21 @@
 #   A string array of Subhect Alternative Names for the api server certificates.
 #   Defaults to []
 #
+<<<<<<< HEAD
+=======
+# [*apiserver_extra_volumes*]
+#   A hash of extra volume mounts mounted on the api server.
+#   Defaults to {}
+#
+# [*controllermanager_extra_arguments*]
+#   A string array of extra arguments to be passed to the controller manager.
+#   Defaults to []
+#
+# [*controllermanager_extra_volumes*]
+#   A hash of extra volume mounts mounted on the controller manager.
+#   Defaults to []
+#
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 # [*kubernetes_ca_crt*]
 #   The clusters ca certificate. Must be passed as a string not a file.
 #   Defaults to undef
@@ -199,6 +239,13 @@
 #   This is a bool that determines if the kubernetes dashboard is installed.
 #   Defaults to false
 #
+<<<<<<< HEAD
+=======
+# [*kubernetes_dashboard_url*]
+#   The URL to get the Kubernetes Dashboard yaml file.
+#   Defaults to the upstream source. `kube_tool` sets this value.
+#
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 # [*dashboard_version*]
 #   The version of Kubernetes dashboard you want to install.
 #   Defaults to v1.10.1
@@ -234,11 +281,21 @@
 #  Defaults to {}
 #
 # [*kubelet_extra_config*]
+<<<<<<< HEAD
 #  A hash containing extra configuration data to be serialised with `to_yaml` and appended to Kubelet configuration file for the cluster. Requires DynamicKubeletConfig.
 #  Defaults to {}
 #
 # [*kubelet_extra_arguments*]
 #  A string array to be appended to kubeletExtraArgs in the Kubelet's nodeRegistration configuration. It is applied to both masters and nodes. Use this for critical Kubelet settings such as `pod-infra-container-image` which may be problematic to configure via kubelet_extra_config and DynamicKubeletConfig.
+=======
+#  A hash containing extra configuration data to be serialised with `to_yaml` and appended to Kubelet configuration file for the cluster.
+#  Requires DynamicKubeletConfig.
+#  Defaults to {}
+#
+# [*kubelet_extra_arguments*]
+#  A string array to be appended to kubeletExtraArgs in the Kubelet's nodeRegistration configuration applied to both masters and nodes.
+#  Use this for critical Kubelet settings such as `pod-infra-container-image` which may be problematic to configure via kubelet_extra_config
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 #  Defaults to []
 #
 # [*kubernetes_apt_location*]
@@ -313,6 +370,21 @@
 #  A flag to manage required sysctl settings.
 #  Defaults to true
 #
+<<<<<<< HEAD
+=======
+# [*default_path*]
+#  The path to be used when running kube* commands
+#  Defaults to ['/usr/bin','/bin','/sbin','/usr/local/bin']
+#
+# [*cgroup_driver*]
+#  The cgroup driver to be used.
+#  Defaults to 'systemd' on EL and 'cgroupfs' otherwise
+#
+# [*environment*]
+# The environment passed to kubectl commands.
+# Defaults to setting HOME and KUBECONFIG variables
+#
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 # Authors
 # -------
 #
@@ -321,6 +393,7 @@
 #
 #
 class kubernetes (
+<<<<<<< HEAD
   String $kubernetes_version                   = '1.10.2',
   String $kubernetes_package_version           = $facts['os']['family'] ? {
                                                     'Debian' => "${kubernetes_version}-00",
@@ -403,6 +476,107 @@ class kubernetes (
   Boolean $manage_sysctl_settings              = true,
   Boolean $create_repos                        = true,
   String $image_repository                     = 'k8s.gcr.io',
+=======
+  String $kubernetes_version                         = '1.10.2',
+  String $kubernetes_cluster_name                    = 'kubernetes',
+  String $kubernetes_package_version                 = $facts['os']['family'] ? {
+                                                          'Debian' => "${kubernetes_version}-00",
+                                                          'RedHat' => $kubernetes::kubernetes_version,
+                                                        },
+  String $container_runtime                          = 'docker',
+  Optional[String] $containerd_version               = '1.1.0',
+  Optional[String] $docker_package_name              = 'docker-engine',
+  Optional[String] $docker_version                   = $facts['os']['family'] ? {
+                                                          'Debian' => '17.03.0~ce-0~ubuntu-xenial',
+                                                          'RedHat' => '17.03.1.ce-1.el7.centos',
+                                                        },
+  Optional[String] $cni_pod_cidr                     = undef,
+  Boolean $controller                                = false,
+  Boolean $worker                                    = false,
+  Boolean $manage_docker                             = true,
+  Boolean $manage_etcd                               = true,
+  Optional[String] $kube_api_advertise_address       = undef,
+  Optional[String] $etcd_version                     = '3.2.18',
+  Optional[String] $etcd_hostname                    = $facts['hostname'],
+  Optional[String] $etcd_ip                          = undef,
+  Optional[Array] $etcd_peers                        = undef,
+  Optional[String] $etcd_initial_cluster             = undef,
+  Optional[Enum['new','existing']] $etcd_initial_cluster_state = 'new',
+  String $etcd_ca_key                                = undef,
+  String $etcd_ca_crt                                = undef,
+  String $etcdclient_key                             = undef,
+  String $etcdclient_crt                             = undef,
+  Optional[String] $etcdserver_crt                   = undef,
+  Optional[String] $etcdserver_key                   = undef,
+  Optional[String] $etcdpeer_crt                     = undef,
+  Optional[String] $etcdpeer_key                     = undef,
+  Optional[String] $cni_network_provider             = undef,
+  Optional[String] $cni_rbac_binding                 = undef,
+  Boolean $install_dashboard                         = false,
+  String $dashboard_version                          = 'v1.10.1',
+  String $kubernetes_dashboard_url                   =
+  "https://raw.githubusercontent.com/kubernetes/dashboard/${dashboard_version}/src/deploy/recommended/kubernetes-dashboard.yaml",
+  Boolean $schedule_on_controller                    = false,
+  Integer $api_server_count                          = undef,
+  String $kubernetes_ca_crt                          = undef,
+  String $kubernetes_ca_key                          = undef,
+  String $token                                      = undef,
+  String $discovery_token_hash                       = undef,
+  String $sa_pub                                     = undef,
+  String $sa_key                                     = undef,
+  Optional[Array] $apiserver_cert_extra_sans         = [],
+  Optional[Array] $apiserver_extra_arguments         = [],
+  Optional[Array] $controllermanager_extra_arguments = [],
+  String $service_cidr                               = '10.96.0.0/12',
+  Optional[String] $node_label                       = undef,
+  Optional[String] $controller_address               = undef,
+  Optional[String] $cloud_provider                   = undef,
+  Optional[String] $cloud_config                     = undef,
+  Optional[Hash] $apiserver_extra_volumes            = {},
+  Optional[Hash] $controllermanager_extra_volumes    = {},
+  Optional[Hash] $kubeadm_extra_config               = undef,
+  Optional[Hash] $kubelet_extra_config               = undef,
+  Optional[Array] $kubelet_extra_arguments           = [],
+  Optional[String] $runc_version                     = '1.0.0-rc5',
+  Optional[String] $runc_source                      =
+    "https://github.com/opencontainers/runc/releases/download/v${runc_version}/runc.amd64",
+  Optional[String] $containerd_archive               = "containerd-${containerd_version}.linux-amd64.tar.gz",
+  Optional[String] $containerd_source                =
+    "https://github.com/containerd/containerd/releases/download/v${containerd_version}/${containerd_archive}",
+  String $etcd_archive                               = "etcd-v${etcd_version}-linux-amd64.tar.gz",
+  String $etcd_package_name                          = 'etcd-server',
+  String $etcd_source                                = "https://github.com/coreos/etcd/releases/download/v${etcd_version}/${etcd_archive}",
+  String $etcd_install_method                        = 'wget',
+  Optional[String] $kubernetes_apt_location          = undef,
+  Optional[String] $kubernetes_apt_release           = undef,
+  Optional[String] $kubernetes_apt_repos             = undef,
+  Optional[String] $kubernetes_key_id                = undef,
+  Optional[String] $kubernetes_key_source            = undef,
+  Optional[String] $kubernetes_yum_baseurl           = undef,
+  Optional[String] $kubernetes_yum_gpgkey            = undef,
+  Optional[String] $docker_apt_location              = undef,
+  Optional[String] $docker_apt_release               = undef,
+  Optional[String] $docker_apt_repos                 = undef,
+  Optional[String] $docker_yum_baseurl               = undef,
+  Optional[String] $docker_yum_gpgkey                = undef,
+  Optional[String] $docker_key_id                    = undef,
+  Optional[String] $docker_key_source                = undef,
+  Boolean $disable_swap                              = true,
+  Boolean $manage_kernel_modules                     = true,
+  Boolean $manage_sysctl_settings                    = true,
+  Boolean $create_repos                              = true,
+  String $image_repository                           = 'k8s.gcr.io',
+  Array[String] $default_path                        = ['/usr/bin','/bin','/sbin','/usr/local/bin'],
+  String $cgroup_driver                              = $facts['os']['family'] ? {
+                                                          'RedHat' => 'systemd',
+                                                          default  => 'cgroupfs',
+                                                        },
+  Array[String] $environment                         = $controller ? {
+                                                          true    => ['HOME=/root', 'KUBECONFIG=/etc/kubernetes/admin.conf'],
+                                                          default => ['HOME=/root', 'KUBECONFIG=/etc/kubernetes/kubelet.conf'],
+                                                        },
+  Optional[Array] $ignore_preflight_errors           = undef,
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 ){
   if ! $facts['os']['family'] in ['Debian','RedHat'] {
     notify {"The OS family ${facts['os']['family']} is not supported by this module":}
@@ -434,20 +608,32 @@ class kubernetes (
   if $controller {
     include kubernetes::repos
     include kubernetes::packages
+<<<<<<< HEAD
     include kubernetes::config
+=======
+    include kubernetes::config::kubeadm
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
     include kubernetes::service
     include kubernetes::cluster_roles
     include kubernetes::kube_addons
     contain kubernetes::repos
     contain kubernetes::packages
+<<<<<<< HEAD
     contain kubernetes::config
+=======
+    contain kubernetes::config::kubeadm
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
     contain kubernetes::service
     contain kubernetes::cluster_roles
     contain kubernetes::kube_addons
 
     Class['kubernetes::repos']
       -> Class['kubernetes::packages']
+<<<<<<< HEAD
       -> Class['kubernetes::config']
+=======
+      -> Class['kubernetes::config::kubeadm']
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
       -> Class['kubernetes::service']
       -> Class['kubernetes::cluster_roles']
       -> Class['kubernetes::kube_addons']

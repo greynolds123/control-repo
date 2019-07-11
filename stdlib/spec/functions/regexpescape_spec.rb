@@ -15,7 +15,11 @@ describe 'regexpescape' do
 
   describe 'handling normal strings' do
     it 'calls ruby\'s Regexp.escape function' do
+<<<<<<< HEAD
       Regexp.expects(:escape).with('regexp_string').returns('escaped_regexp_string').once
+=======
+      expect(Regexp).to receive(:escape).with('regexp_string').and_return('escaped_regexp_string').once
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
       is_expected.to run.with_params('regexp_string').and_return('escaped_regexp_string')
     end
   end
@@ -23,7 +27,11 @@ describe 'regexpescape' do
   describe 'handling classes derived from String' do
     it 'calls ruby\'s Regexp.escape function' do
       regexp_string = AlsoString.new('regexp_string')
+<<<<<<< HEAD
       Regexp.expects(:escape).with(regexp_string).returns('escaped_regexp_string').once
+=======
+      expect(Regexp).to receive(:escape).with(regexp_string).and_return('escaped_regexp_string').once
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
       is_expected.to run.with_params(regexp_string).and_return('escaped_regexp_string')
     end
   end

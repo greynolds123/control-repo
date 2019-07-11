@@ -3,7 +3,11 @@
 #
 module Puppet::Parser::Functions
   newfunction(:type, :type => :rvalue, :doc => <<-DOC
+<<<<<<< HEAD
     DEPRECATED: This function will cease to function on Puppet 4; please use type3x() before upgrading to puppet 4 for backwards-compatibility, or migrate to the new parser's typing system.
+=======
+    DEPRECATED: This function will cease to function on Puppet 4; please use type3x() before upgrading to Puppet 4 for backwards-compatibility, or migrate to the new parser's typing system.
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
   DOC
              ) do |args|
 

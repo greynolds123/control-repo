@@ -15,7 +15,11 @@ describe 'type3x' do
   end
 
   it 'returns array when given an array' do
+<<<<<<< HEAD
     result = scope.function_type3x([%w[aaabbbbcccc asdf]])
+=======
+    result = scope.function_type3x([['aaabbbbcccc', 'asdf']])
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
     expect(result).to(eq('array'))
   end
 

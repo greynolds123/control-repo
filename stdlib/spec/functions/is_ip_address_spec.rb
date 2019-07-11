@@ -20,6 +20,7 @@ describe 'is_ip_address' do
   it { is_expected.to run.with_params(1).and_return(false) }
   it { is_expected.to run.with_params({}).and_return(false) }
   it { is_expected.to run.with_params([]).and_return(false) }
+<<<<<<< HEAD
 
   context 'Checking for deprecation warning', :if => Puppet.version.to_f < 4.0 do
     # Checking for deprecation warning, which should only be provoked when the env variable for it is set.
@@ -37,4 +38,7 @@ describe 'is_ip_address' do
       ENV.delete('STDLIB_LOG_DEPRECATIONS')
     end
   end
+=======
+  it { is_expected.to run.with_params('thisstring').and_return(false) }
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 end

@@ -19,7 +19,11 @@ Puppet::Type.newtype(:registry_value) do
   EOT
 
   def self.title_patterns
+<<<<<<< HEAD
     [[/^(.*?)\Z/m, [[:path, lambda { |x| x }]]]]
+=======
+    [[/^(.*?)\Z/m, [[:path]]]]
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
   end
 
   ensurable
@@ -28,8 +32,14 @@ Puppet::Type.newtype(:registry_value) do
     desc "The path to the registry value to manage.  For example:
       'HKLM\Software\Value1', 'HKEY_LOCAL_MACHINE\Software\Vendor\Value2'.
       If Puppet is running on a 64-bit system, the 32-bit registry key can
+<<<<<<< HEAD
       be explicitly manage using a prefix.  For example:
       '32:HKLM\Software\Value3'"
+=======
+      be explicitly managed using a prefix.  For example:
+      '32:HKLM\Software\Value3'. Use a double backslash between the value name
+      and path when managing a value with a backslash in the name."
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 
     validate do |path|
       PuppetX::Puppetlabs::Registry::RegistryValuePath.new(path).valid?

@@ -8,7 +8,11 @@ describe 'time' do
     before(:each) do
       # get a value before stubbing the function
       test_time = Time.utc(2006, 10, 13, 8, 15, 11)
+<<<<<<< HEAD
       Time.expects(:new).with.returns(test_time).once
+=======
+      allow(Time).to receive(:new).with(no_args).and_return(test_time).once
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
     end
     it { is_expected.to run.with_params.and_return(1_160_727_311) }
     it { is_expected.to run.with_params('').and_return(1_160_727_311) }

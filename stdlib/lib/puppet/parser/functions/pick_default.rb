@@ -5,8 +5,12 @@ module Puppet::Parser::Functions
   newfunction(:pick_default, :type => :rvalue, :doc => <<-DOC
     This function is similar to a coalesce function in SQL in that it will return
     the first value in a list of values that is not undefined or an empty string
+<<<<<<< HEAD
     (two things in Puppet that will return a boolean false value). If no value is
     found, it will return the last argument.
+=======
+    If no value is found, it will return the last argument.
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 
     Typically, this function is used to check for a value in the Puppet
     Dashboard/Enterprise Console, and failover to a default value like the

@@ -14,5 +14,9 @@
 # Requires: nothing
 #
 class stdlib {
+<<<<<<< HEAD
   include stdlib::stages
+=======
+  include ::stdlib::stages
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 }

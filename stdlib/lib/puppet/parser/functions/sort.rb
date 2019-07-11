@@ -5,6 +5,11 @@
 module Puppet::Parser::Functions
   newfunction(:sort, :type => :rvalue, :doc => <<-DOC
     Sorts strings and arrays lexically.
+<<<<<<< HEAD
+=======
+
+    Note that from Puppet 6.0.0 the same function in Puppet will be used instead of this.
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
   DOC
              ) do |arguments|
 

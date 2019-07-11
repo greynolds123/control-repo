@@ -11,7 +11,11 @@ RestartSec=5s
 LimitNOFILE=40000
 TimeoutStartSec=0
 
+<<<<<<< HEAD
 ExecStart=/usr/local/bin/etcd --name <%= @hostname %> \
+=======
+ExecStart=/usr/local/bin/etcd --name <%= @etcd_hostname %> \
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
     --data-dir /var/lib/etcd \
     --listen-client-urls https://<%= @etcd_ip %>:2379 \
     --advertise-client-urls https://<%= @etcd_ip %>:2379 \

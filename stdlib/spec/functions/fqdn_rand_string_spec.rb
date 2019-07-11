@@ -55,7 +55,11 @@ describe 'fqdn_rand_string' do
 
     # workaround not being able to use let(:facts) because some tests need
     # multiple different hostnames in one context
+<<<<<<< HEAD
     scope.stubs(:lookupvar).with('::fqdn', {}).returns(host)
+=======
+    allow(scope).to receive(:lookupvar).with('::fqdn', {}).and_return(host)
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 
     function_args = [max]
     if args.key?(:charset) || !extra.empty?

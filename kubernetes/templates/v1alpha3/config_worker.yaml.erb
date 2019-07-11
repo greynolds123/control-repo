@@ -1,6 +1,12 @@
 apiVersion: kubeadm.k8s.io/v1alpha3
 caCertPath: /etc/kubernetes/pki/ca.crt
 kind: JoinConfiguration
+<<<<<<< HEAD
+=======
+<%- if @kubernetes_cluster_name != "kubernetes"  -%>
+clusterName: <%= @kubernetes_cluster_name %>
+<%- end -%>
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 discoveryToken: <%= @discovery_token %>
 discoveryTokenAPIServers:
   - '<%= @controller_address %>'
@@ -12,7 +18,13 @@ discoveryTokenUnsafeSkipCAVerification: <%= @skip_ca_verification %>
 discoveryTokenUnsafeSkipCAVerification: true
 <% end -%>
 discoveryTimeout: 5m0s
+<<<<<<< HEAD
 featureGates: <%= @feature_gates %>
+=======
+<% if @feature_gates -%>
+featureGates: <%= @feature_gates %>
+<% end -%>
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 tlsBootstrapToken: <%= @tls_bootstrap_token %>
 token: <%= @token %>
 nodeRegistration:
@@ -20,9 +32,23 @@ nodeRegistration:
   <%- if @container_runtime == "cri_containerd" -%>
   criSocket: /run/containerd/containerd.sock
   <%- end -%>
+<<<<<<< HEAD
   <%- if @kubelet_merged_extra_arguments -%>
   kubeletExtraArgs:
     <%- @kubelet_merged_extra_arguments.each do |arg| -%>
     <%= arg %>
     <%- end -%>
   <%- end -%>
+=======
+  kubeletExtraArgs:
+    cgroup-driver: <%= @cgroup_driver %>
+    <%- if @cloud_provider -%>
+    cloud-provider: <%= @cloud_provider %>
+    <%- if @cloud_config -%>
+    cloud-config: <%= @cloud_config %>
+    <%- end -%>
+    <%- end -%>
+    <%- @kubelet_extra_arguments.each do |arg| -%>
+    <%= arg %>
+    <%- end %>
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c

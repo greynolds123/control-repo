@@ -31,7 +31,11 @@ DOC
       type_name, title = Puppet::Resource.type_and_title(reference, nil)
       type = Puppet::Pops::Evaluator::Runtime3ResourceSupport.find_resource_type_or_class(find_global_scope, type_name.downcase)
     elsif reference.is_a?(Puppet::Resource)
+<<<<<<< HEAD
       type = reference.resource_type
+=======
+      type = reference.type
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
       title = reference.title
     else
       raise(ArgumentError, "Reference is not understood: '#{reference.class}'")

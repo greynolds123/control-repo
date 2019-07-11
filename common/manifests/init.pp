@@ -17,6 +17,7 @@ class common (
   $enable_hosts                     = false,
   $enable_inittab                   = false,
   $enable_mailaliases               = false,
+<<<<<<< HEAD
   $enable_motd                      = true,
   $enable_network                   = false,
   $enable_apache                    = false,
@@ -34,6 +35,17 @@ class common (
   $enable_ssh                       = false,
   $enable_hiera                     = false,
   $enable_policyengine              = true,
+=======
+  $enable_motd                      = false,
+  $enable_network                   = false,
+  $enable_nsswitch                  = false,
+  $enable_ntp                       = false,
+  $enable_pam                       = false,
+  $enable_puppet_agent              = false,
+  $enable_rsyslog                   = false,
+  $enable_selinux                   = false,
+  $enable_ssh                       = false,
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
   $enable_utils                     = false,
   $enable_vim                       = false,
   $enable_wget                      = false,
@@ -85,7 +97,11 @@ class common (
   }
 
   # validate type and convert string to boolean if necessary
+<<<<<<< HEAD
   if is_string($enable_motd) {
+=======
+  if is_string($enable_mailaliases) {
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
     $motd_enabled = str2bool($enable_motd)
   } else {
     $motd_enabled = $enable_motd
@@ -94,7 +110,10 @@ class common (
     include ::motd
   }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
   # validate type and convert string to boolean if necessary
   if is_string($enable_network) {
     $network_enabled = str2bool($enable_network)
@@ -106,6 +125,7 @@ class common (
   }
 
   # validate type and convert string to boolean if necessary
+<<<<<<< HEAD
   if is_string($enable_apache) {
     $apache_enabled = str2bool($enable_apache)
   } else {
@@ -126,6 +146,8 @@ class common (
   }
 
   # validate type and convert string to boolean if necessary
+=======
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
   if is_string($enable_nsswitch) {
     $nsswitch_enabled = str2bool($enable_nsswitch)
   } else {
@@ -146,6 +168,7 @@ class common (
   }
 
   # validate type and convert string to boolean if necessary
+<<<<<<< HEAD
   if is_string($enable_git) {
     $git_enabled = str2bool($enable_git)
   } else {
@@ -156,6 +179,8 @@ class common (
   }
 
   # validate type and convert string to boolean if necessary
+=======
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
   if is_string($enable_pam) {
     $pam_enabled = str2bool($enable_pam)
   } else {
@@ -185,6 +210,7 @@ class common (
     include ::rsyslog
   }
 
+<<<<<<< HEAD
 
   # validate type and convert string to boolean if necessary
   if is_string($enable_tool) {
@@ -216,6 +242,8 @@ class common (
     include ::history
   }
 
+=======
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
   # validate type and convert string to boolean if necessary
   if is_string($enable_selinux) {
     $selinux_enabled = str2bool($enable_selinux)
@@ -237,6 +265,7 @@ class common (
   }
 
   # validate type and convert string to boolean if necessary
+<<<<<<< HEAD
   if is_string($enable_hiera) {
     $hiera_enabled = str2bool($enable_hiera)
   } else {
@@ -259,6 +288,8 @@ class common (
 
 
   # validate type and convert string to boolean if necessary
+=======
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
   if is_string($enable_utils) {
     $utils_enabled = str2bool($enable_utils)
   } else {

@@ -1,6 +1,10 @@
 require 'spec_helper'
 
+<<<<<<< HEAD
 describe 'rstrip' do
+=======
+describe 'rstrip', :if => Puppet::Util::Package.versioncmp(Puppet.version, '6.0.0') < 0 do
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
   it { is_expected.not_to eq(nil) }
   it { is_expected.to run.with_params.and_raise_error(Puppet::ParseError, %r{wrong number of arguments}i) }
   it {

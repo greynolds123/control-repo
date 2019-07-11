@@ -18,11 +18,19 @@ describe 'parsejson' do
 
     it 'is able to parse JSON data with an Array' do
       is_expected.to run.with_params('["a","b","c"]')
+<<<<<<< HEAD
                         .and_return(%w[a b c])
     end
 
     it 'is able to parse empty JSON values' do
       actual_array = %w[[] {}]
+=======
+                        .and_return(['a', 'b', 'c'])
+    end
+
+    it 'is able to parse empty JSON values' do
+      actual_array = ['[]', '{}']
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
       expected = [[], {}]
       actual_array.each_with_index do |actual, index|
         is_expected.to run.with_params(actual).and_return(expected[index])
@@ -36,7 +44,11 @@ describe 'parsejson' do
 
     it 'is able to parse JSON data with a UTF8 and double byte characters' do
       is_expected.to run.with_params('{"×":"これ","ý":"記号","です":{"©":["Á","ß"]}}')
+<<<<<<< HEAD
                         .and_return('×' => 'これ', 'ý' => '記号', 'です' => { '©' => %w[Á ß] })
+=======
+                        .and_return('×' => 'これ', 'ý' => '記号', 'です' => { '©' => ['Á', 'ß'] })
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
     end
 
     it 'does not return the default value if the data was parsed correctly' do

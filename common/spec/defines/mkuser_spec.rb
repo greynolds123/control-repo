@@ -1,8 +1,20 @@
 require 'spec_helper'
 
+<<<<<<< HEAD
 describe 'common::mkuser' do
   let(:title) { 'alice' }
   let(:facts) { { :osfamily => 'RedHat' } }
+=======
+clientversion = `facter puppetversion`
+
+describe 'common::mkuser' do
+  let(:title) { 'alice' }
+  let(:facts) do
+    { :osfamily      => 'RedHat',
+      :puppetversion => clientversion,
+    }
+  end
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 
   context 'user alice with default values' do
     let(:params) { { :uid => 1000 } }
@@ -24,6 +36,10 @@ describe 'common::mkuser' do
     it do
       should contain_file('/home/alice').with({
         'owner'   => 'alice',
+<<<<<<< HEAD
+=======
+        'group'   => 'alice',
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
         'mode'    => '0700',
         'require' => 'Common::Mkdir_p[/home/alice]',
       })
@@ -82,6 +98,10 @@ describe 'common::mkuser' do
     it do
       should contain_file('/home/superu').with({
         'owner'   => 'alice',
+<<<<<<< HEAD
+=======
+        'group'   => 'superusers',
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
         'mode'    => '0701',
         'require' => 'Common::Mkdir_p[/home/superu]',
       })
@@ -231,7 +251,12 @@ describe 'common::mkuser' do
     # set needed custom facts and variables
     let(:facts) do
       {
+<<<<<<< HEAD
         :osfamily => 'RedHat',
+=======
+        :osfamily      => 'RedHat',
+        :puppetversion => clientversion,
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
       }
     end
     let(:validation_params) do

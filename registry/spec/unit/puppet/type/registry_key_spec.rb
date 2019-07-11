@@ -39,7 +39,11 @@ describe Puppet::Type.type(:registry_key) do
         key[:path] = path
       end
     end
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
     %w[hku hku\.DEFAULT hku\.DEFAULT\software hku\.DEFAULT\software\vendor].each do |path|
       it "should accept #{path}" do
         key[:path] = path
@@ -94,7 +98,12 @@ describe Puppet::Type.type(:registry_key) do
         key[:purge_values] = true
         catalog.add_resource(key)
         catalog.add_resource(Puppet::Type.type(:registry_value).new(:path => "#{key[:path]}\\val1", :catalog => catalog))
+<<<<<<< HEAD
         catalog.add_resource(Puppet::Type.type(:registry_value).new(:path => "#{key[:path]}\\val2", :catalog => catalog))
+=======
+        catalog.add_resource(Puppet::Type.type(:registry_value).new(:path => "#{key[:path]}\\vAl2", :catalog => catalog))
+        catalog.add_resource(Puppet::Type.type(:registry_value).new(:path => "#{key[:path]}\\\\val\\3", :catalog => catalog))
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
       end
 
       it "should return an empty array if the key doesn't have any values" do
@@ -102,6 +111,7 @@ describe Puppet::Type.type(:registry_key) do
         key.eval_generate.must be_empty
       end
 
+<<<<<<< HEAD
       it "should purge existing values that are not being managed" do
         key.provider.expects(:values).returns(['val1', 'val3'])
         res = key.eval_generate.first
@@ -112,12 +122,51 @@ describe Puppet::Type.type(:registry_key) do
 
       it "should return an empty array if all existing values are being managed" do
         key.provider.expects(:values).returns(['val1', 'val2'])
+=======
+      it "should purge existing values that are not being managed (without backslash)" do
+        key.provider.expects(:values).returns(['val1', 'val\3', 'val99'])
+        resources = key.eval_generate
+        resources.count.must == 1
+        res = resources.first
+
+        res[:ensure].must == :absent
+        res[:path].must == "#{key[:path]}\\val99"
+      end
+
+      it "should purge existing values that are not being managed (with backslash)" do
+        key.provider.expects(:values).returns(['val1', 'val\3', 'val\99'])
+
+        resources = key.eval_generate
+        resources.count.must == 1
+        res = resources.first
+
+        res[:ensure].must == :absent
+        res[:path].must == "#{key[:path]}\\\\val\\99"
+      end
+
+      it "should purge existing values that are not being managed and case insensitive)" do
+        key.provider.expects(:values).returns(['VAL1', 'VaL\3', 'Val99'])
+        resources = key.eval_generate
+        resources.count.must == 1
+        res = resources.first
+
+        res[:ensure].must == :absent
+        res[:path].must == "#{key[:path]}\\Val99"
+      end
+
+      it "should return an empty array if all existing values are being managed" do
+        key.provider.expects(:values).returns(['val1', 'val2','val\3'])
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
         key.eval_generate.must be_empty
       end
     end
   end
 
+<<<<<<< HEAD
   describe "#autorequire" do
+=======
+  describe "resource aliases" do
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
     let :the_catalog do
       Puppet::Resource::Catalog.new
     end

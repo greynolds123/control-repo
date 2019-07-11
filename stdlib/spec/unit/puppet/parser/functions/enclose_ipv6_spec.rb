@@ -12,7 +12,11 @@ describe 'the enclose_ipv6 function' do
   end
 
   it 'raises a ParseError if there is more than 1 arguments' do
+<<<<<<< HEAD
     expect { scope.function_enclose_ipv6(%w[argument1 argument2]) }.to(raise_error(Puppet::ParseError))
+=======
+    expect { scope.function_enclose_ipv6(['argument1', 'argument2']) }.to(raise_error(Puppet::ParseError))
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
   end
 
   it 'raises a ParseError when given garbage' do

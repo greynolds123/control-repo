@@ -69,6 +69,16 @@ define git::config (
     default => undef,
   }
 
+<<<<<<< HEAD
+=======
+  $title = 'Git Global Configuration'
+  $_key  = 'admin@prod.lcoaldomain'
+  $value = 'Admin'
+  $user  = 'puppetmaster'
+  $scope = 'global'
+
+
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
   git_config { $title:
     key     => $_key,
     value   => $value,

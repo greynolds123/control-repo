@@ -13,6 +13,13 @@ module Puppet::Parser::Functions
     Would return:
 
         ['aaa','aaaddd']
+<<<<<<< HEAD
+=======
+
+    Note that since Puppet 4.0.0, the filter() function in Puppet can do the same:
+
+        ['aaa', 'bbb', 'ccc', 'aaaddd']. filter |$x| { $x =~ 'aaa' }
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
     DOC
              ) do |arguments|
 

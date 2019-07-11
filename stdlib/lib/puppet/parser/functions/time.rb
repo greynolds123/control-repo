@@ -10,6 +10,16 @@ module Puppet::Parser::Functions
         time()
 
     Will return something like: 1311972653
+<<<<<<< HEAD
+=======
+
+    Note that since Puppet 4.8.0 the Puppet language has the data types Timestamp (a point in time) and
+    Timespan (a duration). The following example is equivalent to calling time() without
+    any arguments:
+
+        Timestamp()
+
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
     DOC
              ) do |arguments|
 

@@ -25,6 +25,22 @@ module Puppet::Parser::Functions
         member(['a', 'b', 'c'], ['d', 'b'])
 
     would return: false
+<<<<<<< HEAD
+=======
+
+    Note: Since Puppet 4.0.0 the same can be performed in the Puppet language. For single values
+    the operator `in` can be used:
+
+        'a' in ['a', 'b']  # true
+
+    And for arrays by using operator `-` to compute a diff:
+
+        ['d', 'b'] - ['a', 'b', 'c'] == []  # false because 'd' is not subtracted
+        ['a', 'b'] - ['a', 'b', 'c'] == []  # true because both 'a' and 'b' are subtracted
+
+    Also note that since Puppet 5.2.0 the general form of testing content of an array or hash is to use the built-in
+    `any` and `all` functions.
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
     DOC
              ) do |arguments|
 

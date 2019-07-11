@@ -19,4 +19,8 @@ describe 'num2bool' do
   it { is_expected.to run.with_params('[]').and_raise_error(Puppet::ParseError, %r{does not look like a number}) }
   it { is_expected.to run.with_params({}).and_return(false) }
   it { is_expected.to run.with_params('{}').and_raise_error(Puppet::ParseError, %r{does not look like a number}) }
+<<<<<<< HEAD
+=======
+  it { is_expected.to run.with_params(['-50', '1']).and_return(false) }
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 end

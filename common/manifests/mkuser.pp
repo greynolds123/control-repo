@@ -110,7 +110,11 @@ define common::mkuser (
     $mypurgekey = false
   }
 
+<<<<<<< HEAD
   if versioncmp("${::puppetversion}", '3.6') > 0 { # lint:ignore:only_variable_string
+=======
+  if versioncmp("${::puppetversion}", '3.6') >= 0 { # lint:ignore:only_variable_string
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
     User {
       purge_ssh_keys => $mypurgekey,
     }
@@ -139,11 +143,22 @@ define common::mkuser (
   } # user
 
   if $create_group {
+<<<<<<< HEAD
     group { $name:
       ensure => $ensure,
       gid    => $mygid,
       name   => $mygroup,
     } # group
+=======
+    # If the group is not already defined, ensure its existence
+    if !defined(Group[$name]) {
+      group { $name:
+        ensure => $ensure,
+        gid    => $mygid,
+        name   => $mygroup,
+      }
+    }
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
   }
 
   # If managing home, then set the mode of the home directory. This allows for
@@ -154,6 +169,10 @@ define common::mkuser (
 
     file { $myhome:
       owner   => $name,
+<<<<<<< HEAD
+=======
+      group   => $mygroup,
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
       mode    => $mymode,
       require => Common::Mkdir_p[$myhome],
     }

@@ -25,7 +25,11 @@ describe 'parseyaml' do
 
     it 'is able to parse YAML data with an Array' do
       is_expected.to run.with_params("---\n- a\n- b\n- c\n")
+<<<<<<< HEAD
                         .and_return(%w[a b c])
+=======
+                        .and_return(['a', 'b', 'c'])
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
     end
 
     it 'is able to parse YAML data with a mixed structure' do
@@ -35,7 +39,11 @@ describe 'parseyaml' do
 
     it 'is able to parse YAML data with a UTF8 and double byte characters' do
       is_expected.to run.with_params("---\na: ×\nこれ: 記号\nです:\n  ©:\n  - Á\n  - ß\n")
+<<<<<<< HEAD
                         .and_return('a' => '×', 'これ' => '記号', 'です' => { '©' => %w[Á ß] })
+=======
+                        .and_return('a' => '×', 'これ' => '記号', 'です' => { '©' => ['Á', 'ß'] })
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
     end
 
     it 'does not return the default value if the data was parsed correctly' do
@@ -44,6 +52,7 @@ describe 'parseyaml' do
     end
   end
 
+<<<<<<< HEAD
   context 'on a modern ruby', :unless => RUBY_VERSION == '1.8.7' do
     it 'raises an error with invalid YAML and no default' do
       is_expected.to run.with_params('["one"')
@@ -56,6 +65,11 @@ describe 'parseyaml' do
       is_expected.to run.with_params('["one"')
                         .and_raise_error(ArgumentError)
     end
+=======
+  it 'raises an error with invalid YAML and no default' do
+    is_expected.to run.with_params('["one"')
+                      .and_raise_error(Psych::SyntaxError)
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
   end
 
   context 'with incorrect YAML data' do
@@ -71,7 +85,11 @@ describe 'parseyaml' do
       end
     end
 
+<<<<<<< HEAD
     context 'when running on modern rubies', :unless => RUBY_VERSION == '1.8.7' do
+=======
+    context 'when running on modern rubies' do
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
       ['---', '...', '*8', ''].each do |value|
         it "should return the default value for an incorrect #{value.inspect} string parameter" do
           is_expected.to run.with_params(value, 'default_value')

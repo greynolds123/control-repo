@@ -40,10 +40,21 @@
 #   }
 #
 define registry::value (
+<<<<<<< HEAD
   $key,
   $value = undef,
   $type  = 'string',
   $data  = undef,
+=======
+  Pattern[/^\w+/]           $key,
+  Optional[String]          $value = undef,
+  Optional[Pattern[/^\w+/]] $type = 'string',
+  Optional[Variant[
+    String,
+    Numeric,
+    Array[String]
+  ]]                       $data  = undef,
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 ) {
 
   # ensure windows os
@@ -51,6 +62,7 @@ define registry::value (
     fail("Unsupported OS ${::operatingsystem}")
   }
 
+<<<<<<< HEAD
   # validate our inputs.
   validate_re($key, '^\w+',
     "key parameter must not be empty but it is key => '${key}'")
@@ -59,6 +71,8 @@ define registry::value (
 
 
 
+=======
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
   $value_real = $value ? {
     undef       => $name,
     '(default)' => '',
@@ -74,8 +88,13 @@ define registry::value (
   }
 
   # If value_real is an empty string then the default value of the key will be
+<<<<<<< HEAD
   # managed.
   registry_value { "${key}\\${value_real}":
+=======
+  # managed.  Use a double backslash so value names with a backslash are supported
+  registry_value { "${key}\\\\${value_real}":
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
     type => $type,
     data => $data,
   }

@@ -5,6 +5,12 @@ module Puppet::Parser::Functions
   newfunction(:abs, :type => :rvalue, :doc => <<-DOC
     Returns the absolute value of a number, for example -34.56 becomes
     34.56. Takes a single integer and float value as an argument.
+<<<<<<< HEAD
+=======
+
+    Note: from Puppet 6.0.0, the compatible function with the same name in Puppet core
+    will be used instead of this function.
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
     DOC
              ) do |arguments|
 

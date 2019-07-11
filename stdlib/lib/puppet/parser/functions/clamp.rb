@@ -4,6 +4,12 @@
 module Puppet::Parser::Functions
   newfunction(:clamp, :type => :rvalue, :arity => -2, :doc => <<-DOC
     Clamps value to a range.
+<<<<<<< HEAD
+=======
+
+    Note: From Puppet 6.0.0 this can be done with only core Puppet like this:
+      [$minval, $maxval, $value_to_clamp].sort[1]
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
     DOC
              ) do |args|
 

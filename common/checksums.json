@@ -1,13 +1,21 @@
 {
   "CHANGELOG": "9d9dbf369b52edf7b6264fa51e59ed2e",
+<<<<<<< HEAD
   "Gemfile": "35c4542e677a8f4c842ff0043c399ed1",
   "LICENSE": "a0a5592752d4298166fd5b7f01de270c",
   "README.md": "8c5408dad2bea307610e131a7ab97bcb",
   "Rakefile": "87ee3b5b114ae2b1eaaedaf0cd50df37",
+=======
+  "Gemfile": "abaa884ee8a4c85f81ac9e7820d4424d",
+  "LICENSE": "1471d7da4a491d29d68df745aa4e393e",
+  "README.md": "8c5408dad2bea307610e131a7ab97bcb",
+  "Rakefile": "36b2f69bac69998352ee24ce8b8270a5",
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
   "lib/puppet/parser/functions/interface2factname.rb": "fb5ab2ed1ffe64de903a34b337a4102d",
   "lib/puppet/parser/functions/strip_file_extension.rb": "7b9d678e8346e044ab05f208e602ffb0",
   "manifests/init.pp": "4f5b33941d784c1ce1e923e404032e8b",
   "manifests/mkdir_p.pp": "cb3b9916ad43f66b8734249323bffc87",
+<<<<<<< HEAD
   "manifests/mkuser.pp": "4a7e63703efdc6d7e3b67c7b7df32bb4",
   "manifests/remove_if_empty.pp": "305f39a2cc3bd2653cb8ca6520e31788",
   "metadata.json": "a4168c3ceef44374f7e89ccd92b1f705",
@@ -19,5 +27,18 @@
   "spec/functions/interface2factname_spec.rb": "afee2b300871c5ead9e5bddb55bfa9b6",
   "spec/functions/strip_file_extension_spec.rb": "58809e0c56e0e8237c9010d306081831",
   "spec/spec_helper.rb": "0db89c9a486df193c0e40095422e19dc",
+=======
+  "manifests/mkuser.pp": "7e7b652cd0b89c50c07d10952f9be6c4",
+  "manifests/remove_if_empty.pp": "305f39a2cc3bd2653cb8ca6520e31788",
+  "metadata.json": "2b182e240eea9bbabec464ebd2fa2e6b",
+  "spec/classes/init_spec.rb": "25be7248db2412adf4f5b1b9fb968251",
+  "spec/classes/mkuser_use_cases_spec.rb": "7201f2bec9cdac5826b285241140da5b",
+  "spec/defines/mkdir_p_spec.rb": "3a6b8db7f2860eefbf31ef22400ea84a",
+  "spec/defines/mkuser_spec.rb": "d1c659770f960997f58c32c1683d51da",
+  "spec/defines/remove_if_empty_spec.rb": "6e18465a4f78263d4ca47c04f41497ef",
+  "spec/functions/interface2factname_spec.rb": "afee2b300871c5ead9e5bddb55bfa9b6",
+  "spec/functions/strip_file_extension_spec.rb": "58809e0c56e0e8237c9010d306081831",
+  "spec/spec_helper.rb": "63a6a4e0cb806d5f46095edb8bb4c08f",
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
   "tests/init.pp": "c1c9f68a35b8bd5a6147341c0eed884b"
 }

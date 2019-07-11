@@ -25,6 +25,16 @@ module Puppet::Parser::Functions
         values_at(['a','b','c','d','e'], [0, "2-3"])
 
     Would return ['a','c','d'].
+<<<<<<< HEAD
+=======
+
+    Note that since Puppet 4.0.0 it is possible to slice an array with index and count directly in the language.
+    A negative value is taken to be "from the end" of the array:
+
+        ['a', 'b', 'c', 'd'][1, 2]   # results in ['b', 'c']
+        ['a', 'b', 'c', 'd'][2, -1]  # results in ['c', 'd']
+        ['a', 'b', 'c', 'd'][1, -2]  # results in ['b', 'c']
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
     DOC
              ) do |arguments|
 

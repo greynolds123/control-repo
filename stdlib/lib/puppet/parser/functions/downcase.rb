@@ -5,6 +5,12 @@
 module Puppet::Parser::Functions
   newfunction(:downcase, :type => :rvalue, :doc => <<-DOC
     Converts the case of a string or all strings in an array to lower case.
+<<<<<<< HEAD
+=======
+
+    Note: from Puppet 6.0.0, the compatible function with the same name in Puppet core
+    will be used instead of this function.
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
   DOC
              ) do |arguments|
 

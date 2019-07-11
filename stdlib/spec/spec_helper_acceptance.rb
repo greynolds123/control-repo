@@ -1,9 +1,18 @@
+<<<<<<< HEAD
+=======
+require 'beaker-pe'
+require 'beaker-puppet'
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 require 'puppet'
 require 'beaker-rspec'
 require 'beaker/puppet_install_helper'
 require 'beaker/module_install_helper'
 
 run_puppet_install_helper
+<<<<<<< HEAD
+=======
+configure_type_defaults_on(hosts)
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 install_ca_certs unless ENV['PUPPET_INSTALL_TYPE'] =~ %r{pe}i
 install_module_on(hosts)
 install_module_dependencies_on(hosts)
@@ -20,6 +29,7 @@ end
 def return_puppet_version
   (on default, puppet('--version')).output.chomp
 end
+<<<<<<< HEAD
 
 RSpec.shared_context 'with faked facts' do
   let(:facts_d) do
@@ -52,3 +62,5 @@ RSpec.shared_context 'with faked facts' do
     shell("echo #{name}=#{value} > '#{facts_d}/#{name}.txt'")
   end
 end
+=======
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c

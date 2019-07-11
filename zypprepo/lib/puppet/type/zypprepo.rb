@@ -50,7 +50,11 @@ module Puppet
   # Doc string for properties that can be made 'absent'
   ABSENT_DOC="Set this to `absent` to remove it from the file completely."
 
+<<<<<<< HEAD
   newtype(:zypprepo) do
+=======
+  Puppet::Type::newtype(:zypprepo) do
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
     @doc = "The client-side description of a zypper repository. Repository
       configurations are found by parsing `/etc/zypp/zypper.conf` and
       the files indicated by the `reposdir` option in that file

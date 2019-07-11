@@ -8,7 +8,15 @@ This README would normally document whatever steps are necessary to get your app
 * Demo Project
 * [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
+<<<<<<< HEAD
 ### How do I get set up? ###
+=======
+<<<<<<< HEAD
+### How do I get set up? ###
+=======
+## How do I get set up? ##
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
 
 * This project will only function as a test environment for a proof of concept
 * The configuration will include a holding place for {testing demo production}, dev, stage repo
@@ -27,4 +35,12 @@ This README would normally document whatever steps are necessary to get your app
 ### Who do I talk to? ###
 
 * Greynolds3, glynnreynolds123@gmail.com
+<<<<<<< HEAD
 * Will be updated soon
+=======
+<<<<<<< HEAD
+* Will be updated soon
+=======
+* Will be updated soon
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c

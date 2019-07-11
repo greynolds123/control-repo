@@ -22,6 +22,15 @@ module Puppet::Parser::Functions
         delete_regex({'a'=>1,'b'=>2,'c'=>3}, '^a$')
         Would return: {'b'=>2,'c'=>3}
 
+<<<<<<< HEAD
+=======
+     Note that since Puppet 4 this can be done in general with the filter function:
+
+        ["aaa", "aba", "aca"].filter |$val| { $val !~ /b/ }
+        # Would return: ['aaa', 'aca']
+
+
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
   DOC
              ) do |arguments|
 
