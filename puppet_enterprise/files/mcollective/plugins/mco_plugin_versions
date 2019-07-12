@@ -1,0 +1,61 @@
+Updated plugins on Thu Jul  2 17:16:15 PDT 2015
+puppetlabs/mcollective-puppet-agent is currently up to commit:
+438ed44 Merge pull request #57 from richardc/MCOP-525-process_error_undefined
+
+puppetlabs/mcollective-sshkey-security is currently up to commit:
+2d11c87 Merge pull request #13 from melissa/maint/rm-lucid
+
+puppetlabs/mcollective-package-agent is currently up to commit:
+fb99fe8 Merge pull request #22 from melissa/maint/rm-lucid
+
+puppetlabs/mcollective-service-agent is currently up to commit:
+75478ac Merge pull request #10 from melissa/maint/rm-lucid
+
+Updated plugins on Tue Aug 25 14:43:15 PDT 2015
+puppetlabs/mcollective-puppetral-agent is currently up to commit:
+081c8e7 Merge pull request #4 from richardc/PE-11398-sanitize-returned-hash
+
+puppetlabs/mcollective-puppet-agent is currently up to commit:
+cfa4b5e Merge pull request #59 from richardc/pr_55_cleanup
+
+puppetlabs/mcollective-sshkey-security is currently up to commit:
+2d11c87 Merge pull request #13 from melissa/maint/rm-lucid
+
+puppetlabs/mcollective-package-agent is currently up to commit:
+8ec4b7f Merge pull request #23 from cristi-/master
+
+puppetlabs/mcollective-service-agent is currently up to commit:
+75478ac Merge pull request #10 from melissa/maint/rm-lucid
+
+Updated plugins on Fri 13 May 2016 07:54:19 AEST
+puppetlabs/mcollective-puppetral-agent is currently up to commit:
+081c8e7 Merge pull request #4 from richardc/PE-11398-sanitize-returned-hash
+
+puppetlabs/mcollective-puppet-agent is currently up to commit:
+f4c5f64 Merge pull request #64 from beergeek/fix_capitals
+
+puppetlabs/mcollective-sshkey-security is currently up to commit:
+2d11c87 Merge pull request #13 from melissa/maint/rm-lucid
+
+puppetlabs/mcollective-package-agent is currently up to commit:
+8520f75 (maint) Stop pointing at the wiki for the installation guide
+diff --git a/README.md b/README.md
+index 658751e..27cabb3 100644
+--- a/README.md
++++ b/README.md
+@@ -11,7 +11,7 @@ methods.
+ 
+ ## Installation
+ 
+-Follow the [basic plugin install guide](http://projects.puppetlabs.com/projects/mcollective-plugins/wiki/InstalingPlugins).
++Follow the [basic plugin install guide](https://docs.puppetlabs.com/mcollective/deploy/plugins.html).
+ 
+ ## Configuration
+ 
+puppetlabs/mcollective-service-agent is currently up to commit:
+75478ac Merge pull request #10 from melissa/maint/rm-lucid
+
+Updated plugins on Wed Jun 29 16:53:10 CEST 2016
+puppetlabs/mcollective-puppet-agent-cve is currently up to commit:
+7a16b59 Merge pull request #3 from mruzicka/MCOP-559_release_1_11_1
+

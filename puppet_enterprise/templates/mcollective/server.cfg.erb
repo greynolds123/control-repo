@@ -1,0 +1,111 @@
+<%
+    case @operatingsystem
+    when 'AIX'
+      @classesfile = "/opt/freeware/var/lib/pe-puppet/classes.txt"
+      @daemonize = 0
+    when 'Darwin'
+      @classesfile = "/opt/puppetlabs/puppet/cache/state/classes.txt"
+      # Disable daemonize on osx to prevent fork bomb: PE-7023
+      @daemonize = 0
+    when 'windows'
+      @classesfile = "#{@common_appdata}/PuppetLabs/puppet/var/state/classes.txt"
+      @daemonize = 1
+    else
+      @classesfile = "/opt/puppetlabs/puppet/cache/state/classes.txt"
+      @daemonize = 1
+    end
+%>
+# Centrally managed by Puppet version <%= @puppetversion %>
+# https://docs.puppetlabs.com/mcollective/configure/server.html
+
+# Connector settings (required):
+# -----------------------------
+connector = activemq
+direct_addressing = 1
+
+# ActiveMQ connector settings:
+plugin.activemq.randomize = <%= @randomize_activemq %>
+plugin.activemq.pool.size = <%= @activemq_brokers.count %>
+<% @activemq_brokers.each_with_index do |server,index| -%>
+plugin.activemq.pool.<%= index + 1 %>.host = <%= server %>
+plugin.activemq.pool.<%= index + 1 %>.port = <%= @stomp_port %>
+plugin.activemq.pool.<%= index + 1 %>.user = <%= @stomp_user %>
+plugin.activemq.pool.<%= index + 1 %>.password = <%= @stomp_password %>
+plugin.activemq.pool.<%= index + 1 %>.ssl = true
+plugin.activemq.pool.<%= index + 1 %>.ssl.ca = <%= "#{@mco_ssl_dir}/ca.cert.pem" %>
+plugin.activemq.pool.<%= index + 1 %>.ssl.cert = <%= "#{@mco_ssl_dir}/#{@clientcert}.cert.pem" %>
+plugin.activemq.pool.<%= index + 1 %>.ssl.key = <%= "#{@mco_ssl_dir}/#{@clientcert}.private_key.pem" %>
+<% end -%>
+plugin.activemq.heartbeat_interval = <%= @activemq_heartbeat_interval %>
+plugin.activemq.max_hbrlck_fails = <%= @max_hbrlck_fails %>
+
+# Security plugin settings (required):
+# -----------------------------------
+securityprovider           = ssl
+
+# SSL plugin settings:
+plugin.ssl_server_private  = <%= "#{@mco_ssl_dir}/#{@mco_server_name}-private.pem" %>
+plugin.ssl_server_public   = <%= "#{@mco_ssl_dir}/#{@mco_server_name}-public.pem" %>
+plugin.ssl_client_cert_dir = <%= @mco_clients_cert_dir %>
+plugin.ssl_serializer      = yaml
+
+# Facts, identity, and classes (recommended):
+# ------------------------------------------
+factsource = yaml
+plugin.yaml = <%= @mco_etc %>/facts.yaml
+fact_cache_time = <%= @mco_fact_cache_time %>
+
+identity = <%= @mco_identity %>
+
+classesfile = <%= @classesfile %>
+
+# Registration (recommended):
+# -----------------------
+registration = Meta
+registerinterval = <%= @mco_registerinterval %>
+
+# Subcollectives (optional):
+# -------------------------
+main_collective = <%= @main_collective %>
+collectives     = <%= @collectives.map(&:strip).reject(&:empty?).join(',') %>
+
+# Auditing (optional):
+# -------------------
+plugin.rpcaudit.logfile = <%= @mco_audit_log_file %>
+rpcaudit = 1
+rpcauditprovider = logfile
+
+# Authorization (optional):
+# ------------------------
+plugin.actionpolicy.allow_unconfigured = <%= @allow_no_actionpolicy %>
+rpcauthorization = 1
+rpcauthprovider = action_policy
+
+# Logging:
+# -------
+logfile  = <%= @mco_server_log_file %>
+loglevel = <%= @mco_loglevel %>
+
+# Platform defaults:
+# -----------------
+daemonize = <%= @daemonize %>
+libdir = <%= @mco_plugin_libdir %>
+
+# Puppet Agent plugin configuration:
+# ---------------------------------
+plugin.puppet.splay = true
+plugin.puppet.splaylimit = 120
+plugin.puppet.signal_daemon = 0
+<% if @operatingsystem == 'windows' -%>
+plugin.puppet.command = "<%= @env_windows_installdir %>/bin/puppet.bat" agent
+plugin.puppet.windows_service = puppet
+<% else -%>
+plugin.puppet.command = /opt/puppetlabs/bin/puppet agent
+plugin.puppet.config  = /etc/puppetlabs/puppet/puppet.conf
+<% end -%>
+
+<% if !@mco_arbitrary_server_config.nil? && !@mco_arbitrary_server_config.empty? -%>
+<% @mco_arbitrary_server_config.each do | value | -%>
+<%= value %>
+<% end -%>
+<% end -%>
