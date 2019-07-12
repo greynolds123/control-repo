@@ -1,21 +1,20 @@
 require 'spec_helper_acceptance'
 
-describe 'validation, concat validate_cmd parameter', if: ['debian', 'redhat', 'ubuntu'].include?(os[:family]) do
+describe 'concat noop parameter', if: ['debian', 'redhat', 'ubuntu'].include?(os[:family]) do
   before(:all) do
     @basedir = setup_test_directory
   end
-
-  context 'with "/usr/bin/test -e %"' do
+  describe 'with "/usr/bin/test -e %"' do
     let(:pp) do
       <<-MANIFEST
-      concat { '#{@basedir}/file':
-        validate_cmd => '/usr/bin/test -e %',
+      concat_file { '#{@basedir}/file':
+        noop => false,
       }
-      concat::fragment { 'content':
+      concat_fragment { 'content':
         target  => '#{@basedir}/file',
         content => 'content',
       }
-      MANIFEST
+    MANIFEST
     end
 
     it 'applies the manifest twice with no stderr' do

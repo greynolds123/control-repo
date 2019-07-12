@@ -1,8 +1,0 @@
-<% | String $server_name,
-     String $return_value,
-| -%>
-server {
-  server_name <%= $server_name %>;
-  listen 80;
-  return <%= $return_value %>;
-}
