@@ -26,7 +26,7 @@ read -p "Set ssh key for root? [y/n] " rk
 
     if [ $rk = y ]; then
 
-  cd ~root && ssh-keygen -t rsa
+  cd ~root && ssh-keygen -t rsa -a 2048
 
     if [ $rk = n ]; then
 
