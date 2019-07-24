@@ -109,7 +109,7 @@ class puppet_enterprise::master::puppetserver(
     require => Package['pe-puppetserver'],
   }
 
-  Pe_concat {
+   Pe_concat {
     owner  => 'pe-puppet',
     group  => 'pe-puppet',
     mode   => '0640',
