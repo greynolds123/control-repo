@@ -34,10 +34,10 @@ class hiera::params {
     # would be a backwards-incompatible change.
     $master_service = 'puppetmaster'
     $provider       = 'puppet_gem'
-    $owner          = 'puppet'
-    $group          = 'puppet'
-    $eyaml_owner    = 'puppet'
-    $eyaml_group    = 'puppet'
+    $owner          = 'root'
+    $group          = 'root'
+    $eyaml_owner    = 'root'
+    $eyaml_group    = 'root'
   }
   $cmdpath        = ['/opt/puppetlabs/puppet/bin', '/usr/bin', '/usr/local/bin']
   $datadir        = '/etc/puppetlabs/code/environments/%{::environment}/hieradata'
