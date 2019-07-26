@@ -40,7 +40,7 @@ class hiera::params {
     $eyaml_group    = 'puppet'
   }
   $cmdpath        = ['/opt/puppetlabs/puppet/bin', '/usr/bin', '/usr/local/bin']
-  $datadir        = '/etc/puppetlabs/code/environments/%{::environment}/hieradata'
+  $datadir        = '/etc/puppetlabs/code/environments/%{::environment}/data'
   $manage_package = false
   $hiera_yaml = "${confdir}/hiera.yaml"
 }
