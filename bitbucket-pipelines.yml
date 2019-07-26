@@ -41,3 +41,16 @@ pipelines:
           # This lets us account for any new roles and profiles that have
           # been added in the interim
           #- bundle exec onceover init
+script:
+  - pipe: atlassian/trigger-pipeline:3.1.0
+    variables:
+      BITBUCKET_USERNAME: 'greynolds123'
+      BITBUCKET_APP_PASSWORD: '$Getcusat2'
+      REPOSITORY: 'git@bitbucket.org:infrastructure_developers/control-repo.git'
+      # WORKSPACE: '<string>' # Optional
+      # BRANCH_NAME: '<string>' # Optional
+      # CUSTOM_PIPELINE_NAME: '<string>' # Optional
+      # PIPELINE_VARIABLES: '<json>' # Optional
+      # WAIT: '<boolean>' # Optional
+      # WAIT_MAX_TIMEOUT: '<string>' # Optional
+      # DEBUG: '<boolean>' # Optional
