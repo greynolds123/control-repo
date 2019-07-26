@@ -5,6 +5,7 @@
 # You can specify a custom docker image from Docker Hub as your build environment.
 # image: docker-image:tag
 
+deployment:
 image: ruby:2.3.0
 
 pipelines:
