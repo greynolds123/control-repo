@@ -27,7 +27,7 @@ class puppet_enterprise::master::file_sync(
   $certname                                              = $facts['clientcert'],
   $file_sync_poll_interval                               = 5,
   $file_sync_staging_dir                                 = '/etc/puppetlabs/code-staging',
-  $file_sync_submodules_dir                              = 'environments',
+  $file_sync_submodules_dir                              = '/etc/puppetlabs/code/environments/$<%= environments %>/modules',
   $file_sync_locking_enabled                             = true,
   Array[String] $whitelisted_certnames                   = [],
   $file_sync_enable_forceful_sync                        = true,
