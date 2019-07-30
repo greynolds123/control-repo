@@ -13,6 +13,7 @@ class puppet_enterprise::puppetdb::rbac_consumer_conf(
   Optional[String] $rbac_url = undef,
   String $ssl_dir = $puppet_enterprise::params::puppetdb_ssl_dir,
 ) inherits puppet_enterprise::params {
+  include puppet_enterprise::packages
 
   $rbac_consumer_conf = "${confdir}/rbac_consumer.conf"
 

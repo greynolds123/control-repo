@@ -9,9 +9,13 @@
 #         to the /certificate_status API endpoint. This list is additive to the base PE
 #         certificate list.
 class puppet_enterprise::profile::certificate_authority (
-  Array[String] $client_whitelist = []
+  Array[String] $client_whitelist                       = [],
 ) inherits puppet_enterprise::profile::master {
   include puppet_enterprise::params
+  include puppet_enterprise::master::recover_configuration
+
+  $confdir_ssl = $puppet_enterprise::params::ssl_dir
+  $confdir_ca = "${confdir_ssl}/ca"
 
   Puppet_enterprise::Trapperkeeper::Bootstrap_cfg['certificate-authority-service'] {
     namespace => 'puppetlabs.services.ca.certificate-authority-service',
@@ -19,24 +23,79 @@ class puppet_enterprise::profile::certificate_authority (
     notify  => Service['pe-puppetserver'],
   }
 
-  $_client_whitelist = [$puppet_enterprise::console_host] + $client_whitelist
+  $_client_whitelist = [$puppet_enterprise::console_host,
+                        $puppet_enterprise::puppet_master_host] + $client_whitelist
+  $ca_cli_extension = { 'extensions' => { ':pp_cli_auth' => 'true' } }
 
   Pe_hocon_setting {
     notify  => Service['pe-puppetserver'],
   }
 
-  pe_hocon_setting{ 'certificate-authority.certificate-status':
+  pe_hocon_setting { 'certificate-authority.certificate-status':
     ensure  => absent,
     path    => '/etc/puppetlabs/puppetserver/conf.d/ca.conf',
     setting => 'certificate-authority.certificate-status',
   }
 
+  pe_hocon_setting{ 'certificate-authority.allow-subject-alt-names':
+    ensure  => present,
+    path    => '/etc/puppetlabs/puppetserver/conf.d/ca.conf',
+    setting => 'certificate-authority.allow-subject-alt-names',
+    value   => true,
+  }
+
+  pe_hocon_setting { 'certificate-authority.enable-infra-crl':
+    ensure  => present,
+    path    => '/etc/puppetlabs/puppetserver/conf.d/ca.conf',
+    setting => 'certificate-authority.enable-infra-crl',
+    value   => true,
+  }
+
+  if $settings::storeconfigs {
+    $_masters = puppet_enterprise::get_masters()
+  } else {
+    $_masters = [$puppet_enterprise::puppet_master_host]
+  }
+
+  file { $confdir_ca:
+    ensure  => directory,
+    owner => 'pe-puppet',
+    group => 'pe-puppet',
+    require => Package['pe-puppetserver']
+  }
+
+  file { "${confdir_ca}/infra_inventory.txt":
+    ensure  => $ca_setting_ensure,  # lint:ignore:variable_scope
+    owner => 'pe-puppet',
+    group => 'pe-puppet',
+    mode => '0644',
+    require => Package['pe-puppetserver'],
+    content => $_masters.join("\n")
+  }
+
+  exec { 'generate auxiliary infra CRL files':
+    command => '/opt/puppetlabs/bin/puppetserver ca enable --infracrl',
+    creates => "${confdir_ca}/infra_crl.pem",
+    require => File["${confdir_ca}/infra_inventory.txt"],
+  }
+
   pe_puppet_authorization::rule { 'puppetlabs certificate status':
     ensure               => present,
-    match_request_path   => '/puppet-ca/v1/certificate_status',
+    match_request_path   => '/puppet-ca/v1/certificate_status/',
     match_request_type   => 'path',
     match_request_method => ['get','put','delete'],
-    allow                => $_client_whitelist,
+    allow                => $_client_whitelist << $ca_cli_extension,
+    sort_order           => 500,
+    path                 => '/etc/puppetlabs/puppetserver/conf.d/auth.conf',
+    notify               => Service['pe-puppetserver'],
+  }
+
+  pe_puppet_authorization::rule { 'puppetlabs certificate statuses':
+    ensure               => present,
+    match_request_path   => '/puppet-ca/v1/certificate_statuses/',
+    match_request_type   => 'path',
+    match_request_method => 'get',
+    allow                => $_client_whitelist << $ca_cli_extension,
     sort_order           => 500,
     path                 => '/etc/puppetlabs/puppetserver/conf.d/auth.conf',
     notify               => Service['pe-puppetserver'],
@@ -56,18 +115,17 @@ class puppet_enterprise::profile::certificate_authority (
   }
   # Remove external CA to prevent conflict
   pe_hocon_setting {'certificate-authority.proxy-config':
+    ensure  => absent,
     path    => '/etc/puppetlabs/puppetserver/conf.d/ca.conf',
     setting => 'certificate-authority.proxy-config',
-    ensure  => absent,
   }
 
   # FILESERVER
-  # The certificate authority in a standard PE deployment is also the
-  # master-of-masters responsible for deploying new systems. Besides native OS
-  # packages, PE has its own "packaged" components that may need to be deployed
-  # on new systems. We will serve these using Puppet's built-in fileserver.
-  puppet_enterprise::fileserver_conf { "${puppet_enterprise::module_mountpoint}":
+  # This mountpoint has been unused since 2016.4.5; ensure that it is removed.
+  # This can be dropped once we are no longer upgrading from versions < 2016.4.5.
+  puppet_enterprise::fileserver_conf { $puppet_enterprise::module_mountpoint:
+    ensure     => absent,
     mountpoint => $puppet_enterprise::module_mountpoint,
-    path       => $puppet_enterprise::module_tarballsrc,
+    path       => '',
   } -> Pe_anchor['puppet_enterprise:barrier:ca']
 }
