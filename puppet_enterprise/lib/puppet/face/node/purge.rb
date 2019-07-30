@@ -31,17 +31,22 @@ Puppet::Face.define(:node, '0.0.1') do
 
     when_rendering(:console) do |node_list|
       if node_list.length == 1
-      <<-MSG
-Node "#{node_list[0]}" was purged. If you want to add this node back to your
- Puppet infrastructure, remove old certificates from the agent node first.
-        MSG
-
+        purged_msg = %Q|Node "#{node_list[0]}" was purged.|
       else
-      <<-MSG
-Nodes #{node_list} were purged. If you want to add these nodes back to your
- Puppet infrastructure, remove the old certificates from the agent node first.
-        MSG
+        purged_msg = %Q|Nodes #{node_list} were purged.|
       end
+
+      <<-MSG
+#{purged_msg}
+
+To ensure this node can not check into any additional compile masters, run puppet on all compile masters.
+
+- If you plan to re-add a node to your Puppet infrastructure:
+   1. Clear the agent certificate from the node.
+      On *nix, run `rm -rf /etc/puppetlabs/puppet/ssl`.
+      On Windows, delete the `$confdir\\ssl` directory.
+   2. On the agent node, run Puppet.
+        MSG
     end
   end
 end
