@@ -9,12 +9,12 @@
 # @param gzip_proxied [String] Enables or disables gzipping of responses for proxied
 #        requests depending on the request and response.
 # @param gzip_vary Enum['on','off'] Enables or disables inserting the
-#        “Vary: Accept-Encoding” response header field
+#        "Vary: Accept-Encoding" response header field
 # @param gzip_types [String] Enables gzipping of responses for the specified MIME types
 
 class puppet_enterprise::profile::console::proxy::nginx_conf (
-  String           $nginx_config_file = '/etc/puppetlabs/nginx/nginx.conf',
   Enum['on','off'] $gzip,
+  String           $nginx_config_file = "${puppet_enterprise::nginx_conf_dir}/nginx.conf",
   Integer[1,9]     $gzip_comp_level = 5,
   Integer          $gzip_min_length = 256,
   String           $gzip_proxied    = 'any',
