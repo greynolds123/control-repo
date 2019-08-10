@@ -1,0 +1,71 @@
+#!/bin/bash -e
+
+<%= scope.function_template(["pe_repo/partials/shared_functions.bash.erb"]) %>
+
+import_gpg_key() {
+  gpg_keys="GPG-KEY-puppet-2025-04-0 GPG-KEY-puppet"
+  for gpg_key in ${gpg_keys}
+  do
+    curl_or_wget_quietly <%= @repo_base_url %>/${gpg_key} | apt-key add -
+  done
+}
+
+setup_repo() {
+  apt-get update -qq
+  apt-get install --yes apt-transport-https
+
+  # If this agent is the same platform as the master, the repo structure on the master
+  # will be different then usual due to it having all the master packages as well (for compile
+  # master installs). If it is the same platform, then we need to use the old repo style of pointing
+  # to a packages.gz file. Otherwise use the new real repo structure with arch and component.
+  # To determine that, try to curl the packages.gz from where it would be if it had the
+  # master packages in the repo
+  t_packages_gz_url="<%= @packages_url %>/Packages.gz"
+
+  t_http_code=$(check_http_code ${t_packages_gz_url?})
+
+  # If we couldn't download the file, assume its the proper repo structure, otherwise
+  # use the old one
+  if [ -z "${t_http_code?}" -o "${t_http_code?}" != '200' ]; then
+      t_deb_source="<%= @packages_url %> <%= @codename %> <%= @pc_version %>"
+  else
+      t_deb_source="<%= @packages_url %> ./"
+  fi
+
+
+  mkdir -p /etc/apt/sources.list.d /etc/apt/apt.conf.d
+  echo "deb ${t_deb_source?}" > /etc/apt/sources.list.d/puppet-enterprise-installer.list
+  echo -e "Acquire::https::<%= @master %>::Verify-Peer false;\nAcquire::http::Proxy::<%= @master %> DIRECT;" > /etc/apt/apt.conf.d/90pe-repo
+  import_gpg_key
+
+  apt-get update -qq
+}
+
+
+install_agent() {
+  doing_upgrade=$(is_upgrade)
+
+  setup_repo
+
+  set -x
+  DEBIAN_FRONTEND=noninteractive apt-get install -y -o Apt::Get::Purge=false -o Dpkg::Options::='--force-confold' -o Dpkg::Options::='--force-confdef' --no-install-recommends puppet-agent=<%= @agent_version %>*
+  set +x
+  if [ ! y = "${doing_upgrade}" ]; then
+    echo "START=yes" > /etc/default/puppet
+    puppet_config_set "$@"
+    manage_puppet_agent
+  fi
+
+  ensure_agent_links
+}
+
+remove_repo_file() {
+  rm -f '/etc/apt/sources.list.d/puppet-enterprise-installer.list'
+  rm -f '/etc/apt/apt.conf.d/90pe-repo'
+}
+
+trap remove_repo_file EXIT
+
+install_agent "$@"
+
+# vim: ft=sh

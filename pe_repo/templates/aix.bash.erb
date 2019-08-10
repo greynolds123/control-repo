@@ -1,0 +1,41 @@
+#!/bin/bash -e
+
+<%= scope.function_template(["pe_repo/partials/shared_functions.bash.erb"]) %>
+
+download_file() {
+  source_file="https://<%= @master %>:<%= @port %><%= @prefix %>/<%= @pe_version %>/<%= @installer_build %>/${1?}"
+  download_from_url "${source_file?}" "${staging_dir?}/${1?}"
+}
+
+download_packages() {
+  download_file "packages.txt"
+
+  for rpm in $(cat "${staging_dir?}/packages.txt"); do
+    download_file "${rpm?}"
+  done
+}
+
+install_agent() {
+  doing_upgrade=$(is_upgrade)
+
+  staging_dir="/tmp/puppet-enterprise-installer.XXX-${RANDOM}"
+  mkdir -p "$staging_dir"
+
+  cleanup_add_cmd 'rm -rf '"${staging_dir}"
+
+  download_packages
+
+  # AIX 7.2 RPM has a bug preventing install of the 7.1 RPMs
+  rpm -U --force --ignoreos "${staging_dir?}"/*.rpm
+
+  if [ ! y = "${doing_upgrade}" ]; then
+    puppet_config_set "$@"
+    manage_puppet_agent
+  fi
+
+  ensure_agent_links
+}
+
+install_agent "$@"
+
+# vim: ft=sh
