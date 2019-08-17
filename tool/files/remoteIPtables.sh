@@ -13,7 +13,7 @@ cwd='/sbin/iptables'
 
 myip='/root/myserver.txt'
 
-iptsave='/sbin/service iptables save'
+iptsave='/sbin/service iptables status'
 
 iptrestart='/sbin/service iptables restart'
 
@@ -26,7 +26,7 @@ read -p "Set ssh key for root? [y/n] " rk
 
     if [ $rk = y ]; then
 
-  cd ~root && ssh-keygen -t rsa
+  cd ~root && ssh-keygen -t rsa -a 2048
 
     if [ $rk = n ]; then
 
@@ -64,6 +64,10 @@ fi
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 22 -j ACCEPT
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8140 -j ACCEPT
+ 
+ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8142 -j ACCEPT
+ 
+ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8143 -j ACCEPT
 
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 61613 -j ACCEPT
 
@@ -114,8 +118,6 @@ ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 25151 -j ACCEPT
  ssh root@$d  $cwd -A INPUT  -p udp -s $i --dport 8009 -j ACCEPT
  
  ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8000 -j ACCEPT
- 
- ssh root@$d  $cwd -A INPUT  -p tcp -s $i --dport 8170 -j ACCEPT
 
  ssh root@$d  $cwd -A INPUT -m limit --limit 15/minute -j LOG --log-level 7 --log-prefix "Dropped";
 
@@ -159,6 +161,10 @@ done
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 22 -j ACCEPT
 
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 8140 -j ACCEPT
+ 
+ ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 8142 -j ACCEPT
+ 
+ ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 8143 -j ACCEPT
 
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 61613 -j ACCEPT
 
@@ -203,8 +209,6 @@ ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 5432 -j ACCEPT
  ssh root@$d  $cwd -A OUTPUT  -p udp -s $o --dport 8009 -j ACCEPT
  
  ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 8000 -j ACCEPT
- 
- ssh root@$d  $cwd -A OUTPUT  -p tcp -s $o --dport 8170 -j ACCEPT
 
  ssh root@$d  $cwd -A OUTPUT -m limit --limit 15/minute -j LOG --log-level 7 --log-prefix "Dropped";
 
