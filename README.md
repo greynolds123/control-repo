@@ -9,6 +9,7 @@ This README would normally document whatever steps are necessary to get your app
 * This Project (Group ) will be deleted once all testing is complete. A formal group will be created once it has been approved
 * Demo Project
 * [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* More testing information
 
 ### How do I get set up? ###
 
