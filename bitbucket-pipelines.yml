@@ -11,6 +11,11 @@ image: ruby:2.3.0
 pipelines:
   default:
     - step:
+    ame: Deploy to production
+    deployment: production
+    # trigger: manual  # Uncomment to make this a manual deployment.
+    script:
+      - echo "Deploying to production environment"
         script: # Modify the commands below to build your repository.
           - ruby --version
           #- bundler --version
