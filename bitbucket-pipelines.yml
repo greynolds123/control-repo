@@ -11,7 +11,7 @@ image: ruby:2.3.0
 pipelines:
   default:
     - step:
-    ame: Deploy to production
+    name: Deploy to production
     deployment: production
     # trigger: manual  # Uncomment to make this a manual deployment.
     script:
