@@ -1,0 +1,18 @@
+{
+  "CHANGELOG.md": "75b8595d6944786290eab6b135588243",
+  "Gemfile": "a834bd8e47a9754e5341d24c7c908042",
+  "LICENSE": "3b83ef96387f14655fc854ddc3c6bd57",
+  "NOTICE": "1c9feb5b8dc36969f3a5bc05ca68096d",
+  "README.md": "40380fe7a48f5631ba19f540bd862ca6",
+  "Rakefile": "11239df5530f9d3a4d807871368724e9",
+  "appveyor.yml": "042204ee5ca3a9908176cd9b1d03e0a2",
+  "lib/facter/pipelines_env.rb": "61dc0fe1df10b9978eeeadad541f5144",
+  "manifests/agent/unix.pp": "1f291c476abfc09ead3c7c3ce0bb69c5",
+  "manifests/agent/windows.pp": "b4d345c9836d4e63f0b02d34f6966c85",
+  "manifests/agent.pp": "1075b87378df2664f5cd434694109daf",
+  "metadata.json": "ecd5c455f2946e0524cc816f36c3cc61",
+  "spec/classes/agent_spec.rb": "594b14ae8b5733eaf44b4e1a9e8bb93d",
+  "spec/default_facts.yml": "b1ca07fac7dcb249d641d8b63239ef7c",
+  "spec/spec_helper.rb": "52436bc6f6442debdf72b83b3fa4c281",
+  "templates/distelli.yml.epp": "4771a3c5caee1e986ca54099bc8fe096"
+}
