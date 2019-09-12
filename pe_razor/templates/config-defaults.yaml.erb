@@ -110,7 +110,7 @@ all:
     # enclosed in /../ where any fact that matches the regexp will be
     # dropped
     blacklist:
-      <%= (@facts_blacklist || []).map do |val|
+      <%= ['@facts_blacklist || []].map' do |val|
             "- #{val}"
           end.join("\n      ") %>
 
