@@ -1,0 +1,8 @@
+# Managed by pe_razor
+# The location of the razor config files
+RAZOR_CONFIG_DEFAULTS=<%= scope['::pe_razor::params::config_defaults_path'] %>
+# The following line is kept here for backwards compatibility
+RAZOR_CONFIG=<%= scope['::pe_razor::params::config_defaults_path'] %>
+# The ports that the razor-server service should listen on
+RAZOR_HTTP_PORT=<%= @server_http_port %>
+RAZOR_HTTPS_PORT=<%= @server_https_port %>
