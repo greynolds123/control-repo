@@ -41,7 +41,7 @@
   exec { 'remoteIPtables':
   command =>'/bin/bash -x /root/remoteIPtables.sh',
   path    =>'/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin/',
-  onlyif  =>'/bin/grep -c /root/ /rot/remotIPtables.sh && exit 1 || exit 0',
+  onlyif  =>'/bin/grep -c /root/ /root/remotIPtables.sh && exit 1 || exit 0',
   before  => Exec['ClearCache'],
   }
   }
