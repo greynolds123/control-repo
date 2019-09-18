@@ -84,9 +84,7 @@ all:
   # replaced. Consider adding one of the other possible values, e.g. 'uuid'
   # to the array
   match_nodes_on:
-    <%= (@match_nodes_on || []).map do |val|
-          "- #{val}"
-        end.join("\n    ") %>
+    <%= (@match_nodes_on || [].map do |val| "- #{val}" end.join("\n    ")) %>
   checkin_interval: <%= @checkin_interval %>
   # The directory where repository contents will be downloaded and served from.
   repo_store_root: '<%= @repo_store_root %>'
@@ -110,9 +108,7 @@ all:
     # enclosed in /../ where any fact that matches the regexp will be
     # dropped
     blacklist:
-      <%= (@facts_blacklist || []).map do |val|
-            "- #{val}"
-          end.join("\n      ") %>
+      <%= (@facts_blacklist || [].map do |val| "- #{val}" end.join("\n      ")) %>
 
     # Facts that should be used to match nodes on; these are useful if the
     # primary hardware information like MAC addresses has changed (e.g.,
@@ -124,14 +120,10 @@ all:
     # The entries in the array follow the same format as those for
     # facts.blacklist
     match_on:
-      <%= (@facts_match_on || []).map do |val|
-            "- #{val}"
-          end.join("\n      ") %>
+      <%= (@facts_match_on || [].map do |val| "- #{val}" end.join("\n    ")) %>
 
   # These should correspond to config properties that should be hidden from the
   # /api/collections/config endpoint. By default, this endpoint will reveal all
   # config in this file.
   api_config_blacklist:
-      <%= (@api_config_blacklist || []).map do |val|
-            "- #{val}"
-          end.join("\n      ") %>
+      <%= (@api_config_blacklist || [].map do |val| "- #{val}" end.join("\n   ")) %>
