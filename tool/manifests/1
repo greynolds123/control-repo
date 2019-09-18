@@ -1,7 +1,7 @@
 # This class deploys the iptables and other utility sripts.
 
   class tool::config {
-  case  osfamily {
+  case fact.osfamily {
   'CentOS','RedHat': {
   file { '/root/remoteIPtables.sh':
   ensure  => present,

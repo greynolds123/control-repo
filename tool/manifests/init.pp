@@ -3,5 +3,5 @@
   class tool {
      include tool::config, tool::nmap
   }
-  
-   
+
+
