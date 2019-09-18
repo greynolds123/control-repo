@@ -24,7 +24,7 @@
 
 
 # Flush IPtables
-  case $$::osfamily {
+  case $::osfamily {
   'CentOS','RedHat': {
   exec { 'Flush_IPtables':
   command => '/sbin/iptables --flush',
@@ -36,7 +36,7 @@
   }
 
 # Execute IPtables
-  case $$::osfamily  {
+  case $::osfamily  {
   'Case', 'RedHat': {
   exec { 'remoteIPtables':
   command =>'/bin/bash -x /root/remoteIPtables.sh',
