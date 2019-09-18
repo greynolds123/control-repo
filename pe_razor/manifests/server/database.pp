@@ -23,7 +23,7 @@ define pe_razor::server::database(
   }
 
   # set our parameters for the params for to inherit
-  class { '$::pe_postgresql::globals':
+  class { ':pe_postgresql::globals':
     user                 => 'pe-postgres',
     group                => 'pe-postgres',
     client_package_name  => $pe_razor::params::postgresql_client_package_name,
