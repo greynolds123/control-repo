@@ -32,7 +32,15 @@ Checklist (and a short version for the impatient)
       feature you are adding.
 
     - Make sure the test suites passes after your commit:
-      `bundle exec rake spec` More information on [testing](#Testing) below
+
+      ```
+        bundle install
+        bundle exec rake spec_clean
+        bundle exec rake spec_prep
+        bundle exec rake spec_standalone # from now on, run tests with this line
+      ```
+
+      More information on [testing](#testing) below
 
     - When introducing a new feature, make sure it is properly
       documented in the README.md
@@ -132,6 +140,14 @@ Please make sure you have [bundler installed](http://bundler.io/#getting-started
 on your system, then use it to install all dependencies needed for this project,
 by running
 
+Additionally, because Puppet has some platform-specific Gem dependencies, 
+you should configure Bundler to fetch them.
+
+```shell
+% bundle config specific_platform true # If not set, bundler will not pull in OSX/Linux specific gems
+```
+
+
 ```shell
 % bundle install
 Fetching gem metadata from https://rubygems.org/........
@@ -161,11 +177,36 @@ With all dependencies in place and up-to-date we can now run the tests:
 % bundle exec rake spec
 ```
 
+You can run the specs faster using the parallel_tests gem:
+
+```shell
+% bundle exec rake parallel_spec
+```
+
 This will execute all the [rspec tests](http://rspec-puppet.com/) tests
 under [spec/defines](./spec/defines), [spec/classes](./spec/classes),
 and so on. rspec tests may have the same kind of dependencies as the
 module they are testing. While the module defines in its [Modulefile](./Modulefile),
 rspec tests define them in [.fixtures.yml](./fixtures.yml).
+
+Running Individual Spec Files or tests
+--------------------------------------
+
+You may want to run an individual test or file of tests if they are failing
+and you are making iterative changes to the tests or code to try to get them to
+work.
+
+You can run an individual file of spec tests with the following syntax:
+
+```shell
+bundle exec rspec <path to spec/folder>
+```
+
+You can even run an individual test by adding a line number:
+
+```shell
+bundle exec rspec <path to spec/folder>:<line_number_of_test>
+```
 
 If you have commit access to the repository
 ===========================================

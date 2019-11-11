@@ -17,6 +17,11 @@ Facter.add("platform_tag") do
   setcode do
     platform_name = Facter.value("operatingsystem").downcase
     platform_architecture = Facter.value("architecture")
+    if platform_architecture == "ppc64le"
+      # Debian/Ubuntu for some reason chose ppc64el as their Power8 package
+      # arch instead of ppc64le, so we need to special-case this.
+      platform_architecture = "ppc64el"
+    end
     platform_release = platform_name == "ubuntu" ? Facter.value("operatingsystemrelease") : Facter.value("operatingsystemmajrelease")
 
     # If any of these are nil, do not return anything
@@ -87,10 +92,36 @@ Facter.add("platform_tag") do
     when "fedora"
       platform_name = "fedora"
     else
-      platform_name = "el"
+      # Check for redhatfips variant
+      if Facter.value("fips_enabled")
+        platform_name = "redhatfips"
+      else
+        platform_name = "el"
+      end 
     end
     platform_architecture = Facter.value("architecture")
+
     platform_release = Facter.value("operatingsystemmajrelease")
+
+    os = Facter.value("os") || {}
+    if os["name"] == "Amazon"
+      release = os["release"] || {}
+      major = release["major"]
+      minor = release["minor"]
+
+      platform_release = case
+      # The 2017.12 is an el7, and then they switched to calling it Amazon
+      # Linux '2'...
+      when major == '2' || (major == '2017' && minor == '12')
+        then 7
+      # Amazon Linux versions from 2011.09 to 2017.11 and 2018.03
+      # are all a Redhat 6 analog
+      when major.to_i > 2000 && !(major == '2017' && minor == '12')
+        then 6
+      # No idea what '3' will be...
+      else nil
+      end
+    end
 
     # If any of these are nil, do not return anything
     if platform_name && platform_release && platform_architecture

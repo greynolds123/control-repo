@@ -7,11 +7,10 @@
 # @param database_port [Integer] The port that PostgreSQL is listening on.
 # @param database_properties [String] A url encoded string of JDBC options.
 # @param master_host [String] The hostname of the Puppet Master.
+# @param master_port [Integer] The port of the Puppet Master.
 # @param master_certname [String] The master certificate name.
-# @param puppetdb_host [String] The hostname running puppetdb.
-# @param puppetdb_port [Integer] The port that puppetdb is listening on.
-# @param secret_token [String] Used to validate cookies.  Note that changing this will invalidate
-#        current sessions.
+# @param puppetdb_host Array[String] The hostname running puppetdb.
+# @param puppetdb_port Array[Integer] The port that puppetdb is listening on.
 # @param listen_address [String] The network interface used by the console.
 # @param ssl_listen_address [String] The network interface used by the console for ssl connections.
 # @param dashboard_listen_port [Integer] *Deprecated* The port that the dashboard is listening on.
@@ -38,17 +37,22 @@
 #        plain HTTP version of the console services status endpoint. The default value is false.
 # @param activity_database_name [String] The activity database name.
 # @param activity_database_user [String] The username for login to the activity DB.
+# @param activity_database_migration__user [String] The username for migrating the activity DB.
 # @param activity_database_password [String] The password for user defined by activity_database_user.
 # @param activity_url_prefix [String] The url prefix for the activity api.
 # @param classifier_database_name [String] The name for classifier's database.
 # @param classifier_database_user [String] The username that can login to the classifier DB.
+# @param classifier_database_migration_user [String] The username for migrating the classifier DB.
 # @param classifier_database_password [String] The password for the user defined by
 #        classifier_database_user.
 # @param classifier_url_prefix [String] The url prefix for the classifier api.
 # @param classifier_synchronization_period [Integer] How often to synchronize classification data between the master and classifier.
 # @param classifier_prune_threshold [Integer] How many days of node check-ins to keep in the classifier database.
+# @param classifier_node_check_in_storage [Boolean] Whether or not to store node checkin data
+# @param classifier_allow_config_data [Boolean] Whether or not to enable hiera data in the classifier
 # @param rbac_database_name [String] The name for the rbac service's database.
 # @param rbac_database_user [String] The username that can login to the rbac DB.
+# @param rbac_database_migration_user [String] The username for migrating the rbac DB.
 # @param rbac_database_password [String] The password for the user defined by rbac_database_user.
 # @param rbac_url_prefix [String] The url prefix for the rbac api.
 # @param rbac_password_reset_expiration [Integer] When a user doesn't remember their current password,
@@ -57,16 +61,27 @@
 #        default value is 24.
 # @param rbac_session_timeout [Integer] Positive integer that specifies how long a user's session
 #        should last in minutes. The default value is 60.
+# @param session_maximum_lifetime Optional[String] Positive integer that specifies the maximum allowable
+#        that a console session can be valid for. Supported units are: "s" (seconds), "m" (minutes),
+#        "h" (hours), "d" (days), "y" (years). May be set to "0" to not expire before the maximum token lifetime.
+#        Units are specified as a single letter following an integer, for example "1d" (1 day).
+#        If no units are specified, the integer is treated as seconds.
 # @param rbac_token_auth_lifetime [String] This parameter is the time interval before new RBAC tokens
 #        expire. Units are specified as a single letter following an integer, for example "1d" (1 day).
 #        Supported units are: "s" (seconds), "m" (minutes), "h" (hours), "d" (days), "y" (years).
 #        May be set to "0" to generate tokens that never expire. The default value is "5m".
+# @param rbac_token_maximum_lifetime [String] The maximum allowable lifetime
+#        for an rbac token, specified in the same format as rbac_token_auth_lifetime.
 # @param rbac_failed_attempts_lockout [Integer] This parameter is a positive integer that specifies
 #        how many failed login attempts are allowed on an account before that account is revoked.
 #        The default value is 10.
 # @param rbac_ds_trust_chain [String] This parameter is file path string that indicates the location
 #        of a certificate to use when contacting the directory service configured for use with RBAC
 #        over LDAPS.
+# @param rbac_account_expiry_check_minutes [Integer] The polling frequency of the job to revoke idle
+#        non-superuser user accounts.
+# @param rbac_account_expiry_days [Integer] The number of days after which idle non-superuser users will be
+#        revoked. If this value is not set or has a value less than 1 the revocation job will be disabled.
 # @param localcacert [String] The path to the local CA certificate. This will be used instead of the
 #        CA that is in Puppet's ssl dir.
 # @param hostcrl [String] Path to certificate revocation list file.
@@ -82,21 +97,18 @@
 #        console for HTTPS.
 # @param browser_ssl_private_key [String] For use with a custom CA, the path to a private key for
 #        your public console ca certificate.
-# @param browser_ssl_cert_chain [String] For use with a custom CA, the path to the ca certificate
-#        for use with your public console.
-# @param browser_ssl_ca_cert [String] For use with a custom CA, the path to the console's certificate.
 # @param send_analytics_data [Boolean] Enable/disable data analytics collection.
 class puppet_enterprise::profile::console (
   $ca_host                                   = $puppet_enterprise::certificate_authority_host,
-  $certname                                  = $::clientcert,
-  $database_host                             = $puppet_enterprise::database_host,
+  $certname                                  = $facts['clientcert'],
+  $database_host                             = $puppet_enterprise::console_database_host,
   $database_port                             = $puppet_enterprise::database_port,
   $database_properties                       = $puppet_enterprise::database_properties,
   $master_host                               = $puppet_enterprise::puppet_master_host,
+  Integer $master_port                       = $puppet_enterprise::puppet_master_port,
   $master_certname                           = $puppet_enterprise::puppet_master_host,
-  $puppetdb_host                             = $puppet_enterprise::puppetdb_host,
-  $puppetdb_port                             = $puppet_enterprise::puppetdb_port,
-  $secret_token                              = '',
+  Array[String]  $puppetdb_host              = $puppet_enterprise::puppetdb_hosts_array,
+  Array[Integer] $puppetdb_port              = $puppet_enterprise::puppetdb_ports_array,
   $listen_address                            = $puppet_enterprise::params::plaintext_address,
   $ssl_listen_address                        = $puppet_enterprise::params::ssl_address,
   $dashboard_listen_port                     = undef,
@@ -114,53 +126,69 @@ class puppet_enterprise::profile::console (
   $console_services_service_alert_timeout    = undef,
   $activity_url_prefix                       = $puppet_enterprise::params::activity_url_prefix,
   $activity_database_name                    = $puppet_enterprise::activity_database_name,
-  $activity_database_user                    = $puppet_enterprise::activity_database_user,
+  $activity_database_migration_user          = $puppet_enterprise::activity_service_migration_db_user,
+  $activity_database_user                    = $puppet_enterprise::activity_service_regular_db_user,
   $activity_database_password                = $puppet_enterprise::activity_database_password,
   $classifier_database_name                  = $puppet_enterprise::classifier_database_name,
-  $classifier_database_user                  = $puppet_enterprise::classifier_database_user,
+  $classifier_database_migration_user        = $puppet_enterprise::classifier_service_migration_db_user,
+  $classifier_database_user                  = $puppet_enterprise::classifier_service_regular_db_user,
   $classifier_database_password              = $puppet_enterprise::classifier_database_password,
   $classifier_url_prefix                     = $puppet_enterprise::params::classifier_url_prefix,
   $classifier_synchronization_period         = $puppet_enterprise::params::classifier_synchronization_period,
   $classifier_prune_threshold                = $puppet_enterprise::params::classifier_prune_threshold,
+  Boolean $classifier_node_check_in_storage  = false,
+  Boolean $classifier_allow_config_data      = $puppet_enterprise::params::classifier_allow_config_data,
   $rbac_database_name                        = $puppet_enterprise::rbac_database_name,
-  $rbac_database_user                        = $puppet_enterprise::rbac_database_user,
+  $rbac_database_migration_user              = $puppet_enterprise::rbac_service_migration_db_user,
+  $rbac_database_user                        = $puppet_enterprise::rbac_service_regular_db_user,
   $rbac_database_password                    = $puppet_enterprise::rbac_database_password,
   $rbac_url_prefix                           = $puppet_enterprise::params::rbac_url_prefix,
   $rbac_password_reset_expiration            = undef,
-  $rbac_session_timeout                      = undef,
+  Optional[Integer] $rbac_session_timeout    = undef,
+  Optional[String] $session_maximum_lifetime = undef,
   $rbac_token_auth_lifetime                  = undef,
-  $rbac_failed_attempts_lockout              = undef,
-  $rbac_ds_trust_chain                       = undef,
-  $localcacert                               = $puppet_enterprise::params::localcacert,
-  $hostcrl                                   = $puppet_enterprise::params::hostcrl,
-  $delayed_job_workers                       = 2,
-  $disable_live_management                   = true,
-  $migrate_db                                = false,
-  $whitelisted_certnames                     = [],
-  Hash $java_args                            = $puppet_enterprise::params::console_services_java_args,
-  $browser_ssl_cert                          = undef,
-  $browser_ssl_private_key                   = undef,
-  $browser_ssl_cert_chain                    = undef,
-  $browser_ssl_ca_cert                       = undef,
-  $proxy_read_timeout                        = 120,
-  Integer $pcp_timeout                       = 5,
-  Boolean $display_local_time                = false,
-  Boolean $send_analytics_data               = $puppet_enterprise::send_analytics_data,
+  # ENTERPRISE-1143: Has to be double quotes because of... HOCON reasons (might
+  # be a bug in Puppet itself, or the HOCON library, or the HOCON module.)
+  $rbac_token_maximum_lifetime                          = "10y", # lint:ignore:double_quoted_strings
+  $rbac_failed_attempts_lockout                         = undef,
+  $rbac_ds_trust_chain                                  = undef,
+  Optional[Integer] $rbac_account_expiry_check_minutes  = undef,
+  Optional[Integer] $rbac_account_expiry_days           = undef,
+  $localcacert                                          = $puppet_enterprise::params::localcacert,
+  $hostcrl                                              = $puppet_enterprise::params::hostcrl,
+  $delayed_job_workers                                  = 2,
+  $disable_live_management                              = true,
+  $migrate_db                                           = false,
+  $whitelisted_certnames                                = [],
+  Hash $java_args                                       = $puppet_enterprise::params::console_services_java_args,
+  $browser_ssl_cert                                     = undef,
+  $browser_ssl_private_key                              = undef,
+  $proxy_read_timeout                                   = 120,
+  Integer $pcp_timeout                                  = 5,
+  Boolean $display_local_time                           = false,
+  Boolean $send_analytics_data                          = $puppet_enterprise::send_analytics_data,
+  Puppet_enterprise::Replication_mode $replication_mode = 'none',
 ) inherits puppet_enterprise {
-
-  $update_opt_out_ensure = $send_analytics_data ? {
-    true  => absent,
-    false => file,
-  }
-
-  file { '/etc/puppetlabs/analytics-opt-out':
-    ensure  => $update_opt_out_ensure,
-    require => Package['pe-console-services']
-  }
 
   $classifier_client_certname = $certname
   $console_client_certname    = $certname
   $console_server_certname    = $certname
+
+
+  # We need this check here, otherwise on a mono-install
+  # we will have a duplicate file resource.
+  if $master_certname != $certname {
+    $analytics_opt_out_ensure = $send_analytics_data ? {
+      true  => absent,
+      false => file,
+    }
+
+    file { '/etc/puppetlabs/analytics-opt-out':
+      ensure  => $analytics_opt_out_ensure,
+      notify  => Service['pe-console-services'],
+      require => Package['pe-console-services']
+    }
+  }
 
   class { 'puppet_enterprise::profile::console::certs':
     certname    => $certname,
@@ -180,15 +208,7 @@ class puppet_enterprise::profile::console (
 
   include puppet_enterprise::packages
   Package <| tag == 'pe-console-packages' |> {
-    before => Class['puppet_enterprise::profile::console::console_services_config'],
-  }
-
-  if ($browser_ssl_cert_chain != undef) {
-    warning('Please use the node classifier to remove the parameter browser_ssl_cert_chain from the puppet_enterprise::profile::console::proxy class.')
-  }
-
-  if ($browser_ssl_ca_cert != undef) {
-    warning('Please use the node classifier to remove the parameter browser_ssl_ca_cert from the puppet_enterprise::profile::console::proxy class.')
+    before +> Class['puppet_enterprise::profile::console::console_services_config'],
   }
 
   # Unfortunately because we have no HOCON module
@@ -209,36 +229,42 @@ class puppet_enterprise::profile::console (
     rbac_url_prefix       => $rbac_url_prefix,
     status_proxy_enabled  => $console_services_plaintext_status_enabled,
     status_proxy_port     => $console_services_plaintext_status_port,
+    replication_mode      => $replication_mode,
     notify                => Service[ 'pe-console-services' ],
   }
 
   puppet_enterprise::trapperkeeper::activity { 'console-services' :
-    database_host       => $database_host,
-    database_port       => $database_port,
-    database_name       => $activity_database_name,
-    database_user       => $activity_database_user,
-    database_password   => $activity_database_password,
-    database_properties => $ssl_database_properties,
-    rbac_host           => '127.0.0.1',
-    rbac_port           => $console_services_api_listen_port,
-    rbac_url_prefix     => $rbac_url_prefix,
-    notify              => Service['pe-console-services'],
+    database_host           => $database_host,
+    database_port           => $database_port,
+    database_name           => $activity_database_name,
+    database_user           => $activity_database_user,
+    database_migration_user => $activity_database_migration_user,
+    database_password       => $activity_database_password,
+    database_properties     => $ssl_database_properties,
+    rbac_host               => '127.0.0.1',
+    rbac_port               => $console_services_api_listen_port,
+    rbac_url_prefix         => $rbac_url_prefix,
+    notify                  => Service['pe-console-services'],
   }
 
   puppet_enterprise::trapperkeeper::rbac { 'console-services' :
-    certname                  => $certname,
-    database_host             => $database_host,
-    database_port             => $database_port,
-    database_name             => $rbac_database_name,
-    database_user             => $rbac_database_user,
-    database_password         => $rbac_database_password,
-    database_properties       => $ssl_database_properties,
-    password_reset_expiration => $rbac_password_reset_expiration,
-    session_timeout           => $rbac_session_timeout,
-    token_auth_lifetime       => $rbac_token_auth_lifetime,
-    failed_attempts_lockout   => $rbac_failed_attempts_lockout,
-    ds_trust_chain            => $rbac_ds_trust_chain,
-    notify                    => Service['pe-console-services'],
+    certname                     => $certname,
+    localcacert                  => $localcacert,
+    database_host                => $database_host,
+    database_port                => $database_port,
+    database_name                => $rbac_database_name,
+    database_user                => $rbac_database_user,
+    database_migration_user      => $rbac_database_migration_user,
+    database_password            => $rbac_database_password,
+    database_properties          => $ssl_database_properties,
+    password_reset_expiration    => $rbac_password_reset_expiration,
+    token_auth_lifetime          => $rbac_token_auth_lifetime,
+    token_maximum_lifetime       => $rbac_token_maximum_lifetime,
+    failed_attempts_lockout      => $rbac_failed_attempts_lockout,
+    ds_trust_chain               => $rbac_ds_trust_chain,
+    account_expiry_check_minutes => $rbac_account_expiry_check_minutes,
+    account_expiry_days          => $rbac_account_expiry_days,
+    notify                       => Service['pe-console-services'],
   }
 
   file { '/etc/puppetlabs/console-services/rbac-certificate-whitelist':
@@ -280,39 +306,49 @@ class puppet_enterprise::profile::console (
   }
 
   puppet_enterprise::trapperkeeper::classifier { 'console-services' :
-    master_host            => $master_host,
-    database_host          => $database_host,
-    database_port          => $database_port,
-    database_name          => $classifier_database_name,
-    database_user          => $classifier_database_user,
-    database_password      => $classifier_database_password,
-    database_properties    => $ssl_database_properties,
-    client_certname        => $classifier_client_certname,
-    localcacert            => $localcacert,
-    synchronization_period => $classifier_synchronization_period,
-    prune_days_threshold   => $classifier_prune_threshold,
-    notify                 => Service['pe-console-services'],
+    master_host             => $master_host,
+    master_port             => $master_port,
+    database_host           => $database_host,
+    database_port           => $database_port,
+    database_name           => $classifier_database_name,
+    database_user           => $classifier_database_user,
+    database_migration_user => $classifier_database_migration_user,
+    database_password       => $classifier_database_password,
+    database_properties     => $ssl_database_properties,
+    client_certname         => $classifier_client_certname,
+    localcacert             => $localcacert,
+    synchronization_period  => $classifier_synchronization_period,
+    prune_days_threshold    => $classifier_prune_threshold,
+    allow_config_data       => $classifier_allow_config_data,
+    node_check_in_storage   => $classifier_node_check_in_storage,
+    notify                  => Service['pe-console-services'],
   }
 
   class { 'puppet_enterprise::console_services':
-    client_certname       => $console_client_certname,
-    master_host           => $master_host,
-    classifier_host       => '127.0.0.1',
-    classifier_port       => $console_services_api_listen_port,
-    classifier_url_prefix => $classifier_url_prefix,
-    puppetdb_host         => $puppetdb_host,
-    puppetdb_port         => $puppetdb_port,
-    rbac_host             => '127.0.0.1',
-    rbac_port             => $console_services_api_listen_port,
-    activity_host         => '127.0.0.1',
-    activity_port         => $console_services_api_listen_port,
-    activity_url_prefix   => $activity_url_prefix,
-    localcacert           => $localcacert,
-    java_args             => $java_args,
-    status_proxy_enabled  => $console_services_plaintext_status_enabled,
-    pcp_timeout           => $pcp_timeout,
-    service_alert_timeout => $console_services_service_alert_timeout,
-    display_local_time    => $display_local_time,
+    client_certname          => $console_client_certname,
+    master_host              => $master_host,
+    classifier_host          => '127.0.0.1',
+    classifier_port          => $console_services_api_listen_port,
+    classifier_url_prefix    => $classifier_url_prefix,
+    puppetdb_host            => $puppetdb_host,
+    puppetdb_port            => $puppetdb_port,
+    rbac_host                => '127.0.0.1',
+    rbac_port                => $console_services_api_listen_port,
+    activity_host            => '127.0.0.1',
+    activity_port            => $console_services_api_listen_port,
+    activity_url_prefix      => $activity_url_prefix,
+    orchestrator_host        => $master_host,
+    orchestrator_port        => $puppet_enterprise::orchestrator_port,
+    orchestrator_url_prefix  => $puppet_enterprise::orchestrator_url_prefix,
+    localcacert              => $localcacert,
+    java_args                => $java_args,
+    status_proxy_enabled     => $console_services_plaintext_status_enabled,
+    pcp_timeout              => $pcp_timeout,
+    service_alert_timeout    => $console_services_service_alert_timeout,
+    display_local_time       => $display_local_time,
+    session_maximum_lifetime => $session_maximum_lifetime,
+    session_timeout          => $rbac_session_timeout,
+    replication_mode         => $replication_mode,
   }
 
 
@@ -325,8 +361,9 @@ class puppet_enterprise::profile::console (
     ssl_listen_port                    => $console_ssl_listen_port,
     browser_ssl_cert                   => $browser_ssl_cert,
     browser_ssl_private_key            => $browser_ssl_private_key,
-    browser_ssl_cert_chain             => $browser_ssl_cert_chain,
-    browser_ssl_ca_cert                => $browser_ssl_ca_cert,
+    replication_mode                   => $replication_mode,
     require                            => Class['puppet_enterprise::profile::console::certs'],
   }
+
+  include puppet_enterprise::profile::console::cache
 }
