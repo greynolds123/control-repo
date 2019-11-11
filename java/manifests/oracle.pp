@@ -60,8 +60,13 @@
 # [*install_command*]
 # Installation command used to install Oracle java_se. Installation commands
 # differ by package_type. 'bin' types are installed via shell command. 'rpmbin'
+<<<<<<< HEAD
 # types have the rpms extracted and then forcibly installed. 'rpm' types are
 # forcibly installed.
+=======
+# types have the rpms extracted and then foricibly installed. 'rpm' types are
+# foricibly installed.
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 #
 # [*url*]
 # Full URL, including oracle_url, release_major, release_minor and package_name, to
@@ -115,7 +120,11 @@ define java::oracle (
   case $::kernel {
     'Linux' : {
       case $::operatingsystem {
+<<<<<<< HEAD
         'CentOS', 'RedHat' : {
+=======
+        'CentOS' : {
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
           # Oracle Java 6 comes in a special rpmbin format
           if $version == '6' {
             $package_type = 'rpmbin'
@@ -188,11 +197,18 @@ define java::oracle (
   case $ensure {
     'present' : {
       archive { $destination :
+<<<<<<< HEAD
         ensure       => present,
         source       => "${oracle_url}${release_major}-${release_minor}/${package_name}",
         cleanup      => false,
         extract_path => '/tmp',
         cookie       => 'gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie',
+=======
+        ensure  => present,
+        source  => "${oracle_url}${release_major}-${release_minor}/${package_name}",
+        cleanup => false,
+        cookie  => 'gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie',
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
       }->
       case $::kernel {
         'Linux' : {

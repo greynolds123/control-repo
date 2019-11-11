@@ -8,7 +8,11 @@ describe 'validate_numeric' do
   # Checking for deprecation warning
   it 'displays a single deprecation' do
     ENV['STDLIB_LOG_DEPRECATIONS'] = 'true'
+<<<<<<< HEAD
     scope.expects(:warning).with(includes('This method is deprecated'))
+=======
+    expect(scope).to receive(:warning).with(include('This method is deprecated'))
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     is_expected.to run.with_params(3)
   end
 

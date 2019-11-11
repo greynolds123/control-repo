@@ -104,5 +104,12 @@ describe 'try_get_value' do
     it 'is able to use a custom path separator: default' do
       is_expected.to run.with_params(data, 'a::c', 'default', '::').and_return('default')
     end
+<<<<<<< HEAD
+=======
+
+    it 'is able to throw an error with incorrect params' do
+      is_expected.to run.with_params.and_raise_error(ArgumentError, %r{Wrong number of arguments}i)
+    end
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   end
 end

@@ -29,6 +29,23 @@ describe 'is_mac_address function' do
         expect(r.stdout).to match(%r{Notice: output correct})
       end
     end
+<<<<<<< HEAD
+=======
+
+    pp3 = <<-DOC
+      $a = '80:00:02:09:fe:80:00:00:00:00:00:00:00:24:65:ff:ff:91:a3:12'
+      $b = true
+      $o = is_mac_address($a)
+      if $o == $b {
+        notify { 'output correct': }
+      }
+    DOC
+    it 'is_mac_addresss a 20-octet mac' do
+      apply_manifest(pp3, :catch_failures => true) do |r|
+        expect(r.stdout).to match(%r{Notice: output correct})
+      end
+    end
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   end
   describe 'failure' do
     it 'handles improper argument counts'

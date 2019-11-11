@@ -13,13 +13,29 @@ module Puppet::Parser::Functions
       $encodestring = base64('encode', 'thestring', $method)
       $decodestring = base64('decode', 'dGhlc3RyaW5n', $method)
 
+<<<<<<< HEAD
+=======
+    Note: Since Puppet 4.8.0, the Binary data type can be used to produce base 64 encoded strings.
+    See the `new()` function for the Binary and String types for documentation. Also see `binary_file()`
+    function for reading a file with binary (non UTF-8) content.
+
+       # encode a string as if it was binary
+       $encodestring = String(Binary('thestring', '%s'))
+       # decode a Binary assuming it is an UTF-8 String
+       $decodestring = String(Binary("dGhlc3RyaW5n"), "%s")
+
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     DOC
 
     require 'base64'
 
     raise Puppet::ParseError, "base64(): Wrong number of arguments (#{args.length}; must be >= 2)" unless args.length >= 2
 
+<<<<<<< HEAD
     actions = %w[encode decode]
+=======
+    actions = ['encode', 'decode']
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 
     unless actions.include?(args[0])
       raise Puppet::ParseError, "base64(): the first argument must be one of 'encode' or 'decode'"
@@ -29,7 +45,11 @@ module Puppet::Parser::Functions
       raise Puppet::ParseError, 'base64(): the second argument must be a string to base64'
     end
 
+<<<<<<< HEAD
     method = %w[default strict urlsafe]
+=======
+    method = ['default', 'strict', 'urlsafe']
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 
     chosen_method = if args.length <= 2
                       'default'

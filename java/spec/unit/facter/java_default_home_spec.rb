@@ -14,7 +14,11 @@ describe Facter::Util::Fact do
         EOS
         Facter::Util::Resolution.expects(:which).with("readlink").returns(true)
         Facter::Util::Resolution.expects(:exec).with("readlink -e /usr/bin/java").returns(java_path_output)
+<<<<<<< HEAD
         expect(Facter.value(:java_default_home)).to eql "/usr/lib/jvm/java-7-openjdk-amd64"
+=======
+        Facter.value(:java_default_home).should == "/usr/lib/jvm/java-7-openjdk-amd64"
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
       end
     end
 
@@ -22,7 +26,11 @@ describe Facter::Util::Fact do
       it do
         Facter::Util::Resolution.stubs(:exec)
         Facter::Util::Resolution.expects(:which).with("readlink").at_least(1).returns(false)
+<<<<<<< HEAD
         expect(Facter.value(:java_default_home)).to be_nil
+=======
+        Facter.value(:java_default_home).should be_nil
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
       end
     end
   end

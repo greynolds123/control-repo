@@ -8,6 +8,13 @@ end
 
 gem 'puppetlabs_spec_helper', '>= 1.2.0', :require => false
 gem 'facter', '>= 1.7.0', :require => false
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 gem 'rspec-puppet', :require => false
 gem 'puppet-lint', '~> 2.0', :require => false
 gem 'puppet-lint-absolute_classname-check', :require => false
@@ -29,6 +36,35 @@ gem 'json_pure', '<= 2.0.1', :require => false        if RUBY_VERSION < '2.0.0'
 gem 'json', :require => false                         if RUBY_VERSION >= '2.0.0'
 gem 'metadata-json-lint', '0.0.11', :require => false if RUBY_VERSION < '1.9'
 gem 'metadata-json-lint', :require => false           if RUBY_VERSION >= '1.9'
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+gem 'rspec-puppet', :require => true
+gem 'puppet-lint', '~> 2.3.6', :require => true
+gem 'puppet-lint-absolute_classname-check', :require => false
+gem 'puppet-lint-alias-check', :require => true
+gem 'puppet-lint-empty_string-check', :require => true
+gem 'puppet-lint-file_ensure-check', :require => true
+gem 'puppet-lint-file_source_rights-check', :require => true
+gem 'puppet-lint-leading_zero-check', :require => true
+gem 'puppet-lint-spaceship_operator_without_tag-check', :require => true
+gem 'puppet-lint-trailing_comma-check', :require => true
+gem 'puppet-lint-undef_in_function-check', :require => true
+gem 'puppet-lint-unquoted_string-check', :require => true
+gem 'puppet-lint-variable_contains_upcase', :require => true
+
+gem 'rspec','~> 2.0', :require => true               if RUBY_VERSION < '1.9'
+gem 'rake', '~> 10.0', :require => true              if RUBY_VERSION < '1.9'
+gem 'json', '<= 1.8', :require => true               if RUBY_VERSION < '2.0.0'
+gem 'json_pure', '<= 2.0.1', :require => true        if RUBY_VERSION < '2.0.0'
+gem 'json', :require => true                         if RUBY_VERSION >= '2.0.0'
+gem 'metadata-json-lint', '0.0.11', :require => true if RUBY_VERSION < '1.9'
+gem 'metadata-json-lint', :require => true           if RUBY_VERSION >= '1.9'
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 
 group :system_tests do
   if beaker_version = ENV['BEAKER_VERSION']
@@ -37,10 +73,29 @@ group :system_tests do
   if beaker_rspec_version = ENV['BEAKER_RSPEC_VERSION']
     gem 'beaker-rspec', *location_for(beaker_rspec_version)
   else
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     gem 'beaker-rspec', :require => false
   end
   gem 'serverspec', :require => false
   gem 'beaker-puppet_install_helper', :require => false
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+    gem 'beaker-rspec', :require => true
+  end
+  gem 'serverspec', :require => true
+  gem 'beaker-puppet_install_helper', :require => true
+>>>>>>> f661b3a03526f113b1823084ffd4808cf261cf70
+>>>>>>> 1de4402b3b517d4a5ec3b988913cd26786d0111c
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 end
 
 # vim:ft=ruby

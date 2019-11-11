@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## Supported Release 1.6.0
 ### Summary
 
@@ -16,6 +17,8 @@ Addition of a new supported OS, along with several other features and bugfixes.
 - Fixed tests to run under strict variables.
 - Updated Java package for SLES 11.4.
 
+=======
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 ## Supported Release 1.5.0
 ### Summary
 

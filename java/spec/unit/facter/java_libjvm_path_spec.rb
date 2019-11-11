@@ -13,7 +13,11 @@ describe Facter::Util::Fact do
     context 'returns libjvm path' do
       context 'on Linux' do
         it do
+<<<<<<< HEAD
           expect(Facter.value(:java_libjvm_path)).to eql "/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server"
+=======
+          Facter.value(:java_libjvm_path).should == "/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server"
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
         end
       end
     end

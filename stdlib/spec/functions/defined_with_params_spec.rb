@@ -35,9 +35,17 @@ describe 'defined_with_params' do
     let :pre_condition do
       'file { "/tmp/a": ensure => present }'
     end
+<<<<<<< HEAD
 
     it { is_expected.to run.with_params('File[/tmp/a]', {}).and_return(true) }
     it { is_expected.to run.with_params('File[/tmp/a]', 'ensure' => 'present', 'owner' => :undef).and_return(true) }
+=======
+    let(:is_puppet_6_or_greater) { Puppet::Util::Package.versioncmp(Puppet.version, '6.0.0') >= 0 }
+    let(:undef_value) { is_puppet_6_or_greater ? nil : :undef } # even if :undef would work on 6.0.1, :undef should not be used
+
+    it { is_expected.to run.with_params('File[/tmp/a]', {}).and_return(true) }
+    it { is_expected.to run.with_params('File[/tmp/a]', 'ensure' => 'present', 'owner' => undef_value).and_return(true) }
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   end
 
   describe 'when the reference is a' do
@@ -52,8 +60,13 @@ describe 'defined_with_params' do
       context 'with array' do
         it 'fails' do
           expect {
+<<<<<<< HEAD
             subject.call([['User[dan]'], {}])
           }.to raise_error ArgumentError, %r{not understood: 'Array'}
+=======
+            subject.execute(['User[dan]'], {})
+          }.to raise_error(ArgumentError, %r{not understood: 'Array'})
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
         end
       end
     end
@@ -61,7 +74,11 @@ describe 'defined_with_params' do
 
   describe 'when passed a defined type' do
     let :pre_condition do
+<<<<<<< HEAD
       'test::deftype { "foo": }'
+=======
+      'define test::deftype() { } test::deftype { "foo": }'
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     end
 
     it { is_expected.to run.with_params('Test::Deftype[foo]', {}).and_return(true) }
@@ -69,4 +86,20 @@ describe 'defined_with_params' do
     it { is_expected.to run.with_params(Puppet::Resource.new('Test::Deftype[foo]'), {}).and_return(true) }
     it { is_expected.to run.with_params(Puppet::Resource.new('Test::Deftype[bar]'), {}).and_return(false) }
   end
+<<<<<<< HEAD
+=======
+
+  describe 'when passed a class' do
+    let :pre_condition do
+      'class test () { } class { "test": }'
+    end
+
+    it { is_expected.to run.with_params('Class[test]', {}).and_return(true) }
+    it { is_expected.to run.with_params('Class["bar"]', {}).and_return(false) }
+    it { is_expected.to run.with_params('Class[bar]', {}).and_return(false) }
+    it { is_expected.to run.with_params(Puppet::Resource.new('class', 'test'), {}).and_return(true) }
+    it { is_expected.to run.with_params(Puppet::Resource.new('Class["bar"]'), {}).and_return(false) }
+    it { is_expected.to run.with_params(Puppet::Resource.new('Class[bar]'), {}).and_return(false) }
+  end
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 end

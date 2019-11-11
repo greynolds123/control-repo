@@ -81,6 +81,10 @@ EOS
       include myclass
       EOS
     end
+<<<<<<< HEAD
+=======
+
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     it 'finds it on the command line' do
       expect(on(master, 'hiera myclass::value environment=production').stdout.strip).to eq('found output')
     end

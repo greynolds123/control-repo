@@ -1,4 +1,5 @@
 HOSTS:
+<<<<<<< HEAD
   ubuntu-1404-x64:
     roles:
       - agent
@@ -6,5 +7,14 @@ HOSTS:
     platform: ubuntu-14.04-amd64
     hypervisor: vagrant
     box: puppetlabs/ubuntu-14.04-64-nocm
+=======
+  centos-64-x64:
+    roles:
+      - master
+    platform: el-6-x86_64
+    box : centos-64-x64-vbox4210-nocm
+    box_url : http://puppet-vagrant-boxes.puppetlabs.com/centos-64-x64-vbox4210-nocm.box
+    hypervisor : vagrant
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 CONFIG:
   type: foss

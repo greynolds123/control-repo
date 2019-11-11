@@ -16,14 +16,23 @@ class hiera::eyaml {
   $eyaml_version = $::hiera::eyaml_version
   $eyaml_source  = $::hiera::_eyaml_source
 
+<<<<<<< HEAD
   $owner         = $::hiera::owner
   $group         = $::hiera::group
+=======
+  $owner         = $::hiera::eyaml_owner
+  $group         = $::hiera::eyaml_group
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   $cmdpath       = $::hiera::cmdpath
   $confdir       = $::hiera::confdir
   $create_keys   = $::hiera::create_keys
   $_keysdir      = $::hiera::_keysdir
 
+<<<<<<< HEAD
   $manage_package = $::hiera::manage_package
+=======
+  $manage_package = $::hiera::manage_eyaml_package
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 
   if $manage_package {
     ::hiera::install { 'eyaml':

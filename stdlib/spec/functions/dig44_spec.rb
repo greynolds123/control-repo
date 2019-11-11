@@ -1,6 +1,13 @@
 require 'spec_helper'
 
 describe 'dig44' do
+<<<<<<< HEAD
+=======
+  let(:undef_value) do
+    (Puppet::Util::Package.versioncmp(Puppet.version, '6.0.0') < 0) ? :undef : nil
+  end
+
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   let(:data) do
     {
       'a' => {
@@ -19,7 +26,11 @@ describe 'dig44' do
       'b' => true,
       'c' => false,
       'd' => '1',
+<<<<<<< HEAD
       'e' => :undef,
+=======
+      'e' => undef_value,
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
       'f' => nil,
     }
   end
@@ -42,6 +53,7 @@ describe 'dig44' do
     end
 
     it 'requires two arguments' do
+<<<<<<< HEAD
       is_expected.to run.with_params.and_raise_error(ArgumentError)
     end
 
@@ -51,6 +63,17 @@ describe 'dig44' do
 
     it 'fails if the path is not an array' do
       is_expected.to run.with_params({}, '').and_raise_error(Puppet::Error)
+=======
+      is_expected.to run.with_params.and_raise_error(ArgumentError, %r{Wrong number of arguments})
+    end
+
+    it 'fails if the data is not a structure' do
+      is_expected.to run.with_params('test', []).and_raise_error(Puppet::Error, %r{first argument must be a hash or an array})
+    end
+
+    it 'fails if the path is not an array' do
+      is_expected.to run.with_params({}, '').and_raise_error(Puppet::Error, %r{second argument must be an array})
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     end
 
     it 'returns the value if the value is string' do
@@ -80,11 +103,19 @@ describe 'dig44' do
 
   context 'with structured values' do
     it 'is able to extract a deeply nested hash value' do
+<<<<<<< HEAD
       is_expected.to run.with_params(data, %w[a g], 'default').and_return('2')
     end
 
     it 'returns the default value if the path is too long' do
       is_expected.to run.with_params(data, %w[a g c d], 'default').and_return('default')
+=======
+      is_expected.to run.with_params(data, ['a', 'g'], 'default').and_return('2')
+    end
+
+    it 'returns the default value if the path is too long' do
+      is_expected.to run.with_params(data, ['a', 'g', 'c', 'd'], 'default').and_return('default')
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     end
 
     it 'supports an array index (number) in the path' do
@@ -92,6 +123,7 @@ describe 'dig44' do
     end
 
     it 'supports an array index (string) in the path' do
+<<<<<<< HEAD
       is_expected.to run.with_params(data, %w[a e 1], 'default').and_return('f1')
     end
 
@@ -109,6 +141,25 @@ describe 'dig44' do
 
     it 'returns "nil" if value is not found and no default value is provided' do
       is_expected.to run.with_params(data, %w[a 1]).and_return(nil)
+=======
+      is_expected.to run.with_params(data, ['a', 'e', '1'], 'default').and_return('f1')
+    end
+
+    it 'returns the default value if an array index is not a number' do
+      is_expected.to run.with_params(data, ['a', 'b', 'c'], 'default').and_return('default')
+    end
+
+    it 'returns the default value if and index is out of array length' do
+      is_expected.to run.with_params(data, ['a', 'e', '5'], 'default').and_return('default')
+    end
+
+    it 'is able to path though both arrays and hashes' do
+      is_expected.to run.with_params(data, ['a', 'e', '2', 'x', 'y'], 'default').and_return('z')
+    end
+
+    it 'returns "nil" if value is not found and no default value is provided' do
+      is_expected.to run.with_params(data, ['a', '1']).and_return(nil)
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     end
   end
 

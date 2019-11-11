@@ -8,6 +8,12 @@ module Puppet::Parser::Functions
 
     Example:
       $module_path = get_module_path('stdlib')
+<<<<<<< HEAD
+=======
+
+    Note that since Puppet 5.4.0 the function `module_directory()` in Puppet does the same thing and will return
+    the path to the first found module if given multiple values or an array.
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   DOC
              ) do |args|
     raise(Puppet::ParseError, 'get_module_path(): Wrong number of arguments, expects one') unless args.size == 1

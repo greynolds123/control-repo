@@ -6,7 +6,11 @@ describe 'type' do
   end
 
   it 'gives a deprecation warning when called' do
+<<<<<<< HEAD
     scope.expects(:warning).with("type() DEPRECATED: This function will cease to function on Puppet 4; please use type3x() before upgrading to puppet 4 for backwards-compatibility, or migrate to the new parser's typing system.") # rubocop:disable Metrics/LineLength : Unable to reduce to required length
+=======
+    expect(scope).to receive(:warning).with("type() DEPRECATED: This function will cease to function on Puppet 4; please use type3x() before upgrading to puppet 4 for backwards-compatibility, or migrate to the new parser's typing system.") # rubocop:disable Metrics/LineLength : Unable to reduce to required length
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     scope.function_type(['aoeu'])
   end
 
@@ -16,7 +20,11 @@ describe 'type' do
   end
 
   it 'returns array when given an array' do
+<<<<<<< HEAD
     result = scope.function_type([%w[aaabbbbcccc asdf]])
+=======
+    result = scope.function_type([['aaabbbbcccc', 'asdf']])
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     expect(result).to(eq('array'))
   end
 

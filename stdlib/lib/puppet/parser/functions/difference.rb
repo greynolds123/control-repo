@@ -12,6 +12,15 @@ module Puppet::Parser::Functions
         difference(["a","b","c"],["b","c","d"])
 
     Would return: ["a"]
+<<<<<<< HEAD
+=======
+
+    Note: Since Puppet 4 the minus (-) operator in the Puppet language does the same thing:
+
+      ['a', 'b', 'c'] - ['b', 'c', 'd']
+      # would return ['a']
+
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     DOC
              ) do |arguments|
 

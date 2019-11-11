@@ -1,4 +1,13 @@
+<<<<<<< HEAD
 # A function to eventually replace the old size() function for stdlib - The original size function did not handle Puppets new type capabilities, so this function is a Puppet 4 compatible solution.
+=======
+# A function to eventually replace the old size() function for stdlib
+# The original size function did not handle Puppets new type capabilities, so this function is a Puppet 4 compatible solution.
+#
+# Note: from Puppet 6.0.0, the compatible function with the same name in Puppet core
+# will be used instead of this function.
+#
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 Puppet::Functions.create_function(:length) do
   dispatch :length do
     param 'Variant[String,Array,Hash]', :value

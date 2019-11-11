@@ -1,4 +1,13 @@
+<<<<<<< HEAD
 version: 1.1.x.{build}
+=======
+---
+version: 1.1.x.{build}
+branches:
+  only:
+    - master
+    - release
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 skip_commits:
   message: /^\(?doc\)?.*/
 clone_depth: 10
@@ -12,6 +21,7 @@ environment:
   matrix:
     -
       RUBY_VERSION: 24-x64
+<<<<<<< HEAD
       CHECK: syntax lint
     -
       RUBY_VERSION: 24-x64
@@ -35,6 +45,25 @@ environment:
       PUPPET_GEM_VERSION: ~> 5.0
       RUBY_VERSION: 24-x64
       CHECK: spec
+=======
+      CHECK: syntax lint metadata_lint check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop
+    -
+      PUPPET_GEM_VERSION: ~> 5.0
+      RUBY_VERSION: 24
+      CHECK: parallel_spec
+    -
+      PUPPET_GEM_VERSION: ~> 5.0
+      RUBY_VERSION: 24-x64
+      CHECK: parallel_spec
+    -
+      PUPPET_GEM_VERSION: ~> 6.0
+      RUBY_VERSION: 25
+      CHECK: parallel_spec
+    -
+      PUPPET_GEM_VERSION: ~> 6.0
+      RUBY_VERSION: 25-x64
+      CHECK: parallel_spec
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 matrix:
   fast_finish: true
 install:

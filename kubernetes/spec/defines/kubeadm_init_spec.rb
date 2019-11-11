@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe 'kubernetes::kubeadm_init', :type => :define do
+<<<<<<< HEAD
+=======
+  let(:pre_condition) { 'include kubernetes' }
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   let(:title) { 'kubeadm init' }
   let(:facts) do
     {
@@ -29,5 +33,9 @@ describe 'kubernetes::kubeadm_init', :type => :define do
     end
     it { is_expected.to compile.with_all_deps }
     it { is_expected.to contain_exec('kubeadm init').with_command("kubeadm init --config '/etc/kubernetes/config.yaml'")}
+<<<<<<< HEAD
+=======
+    it { is_expected.to contain_kubernetes__wait_for_default_sa('default')}
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   end
 end

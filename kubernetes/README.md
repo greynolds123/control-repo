@@ -18,13 +18,32 @@
    * [Parameters](#parameters)
 4. [Limitations - OS compatibility, etc.](#limitations)
 5. [Development - Guide for contributing to the module](#development)
+<<<<<<< HEAD
 
 ## Description
 
+=======
+6. [Examples - Puppet Bolt task examples](#examples)
+
+## Description
+
+[<img
+src="https://raw.githubusercontent.com/cncf/artwork/master/kubernetes/certified-kubernetes/1.13/color/certified-kubernetes-1.13-color.png"
+align="right" width="150px" alt="certified kubernetes 1.13">][certified]
+
+[certified]: https://github.com/cncf/k8s-conformance/tree/master/v1.13/puppetlabs-kubernetes
+
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 This module installs and configures [Kubernetes](https://kubernetes.io/) which is an open-source system for automating deployment, scaling, and management of containerized applications. For efficient management and discovery, containers that make up an application are grouped into logical units.
 
 To bootstrap a Kubernetes cluster in a secure and extensible way, this module uses the [kubeadm](https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/) toolkit.
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 ## Setup
 
 [Install](https://puppet.com/docs/puppet/5.5/modules_installing.html) this module, [generate the configuration](#generating-the-module-configuration), [add the OS and hostname yaml files to Hiera](#adding-the-`{$OS}.yaml`-and-`{$hostname}.yaml`-files-to-Hiera), and [configure your node](#configuring-your-node).
@@ -167,6 +186,26 @@ A string array of extra arguments passed to the API server.
 
 Defaults to `[]`.
 
+<<<<<<< HEAD
+=======
+#### `apiserver_extra_volumes`
+
+A hash of extra volumes mounts mounted on the API server.
+
+For example,
+
+```puppet
+apiserver_extra_volumes => {
+  'volume-name' => {
+    hostPath  => '/data',
+    mountPath => '/data',
+  },
+}
+```
+
+Defaults to `{}`.
+
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 #### `cloud_provider`
 
 The name of the cloud provider configured in `/etc/kubernetes/cloud-config`.
@@ -241,6 +280,33 @@ The IP address and port for the controller the worker node joins. For example `1
 
 Defaults to `undef`.
 
+<<<<<<< HEAD
+=======
+#### `controllermanager_extra_arguments`
+
+A string array of extra arguments passed to the controller manager.
+
+Defaults to `[]`.
+
+#### `controllermanager_extra_volumes`
+
+A hash of extra volumes mounts mounted on the controller manager container.
+
+For example,
+
+```puppet
+controllermanager_extra_volumes => {
+  'volume-name' => {
+    hostPath  => '/data',
+    mountPath => '/data',
+  },
+}
+```
+
+Defaults to `{}`.
+
+
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 #### `create_repos`
 
 Specifies whether to install the upstream Kubernetes and Docker repos.
@@ -364,6 +430,17 @@ The system package name for installing etcd
 
 Defaults to `etcd-server`.
 
+<<<<<<< HEAD
+=======
+#### `etcd_hostname`
+
+Specifies the name of the etcd instance.
+
+A Hiera is `kubernetes::etcd_hostname:"%{::fqdn}"`.
+
+Defaults to `$hostname`.
+
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 #### `etcd_ip`
 
 Specifies the IP address etcd uses for communications.
@@ -644,3 +721,10 @@ Docker is the supported container runtime for this module.
 ## Development
 
 If you would like to contribute to this module, please follow the rules in the [CONTRIBUTING.md](https://github.com/puppetlabs/puppetlabs-kubernetes/blob/master/CONTRIBUTING.md).
+<<<<<<< HEAD
+=======
+
+## Examples
+
+In the examples folder you will find a [bash script](https://github.com/puppetlabs/puppetlabs-kubernetes/blob/master/examples/task_examples.sh) containg a few sample Puppet Bolt commands for the usage of the tasks. The example script is intended to be used with a Kubernetes API that requires the token authentication header, but the token parameter is optional by default.  
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8

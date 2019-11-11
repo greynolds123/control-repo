@@ -10,6 +10,14 @@ module Puppet::Parser::Functions
         prefix(['a','b','c'], 'p')
 
     Will return: ['pa','pb','pc']
+<<<<<<< HEAD
+=======
+
+    Note that since Puppet 4.0.0 the general way to modify values is in array is by using the map
+    function in Puppet. This example does the same as the example above:
+
+        ['a', 'b', 'c'].map |$x| { "p${x}" }
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     DOC
              ) do |arguments|
 

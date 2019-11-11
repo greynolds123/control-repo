@@ -1,6 +1,10 @@
 {
   "name": "puppetlabs-java",
+<<<<<<< HEAD
   "version": "1.6.0",
+=======
+  "version": "1.5.0",
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   "author": "puppetlabs",
   "summary": "Installs the correct Java package on various platforms.",
   "license": "Apache-2.0",
@@ -63,8 +67,12 @@
       "operatingsystemrelease": [
         "10.04",
         "12.04",
+<<<<<<< HEAD
         "14.04",
         "16.04"
+=======
+        "14.04"
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
       ]
     },
     {

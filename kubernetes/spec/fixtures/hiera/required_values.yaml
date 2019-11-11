@@ -23,3 +23,7 @@ kubernetes::controller_address: '172.17.10.101:6443'
 kubernetes::cloud_provider: :undef
 kubernetes::create_repos: true
 kubernetes::disable_swap: true
+<<<<<<< HEAD
+=======
+kubernetes::cni_network_provider: 'https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml'
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
