@@ -9,6 +9,7 @@ This README would normally document whatever steps are necessary to get your app
 * This Project (Group ) will be deleted once all testing is complete. A formal group will be created once it has been approved
 * Demo Project
 * [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* More testing information
 
 ### How do I get set up? ###
 
@@ -28,5 +29,5 @@ This README would normally document whatever steps are necessary to get your app
 
 ### Who do I talk to? ###
 
-* Greynolds3, glynnreynolds123@gmail.com
+* Greynolds3, glynnreynolds123@gmail.com, greynolds@gdrenterprise.com
 * Will be updated soon

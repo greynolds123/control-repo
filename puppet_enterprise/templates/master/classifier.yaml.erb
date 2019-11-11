@@ -1,3 +1,5 @@
-server: <%= @classifier_host %>
-port: <%= @classifier_port %>
-prefix: <%= @classifier_url_prefix %>
+<%- for i in 0...@classifier_hosts.size do -%>
+- server: <%= @classifier_hosts[i] %>
+  port: <%= @classifier_ports[i] %>
+  prefix: <%= @classifier_url_prefix %>
+<%- end -%>

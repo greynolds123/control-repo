@@ -11,52 +11,52 @@
 # @param ssl_listen_port [Integer] The port used for ssl connections.
 # @param browser_ssl_cert [String] Sets the path to the server certificate PEM file used
 #        by the web service.
+# @param Variant[String, Array[String]] ssl_protocols The list of SSL protocols to allow.
 # @param browser_ssl_private_key [String] For use with a custom CA, the path to a private
 #        key for your public ca certificate.
-# @param browser_ssl_cert_chain [String] For use with a custom CA, the path to the ca certificate.
-# @param browser_ssl_ca_cert [String] For use with a custom CA, the path to the certificate.
 # @param nginx_gzip [String] Set gzip compression in nginx to on or off
 class puppet_enterprise::profile::console::proxy (
-  $certname                                 = $::clientcert,
+  $certname                                 = $facts['clientcert'],
+  String $server_name                       = $puppet_enterprise::console_host,
   $dhparam_file                             = '/etc/puppetlabs/nginx/dhparam_puppetproxy.pem',
   $proxy_read_timeout                       = 120,
   $trapperkeeper_proxy_listen_address       = $puppet_enterprise::params::plaintext_address,
   $trapperkeeper_proxy_listen_port          = $puppet_enterprise::params::console_services_listen_port,
-  $ssl_ciphers                              = 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:ECDHE-RSA-DES-CBC3-SHA:ECDHE-ECDSA-DES-CBC3-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA',
+  $ssl_ciphers                              = $puppet_enterprise::params::browser_ciphers,
   $ssl_listen_address                       = $puppet_enterprise::params::ssl_address,
   $ssl_listen_port                          = $puppet_enterprise::console_port,
   $ssl_prefer_server_ciphers                = 'on',
-  $ssl_protocols                            = 'TLSv1 TLSv1.1 TLSv1.2',
+  Variant[String, Array[String]] $ssl_protocols = $puppet_enterprise::ssl_protocols,
   $ssl_session_cache                        = 'shared:SSL:50m',
   $ssl_session_timeout                      = '1d',
   $ssl_verify_client                        = 'off',
   $ssl_verify_depth                         = 1,
   Optional[String] $browser_ssl_cert        = undef,
   Optional[String] $browser_ssl_private_key = undef,
-  $browser_ssl_cert_chain                   = undef,
-  $browser_ssl_ca_cert                      = undef,
-  Enum['on','off'] $nginx_gzip              = 'on'
+  Enum['on','off'] $nginx_gzip              = 'on',
+  Puppet_enterprise::Replication_mode $replication_mode = 'none',
 ) inherits puppet_enterprise {
-  include pe_nginx
+
+  # Don't enable the pe-nginx service on replicas
+  if $replication_mode == 'replica' {
+    class {'pe_nginx':
+      ensure => stopped,
+      enable => false,
+    }
+    } else {
+      include pe_nginx
+    }
 
   pe_validate_re($ssl_verify_client, '^(on|off|optional|optional_no_ca)$')
   pe_validate_re($ssl_prefer_server_ciphers, '^(on|off)$')
   pe_validate_re($ssl_session_cache, '(^(off|none)$|(builtin:[0-9]+)|(shared:[a-zA-Z]+:[0-9]+[bkmg]?))')
   pe_validate_single_integer($proxy_read_timeout)
 
-  if ($browser_ssl_cert_chain != undef) {
-    warning('Please use the node classifier to remove the parameter browser_ssl_cert_chain from the puppet_enterprise::profile::console::proxy class.')
-  }
-
-  if ($browser_ssl_ca_cert != undef) {
-    warning('Please use the node classifier to remove the parameter browser_ssl_ca_cert from the puppet_enterprise::profile::console::proxy class.')
-  }
-
   if $browser_ssl_cert != undef and $browser_ssl_private_key == undef {
-    fail("browser_ssl_private_key must also be set if setting browser_ssl_cert")
+    fail('browser_ssl_private_key must also be set if setting browser_ssl_cert')
   }
   elsif $browser_ssl_cert == undef and $browser_ssl_private_key != undef {
-    fail("browser_ssl_cert must also be set if setting browser_ssl_private_key")
+    fail('browser_ssl_cert must also be set if setting browser_ssl_private_key')
   }
 
   $console_cert_dir = $puppet_enterprise::console_services_ssl_dir
@@ -71,7 +71,7 @@ class puppet_enterprise::profile::console::proxy (
     default => $browser_ssl_private_key,
   }
 
-  $puppetproxy_file = '/etc/puppetlabs/nginx/conf.d/proxy.conf'
+  $puppetproxy_file = "${puppet_enterprise::nginx_conf_dir}/conf.d/proxy.conf"
 
   file { $puppetproxy_file:
     ensure  => file,
@@ -99,11 +99,11 @@ class puppet_enterprise::profile::console::proxy (
   Pe_nginx::Directive {
     directive_ensure => 'present',
     target           => $puppetproxy_file,
-    server_context   => $puppet_enterprise::console_host,
+    server_context   => $server_name,
   }
 
   pe_nginx::directive { 'server_name':
-    value => $puppet_enterprise::console_host,
+    value => $server_name,
   }
 
   if ($ssl_listen_address and $ssl_listen_address != '0.0.0.0') {
@@ -134,11 +134,11 @@ class puppet_enterprise::profile::console::proxy (
   }
 
   pe_nginx::directive { 'ssl_ciphers':
-    value => $ssl_ciphers,
+    value => pe_join(pe_any2array($ssl_ciphers), ':'),
   }
 
   pe_nginx::directive { 'ssl_protocols':
-    value => $ssl_protocols,
+    value => pe_join(pe_any2array($ssl_protocols), ' '),
   }
 
   pe_nginx::directive { 'ssl_dhparam':
@@ -207,4 +207,9 @@ class puppet_enterprise::profile::console::proxy (
     replace_value    => false,
   }
   # --END LOCATION CONFIG--
+
+  class { 'puppet_enterprise::profile::console::proxy::http_redirect' :
+    ssl_listen_port => Integer($ssl_listen_port),
+  }
+
 }
