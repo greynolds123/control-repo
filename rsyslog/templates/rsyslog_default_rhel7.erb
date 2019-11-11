@@ -1,0 +1,10 @@
+# File is managed by puppet
+:kern.*
+:kern.=crit greynolds & ^test-program;temp & @centos7.prod.localdomain
+:mail.crit
+:log.* /var/log/messages
+:cron.* /var/log/cron
+:msg, contains, "error"
+:msg, !regex, "fatal .* error"
+:hostname, isequal, "centos7.prod.localdomaon"
+SYSLOGD_OPTIONS="-s syslogd"
