@@ -1,0 +1,48 @@
+{
+  "name": "puppetlabs-pe_razor",
+  "version": "1.1.0",
+  "author": "Puppet Labs",
+  "summary": "PE Razor puppet module",
+  "license": "Puppet Enterprise Software License Agreement",
+  "source": "git://github.com/puppetlabs/puppetlabs-pe_razor.git",
+  "project_page": "http://github.com/puppetlabs/puppetlabs-pe_razor",
+  "dependencies": [
+
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "6"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "6"
+      ]
+    },
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": "3.x"
+    }
+  ],
+  "description": "PE Razor provisioning system puppet installation module",
+  "pdk-version": "1.10.0.pre (heads/add_pdk_new_plan-0-gab6ad44)",
+  "template-url": "file:///opt/puppetlabs/pdk/share/cache/pdk-templates.git",
+  "template-ref": "tags/1.9.0-0-g7281db5"
+}

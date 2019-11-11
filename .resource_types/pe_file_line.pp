@@ -1,4 +1,4 @@
-# This file was automatically generated on 2017-02-13 04:11:50 -0800.
+# This file was automatically generated on 2019-06-08 13:59:54 -0700.
 # Use the 'puppet generate types' command to regenerate this file.
 
 # Ensures that a given line is contained within a file.  The implementation
@@ -61,7 +61,7 @@ Puppet::Resource::ResourceType3.new(
     Puppet::Resource::Param(Any, 'provider')
   ],
   {
-    /(.*)/ => ['name']
+    /(?m-ix:(.*))/ => ['name']
   },
   true,
   false)

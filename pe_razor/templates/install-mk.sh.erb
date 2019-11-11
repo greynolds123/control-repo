@@ -1,0 +1,39 @@
+#!/bin/sh
+set -ex
+
+umask 0022                      # allow rX for group/other
+
+dest=<%= scope['::pe_razor::params::repo_dir'] %>/microkernel
+tmpdir="${dest}-$$" # not very secure
+trap "rm -rf '${tmpdir}'" exit
+mkdir -p "${tmpdir}"
+
+# OK, we need to download and unpack the archive into the destination...
+# Retry a few times in case the download fails for a transient reason.
+download_mk() {
+   curl --retry 5 -Lfo "${tmpdir}/mk.tar" "<%= @microkernel_url %>" -C -
+}
+set +e # Temporarily disable this so the retry mechanism works.
+times=0
+download_mk
+while [ $? -ne 0 -a $times -lt 5 ]; do let "times++"; sleep 3; download_mk; done
+if [ $? -ne 0 ]; then
+    echo "Could not download microkernel";
+    exit 1;
+fi
+set -e
+
+# Now, unpack it in the same location.
+tar xCf "${tmpdir}" "${tmpdir}/mk.tar"
+rm -f "${tmpdir}/mk.tar"
+
+# Finally, move that into place overwriting the destination files, but
+# avoiding destroying additional files.  This helps with upgrades...
+mkdir -p "${dest}"
+if ! tar cC "${tmpdir}/microkernel" . | tar xC "${dest}"; then
+    rm -rf "${dest}"
+    exit 1
+fi
+
+# ...done.
+exit 0

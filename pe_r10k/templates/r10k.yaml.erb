@@ -1,0 +1,39 @@
+---
+cachedir: <%= @cachedir %>
+<% if !@proxy.nil? && !@proxy.empty? -%>
+proxy: <%= @proxy %>
+<% end -%>
+<% if !@_sources.empty? -%>
+sources:
+<% @_sources.sort.each do |source_name, source_params| -%>
+  <%= source_name -%>:
+<% source_params.sort.each do |key, value| -%>
+    <%=key-%>: <%=value%>
+<% end -%>
+<% end -%>
+<% end -%>
+
+
+<% if !@forge_settings.empty? -%>
+forge:
+<% @forge_settings.sort.each do |key, value| -%>
+    <%=key-%>: <%=value%>
+<% end -%>
+
+<% end -%>
+<% if !@git_settings.empty? -%>
+git:
+<% @git_settings.sort.each do |key, value| -%>
+    <%=key-%>: <%=value%>
+<% end -%>
+<% end -%>
+<% if !@deploy_settings.empty? -%>
+deploy:
+<% @deploy_settings.sort.each do |key, value| -%>
+    <%=key-%>: <%=value%>
+<% end -%>
+<% end -%>
+
+<% if @postrun && !@postrun.empty? -%>
+postrun: [<%= @postrun.map { |v| %Q["#{v}"] }.join("\, ")%>]
+<% end -%>

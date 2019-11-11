@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 6fcbf65f5da55a17e187ee1a6fd36bbb7963e538
 # This class is the configuration file for kernel updates.
 
   class kernel::config (
@@ -24,6 +27,7 @@
   allow_virtual => $allow_virtual,
   }
   }
+<<<<<<< HEAD
     
 =======
 # This class is the configuration file for kernel updates.
@@ -53,3 +57,6 @@
   }
     
 >>>>>>> c85f3f0a34a6f9d54ee4608b5f8d792152f48899
+=======
+  
+>>>>>>> 6fcbf65f5da55a17e187ee1a6fd36bbb7963e538

@@ -1,7 +1,11 @@
 #! /bin/sh
 ### BEGIN INIT INFO
 # Provides:          zabbix-agent
+<<<<<<< HEAD
+# Required-Start:    $remote_fs $network
+=======
 # Required-Start:    $remote_fs $network 
+>>>>>>> c9b52c6393265c3a51bd8b3201b3bfbe07fcc044
 # Required-Stop:     $remote_fs
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
@@ -64,5 +68,8 @@ case "$1" in
     exit 1
     ;;
 esac
+<<<<<<< HEAD
+=======
 
+>>>>>>> c9b52c6393265c3a51bd8b3201b3bfbe07fcc044
 exit 0

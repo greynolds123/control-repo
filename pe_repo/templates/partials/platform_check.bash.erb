@@ -1,0 +1,248 @@
+#! /bin/bash
+
+# Sets PLATFORM_NAME to a value that PE expects
+#
+# Arguments:
+# PLATFORM_NAME
+# RELEASE_FILE
+#
+# Side-effect:
+# Modifies PLATFORM_NAME
+function sanitize_platform_name() {
+    # Sanitize name for unusual platforms
+    case "${PLATFORM_NAME?}" in
+        redhatenterpriseserver | redhatenterpriseclient | redhatenterpriseas | redhatenterprisees | enterpriseenterpriseserver | redhatenterpriseworkstation | redhatenterprisecomputenode | oracleserver)
+            PLATFORM_NAME=rhel
+            ;;
+        enterprise*)
+            PLATFORM_NAME=centos
+            ;;
+        scientific | scientifics | scientificsl)
+            PLATFORM_NAME=rhel
+            ;;
+        oracle | ol)
+            PLATFORM_NAME=rhel
+            ;;
+        'suse linux' | sles_sap )
+            PLATFORM_NAME=sles
+            ;;
+        amazonami | amzn)
+            PLATFORM_NAME=amazon
+            ;;
+    esac
+
+    if [ -r "${RELEASE_FILE:-}" ] && grep -E "Cumulus Linux" "${RELEASE_FILE}" &> /dev/null; then
+        PLATFORM_NAME=cumulus
+    fi
+}
+
+# Sets PLATFORM_RELEASE to a value that PE expects
+#
+# Arguments:
+# PLATFORM_NAME
+# PLATFORM_RELEASE
+#
+# Side-effect:
+# Modifies PLATFORM_RELEASE
+function sanitize_platform_release() {
+    # Sanitize release for unusual platforms
+    case "${PLATFORM_NAME?}" in
+        centos | rhel | sles | solaris)
+            # Platform uses only number before period as the release,
+            # e.g. "CentOS 5.5" is release "5"
+            PLATFORM_RELEASE=$(echo -n "${PLATFORM_RELEASE?}" | cut -d. -f1)
+            ;;
+        amazon)
+            # This line will parse the image_name: image_name="amzn2-ami-hvm"
+            # Amazon linux v1 will be similar to: image_name="amzn-ami-hvm"
+            t_image_name=$(grep image_name /etc/image-id | cut -d\" -f2 | cut -d- -f1)
+            if [ -z "$t_image_name" ]; then
+                fail "Unable to parse Amazon Linux version info from /etc/image-id"
+            else
+                if [ "$t_image_name" == "amzn2" ]; then
+                    PLATFORM_RELEASE=7
+                else
+                    PLATFORM_RELEASE=6
+                fi
+            fi
+            ;;
+        debian)
+            # Platform uses only number before period as the release,
+            # e.g. "Debian 6.0.1" is release "6"
+            PLATFORM_RELEASE=$(echo -n "${PLATFORM_RELEASE?}" | cut -d. -f1)
+            if [ "${PLATFORM_RELEASE}" = "testing" ] ; then
+                PLATFORM_RELEASE=7
+            fi
+            ;;
+        cumulus)
+            PLATFORM_RELEASE=$(echo -n "${PLATFORM_RELEASE?}" | cut -d'.' -f'1,2')
+            ;;
+    esac
+}
+
+##############################################################################
+# We need to know what the PE platform tag is for this node, which requires
+# digging through a bunch of data to extract it.  This is currently the best
+# mechanism available to do this, which is copied from the PE
+# installer itself.
+
+# shellcheck source=/dev/null
+if [ -z "${PLATFORM_NAME:-""}" ] || [ -z "${PLATFORM_RELEASE:-""}" ]; then
+    # https://www.freedesktop.org/software/systemd/man/os-release.html#Description
+    # Try /etc/os-release first, then /usr/lib/os-release, then legacy pre-systemd methods
+    if [ -f "/etc/os-release" ] || [ -f "/usr/lib/os-release" ]; then
+        if [ -f "/etc/os-release" ]; then
+            RELEASE_FILE="/etc/os-release"
+        else
+            RELEASE_FILE="/usr/lib/os-release"
+        fi
+        PLATFORM_NAME=$(source "${RELEASE_FILE}"; echo -n "${ID}")
+        sanitize_platform_name
+        PLATFORM_RELEASE=$(source "${RELEASE_FILE}"; echo -n "${VERSION_ID}")
+        sanitize_platform_release
+
+        # For el-7 platforms we also support FIPS mode, which changes the platform name
+        if [[ "$PLATFORM_RELEASE" == "7" && ("$PLATFORM_NAME" == "rhel" || "$PLATFORM_NAME" == "centos") ]]; then
+            if [ -f "/proc/sys/crypto/fips_enabled" ]; then
+                t_fips_status="$(cat /proc/sys/crypto/fips_enabled)"
+                if [ "$t_fips_status" == "1" ]; then
+                    PLATFORM_NAME='redhatfips'
+                fi
+            fi
+        fi
+    # Try identifying using lsb_release.  This takes care of Ubuntu
+    # (lsb-release is part of ubuntu-minimal).
+    elif type lsb_release > /dev/null 2>&1; then
+        t_prepare_platform=$(lsb_release -icr 2>&1)
+
+        PLATFORM_NAME="$(echo -n "${t_prepare_platform?}" | grep -E '^Distributor ID:' | cut -s -d: -f2 | sed 's/[[:space:]]//' | tr '[:upper:]' '[:lower:]')"
+        sanitize_platform_name
+
+        # Release
+        PLATFORM_RELEASE="$(echo -n "${t_prepare_platform?}" | grep -E '^Release:' | cut -s -d: -f2 | sed 's/[[:space:]]//g')"
+        sanitize_platform_release
+    elif [ "x$(uname -s)" = "xDarwin" ]; then
+        PLATFORM_NAME="osx"
+        # sw_vers returns something like 10.9.2, but we only want 10.9 so chop off the end
+        t_platform_release="$(/usr/bin/sw_vers -productVersion | cut -d'.' -f1,2)"
+        PLATFORM_RELEASE="${t_platform_release?}"
+    # Test for Solaris.
+    elif [ "x$(uname -s)" = "xSunOS" ]; then
+        PLATFORM_NAME="solaris"
+        t_platform_release="$(uname -r)"
+        # JJM We get back 5.10 but we only care about the right side of the decimal.
+        PLATFORM_RELEASE="${t_platform_release##*.}"
+    elif [ "x$(uname -s)" = "xAIX" ] ; then
+        # All versions of AIX use aix 6.1 packages
+        PLATFORM_NAME="aix"
+        PLATFORM_RELEASE="6.1"
+
+    # Test for RHEL variant. RHEL, CentOS, OEL
+    elif [ -f /etc/redhat-release ] && [ -r /etc/redhat-release ] && [ -s /etc/redhat-release ]; then
+        # Oracle Enterprise Linux 5.3 and higher identify the same as RHEL
+        if grep -qi 'red hat enterprise' /etc/redhat-release; then
+            PLATFORM_NAME=rhel
+        elif grep -qi 'centos' /etc/redhat-release; then
+            PLATFORM_NAME=centos
+        elif grep -qi 'scientific' /etc/redhat-release; then
+            PLATFORM_NAME=rhel
+        elif grep -qi 'fedora' /etc/redhat-release; then
+            PLATFORM_NAME='fedora'
+        fi
+        # Release - take first digits after ' release ' only.
+        PLATFORM_RELEASE="$(sed 's/.*\ release\ \([[:digit:]]\+\).*/\1/g;q' /etc/redhat-release)"
+
+    # Test for Debian releases
+    elif [ -f /etc/debian_version ] && [ -r /etc/debian_version ] && [ -s /etc/debian_version ]; then
+        t_prepare_platform__debian_version_file="/etc/debian_version"
+
+        if grep -qE '^[[:digit:]]' "${t_prepare_platform__debian_version_file?}"; then
+            PLATFORM_NAME=debian
+            PLATFORM_RELEASE="$(sed 's/\..*//' "${t_platform_release__debian_version_file?}")"
+        elif grep -qE '^wheezy' "${t_prepare_platform__debian_version_file?}"; then
+            PLATFORM_NAME=debian
+            PLATFORM_RELEASE="7"
+        fi
+    elif [ -f /etc/SuSE-release ] && [ -r /etc/SuSE-release ]; then
+        t_prepare_platform__suse_version=$(cat /etc/SuSE-release)
+
+        if echo -n "${t_prepare_platform__suse_version?}" | grep -E 'Enterprise Server'; then
+            PLATFORM_NAME=sles
+            t_version=$(grep VERSION /etc/SuSE-release | sed 's/^VERSION = \(\d*\)/\1/')
+            PLATFORM_RELEASE="${t_version}"
+        fi
+    elif [ -f /etc/system-release ]; then
+        if grep -qi 'amazon linux' /etc/system-release; then
+          PLATFORM_NAME=amazon
+          sanitize_platform_release
+        else
+            fail "$(cat /etc/system-release) is not a supported platform for Puppet Enterprise v<%= @pe_version %>
+                    Please visit http://links.puppetlabs.com/puppet_enterprise_${PE_LINK_VER?}_platform_support to request support for this platform."
+
+        fi
+    elif [ -z "${PLATFORM_NAME:-""}" ]; then
+        fail "$(uname -s) is not a supported platform for Puppet Enterprise v<%= @pe_version %>
+            Please visit http://links.puppetlabs.com/puppet_enterprise_${PE_LINK_VER?}_platform_support to request support for this platform."
+    fi
+fi
+
+if [ -z "${PLATFORM_NAME:-""}" ] || [ -z "${PLATFORM_RELEASE:-""}" ]; then
+    fail "Unknown platform"
+fi
+
+# Architecture
+if [ -z "${PLATFORM_ARCHITECTURE:-""}" ]; then
+    case "${PLATFORM_NAME?}" in
+        solaris | aix )
+            PLATFORM_ARCHITECTURE="$(uname -p)"
+            if [ "${PLATFORM_ARCHITECTURE}" = "powerpc" ] ; then
+                PLATFORM_ARCHITECTURE='power'
+            fi
+            ;;
+        debian | ubuntu )
+            PLATFORM_ARCHITECTURE="$(uname -m)"
+            if [ "${PLATFORM_ARCHITECTURE}" = "ppc64le" ] ; then
+                # Debian/Ubuntu name their package arch for Power8 as 'ppc64el'
+                PLATFORM_ARCHITECTURE='ppc64el'
+            fi
+            ;;
+        *)
+            PLATFORM_ARCHITECTURE="$(uname -m)"
+            ;;
+    esac
+
+    case "${PLATFORM_ARCHITECTURE?}" in
+        x86_64)
+            case "${PLATFORM_NAME?}" in
+                ubuntu | debian )
+                    PLATFORM_ARCHITECTURE=amd64
+                    ;;
+            esac
+            ;;
+        i686)
+            PLATFORM_ARCHITECTURE=i386
+            ;;
+        ppc)
+            PLATFORM_ARCHITECTURE=powerpc
+            ;;
+    esac
+fi
+
+# Tag
+if [ -z "${PLATFORM_TAG:-""}" ]; then
+    case "${PLATFORM_NAME?}" in
+        # Enterprise linux (centos & rhel) share the same packaging
+        # Amazon linux is similar enough for our packages
+        rhel | centos | amazon )
+            PLATFORM_TAG="el-${PLATFORM_RELEASE?}-${PLATFORM_ARCHITECTURE?}"
+            ;;
+        *)
+            PLATFORM_TAG="${PLATFORM_NAME?}-${PLATFORM_RELEASE?}-${PLATFORM_ARCHITECTURE?}"
+            ;;
+    esac
+fi
+
+# This is the end of the code copied from the upstream installer.
+##############################################################################
+
+# vim: ft=sh

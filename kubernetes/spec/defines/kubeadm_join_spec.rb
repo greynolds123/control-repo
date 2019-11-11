@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe 'kubernetes::kubeadm_join', :type => :define do
+  let(:pre_condition) { 'include kubernetes' }
   let(:title) { 'kubeadm join' }
   let(:facts) do
     {
@@ -38,7 +39,7 @@ describe 'kubernetes::kubeadm_join', :type => :define do
     end
 
     it { is_expected.to compile.with_all_deps }
-    it { is_expected.to contain_exec('kubeadm join').with_command("kubeadm join '10.0.0.1:6443' --config '/etc/kubernetes/config.yaml' --discovery-token 'token' --discovery-token-ca-cert-hash 'sha256:hash' --node-name 'kube-node' --token 'token'")}
+    it { is_expected.to contain_exec('kubeadm join').with_command("kubeadm join '10.0.0.1:6443' --discovery-token 'token' --discovery-token-ca-cert-hash 'sha256:hash' --node-name 'kube-node' --token 'token'")}
   end
 
   context 'with kubernetes_version => 1.12.3 and controller_address => 10.0.0.1:6443' do
