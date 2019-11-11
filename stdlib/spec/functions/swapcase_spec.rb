@@ -23,15 +23,9 @@ describe 'swapcase' do
       it { is_expected.to run.with_params(['one']).and_return(['ONE']) }
       it { is_expected.to run.with_params(['ONE']).and_return(['one']) }
       it { is_expected.to run.with_params(['oNe']).and_return(['OnE']) }
-<<<<<<< HEAD
-      it { is_expected.to run.with_params(%w[one ONE]).and_return(%w[ONE one]) }
-      it { is_expected.to run.with_params(%w[ONE OnE]).and_return(%w[one oNe]) }
-      it { is_expected.to run.with_params(%w[oNe one]).and_return(%w[OnE ONE]) }
-=======
       it { is_expected.to run.with_params(['one', 'ONE']).and_return(['ONE', 'one']) }
       it { is_expected.to run.with_params(['ONE', 'OnE']).and_return(['one', 'oNe']) }
       it { is_expected.to run.with_params(['oNe', 'one']).and_return(['OnE', 'ONE']) }
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     end
     describe 'containing mixed types' do
       it { is_expected.to run.with_params(['OnE', {}]).and_return(['oNe', {}]) }

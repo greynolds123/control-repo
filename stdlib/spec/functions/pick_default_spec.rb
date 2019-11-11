@@ -17,12 +17,6 @@ describe 'pick_default' do
       it { is_expected.to run.with_params('ớņệ', value).and_return('ớņệ') }
       it { is_expected.to run.with_params([], value).and_return([]) }
       it { is_expected.to run.with_params({}, value).and_return({}) }
-<<<<<<< HEAD
-      it { is_expected.to run.with_params(value, value).and_return(value) }
-      it { is_expected.to run.with_params(:undef, value).and_return(value) }
-      it { is_expected.to run.with_params(:undefined, value).and_return(value) }
-      it { is_expected.to run.with_params(nil, value).and_return(value) }
-=======
       it { is_expected.to run.with_params(value, value).and_return(mapped_value(value)) }
       it { is_expected.to run.with_params(:undef, value).and_return(mapped_value(value)) }
       it { is_expected.to run.with_params(:undefined, value).and_return(mapped_value(value)) }
@@ -41,7 +35,6 @@ describe 'pick_default' do
       # even if function is called from Ruby via call_function
       # The 3x function API expects nil and :undef to be represented as empty string
       (v.nil? || v == :undef) ? '' : v
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     end
   end
 end

@@ -2,11 +2,6 @@
 
 #### Table of Contents
 
-<<<<<<< HEAD
-### Overview information ###
-
-=======
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 1. [Overview](#overview)
 2. [Module Description - What the module does and why it is useful](#module-description)
 3. [Setup - The basics of getting started with tool](#setup)

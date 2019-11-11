@@ -8,11 +8,7 @@ describe 'validate_re' do
   # Checking for deprecation warning
   it 'displays a single deprecation' do
     ENV['STDLIB_LOG_DEPRECATIONS'] = 'true'
-<<<<<<< HEAD
-    scope.expects(:warning).with(includes('This method is deprecated'))
-=======
     expect(scope).to receive(:warning).with(include('This method is deprecated'))
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     is_expected.to run.with_params('', '')
   end
 
@@ -44,16 +40,6 @@ describe 'validate_re' do
 
     describe 'non-string inputs' do
       [
-<<<<<<< HEAD
-        1,             # Fixnum
-        3.14,          # Float
-        nil,           # NilClass
-        true,          # TrueClass
-        false,         # FalseClass
-        ['10'],        # Array
-        :key,          # Symbol
-        { :key => 'val' }, # Hash
-=======
         1,                  # Fixnum
         3.14,               # Float
         nil,                # NilClass
@@ -62,7 +48,6 @@ describe 'validate_re' do
         ['10'],             # Array
         :key,               # Symbol
         { :key => 'val' },  # Hash
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
       ].each do |input|
         it { is_expected.to run.with_params(input, '.*').and_raise_error(Puppet::ParseError, %r{needs to be a String}) }
       end

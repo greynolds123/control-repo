@@ -3,11 +3,18 @@
 #
 module Puppet::Parser::Functions
   newfunction(:type, :type => :rvalue, :doc => <<-DOC
-<<<<<<< HEAD
-    DEPRECATED: This function will cease to function on Puppet 4; please use type3x() before upgrading to puppet 4 for backwards-compatibility, or migrate to the new parser's typing system.
-=======
-    DEPRECATED: This function will cease to function on Puppet 4; please use type3x() before upgrading to Puppet 4 for backwards-compatibility, or migrate to the new parser's typing system.
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
+    @summary
+      **DEPRECATED:** This function will cease to function on Puppet 4;
+     please use type3x() before upgrading to Puppet 4 for backwards-compatibility, or migrate to the new parser's typing system.
+
+    @return the type when passed a value. Type can be one of:
+
+    * string
+    * array
+    * hash
+    * float
+    * integer
+    * boolean
   DOC
              ) do |args|
 

@@ -3,13 +3,10 @@
 #
 module Puppet::Parser::Functions
   newfunction(:type3x, :type => :rvalue, :doc => <<-DOC
-<<<<<<< HEAD
-    DEPRECATED: This function will be removed when puppet 3 support is dropped; please migrate to the new parser's typing system.
-=======
-    DEPRECATED: This function will be removed when Puppet 3 support is dropped; please migrate to the new parser's typing system.
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
+    @summary
+      **DEPRECATED:** This function will be removed when Puppet 3 support is dropped; please migrate to the new parser's typing system.
 
-    Returns the type when passed a value. Type can be one of:
+    @return the type when passed a value. Type can be one of:
 
     * string
     * array

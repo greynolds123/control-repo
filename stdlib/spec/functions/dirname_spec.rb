@@ -2,14 +2,6 @@ require 'spec_helper'
 
 describe 'dirname' do
   it { is_expected.not_to eq(nil) }
-<<<<<<< HEAD
-  it { is_expected.to run.with_params.and_raise_error(Puppet::ParseError) }
-  it { is_expected.to run.with_params('one', 'two').and_raise_error(Puppet::ParseError) }
-  it { is_expected.to run.with_params([]).and_raise_error(Puppet::ParseError) }
-  it { is_expected.to run.with_params({}).and_raise_error(Puppet::ParseError) }
-  it { is_expected.to run.with_params(1).and_raise_error(Puppet::ParseError) }
-  it { is_expected.to run.with_params('/path/to/a/file.ext', []).and_raise_error(Puppet::ParseError) }
-=======
   it { is_expected.to run.with_params.and_raise_error(Puppet::ParseError, %r{No arguments given}) }
   it { is_expected.to run.with_params('one', 'two').and_raise_error(Puppet::ParseError, %r{Too many arguments given}) }
   it { is_expected.to run.with_params([]).and_raise_error(Puppet::ParseError, %r{Requires string as argument}) }
@@ -18,7 +10,6 @@ describe 'dirname' do
   it { is_expected.to run.with_params('').and_raise_error(Puppet::ParseError, %r{Requires a non-empty string as argument}) }
   it { is_expected.to run.with_params(:undef).and_raise_error(Puppet::ParseError, %r{string as argument}) }
   it { is_expected.to run.with_params(nil).and_raise_error(Puppet::ParseError, %r{string as argument}) }
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   it { is_expected.to run.with_params('/path/to/a/file.ext').and_return('/path/to/a') }
   it { is_expected.to run.with_params('relative_path/to/a/file.ext').and_return('relative_path/to/a') }
 

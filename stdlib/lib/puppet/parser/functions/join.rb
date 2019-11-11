@@ -3,19 +3,17 @@
 #
 module Puppet::Parser::Functions
   newfunction(:join, :type => :rvalue, :doc => <<-DOC
-    This function joins an array into a string using a separator.
+    @summary
+      **Deprecated:** This function joins an array into a string using a separator.
 
-    *Examples:*
+    @example Example Usage:
+      join(['a','b','c'], ",") # Results in: "a,b,c"
 
-        join(['a','b','c'], ",")
+    @return [String]
+      The String containing each of the array values
 
-    Would result in: "a,b,c"
-<<<<<<< HEAD
-=======
-
-    Note: from Puppet 5.4.0, the compatible function with the same name in Puppet core
-    will be used instead of this function.
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
+    > **Note:** **Deprecated** from Puppet 5.4.0 this function has been replaced
+    with a built-in [`join`](https://puppet.com/docs/puppet/latest/function.html#join) function.
     DOC
              ) do |arguments|
 

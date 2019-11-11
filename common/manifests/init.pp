@@ -22,11 +22,7 @@ class common (
   $enable_apache                    = false,
   $enable_php                       = false,
   $enable_nsswitch                  = false,
-<<<<<<< HEAD
-  $enable_ntp                       = false,
-=======
   $enable_ntp                       = true,
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   $enable_git                       = true,
   $enable_pam                       = false,
   $enable_puppet_agent              = false,

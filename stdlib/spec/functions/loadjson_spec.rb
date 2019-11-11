@@ -8,6 +8,8 @@ describe 'loadjson' do
     before :each do
       allow(File).to receive(:read).with(%r{\/(stdlib|test)\/metadata.json}, :encoding => 'utf-8').and_return('{"name": "puppetlabs-stdlib"}')
       allow(File).to receive(:read).with(%r{\/(stdlib|test)\/metadata.json}).and_return('{"name": "puppetlabs-stdlib"}')
+      # Additional modules used by litmus which are identified while running these dues to being in fixtures
+      allow(File).to receive(:read).with(%r{\/(provision|puppet_agent|facts)\/metadata.json}, :encoding => 'utf-8')
     end
 
     context 'when a non-existing file is specified' do
@@ -65,8 +67,6 @@ describe 'loadjson' do
       end
       it { is_expected.to run.with_params(filename, 'default' => 'value').and_return('default' => 'value') }
     end
-<<<<<<< HEAD
-=======
 
     context 'when an existing URL is specified' do
       let(:filename) do
@@ -140,6 +140,5 @@ describe 'loadjson' do
         is_expected.to run.with_params(filename, 'default' => 'value').and_return('default' => 'value')
       }
     end
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   end
 end

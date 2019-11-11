@@ -43,11 +43,7 @@ describe 'squeeze' do
   context 'when using a class extending String' do
     it 'calls its squeeze method' do
       value = AlsoString.new('aaaaaaaaa')
-<<<<<<< HEAD
-      value.expects(:squeeze).returns('foo')
-=======
       expect_any_instance_of(AlsoString).to receive(:squeeze).and_return('foo') # rubocop:disable RSpec/AnyInstance
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
       expect(subject).to run.with_params(value).and_return('foo')
     end
   end

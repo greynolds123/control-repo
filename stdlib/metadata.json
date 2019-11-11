@@ -1,10 +1,6 @@
 {
   "name": "puppetlabs-stdlib",
-<<<<<<< HEAD
-  "version": "4.25.1",
-=======
-  "version": "6.0.0",
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
+  "version": "6.1.0",
   "author": "puppetlabs",
   "summary": "Standard library of resources for Puppet modules.",
   "license": "Apache-2.0",
@@ -21,7 +17,8 @@
       "operatingsystemrelease": [
         "5",
         "6",
-        "7"
+        "7",
+        "8"
       ]
     },
     {
@@ -43,10 +40,6 @@
     {
       "operatingsystem": "Scientific",
       "operatingsystemrelease": [
-<<<<<<< HEAD
-        "5",
-=======
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
         "6",
         "7"
       ]
@@ -54,37 +47,25 @@
     {
       "operatingsystem": "SLES",
       "operatingsystemrelease": [
-<<<<<<< HEAD
-        "11 SP1",
-        "12"
-=======
         "11",
         "12",
         "15"
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
       ]
     },
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-<<<<<<< HEAD
-        "7",
-=======
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
         "8",
-        "9"
+        "9",
+        "10"
       ]
     },
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
         "14.04",
-<<<<<<< HEAD
-        "16.04"
-=======
         "16.04",
         "18.04"
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
       ]
     },
     {
@@ -97,23 +78,14 @@
     {
       "operatingsystem": "Windows",
       "operatingsystemrelease": [
-<<<<<<< HEAD
-        "Server 2008",
-        "Server 2008 R2",
-        "Server 2012",
-        "Server 2012 R2",
-        "Server 2016",
-        "7",
-        "8",
-=======
         "2008",
         "2008 R2",
         "2012",
         "2012 R2",
         "2016",
+        "2019",
         "7",
         "8.1",
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
         "10"
       ]
     },
@@ -129,21 +101,11 @@
   "requirements": [
     {
       "name": "puppet",
-<<<<<<< HEAD
-      "version_requirement": ">=2.7.20 < 6.0.0"
-    }
-  ],
-  "description": "Standard Library for Puppet Modules",
-  "pdk-version": "1.4.1",
-  "template-url": "file:///opt/puppetlabs/pdk/share/cache/pdk-templates.git",
-  "template-ref": "1.4.1-0-g52adbbb"
-=======
       "version_requirement": ">= 5.5.10 < 7.0.0"
     }
   ],
   "description": "Standard Library for Puppet Modules",
-  "pdk-version": "1.10.0",
+  "pdk-version": "1.12.0",
   "template-url": "https://github.com/puppetlabs/pdk-templates#master",
-  "template-ref": "heads/master-0-gf778803"
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
+  "template-ref": "1.12.0-0-g55d9ae2"
 }
