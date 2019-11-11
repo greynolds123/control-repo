@@ -1,22 +1,24 @@
 define puppet_enterprise::trapperkeeper::rbac (
   $certname,
-  $container                                   = $title,
-  $database_host                               = 'localhost',
-  $database_name                               = $puppet_enterprise::params::rbac_database_name,
-  $database_password                           = undef,
-  $database_port                               = $puppet_enterprise::params::database_port,
-  $database_properties                         = '',
-  $database_user                               = $puppet_enterprise::params::rbac_database_user,
-  Integer $maximum_pool_size                   = 10,
-  Integer $pool_timeout                        = 30,
-  Integer $pool_check_timeout                  = 5,
-  Optional[String] $ds_trust_chain             = undef,
-  Optional[Integer] $failed_attempts_lockout   = undef,
-  $group                                       = "pe-${title}",
-  Optional[Integer] $password_reset_expiration = undef,
-  Optional[Integer] $session_timeout           = undef,
-  Optional[String] $token_auth_lifetime        = undef,
-  $user                                        = "pe-${title}",
+  $container                                      = $title,
+  $database_host                                  = 'localhost',
+  $database_name                                  = $puppet_enterprise::params::rbac_database_name,
+  $database_password                              = undef,
+  $database_port                                  = $puppet_enterprise::database_port,
+  $database_properties                            = '',
+  $database_user                                  = $puppet_enterprise::rbac_service_regular_db_user,
+  $database_migration_user                        = $puppet_enterprise::rbac_service_migration_db_user,
+  $localcacert                                    = $puppet_enterprise::params::localcacert,
+  Optional[String] $ds_trust_chain                = undef,
+  Optional[Integer] $failed_attempts_lockout      = undef,
+  Optional[Integer] $account_expiry_check_minutes = undef,
+  Optional[Integer] $account_expiry_days          = undef,
+  $group                                          = "pe-${title}",
+  Optional[Integer] $password_reset_expiration    = undef,
+  Optional[Integer] $session_timeout              = undef,
+  Optional[String] $token_auth_lifetime           = undef,
+  Optional[String] $token_maximum_lifetime        = '10y',
+  $user                                           = "pe-${title}",
 ) {
 
   $cert_dir = "${puppet_enterprise::server_data_dir}/${container}/certs"
@@ -58,6 +60,29 @@ define puppet_enterprise::trapperkeeper::rbac (
     value   => $ssl_cert,
   }
 
+  # Configure the SSL settings to enable SSL when communicating with the Puppet Master
+  pe_hocon_setting { "${container}.rbac.ssl-key":
+    path    => "/etc/puppetlabs/${container}/conf.d/rbac.conf",
+    setting => 'rbac.ssl-key',
+    value   => $ssl_key,
+  }
+  pe_hocon_setting { "${container}.rbac.ssl-cert":
+    path    => "/etc/puppetlabs/${container}/conf.d/rbac.conf",
+    setting => 'rbac.ssl-cert',
+    value   => $ssl_cert,
+  }
+  pe_hocon_setting { "${container}.rbac.ssl-ca-cert":
+    path    => "/etc/puppetlabs/${container}/conf.d/rbac.conf",
+    setting => 'rbac.ssl-ca-cert',
+    value   => $localcacert,
+  }
+
+  pe_hocon_setting {"${container}.rbac.token-maximum-lifetime":
+    path    => "/etc/puppetlabs/${container}/conf.d/rbac.conf",
+    setting => 'rbac.token-maximum-lifetime',
+    value   => $token_maximum_lifetime,
+  }
+
   if $password_reset_expiration {
     $password_reset_expiration_ensure = present
   } else {
@@ -71,25 +96,18 @@ define puppet_enterprise::trapperkeeper::rbac (
     value   => $password_reset_expiration,
   }
 
-  if $session_timeout {
-    $session_timeout_ensure = present
-  } else {
-    $session_timeout_ensure = absent
-  }
-
   pe_hocon_setting { "${container}.rbac.session-timeout":
-    ensure  => $session_timeout_ensure,
+    ensure  => absent,
     path    => "/etc/puppetlabs/${container}/conf.d/rbac.conf",
     setting => 'rbac.session-timeout',
-    value   => $session_timeout,
   }
 
   if $token_auth_lifetime and ! pe_empty($token_auth_lifetime) {
-    pe_validate_re("${token_auth_lifetime}", '^[0-9]+[smhdy]?$', '$token_auth_lifetime must either be an integer or a string of digits optionally followed by "s", "m", "h", "d", or "y".')
+    pe_validate_re($token_auth_lifetime, '^[0-9]+[smhdy]?$', '$token_auth_lifetime must either be an integer or a string of digits optionally followed by "s", "m", "h", "d", or "y".')
     $token_auth_lifetime_ensure = present
-    } else {
+  } else {
     $token_auth_lifetime_ensure = absent
-    }
+  }
 
   pe_hocon_setting { "${container}.rbac.token-auth-lifetime":
     ensure  => $token_auth_lifetime_ensure,
@@ -124,57 +142,44 @@ define puppet_enterprise::trapperkeeper::rbac (
     value   => $failed_attempts_lockout,
   }
 
-  # Uses
-  #   $database_host
-  #   $database_port
-  #   $database_name
-  #   $database_user
-  #   $database_properties
-  file { "/etc/puppetlabs/${container}/conf.d/rbac-database.conf":
-    ensure => present,
-  }
-  pe_hocon_setting { "${container}.rbac.database.subprotocol":
-    path    => "/etc/puppetlabs/${container}/conf.d/rbac-database.conf",
-    setting => 'rbac.database.subprotocol',
-    value   => 'postgresql',
-  }
-  pe_hocon_setting { "${container}.rbac.database.subname":
-    path    => "/etc/puppetlabs/${container}/conf.d/rbac-database.conf",
-    setting => 'rbac.database.subname',
-    value   => "//${database_host}:${database_port}/${database_name}${database_properties}",
-  }
-  pe_hocon_setting { "${container}.rbac.database.user":
-    path    => "/etc/puppetlabs/${container}/conf.d/rbac-database.conf",
-    setting => 'rbac.database.user',
-    value   => $database_user,
+  if $account_expiry_check_minutes {
+    $account_expiry_check_minutes_ensure = present
+  } else {
+    $account_expiry_check_minutes_ensure = absent
   }
 
-  if !pe_empty($database_password) {
-    pe_hocon_setting { "${container}.rbac.database.password":
-      path    => "/etc/puppetlabs/${container}/conf.d/rbac-database.conf",
-      setting => 'rbac.database.password',
-      value   => $database_password,
-    }
+  pe_hocon_setting { "${container}.rbac.account-expiry-check-minutes":
+    ensure  => $account_expiry_check_minutes_ensure,
+    path    => "/etc/puppetlabs/${container}/conf.d/rbac.conf",
+    setting => 'rbac.account-expiry-check-minutes',
+    value   => $account_expiry_check_minutes,
   }
 
-  pe_hocon_setting { "${container}.rbac.database.maximum-pool-size":
-    path    => "/etc/puppetlabs/${container}/conf.d/rbac-database.conf",
-    setting => "rbac.database.maximum-pool-size",
-    value   => $maximum_pool_size,
+  if $account_expiry_days {
+    $account_expiry_days_ensure = present
+  } else {
+    $account_expiry_days_ensure = absent
   }
 
-  # Timeouts in this module are in seconds, but the services expect them in milliseconds
-  pe_hocon_setting { "${container}.rbac.database.connection-timeout":
-    path    => "/etc/puppetlabs/${container}/conf.d/rbac-database.conf",
-    setting => "rbac.database.connection-timeout",
-    value   => $pool_timeout * 1000,
+  pe_hocon_setting { "${container}.rbac.account-expiry-days":
+    ensure  => $account_expiry_days_ensure,
+    path    => "/etc/puppetlabs/${container}/conf.d/rbac.conf",
+    setting => 'rbac.account-expiry-days',
+    value   => $account_expiry_days,
   }
 
-  # Timeouts in this module are in seconds, but the services expect them in milliseconds
-  pe_hocon_setting { "${container}.rbac.database.connection-check-timeout":
-    path    => "/etc/puppetlabs/${container}/conf.d/rbac-database.conf",
-    setting => "rbac.database.connection-check-timeout",
-    value   => $pool_check_timeout * 1000,
+  puppet_enterprise::trapperkeeper::database_settings { 'rbac' :
+    container           => $container,
+    database_host       => $database_host,
+    database_name       => $database_name,
+    database_password   => $database_password,
+    database_port       => Integer($database_port),
+    database_properties => $database_properties,
+    database_user       => $database_user,
+    migration_user      => $database_migration_user,
+    migration_password  => $database_password,
+    group               => $group,
+    user                => $user,
   }
 
   puppet_enterprise::trapperkeeper::bootstrap_cfg { "${container}:rbac rbac-service" :
@@ -196,6 +201,7 @@ define puppet_enterprise::trapperkeeper::rbac (
   }
 
   puppet_enterprise::trapperkeeper::bootstrap_cfg { "${container}:rbac rbac-authn-middleware" :
+    ensure    => absent,
     container => $container,
     namespace => 'puppetlabs.rbac.services.http.middleware',
     service   => 'rbac-authn-middleware',
@@ -211,5 +217,11 @@ define puppet_enterprise::trapperkeeper::rbac (
     container => $container,
     namespace => 'puppetlabs.trapperkeeper.services.webserver.jetty9-service',
     service   => 'jetty9-service',
+  }
+
+  puppet_enterprise::trapperkeeper::bootstrap_cfg { "${container}:rbac audit-service" :
+    container => $container,
+    namespace => 'puppetlabs.rbac.services.audit',
+    service   => 'audit-service',
   }
 }

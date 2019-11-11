@@ -59,7 +59,7 @@ Puppet::Type.newtype(:pe_file_line) do
   newparam(:path) do
     desc 'The file Puppet will ensure contains the line specified by the line parameter.'
     validate do |value|
-      unless (Puppet.features.posix? and value =~ /^\//) or (Puppet.features.microsoft_windows? and (value =~ /^.:\// or value =~ /^\/\/[^\/]+\/[^\/]+/))
+        unless (Puppet.features.posix? and value =~ /^\//) or (Puppet.features.microsoft_windows? and (value =~ /^.:\\/ or value =~ /^.:\// or value =~ /^\/\/[^\/]+\/[^\/]+/))
         raise(Puppet::Error, "File paths must be fully qualified, not '#{value}'")
       end
     end

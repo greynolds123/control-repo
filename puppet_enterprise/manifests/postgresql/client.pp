@@ -16,4 +16,17 @@ class puppet_enterprise::postgresql::client {
     package_name   => $puppet_enterprise::postgresql_client_package_name,
     bindir         => $puppet_enterprise::server_bin_dir,
   }
+  include puppet_enterprise::packages
+  Package <| tag == 'pe-database-packages' |> {
+    before +> [
+      Class['pe_postgresql::client'],
+    ],
+  }
+  if $puppet_enterprise::params::postgres_multi_version_packaging {
+    Package <| tag == 'pe-psql-common' |> {
+      before +> [
+        Class['pe_postgresql::client'],
+      ],
+    }
+  }
 }
