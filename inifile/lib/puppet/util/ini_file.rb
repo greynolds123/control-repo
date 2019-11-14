@@ -1,7 +1,6 @@
 require File.expand_path('../external_iterator', __FILE__)
 require File.expand_path('../ini_file/section', __FILE__)
 
-<<<<<<< HEAD
 module Puppet
 module Util
   class IniFile
@@ -16,7 +15,6 @@ module Util
       @@SECTION_REGEX = section_regex
       @@SETTING_REGEX = /^(\s*)([^#;\s]|[^#;\s].*?[^\s#{k_v_s}])(\s*#{k_v_s}[ \t]*)(.*)\s*$/
       @@COMMENTED_SETTING_REGEX = /^(\s*)[#;]+(\s*)(.*?[^\s#{k_v_s}])(\s*#{k_v_s}[ \t]*)(.*)\s*$/
-=======
 module Puppet::Util
   #
   # ini_file.rb
@@ -35,19 +33,15 @@ module Puppet::Util
       @section_regex = section_regex
       @setting_regex = %r{^(\s*)([^#;\s]|[^#;\s].*?[^\s#{k_v_s}])(\s*#{k_v_s}[ \t]*)(.*)\s*$}
       @commented_setting_regex = %r{^(\s*)[#;]+(\s*)(.*?[^\s#{k_v_s}])(\s*#{k_v_s}[ \t]*)(.*)\s*$}
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 
       @path = path
       @key_val_separator = key_val_separator
       @section_names = []
       @sections_hash = {}
-<<<<<<< HEAD
       if File.file?(@path)
         parse_file
       end
-=======
       parse_file
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     end
 
     def section_regex
@@ -67,7 +61,6 @@ module Puppet::Util
       r_string += '*)'
       r_string += Regexp.escape(@section_suffix)
       r_string += '\s*$'
-<<<<<<< HEAD
       /#{r_string}/
     end
 
@@ -91,7 +84,6 @@ module Puppet::Util
 
     def set_value(section_name, setting, value)
       unless (@sections_hash.has_key?(section_name))
-=======
       %r{#{r_string}}
     end
 
@@ -129,23 +121,19 @@ module Puppet::Util
         value: value,
       }
       unless @sections_hash.key?(section_name)
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
         add_section(Section.new(section_name, nil, nil, nil, nil))
       end
 
       section = @sections_hash[section_name]
 
-<<<<<<< HEAD
       if (section.has_existing_setting?(setting))
         update_line(section, setting, value)
         section.update_existing_setting(setting, value)
       elsif result = find_commented_setting(section, setting)
-=======
       if section.existing_setting?(setting)
         update_line(section, setting, value)
         section.update_existing_setting(setting, value)
       elsif find_commented_setting(section, setting)
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
         # So, this stanza is a bit of a hack.  What we're trying
         # to do here is this: for settings that don't already
         # exist, we want to take a quick peek to see if there
@@ -155,11 +143,8 @@ module Puppet::Util
 
         # If we get here then we found a commented line, so we
         # call "insert_inline_setting_line" to update the lines array
-<<<<<<< HEAD
         insert_inline_setting_line(result, section, setting, value)
-=======
         insert_inline_setting_line(find_commented_setting(section, setting), section, complete_setting)
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 
         # Then, we need to tell the setting object that we hacked
         # in an inline setting
@@ -170,18 +155,14 @@ module Puppet::Util
         # was modified.
         section_index = @section_names.index(section_name)
         increment_section_line_numbers(section_index + 1)
-<<<<<<< HEAD
       else
-=======
       elsif !setting.nil? || !value.nil?
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
         section.set_additional_setting(setting, value)
       end
     end
 
     def remove_setting(section_name, setting)
       section = @sections_hash[section_name]
-<<<<<<< HEAD
       if (section.has_existing_setting?(setting))
         # If the setting is found, we have some work to do.
         # First, we remove the line from our array of lines:
@@ -202,7 +183,6 @@ module Puppet::Util
     def save
       File.open(@path, 'w') do |fh|
 
-=======
       return unless section.existing_setting?(setting)
       # If the setting is found, we have some work to do.
       # First, we remove the line from our array of lines:
@@ -229,7 +209,6 @@ module Puppet::Util
     def save
       global_empty = @sections_hash[''].empty? && @sections_hash[''].additional_settings.empty?
       File.open(@path, 'w') do |fh|
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
         @section_names.each_index do |index|
           name = @section_names[index]
 
@@ -238,7 +217,6 @@ module Puppet::Util
           # We need a buffer to cache lines that are only whitespace
           whitespace_buffer = []
 
-<<<<<<< HEAD
           if (section.is_new_section?) && (! section.is_global?)
             fh.puts("\n#{@section_prefix}#{section.name}#{@section_suffix}")
           end
@@ -250,7 +228,6 @@ module Puppet::Util
             end
 
             # write all of the pre-existing settings
-=======
           if section.new_section? && !section.global?
             if index == 1 && !global_empty || index > 1
               fh.puts('')
@@ -261,7 +238,6 @@ module Puppet::Util
 
           unless section.new_section?
             # write all of the pre-existing lines
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
             (section.start_line..section.end_line).each do |line_num|
               line = lines[line_num]
 
@@ -269,11 +245,8 @@ module Puppet::Util
               # if they are at the end of a section, we can insert
               # any new settings *before* the final chunk of whitespace
               # lines.
-<<<<<<< HEAD
               if (line =~ /^\s*$/)
-=======
               if line =~ %r{^\s*$}
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
                 whitespace_buffer << line
               else
                 # If we get here, we've found a non-whitespace line.
@@ -287,21 +260,18 @@ module Puppet::Util
 
           # write new settings, if there are any
           section.additional_settings.each_pair do |key, value|
-<<<<<<< HEAD
             fh.puts("#{' ' * (section.indentation || 0)}#{key}#{@key_val_separator}#{value}")
           end
 
           if (whitespace_buffer.length > 0)
             flush_buffer_to_file(whitespace_buffer, fh)
           else
-=======
             fh.puts("#{@indent_char * (@indent_width || section.indentation || 0)}#{key}#{@key_val_separator}#{value}")
           end
 
           if !whitespace_buffer.empty?
             flush_buffer_to_file(whitespace_buffer, fh)
           elsif section.new_section? && !section.additional_settings.empty? && (index < @section_names.length - 1)
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
             # We get here if there were no blank lines at the end of the
             # section.
             #
@@ -309,7 +279,6 @@ module Puppet::Util
             # and if there are more sections that come after this one,
             # we'll write one blank line just so that there is a little
             # whitespace between the sections.
-<<<<<<< HEAD
             #if (section.end_line.nil? &&
             if (section.is_new_section? &&
                 (section.additional_settings.length > 0) &&
@@ -318,22 +287,17 @@ module Puppet::Util
             end
           end
 
-=======
             # if (section.end_line.nil? &&
             fh.puts('')
           end
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
         end
       end
     end
 
-<<<<<<< HEAD
 
     private
-=======
     private
 
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     def add_section(section)
       @sections_hash[section.name] = section
       @section_names << section.name
@@ -349,11 +313,8 @@ module Puppet::Util
       line, line_num = line_iter.next
 
       while line
-<<<<<<< HEAD
         if (match = @@SECTION_REGEX.match(line))
-=======
         if (match = @section_regex.match(line))
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
           section = read_section(match[1], line_num, line_iter)
           add_section(section)
         end
@@ -363,7 +324,6 @@ module Puppet::Util
 
     def read_section(name, start_line, line_iter)
       settings = {}
-<<<<<<< HEAD
       end_line_num = nil
       min_indentation = nil
       while true
@@ -371,7 +331,6 @@ module Puppet::Util
         if (line_num.nil? or match = @@SECTION_REGEX.match(line))
           return Section.new(name, start_line, end_line_num, settings, min_indentation)
         elsif (match = @@SETTING_REGEX.match(line))
-=======
       end_line_num = start_line
       min_indentation = nil
       empty = true
@@ -385,48 +344,38 @@ module Puppet::Util
           return Section.new(name, start_line, end_line_num, settings, min_indentation)
         end
         if (match = @setting_regex.match(line))
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
           settings[match[2]] = match[4]
           indentation = match[1].length
           min_indentation = [indentation, min_indentation || indentation].min
         end
         end_line_num = line_num
-<<<<<<< HEAD
-=======
         empty = false
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
         line_iter.next
       end
     end
 
     def update_line(section, setting, value)
       (section.start_line..section.end_line).each do |line_num|
-<<<<<<< HEAD
         if (match = @@SETTING_REGEX.match(lines[line_num]))
           if (match[2] == setting)
             lines[line_num] = "#{match[1]}#{match[2]}#{match[3]}#{value}"
           end
-=======
         next unless (match = @setting_regex.match(lines[line_num]))
         if match[2] == setting
           lines[line_num] = "#{match[1]}#{match[2]}#{match[3]}#{value}"
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
         end
       end
     end
 
     def remove_line(section, setting)
       (section.start_line..section.end_line).each do |line_num|
-<<<<<<< HEAD
         if (match = @@SETTING_REGEX.match(lines[line_num]))
           if (match[2] == setting)
             lines.delete_at(line_num)
           end
-=======
         next unless (match = @setting_regex.match(lines[line_num]))
         if match[2] == setting
           lines.delete_at(line_num)
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
         end
       end
     end
@@ -436,16 +385,12 @@ module Puppet::Util
     end
 
     def lines
-<<<<<<< HEAD
         @lines ||= IniFile.readlines(@path)
-=======
       @lines ||= IniFile.readlines(@path)
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     end
 
     # This is mostly here because it makes testing easier--we don't have
     #  to try to stub any methods on File.
-<<<<<<< HEAD
     def self.readlines(path)
         # If this type is ever used with very large files, we should
         #  write this in a different way, using a temp
@@ -453,7 +398,6 @@ module Puppet::Util
         #  small-ish config files that can fit into memory without
         #  too much trouble.
         File.readlines(path)
-=======
     def self.readlines(path) # rubocop:disable Lint/IneffectiveAccessModifier : Attempting to change breaks tests
       # If this type is ever used with very large files, we should
       #  write this in a different way, using a temp
@@ -461,7 +405,6 @@ module Puppet::Util
       #  small-ish config files that can fit into memory without
       #  too much trouble.
       File.file?(path) ? File.readlines(path) : []
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     end
 
     # This utility method scans through the lines for a section looking for
@@ -474,20 +417,17 @@ module Puppet::Util
     #   :match    - the ruby regular expression match object, which can
     #               be used to mimic the whitespace from the comment line
     def find_commented_setting(section, setting)
-<<<<<<< HEAD
       return nil if section.is_new_section?
       (section.start_line..section.end_line).each do |line_num|
         if (match = @@COMMENTED_SETTING_REGEX.match(lines[line_num]))
           if (match[3] == setting)
             return { :match => match, :line_num => line_num }
           end
-=======
       return nil if section.new_section?
       (section.start_line..section.end_line).each do |line_num|
         next unless (match = @commented_setting_regex.match(lines[line_num]))
         if match[3] == setting
           return { match: match, line_num: line_num }
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
         end
       end
       nil
@@ -496,17 +436,14 @@ module Puppet::Util
     # This utility method is for inserting a line into the existing
     # lines array.  The `result` argument is expected to be in the
     # format of the return value of `find_commented_setting`.
-<<<<<<< HEAD
     def insert_inline_setting_line(result, section, setting, value)
       line_num = result[:line_num]
       match = result[:match]
       lines.insert(line_num + 1, "#{' ' * (section.indentation || 0 )}#{setting}#{match[4]}#{value}")
-=======
     def insert_inline_setting_line(result, section, complete_setting)
       line_num = result[:line_num]
       s = complete_setting
       lines.insert(line_num + 1, "#{@indent_char * (@indent_width || section.indentation || 0)}#{s[:setting]}#{s[:separator]}#{s[:value]}")
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     end
 
     # Utility method; given a section index (index into the @section_names
@@ -529,7 +466,6 @@ module Puppet::Util
       end
     end
 
-<<<<<<< HEAD
 
     def flush_buffer_to_file(buffer, fh)
       if buffer.length > 0
@@ -541,7 +477,6 @@ module Puppet::Util
   end
 end
 end
-=======
     def flush_buffer_to_file(buffer, fh)
       return if buffer.empty?
       buffer.each { |l| fh.puts(l) }
@@ -549,4 +484,3 @@ end
     end
   end
 end
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 module Puppet
   module Util
     # This class can work with a list of subsettings inside
@@ -363,7 +362,6 @@ module Puppet::Util
     # @return [String]
     def item_value(subsetting, subsetting_value)
       (subsetting || '') + (@key_val_separator || '') + (subsetting_value || '')
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     end
   end
 end

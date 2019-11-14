@@ -1,11 +1,9 @@
 require 'digest/md5'
-<<<<<<< HEAD
 
 Puppet::Type.newtype(:ini_setting) do
 
   ensurable do
     defaultvalues
-=======
 require 'puppet/parameter/boolean'
 
 Puppet::Type.newtype(:ini_setting) do
@@ -25,7 +23,6 @@ Puppet::Type.newtype(:ini_setting) do
         current == should
       end
     end
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     defaultto :present
   end
 
@@ -38,36 +35,29 @@ Puppet::Type.newtype(:ini_setting) do
     when :md5, 'md5'
       :md5
     else
-<<<<<<< HEAD
       fail('expected a boolean value or :md5')
     end
   end
 
   newparam(:name, :namevar => true) do
-=======
       raise(_('expected a boolean value or :md5'))
     end
   end
   newparam(:name, namevar: true) do
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     desc 'An arbitrary name used as the identity of the resource.'
   end
 
   newparam(:section) do
-<<<<<<< HEAD
     desc 'The name of the section in the ini file in which the setting should be defined.' +
       'If not provided, defaults to global, top of file, sections.'
     defaultto("")
-=======
     desc 'The name of the section in the ini file in which the setting should be defined.'
     defaultto('')
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   end
 
   newparam(:setting) do
     desc 'The name of the setting to be defined.'
     munge do |value|
-<<<<<<< HEAD
       if value =~ /(^\s|\s$)/
         Puppet.warn("Settings should not have spaces in the value, we are going to strip the whitespace")
       end
@@ -80,7 +70,6 @@ Puppet::Type.newtype(:ini_setting) do
     validate do |value|
       unless (Puppet.features.posix? and value =~ /^\//) or (Puppet.features.microsoft_windows? and (value =~ /^.:\// or value =~ /^\/\/[^\/]+\/[^\/]+/))
         raise(Puppet::Error, "File paths must be fully qualified, not '#{value}'")
-=======
       if value =~ %r{(^\s|\s$)}
         Puppet.warn('Settings should not have spaces in the value, we are going to strip the whitespace')
       end
@@ -98,7 +87,6 @@ Puppet::Type.newtype(:ini_setting) do
     validate do |value|
       unless Puppet::Util.absolute_path?(value)
         raise(Puppet::Error, _("File paths must be fully qualified, not '%{value}'") % { value: value })
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
       end
     end
   end
@@ -116,22 +104,18 @@ Puppet::Type.newtype(:ini_setting) do
   end
 
   newparam(:key_val_separator) do
-<<<<<<< HEAD
     desc 'The separator string to use between each setting name and value. ' +
         'Defaults to " = ", but you could use this to override e.g. ": ", or' +
         'whether or not the separator should include whitespace.'
     defaultto(" = ")
-=======
     desc 'The separator string to use between each setting name and value.'
     defaultto(' = ')
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   end
 
   newproperty(:value) do
     desc 'The value of the setting to be defined.'
 
     munge do |value|
-<<<<<<< HEAD
       value.to_s
     end
 
@@ -146,7 +130,6 @@ Puppet::Type.newtype(:ini_setting) do
     end
 
     def is_to_s(value)
-=======
       if ([true, false].include? value) || value.is_a?(Numeric)
         value.to_s
       else
@@ -165,39 +148,31 @@ Puppet::Type.newtype(:ini_setting) do
     end
 
     def is_to_s(value) # rubocop:disable Style/PredicateName : Changing breaks the code (./.bundle/gems/gems/puppet-5.3.3-universal-darwin/lib/puppet/parameter.rb:525:in `to_s')
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
       should_to_s(value)
     end
 
     def insync?(current)
-<<<<<<< HEAD
       if (@resource[:refreshonly]) then
-=======
       if @resource[:refreshonly]
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
         true
       else
         current == should
       end
     end
-<<<<<<< HEAD
 
   end
 
   newparam(:section_prefix) do
     desc 'The prefix to the section name\'s header.' +
       'Defaults to \'[\'.'
-=======
   end
 
   newparam(:section_prefix) do
     desc 'The prefix to the section name\'s header.'
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     defaultto('[')
   end
 
   newparam(:section_suffix) do
-<<<<<<< HEAD
     desc 'The suffix to the section name\'s header.' +
       'Defaults to \']\'.'
     defaultto(']')
@@ -217,7 +192,6 @@ Puppet::Type.newtype(:ini_setting) do
     end
   end
 
-=======
     desc 'The suffix to the section name\'s header.'
     defaultto(']')
   end
@@ -247,5 +221,4 @@ Puppet::Type.newtype(:ini_setting) do
   autorequire(:file) do
     Pathname.new(self[:path]).parent.to_s
   end
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 end

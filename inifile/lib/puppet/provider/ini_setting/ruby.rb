@@ -1,7 +1,6 @@
 require File.expand_path('../../../util/ini_file', __FILE__)
 
 Puppet::Type.type(:ini_setting).provide(:ruby) do
-<<<<<<< HEAD
 
   def self.instances
     # this code is here to support purging and the query-all functionality of the
@@ -44,7 +43,6 @@ Puppet::Type.type(:ini_setting).provide(:ruby) do
 
   def create
     ini_file.set_value(section, setting, resource[:value])
-=======
   def self.instances
     desc '
     Creates new ini_setting file, a specific config file with a provider that uses
@@ -99,7 +97,6 @@ Puppet::Type.type(:ini_setting).provide(:ruby) do
     else
       ini_file.set_value(section, setting, separator, resource[:value])
     end
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     ini_file.save
     @ini_file = nil
   end
@@ -114,17 +111,14 @@ Puppet::Type.type(:ini_setting).provide(:ruby) do
     ini_file.get_value(section, setting)
   end
 
-<<<<<<< HEAD
   def value=(value)
     ini_file.set_value(section, setting, resource[:value])
-=======
   def value=(_value)
     if setting.nil? && resource[:value].nil?
       ini_file.set_value(section)
     else
       ini_file.set_value(section, setting, separator, resource[:value])
     end
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     ini_file.save
   end
 
@@ -176,13 +170,11 @@ Puppet::Type.type(:ini_setting).provide(:ruby) do
     end
   end
 
-<<<<<<< HEAD
   private
   def ini_file
     @ini_file ||= Puppet::Util::IniFile.new(file_path, separator, section_prefix, section_suffix)
   end
 
-=======
   def indent_char
     if resource.class.validattr?(:indent_char)
       resource[:indent_char] || ' '
@@ -204,5 +196,4 @@ Puppet::Type.type(:ini_setting).provide(:ruby) do
   def ini_file
     @ini_file ||= Puppet::Util::IniFile.new(file_path, separator, section_prefix, section_suffix, indent_char, indent_width)
   end
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 end
