@@ -35,7 +35,6 @@
 #
 # Copyright 2014 Your name here, unless otherwise noted.
 #
-<<<<<<< HEAD
 
 class cron {
    include cron::config
@@ -49,4 +48,3 @@ class cron {
    #include cron::mc_cron
 }
 
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
