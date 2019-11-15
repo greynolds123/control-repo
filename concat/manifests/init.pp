@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # == Define: concat
 #
 # Sets up so that you can use fragments to build a final config file,
@@ -103,7 +102,6 @@ define concat(
   validate_string($seluser)
 
   $safe_name            = regsubst($name, '[/:~\n\s\+\*\(\)]', '_', 'G')
-=======
 # @summary
 #   Manages a file, compiled from one or more text fragments.
 #
@@ -244,11 +242,8 @@ define concat(
       order                   => $order,
       ensure_newline          => $ensure_newline,
       validate_cmd            => $validate_cmd,
-<<<<<<< HEAD
-=======
       format                  => $format,
       force                   => $force,
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     }
 
     if $_append_header {

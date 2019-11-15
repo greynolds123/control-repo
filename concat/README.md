@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #concat
 
 ####Table of Contents
@@ -12,7 +11,6 @@
 5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
     * [Defines](#defines)
     * [Parameters](#parameters)
-=======
 # concat
 
 #### Table of Contents
@@ -22,12 +20,10 @@
     * [Beginning with concat](#beginning-with-concat)
 4. [Usage - Configuration options and additional functionality](#usage)
 5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     * [Removed functionality](#removed-functionality)
 6. [Limitations - OS compatibility, etc.](#limitations)
 7. [Development - Guide for contributing to the module](#development)
 
-<<<<<<< HEAD
 ##Overview
 
 The concat module lets you construct files from multiple ordered fragments of text.
@@ -37,7 +33,7 @@ The concat module lets you construct files from multiple ordered fragments of te
 The concat module lets you gather `concat::fragment` resources from your other modules and order them into a coherent file through a single `concat` resource.
 
 ###Beginning with concat
-=======
+
 <a id="overview"></a>
 ## Overview
 
@@ -50,7 +46,6 @@ The concat module lets you gather `concat::fragment` resources from your other m
 
 <a id="beginning-with-concat"></a>
 ### Beginning with concat
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 
 To start using concat you need to create:
 
@@ -59,7 +54,6 @@ To start using concat you need to create:
 
 A minimal example might be:
 
-~~~
 concat { '/tmp/file':
   ensure => present,
 }
@@ -71,16 +65,13 @@ concat::fragment { 'tmpfile':
 }
 ~~~
 
-<<<<<<< HEAD
 ##Usage
 
 ###Maintain a list of the major modules on a node
-=======
 <a id="usage"></a>
 ## Usage
 
 ### Maintain a list of the major modules on a node
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 
 To maintain an motd file that lists the modules on one of your nodes, first create a class to frame up the file:
 
@@ -94,11 +85,8 @@ class motd {
     mode  => '0644'
   }
 
-<<<<<<< HEAD
   concat::fragment{ 'motd_header':
-=======
   concat::fragment { 'motd_header':
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     target  => $motd,
     content => "\nPuppet modules on this server:\n\n",
     order   => '01'
@@ -106,11 +94,8 @@ class motd {
 
   # let local users add to the motd by creating a file called
   # /etc/motd.local
-<<<<<<< HEAD
   concat::fragment{ 'motd_local':
-=======
   concat::fragment { 'motd_local':
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     target => $motd,
     source => '/etc/motd.local',
     order  => '15'
@@ -118,25 +103,19 @@ class motd {
 }
 
 # let other modules register themselves in the motd
-<<<<<<< HEAD
 define motd::register($content="", $order='10') {
-=======
 define motd::register (
   $content = "",
   $order   = '10',
 ) {
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   if $content == "" {
     $body = $name
   } else {
     $body = $content
   }
 
-<<<<<<< HEAD
   concat::fragment{ "motd_fragment_$name":
-=======
   concat::fragment { "motd_fragment_$name":
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     target  => '/etc/motd',
     order   => $order,
     content => "    -- $body\n"
@@ -150,11 +129,8 @@ Then, in the declarations for each module on the node, add `motd::register{ 'Apa
 class apache {
   include apache::install, apache::config, apache::service
 
-<<<<<<< HEAD
   motd::register{ 'Apache': }
-=======
   motd::register { 'Apache': }
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 }
 ~~~
 
@@ -171,7 +147,6 @@ When you're finished, the motd file will look something like this:
   <contents of /etc/motd.local>
 ~~~
 
-<<<<<<< HEAD
 ##Reference
 
 ###Defines
@@ -383,7 +358,6 @@ Specifies a file to read into the content of the fragment. **Note**: You must su
 *Required.* Specifies the destination file of the fragment. Valid options: a string containing the path or title of the parent `concat_file` resource.
 
 ###Removed functionality
-=======
 <a id="reference"></a>
 ## Reference
 
@@ -391,7 +365,6 @@ See [REFERENCE.md](https://github.com/puppetlabs/puppetlabs-concat/blob/master/R
 
 <a id="removed-functionality"></a>
 ### Removed functionality
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 
 The following functionality existed in previous versions of the concat module, but was removed in version 2.0.0:
 
@@ -420,7 +393,6 @@ We want to keep it as easy as possible to contribute changes so that our modules
 For more information, see our [module contribution guide.](https://docs.puppetlabs.com/forge/contributing.html)
 
 ###Contributors
-=======
 Prior to concat version 2.0.0, if you set the `warn` parameter to a string value of `true`, `false`, 'yes', 'no', 'on', or 'off', the module translated the string to the corresponding boolean value. In concat version 2.0.0 and newer, the `warn_header` parameter treats those values the same as other strings and uses them as the content of your header message. To avoid that, pass the `true` and `false` values as booleans instead of strings.
 
 <a id="limitations"></a>
@@ -442,14 +414,10 @@ We want to keep it as easy as possible to contribute changes so that our modules
 For more information, see our [module contribution guide](https://puppet.com/docs/puppet/latest/contributing.html).
 
 ### Contributors
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 
 Richard Pijnenburg ([@Richardp82](http://twitter.com/richardp82))
 
 Joshua Hoblitt ([@jhoblitt](http://twitter.com/jhoblitt))
 
-<<<<<<< HEAD
 [More contributors.](https://github.com/puppetlabs/puppetlabs-concat/graphs/contributors)
-=======
 [More contributors](https://github.com/puppetlabs/puppetlabs-concat/graphs/contributors).
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8

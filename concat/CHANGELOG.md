@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ##Supported Release 2.2.0
 ###Summary
 
@@ -191,7 +190,6 @@ This release includes support for Debian 8 and Ubuntu 16.04 in addition to numer
 - Adds Ubuntu 16.04 support
 
 #### Bugfixes
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 - Fixes the stdlib lower dependency.
 - (MODULES-3027) Fixes escaping the '*' character in tag creation.
 - (MODULES-3097) Fixes fragment sorting by alpha
@@ -200,26 +198,22 @@ This release includes support for Debian 8 and Ubuntu 16.04 in addition to numer
 - (MODULES-3332) Correct the target path validation
 - (MODULES-3463) Properly passes metaparams to generated resource
 
-<<<<<<< HEAD
 ##Supported Release 2.1.0
 ###Summary
 
 This is a re-release of concat as a resource type. This release also includes new features and bugfixes on top of the previously YANKED 2.0.1 release.
 
 ####Features
-=======
 ## Supported Release 2.1.0
 ### Summary
 
 This is a re-release of concat as a resource type. This release also includes new features and bugfixes on top of the previously YANKED 2.0.1 release.
 
 #### Features
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 - Adds the show_diff property.
 - Adds the selinux related file params.
 - Allows integer UID/GID values to be passed into `$owner` and `$group`
 
-<<<<<<< HEAD
 ####Bugfixes
 - Adds a workaround to PUP-1963: generated resources never receiving dependency edges.
 - Fixes occassional failure to find directory environment.
@@ -235,7 +229,6 @@ Small release for support of newer PE versions. This increments the version of P
 This release includes some ruby path and lint fixes.
 
 ####Bugfixes
-=======
 #### Bugfixes
 - Adds a workaround to PUP-1963: generated resources never receiving dependency edges.
 - Fixes occassional failure to find directory environment.
@@ -251,32 +244,27 @@ Small release for support of newer PE versions. This increments the version of P
 This release includes some ruby path and lint fixes.
 
 #### Bugfixes
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 - Use correct ruby path with PE and AIO
 - Lint fixes
 - Use correct ruby path on FreeBSD
 - Test fixes
 
-<<<<<<< HEAD
 ##2015-06-02 - Supported Release 2.0.1 [YANKED]
 ###Summary
 
 This is a bugfix release. 
 
 ####Bugfixes
-=======
 ## 2015-06-02 - Supported Release 2.0.1 [YANKED]
 ### Summary
 
 This is a bugfix release. 
 
 #### Bugfixes
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 - Fixes dependency graphing with concurrent modification of the same file.
 - Fixes handling fragment target.
 - Fixes the defaulted force behavior to handle empty concats correctly.
 
-<<<<<<< HEAD
 ##2015-06-02 - Supported Release 1.2.3
 ###Summary
 
@@ -310,7 +298,6 @@ This release includes a bugfix.
 This release includes bugfixes, test improvements, and a rewritten README.
 
 ####Bugfixes
-=======
 ## 2015-06-02 - Supported Release 1.2.3
 ### Summary
 
@@ -344,7 +331,6 @@ This release includes a bugfix.
 This release includes bugfixes, test improvements, and a rewritten README.
 
 #### Bugfixes
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 
 - Verifies existence of $is_pe before using it.
 - Adds validation for $order param to not allow restricted characters.
@@ -353,7 +339,6 @@ This release includes bugfixes, test improvements, and a rewritten README.
 - Explicitly sets script and concat directories to the same owner and group.
 - Re-adds support for fragment backup, so that static compiler can work with filebucket (MODULES-1700).
 
-<<<<<<< HEAD
 ##2015-02-17 - Supported Release 1.2.0
 ###Summary
 
@@ -363,7 +348,6 @@ This release includes a number of bugfixes and adds support for running a valida
 - Support running a validation command for Puppet >= 3.5.0
 
 ####Bugfixes
-=======
 ## 2015-02-17 - Supported Release 1.2.0
 ### Summary
 
@@ -373,49 +357,42 @@ This release includes a number of bugfixes and adds support for running a valida
 - Support running a validation command for Puppet >= 3.5.0
 
 #### Bugfixes
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 - Reset poisoned defaults from Exec
 - Use concatfragments.rb on AIX since it doesn't support print0
 - Make sure ruby is in the path for PE (MODULES-1456)
 - Fix missing method for check_is_owned_by for windows (MODULES-1764)
 - Fix sort by numeric
 
-<<<<<<< HEAD
 ##2014-10-28 - Supported Release 1.1.2
 ###Summary
 
 This release includes bugfixes and test improvements. The module was tested against SLES10 and SLES12 and found to work against those platforms with no module improvements. Metadata was updated to include those as supported platforms.
 
 ####Bugfixes
-=======
 ## 2014-10-28 - Supported Release 1.1.2
 ### Summary
 
 This release includes bugfixes and test improvements. The module was tested against SLES10 and SLES12 and found to work against those platforms with no module improvements. Metadata was updated to include those as supported platforms.
 
 #### Bugfixes
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 - newline didn't work for Windows and Solaris. This has been fixed.
 - Install certs on Windows for acceptance tests
 - Update tests to work with strict variables (no module updates were required)
 - Update tests to work on Windows
 - Fix typo in CHANGELOG.md
 
-<<<<<<< HEAD
 ##2014-09-10 - Supported Release 1.1.1
 ###Summary
 
 This is a bugfix release, and the first supported release of the 1.1.x series.
 
 ####Bugfixes
-=======
 ## 2014-09-10 - Supported Release 1.1.1
 ### Summary
 
 This is a bugfix release, and the first supported release of the 1.1.x series.
 
 #### Bugfixes
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 - Make the `$order` parameter default to a string and be validated as an integer
   or a string
 - Use the ruby script on Solaris to not break Sol10 support
@@ -429,7 +406,6 @@ This is a bugfix release, and the first supported release of the 1.1.x series.
 - Fix tests and spec_helper
 - Synchronized files for more consistency across modules via modulesync
 
-<<<<<<< HEAD
 ##2014-05-14 - Release 1.1.0
 ###Summary
 
@@ -439,7 +415,6 @@ This release is primarily a bugfix release since 1.1.0-rc1.
 - Improved testing, with tests moved to beaker
 
 ####Bugfixes
-=======
 ## 2014-05-14 - Release 1.1.0
 ### Summary
 
@@ -449,19 +424,15 @@ This release is primarily a bugfix release since 1.1.0-rc1.
 - Improved testing, with tests moved to beaker
 
 #### Bugfixes
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 - No longer attempts to set fragment owner and mode on Windows
 - Fix numeric sorting
 - Fix incorrect quoting
 - Fix newlines
 
-<<<<<<< HEAD
 ##2014-01-03 - Release 1.1.0-rc1
 ###Summary
-=======
 ## 2014-01-03 - Release 1.1.0-rc1
 ### Summary
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 
 This release of concat was 90% written by Joshua Hoblitt, and the module team
 would like to thank him for the huge amount of work he put into this release.
@@ -479,21 +450,15 @@ warnings and we'll be aggressively moving for a 2.0 to remove those too.
 For further information on deprecations, please read:
 https://github.com/puppetlabs/puppetlabs-concat/blob/master/README.md#api-deprecations
 
-<<<<<<< HEAD
 ####Removed
-=======
 #### Removed
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 - Puppet 0.24 support.
 - Filebucket backup of all file resources except the target concatenated file.
 - Default owner/user/group values.
 - Purging of long unused /usr/local/bin/concatfragments.sh
 
-<<<<<<< HEAD
 ###Features
-=======
 ### Features
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 - Windows support via a ruby version of the concat bash script.
 - Huge amount of acceptance testing work added.
 - Documentation (README) completely rewritten.
@@ -503,11 +468,8 @@ https://github.com/puppetlabs/puppetlabs-concat/blob/master/README.md#api-deprec
  - Made `gnu` parameter deprecated.
  - Added parameter validation.
 
-<<<<<<< HEAD
 ###Bugfixes
-=======
 ### Bugfixes
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
  - Ensure concat::setup runs before concat::fragment in all cases.
  - Pluginsync references updated for modern Puppet.
  - Fix incorrect group parameter.
@@ -517,7 +479,6 @@ https://github.com/puppetlabs/puppetlabs-concat/blob/master/README.md#api-deprec
  - Always exec the concatfragments script as root when running as root.
  - Syntax and other cleanup changes.
 
-<<<<<<< HEAD
 ##2014-06-25 - Supported Release 1.0.4
 ###Summary
 
@@ -599,61 +560,48 @@ This is a supported release. No functional changes were made from 1.0.1.
 #### Bugfixes
 
 #### Known Bugs
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 
 * Not supported on Windows.
 
 
-<<<<<<< HEAD
 ##2014-02-12 - 1.0.1
 ###Summary
 
 Minor bugfixes for sorting of fragments and ordering of resources.
 
 ####Bugfixes
-=======
 ## 2014-02-12 - 1.0.1
 ### Summary
 
 Minor bugfixes for sorting of fragments and ordering of resources.
 
 #### Bugfixes
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 - LANG => C replaced with LC_ALL => C to reduce spurious recreation of
 fragments.
 - Corrected pluginsync documentation.
 - Ensure concat::setup always runs before fragments.
 
 
-<<<<<<< HEAD
 ##2013-08-09 - 1.0.0
 ###Summary
-=======
 ## 2013-08-09 - 1.0.0
 ### Summary
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 
 Many new features and bugfixes in this release, and if you're a heavy concat
 user you should test carefully before upgrading.  The features should all be
 backwards compatible but only light testing has been done from our side before
 this release.
 
-<<<<<<< HEAD
 ####Features
-=======
 #### Features
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 - New parameters in concat:
  - `replace`: specify if concat should replace existing files.
  - `ensure_newline`: controls if fragments should contain a newline at the end.
 - Improved README documentation.
 - Add rspec:system tests (rake spec:system to test concat)
 
-<<<<<<< HEAD
 ####Bugfixes
-=======
 #### Bugfixes
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 - Gracefully handle \n in a fragment resource name.
 - Adding more helpful message for 'pluginsync = true'
 - Allow passing `source` and `content` directly to file resource, rather than
@@ -663,11 +611,8 @@ defining resource defaults.
 - Allow WARNMSG to contain/start with '#'.
 - Replace while-read pattern with for-do in order to support Solaris.
 
-<<<<<<< HEAD
 ####CHANGELOG:
-=======
 #### CHANGELOG:
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 - 2010/02/19 - initial release
 - 2010/03/12 - add support for 0.24.8 and newer
              - make the location of sort configurable
@@ -707,9 +652,6 @@ defining resource defaults.
 - 2012/08/30 - More Puppet Lint cleanup
 - 2012/09/04 - RELEASE 0.2.0
 - 2012/12/12 - Added (file) $replace parameter to concat
-<<<<<<< HEAD
-=======
 
 
 \* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8

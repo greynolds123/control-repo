@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "CHANGELOG.md": "b9ce04eb47c1ff9e7a6dc727de739461",
   "CONTRIBUTING.md": "ad65d271f183b5adb9fdd58207939f5f",
   "Gemfile": "a5493d10f1c1fec87972b13a9fe1afcf",
@@ -40,7 +39,6 @@
   "spec/unit/defines/concat_spec.rb": "c1e998f706ac3840a6f1278caed344fa",
   "tests/fragment.pp": "01096a870ef7d1a1425999745f64cc2d",
   "tests/init.pp": "356477e6c25394550886bf1c1edb72a4"
-=======
   "CHANGELOG.md": "797c894a671170434fb97d03c426cbd7",
   "CONTRIBUTING.md": "4d17f3c942e7c93d1577cc4438a231e4",
   "Gemfile": "547549329fb7fa5d97ab51bfe6f72080",
@@ -101,5 +99,4 @@
   "spec/spec_helper_local.rb": "1b62040c7efa09ba90245a881b545fe8",
   "spec/unit/type/concat_file_spec.rb": "93d9a7d169882c19014aa8be92c98ba0",
   "spec/unit/type/concat_fragment_spec.rb": "ec3f0a496a70ec7a5b55a2372cfbeb79"
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 }

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 require 'beaker-rspec/spec_helper'
 require 'beaker-rspec/helpers/serverspec'
 require 'acceptance/specinfra_stubs'
@@ -52,7 +51,6 @@ RSpec.configure do |c|
   c.treat_symbols_as_metadata_keys_with_true_values = true
 end
 
-=======
 # frozen_string_literal: true
 
 require 'serverspec'
@@ -112,4 +110,3 @@ else
     Specinfra.configuration.winrm = winrm
   end
 end
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8

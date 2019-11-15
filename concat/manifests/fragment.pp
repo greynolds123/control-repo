@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # == Define: concat::fragment
 #
 # Creates a concat_fragment in the catalogue
@@ -37,7 +36,6 @@ define concat::fragment(
     fail('$order is not a string or integer.')
   } elsif (is_string($order) and $order =~ /[:\n\/]/) {
     fail("Order cannot contain '/', ':', or '\n'.")
-=======
 # @summary
 #   Manages a fragment of text to be compiled into a file.
 #
@@ -65,23 +63,19 @@ define concat::fragment(
 
   if ($order =~ String and $order =~ /[:\n\/]/) {
     fail(translate("%{_resource}['%{_title}']: 'order' cannot contain '/', ':', or '\\n'.", {'_resource' => $resource, '_title' => $title}))
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   }
 
   if ! ($content or $source) {
     crit('No content, source or symlink specified')
   } elsif ($content and $source) {
-<<<<<<< HEAD
     fail("Can't use 'source' and 'content' at the same time")
   }
 
   $safe_target_name = regsubst($target, '[/:~\n\s\+\*\(\)]', '_', 'GM')
-=======
     fail(translate("%{_resource}['%{_title}']: Can't use 'source' and 'content' at the same time.", {'_resource' => $resource, '_title' => $title}))
   }
 
   $safe_target_name = regsubst($target, '[\\\\/:~\n\s\+\*\(\)@]', '_', 'GM')
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 
   concat_fragment { $name:
     target  => $target,
