@@ -13,10 +13,6 @@ Puppet::Type.type(:ini_subsetting).provide(:ruby) do
 
   def create
     setting_value.add_subsetting(
-        subsetting, resource[:value], resource[:use_exact_match],
-        resource[:insert_type], resource[:insert_value]
-    )
-    ini_file.set_value(section, setting, setting_value.get_value)
       subsetting, resource[:value], resource[:use_exact_match],
       resource[:insert_type], resource[:insert_value]
     )
@@ -28,7 +24,6 @@ Puppet::Type.type(:ini_subsetting).provide(:ruby) do
 
   def destroy
     setting_value.remove_subsetting(subsetting, resource[:use_exact_match])
-    ini_file.set_value(section, setting, setting_value.get_value)
     ini_file.set_value(section, setting, key_val_separator, setting_value.get_value)
     ini_file.save
     @ini_file = nil
@@ -41,10 +36,6 @@ Puppet::Type.type(:ini_subsetting).provide(:ruby) do
 
   def value=(value)
     setting_value.add_subsetting(
-        subsetting, value, resource[:use_exact_match],
-        resource[:insert_type], resource[:insert_value]
-    )
-    ini_file.set_value(section, setting, setting_value.get_value)
       subsetting, value, resource[:use_exact_match],
       resource[:insert_type], resource[:insert_value]
     )
@@ -85,17 +76,13 @@ Puppet::Type.type(:ini_subsetting).provide(:ruby) do
   end
 
   private
+
   def ini_file
     @ini_file ||= Puppet::Util::IniFile.new(file_path, key_val_separator)
   end
 
   def setting_value
     @setting_value ||= Puppet::Util::SettingValue.new(
-        ini_file.get_value(section, setting),
-        subsetting_separator, quote_char, subsetting_key_val_separator
-    )
-  end
-
       ini_file.get_value(section, setting),
       subsetting_separator, quote_char, subsetting_key_val_separator
     )

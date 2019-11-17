@@ -1,9 +1,6 @@
 require 'spec_helper'
 
 describe 'create_multiple_ini_settings' do
-<<<<<<< HEAD
-  it { is_expected.to compile }
-=======
   context 'on a non-Windows platform', if: !Puppet::Util::Platform.windows? do
     let(:facts) do
       { 'os' => { 'family'  => 'RedHat',
@@ -22,5 +19,4 @@ describe 'create_multiple_ini_settings' do
 
     it { is_expected.to compile }
   end
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 end

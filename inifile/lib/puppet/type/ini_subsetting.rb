@@ -1,8 +1,6 @@
 require 'digest/md5'
 
 Puppet::Type.newtype(:ini_subsetting) do
-
-  ensurable do
   desc 'ini_subsettings is used to manage multiple values in a setting in an INI file'
   ensurable do
     desc 'Ensurable method handles modeling creation. It creates an ensure property'
@@ -19,11 +17,6 @@ Puppet::Type.newtype(:ini_subsetting) do
     when :md5, 'md5'
       :md5
     else
-      fail('expected a boolean value or :md5')
-    end
-  end
-
-  newparam(:name, :namevar => true) do
       raise(_('expected a boolean value or :md5'))
     end
   end
@@ -32,9 +25,6 @@ Puppet::Type.newtype(:ini_subsetting) do
   end
 
   newparam(:section) do
-    desc 'The name of the section in the ini file in which the setting should be defined.' +
-      'If not provided, defaults to global, top of file, sections.'
-    defaultto("")
     desc 'The name of the section in the ini file in which the setting should be defined.'
     defaultto('')
   end
@@ -48,8 +38,6 @@ Puppet::Type.newtype(:ini_subsetting) do
   end
 
   newparam(:subsetting_separator) do
-    desc 'The separator string between subsettings. Defaults to " "'
-    defaultto(" ")
     desc 'The separator string between subsettings. Defaults to the empty string.'
     defaultto(' ')
   end
@@ -62,13 +50,7 @@ Puppet::Type.newtype(:ini_subsetting) do
   newparam(:path) do
     desc 'The ini file Puppet will ensure contains the specified setting.'
     validate do |value|
-      unless (Puppet.features.posix? and value =~ /^\//) or (Puppet.features.microsoft_windows? and (value =~ /^.:\// or value =~ /^\/\/[^\/]+\/[^\/]+/))
-        raise(Puppet::Error, "File paths must be fully qualified, not '#{value}'")
-      end
-    end
-  end
-
-      unless (Puppet.features.posix? && value =~ %r{^\/}) || (Puppet.features.microsoft_windows? && (value =~ %r{^.:\/} || value =~ %r{^\/\/[^\/]+\/[^\/]+}))
+      unless Puppet::Util.absolute_path?(value)
         raise(Puppet::Error, _("File paths must be fully qualified, not '%{value}'") % { value: value })
       end
     end
@@ -84,23 +66,12 @@ Puppet::Type.newtype(:ini_subsetting) do
   end
 
   newparam(:key_val_separator) do
-    desc 'The separator string to use between each setting name and value. ' +
-        'Defaults to " = ", but you could use this to override e.g. ": ", or' +
-        'whether or not the separator should include whitespace.'
-    defaultto(" = ")
     desc 'The separator string to use between each setting name and value.'
     defaultto(' = ')
   end
 
   newparam(:quote_char) do
-    desc 'The character used to quote the entire value of the setting. ' +
-        %q{Valid values are '', '"' and "'". Defaults to ''.}
-    defaultto('')
-
-    validate do |value|
-      unless value =~ /^["']?$/
-        raise Puppet::Error, %q{:quote_char valid values are '', '"' and "'"}
-         %q(Valid values are '', '"' and "'")
+    desc "The character used to quote the entire value of the setting. Valid values are '', '\"' and \"'\""
     defaultto('')
 
     validate do |value|
@@ -111,7 +82,6 @@ Puppet::Type.newtype(:ini_subsetting) do
   end
 
   newparam(:use_exact_match) do
-    desc 'Set to true if your subsettings don\'t have values and you want to use exact matches to determine if the subsetting exists. See MODULES-2212'
     desc 'Set to true if your subsettings don\'t have values and you want to use exact matches to determine if the subsetting exists.'
     newvalues(:true, :false)
     defaultto(:false)
@@ -121,20 +91,6 @@ Puppet::Type.newtype(:ini_subsetting) do
     desc 'The value of the subsetting to be defined.'
 
     def should_to_s(newvalue)
-      if (@resource[:show_diff] == :true && Puppet[:show_diff]) then
-        return newvalue
-      elsif (@resource[:show_diff] == :md5 && Puppet[:show_diff]) then
-        return '{md5}' + Digest::MD5.hexdigest(newvalue.to_s)
-      else
-        return '[redacted sensitive information]'
-      end
-    end
-
-    def is_to_s(value)
-      should_to_s(value)
-    end
-
-    def is_to_s(value)
       if @resource[:show_diff] == :true && Puppet[:show_diff]
         newvalue
       elsif @resource[:show_diff] == :md5 && Puppet[:show_diff]
@@ -151,13 +107,6 @@ Puppet::Type.newtype(:ini_subsetting) do
 
   newparam(:insert_type) do
     desc <<-eof
-Where the new subsetting item should be inserted?
-
-* :start  - insert at the beginning of the line.
-* :end    - insert at the end of the line (default).
-* :before - insert before the specified element if possible.
-* :after  - insert after the specified element if possible.
-* :index  - insert at the specified index number.
       Where the new subsetting item should be inserted
 
       * :start  - insert at the beginning of the line.

@@ -3,10 +3,7 @@ class kubernetes::config::worker (
   String $node_name                        = $kubernetes::node_name,
   String $config_file                      = $kubernetes::config_file,
   String $kubernetes_version               = $kubernetes::kubernetes_version,
-<<<<<<< HEAD
-=======
   String $kubernetes_cluster_name          = $kubernetes::kubernetes_cluster_name,
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   String $controller_address               = $kubernetes::controller_address,
   String $discovery_token_hash             = $kubernetes::discovery_token_hash,
   String $container_runtime                = $kubernetes::container_runtime,
@@ -21,7 +18,6 @@ class kubernetes::config::worker (
   Optional[Hash] $kubelet_extra_config     = $kubernetes::kubelet_extra_config,
   Optional[Array] $ignore_preflight_errors = undef,
   Boolean $skip_ca_verification            = false,
-<<<<<<< HEAD
 ) {
   # Need to merge the cloud configuration parameters into extra_arguments
   if !empty($cloud_provider) {
@@ -35,18 +31,13 @@ class kubernetes::config::worker (
     $kubelet_merged_extra_arguments = $kubelet_extra_arguments
   }
 
-=======
   String $cgroup_driver                    = $kubernetes::cgroup_driver,
 ) {
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   # to_yaml emits a complete YAML document, so we must remove the leading '---'
   $kubelet_extra_config_yaml = regsubst(to_yaml($kubelet_extra_config), '^---\n', '')
 
   $template = $kubernetes_version ? {
-<<<<<<< HEAD
-=======
     /1.1(3|4)/  => 'v1beta1',
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     default => 'v1alpha3',
   }
 
