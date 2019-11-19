@@ -1,7 +1,6 @@
 source ENV['GEM_SOURCE'] || 'https://rubygems.org'
 
 def location_for(place_or_version, fake_version = nil)
-<<<<<<< HEAD
   if place_or_version =~ %r{\A(git[:@][^#]*)#(.*)}
     [fake_version, { git: Regexp.last_match(1), branch: Regexp.last_match(2), require: false }].compact
   elsif place_or_version =~ %r{\Afile:\/\/(.*)}
@@ -18,7 +17,6 @@ def gem_type(place_or_version)
     :file
   else
     :gem
-=======
   git_url_regex = %r{\A(?<url>(https?|git)[:@][^#]*)(#(?<branch>.*))?}
   file_url_regex = %r{\Afile:\/\/(?<path>.*)}
 
@@ -28,7 +26,6 @@ def gem_type(place_or_version)
     ['>= 0', { path: File.expand_path(file_url[:path]), require: false }]
   else
     [place_or_version, { require: false }]
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   end
 end
 
@@ -40,7 +37,6 @@ group :development do
   gem "fast_gettext",                                            require: false if Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.1.0')
   gem "json_pure", '<= 2.0.1',                                   require: false if Gem::Version.new(RUBY_VERSION.dup) < Gem::Version.new('2.0.0')
   gem "json", '= 1.8.1',                                         require: false if Gem::Version.new(RUBY_VERSION.dup) == Gem::Version.new('2.1.9')
-<<<<<<< HEAD
   gem "json", '<= 2.0.4',                                        require: false if Gem::Version.new(RUBY_VERSION.dup) == Gem::Version.new('2.4.4')
   gem "puppet-module-posix-default-r#{minor_version}",           require: false, platforms: [:ruby]
   gem "puppet-module-posix-dev-r#{minor_version}",               require: false, platforms: [:ruby]
@@ -59,7 +55,6 @@ end
 
 puppet_version = ENV['PUPPET_GEM_VERSION']
 puppet_type = gem_type(puppet_version)
-=======
   gem "json", '= 2.0.4',                                         require: false if Gem::Requirement.create('~> 2.4.2').satisfied_by?(Gem::Version.new(RUBY_VERSION.dup))
   gem "json", '= 2.1.0',                                         require: false if Gem::Requirement.create(['>= 2.5.0', '< 2.7.0']).satisfied_by?(Gem::Version.new(RUBY_VERSION.dup))
   gem "puppet-module-posix-default-r#{minor_version}", '~> 0.3', require: false, platforms: [:ruby]
@@ -74,7 +69,6 @@ group :system_tests do
 end
 
 puppet_version = ENV['PUPPET_GEM_VERSION']
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 facter_version = ENV['FACTER_GEM_VERSION']
 hiera_version = ENV['HIERA_GEM_VERSION']
 

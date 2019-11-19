@@ -27,8 +27,6 @@ This README would normally document whatever steps are necessary to get your app
 ### Who do I talk to? ###
 
 * Greynolds3, glynnreynolds123@gmail.com
-<<<<<<< HEAD
 * Will be updated soon
 =======
 * Will be updated soon
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
