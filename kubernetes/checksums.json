@@ -1174,7 +1174,6 @@
   "templates/v1alpha3/config_worker.yaml.erb": "f323937c76fc3859e65a67e11fe3701d",
   "templates/v1beta1/config_kubeadm.yaml.erb": "91189e5d9bc92a3a2dd60afa430a0bec",
   "templates/v1beta1/config_worker.yaml.erb": "daa129dc8d3803aaa801c04224b5054c",
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   "tooling/Dockerfile": "647f27b322687d12da6184ab4bcdfbae",
   "tooling/kube_tool/clean_up.rb": "08bcb057f7002708736ccd9ceec06e45",
   "tooling/kube_tool/create_certs.rb": "a5e1b00c24f0475f375200ad32338137",
