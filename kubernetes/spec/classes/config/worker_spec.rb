@@ -23,7 +23,6 @@ describe 'kubernetes::config::worker', :type => :class do
     }
   end
 
-<<<<<<< HEAD
   context 'with version => 1.12.3 cloud_provider => undef' do
     let(:params) do
       {
@@ -38,7 +37,6 @@ describe 'kubernetes::config::worker', :type => :class do
   end
 
   context 'with version => 1.12.3 cloud_provider => aws' do
-=======
   context 'with version => 1.12.3 and node_name => foo and kubelet_extra_args => foo: bar' do
     let(:params) do
       {
@@ -63,7 +61,6 @@ describe 'kubernetes::config::worker', :type => :class do
   end
 
   context 'with version => 1.12.3 and cloud_provider => aws' do
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     let(:params) do
       {
         'kubernetes_version' => '1.12.3',
@@ -71,10 +68,8 @@ describe 'kubernetes::config::worker', :type => :class do
       }
     end
 
-<<<<<<< HEAD
     it { is_expected.to contain_file('/etc/kubernetes/config.yaml').with_content(%r{apiVersion: kubeadm.k8s.io/v1alpha3\n}) }
     it { is_expected.to contain_file('/etc/kubernetes/config.yaml').with_content(%r{  kubeletExtraArgs:\n    cloud-provider: aws\n}) }
-=======
     let(:config_yaml) { YAML.safe_load(catalogue.resource('file', '/etc/kubernetes/config.yaml').send(:parameters)[:content]) }
 
     it { is_expected.to contain_file('/etc/kubernetes/config.yaml').with_content(%r{apiVersion: kubeadm.k8s.io/v1alpha3\n}) }
@@ -84,6 +79,5 @@ describe 'kubernetes::config::worker', :type => :class do
     it 'has cloud-provider==aws in first YAML document (JoinConfig) NodeRegistration' do
       expect(config_yaml['nodeRegistration']['kubeletExtraArgs']).to include('cloud-provider' => 'aws')
     end
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   end
 end
