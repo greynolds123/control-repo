@@ -66,8 +66,6 @@ class { 'hiera':
   ],
 }
 ```
-<<<<<<< HEAD
-=======
 ### For Hiera version 5
 ```puppet
 class { 'hiera':
@@ -82,7 +80,6 @@ class { 'hiera':
 ```
 ** Note: For Hiera version 5 when calling the class, please remember to pass '5' to 'hiera_version' as in the example above. **
 ** Also please note that 'hierarchy' is an array of hash in version 5. **
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 
 The resulting output in /etc/puppet/hiera.yaml:
 
@@ -99,8 +96,6 @@ The resulting output in /etc/puppet/hiera.yaml:
 :yaml:
    :datadir: /etc/puppet/hieradata
 ```
-<<<<<<< HEAD
-=======
 ### Resulting output for Hiera 5
 
 ```yaml
@@ -122,7 +117,6 @@ hierarchy:
   - name: "Default yaml file"
     path: "common.yaml"
 ```
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 
 ## Usage
 
@@ -145,8 +139,6 @@ class { 'hiera':
   merge_behavior => 'deeper'
 }
 ```
-<<<<<<< HEAD
-=======
 ## For Hiera version 5 please see the example above in beginning with Hiera.
 >>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 
@@ -290,8 +282,6 @@ The following parameters are available for the hiera class:
 * `hierarchy`
   The hiera hierarchy.
   Default: `[]`
-<<<<<<< HEAD
-=======
   For Hiera verison 5.
   Default: `[{}]`
 * `hiera5_defaults`
@@ -301,7 +291,6 @@ The following parameters are available for the hiera class:
   Version format to layout hiera.yaml.
   Should be a string.
   Default: `3`
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 * `backends`
   The list of backends.
   Default: `['yaml']`
@@ -352,10 +341,7 @@ The following parameters are available for the hiera class:
 * `datadir`
   The path to the directory where hiera will look for databases.
   Default:
-<<<<<<< HEAD
     * `'/etc/puppet/hieradata'` for Puppet Open Source
-=======
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     * `'/etc/puppetlabs/puppet/hieradata'` for PE Puppet < 4
     * `'/etc/puppetlabs/code/environments/%{::environment}/hieradata'` for Puppet >= 4
 * `datadir_manage`
@@ -405,26 +391,20 @@ The following parameters are available for the hiera class:
   A hash of options to set in hiera.yaml for the deep merge behavior.
   Default: `{}`
 * `manage_package`
-<<<<<<< HEAD
   A boolean for wether the hiera package should be managed. Defaults to `true` on
   FOSS 3 but `false` otherwise.
-=======
   A boolean for wether the hiera package should be managed.
   Default: `false`
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 * `package_name`
   Specifies the name of the hiera package. Default: 'hiera'
 * `package_ensure`
   Specifies the ensure value of the hiera package. Default: 'present'
 * `confdir`
   The path to Puppet's confdir.
-<<<<<<< HEAD
   Default: `$::settings::confdir` which should be the following:
     * `'/etc/puppet'` for Puppet Open Source
     * `'/etc/puppetlabs/puppet'` for Puppet Enterprise
-=======
   Default: `$::settings::confdir` which should be `'/etc/puppetlabs/puppet'`
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 * `logger`
   Which hiera logger to use.
   **Note**: You need to manage any package/gem dependencies yourself.
@@ -470,13 +450,10 @@ The following parameters are available for the hiera class:
   hiera.yaml changes.
   **Note**: You must pass `master_service => 'puppetserver'` for FOSS puppetserver
   Default: 'pe-puppetserver' for PE 2015.x, otherwise 'puppetmaster'
-<<<<<<< HEAD
-=======
 * `gem_install_options`
   An array of install options to pass to the gem package resources.  Typically,
   this parameter is used to specify a proxy server. eg
   `gem_install_options => ['--http-proxy', 'http://proxy.example.com:3128']`
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 
 [eyaml]: https://github.com/TomPoulton/hiera-eyaml
 

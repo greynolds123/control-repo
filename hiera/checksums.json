@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "CHANGELOG.md": "503399670c714884903f79c0148296a5",
   "CONTRIBUTING.md": "8df0e5be30b6bca932fb5e34c2264522",
   "Gemfile": "9256c3fe291268a78978cbc4f0eace61",
@@ -41,7 +40,6 @@
   "spec/spec_helper.rb": "a177b1e9e840ff9ab649c51178f2c85e",
   "spec/spec_helper_acceptance.rb": "cde843203454d5b3dc6d653dda8fc0d0",
   "templates/hiera.yaml.erb": "024eea3d9eced8746817f1bf489fc2a9"
-=======
   "CHANGELOG.md": "196234c99760f0c2881126511733edba",
   "CONTRIBUTING.md": "8df0e5be30b6bca932fb5e34c2264522",
   "Gemfile": "621c98190e59f97fd63130efd21d2d12",
@@ -74,5 +72,4 @@
   "templates/hiera.yaml.erb": "024eea3d9eced8746817f1bf489fc2a9",
   "types/hiera5_defaults.pp": "d262a2967b886b798b71706a30216a0e",
   "types/hiera5_hierarchy.pp": "8194980f0b64e93105ed0e0737e60f2e"
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 }
