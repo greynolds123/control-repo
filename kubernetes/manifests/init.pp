@@ -10,14 +10,11 @@
 #   ie api server,
 #   Defaults to  1.10.2
 #
-<<<<<<< HEAD
-=======
 # [*kubernetes_cluster_name*]
 #   The name of the cluster, for use when multiple clusters are accessed from the same source
 #   Only used by Kubernetes 1.12+
 #   Defaults to "kubernetes"
 #
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 # [*kubernetes_package_version*]
 #   The version of the packages the Kubernetes os packages to install
 #   ie kubectl and kubelet
@@ -55,11 +52,8 @@
 #
 # [*cni_network_provider*]
 #
-<<<<<<< HEAD
 #  The URL to get the cni providers yaml file. 
-=======
 #  The URL to get the cni providers yaml file.
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 #  Defaults to `undef`. `kube_tool` sets this value.
 #
 # [*cni_rbac_binding*]
@@ -89,11 +83,8 @@
 #
 # [*etcd_version*]
 #   The version of etcd that you would like to use.
-<<<<<<< HEAD
 #   Defaults to 3.1.12
-=======
 #   Defaults to 3.2.18
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 #
 # [*etcd_archive*]
 #  The name of the etcd archive
@@ -118,16 +109,13 @@
 # [*runc_source*]
 #  The URL to download runc
 #  Defaults to https://github.com/opencontainers/runc/releases/download/v${runc_version}/runc.amd64
-<<<<<<< HEAD
 #  
-=======
 #
 # [*etcd_hostname*]
 #   The name of the etcd instance.
 #   An example with hiera would be kubernetes::etcd_hostname: "%{::fqdn}"
 #   Defaults to hostname
 #
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 # [*etcd_ip*]
 #   The ip address that you want etcd to use for communications.
 #   An example with hiera would be kubernetes::etcd_ip: "%{::ipaddress_enp0s8}"
@@ -191,8 +179,6 @@
 #   A string array of Subhect Alternative Names for the api server certificates.
 #   Defaults to []
 #
-<<<<<<< HEAD
-=======
 # [*apiserver_extra_volumes*]
 #   A hash of extra volume mounts mounted on the api server.
 #   Defaults to {}
@@ -205,7 +191,6 @@
 #   A hash of extra volume mounts mounted on the controller manager.
 #   Defaults to []
 #
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 # [*kubernetes_ca_crt*]
 #   The clusters ca certificate. Must be passed as a string not a file.
 #   Defaults to undef
@@ -239,13 +224,10 @@
 #   This is a bool that determines if the kubernetes dashboard is installed.
 #   Defaults to false
 #
-<<<<<<< HEAD
-=======
 # [*kubernetes_dashboard_url*]
 #   The URL to get the Kubernetes Dashboard yaml file.
 #   Defaults to the upstream source. `kube_tool` sets this value.
 #
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 # [*dashboard_version*]
 #   The version of Kubernetes dashboard you want to install.
 #   Defaults to v1.10.1
@@ -281,13 +263,11 @@
 #  Defaults to {}
 #
 # [*kubelet_extra_config*]
-<<<<<<< HEAD
 #  A hash containing extra configuration data to be serialised with `to_yaml` and appended to Kubelet configuration file for the cluster. Requires DynamicKubeletConfig.
 #  Defaults to {}
 #
 # [*kubelet_extra_arguments*]
 #  A string array to be appended to kubeletExtraArgs in the Kubelet's nodeRegistration configuration. It is applied to both masters and nodes. Use this for critical Kubelet settings such as `pod-infra-container-image` which may be problematic to configure via kubelet_extra_config and DynamicKubeletConfig.
-=======
 #  A hash containing extra configuration data to be serialised with `to_yaml` and appended to Kubelet configuration file for the cluster.
 #  Requires DynamicKubeletConfig.
 #  Defaults to {}
@@ -295,7 +275,6 @@
 # [*kubelet_extra_arguments*]
 #  A string array to be appended to kubeletExtraArgs in the Kubelet's nodeRegistration configuration applied to both masters and nodes.
 #  Use this for critical Kubelet settings such as `pod-infra-container-image` which may be problematic to configure via kubelet_extra_config
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 #  Defaults to []
 #
 # [*kubernetes_apt_location*]
@@ -370,8 +349,6 @@
 #  A flag to manage required sysctl settings.
 #  Defaults to true
 #
-<<<<<<< HEAD
-=======
 # [*default_path*]
 #  The path to be used when running kube* commands
 #  Defaults to ['/usr/bin','/bin','/sbin','/usr/local/bin']
@@ -384,7 +361,6 @@
 # The environment passed to kubectl commands.
 # Defaults to setting HOME and KUBECONFIG variables
 #
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 # Authors
 # -------
 #
@@ -393,7 +369,6 @@
 #
 #
 class kubernetes (
-<<<<<<< HEAD
   String $kubernetes_version                   = '1.10.2',
   String $kubernetes_package_version           = $facts['os']['family'] ? {
                                                     'Debian' => "${kubernetes_version}-00",
@@ -476,7 +451,6 @@ class kubernetes (
   Boolean $manage_sysctl_settings              = true,
   Boolean $create_repos                        = true,
   String $image_repository                     = 'k8s.gcr.io',
-=======
   String $kubernetes_version                         = '1.10.2',
   String $kubernetes_cluster_name                    = 'kubernetes',
   String $kubernetes_package_version                 = $facts['os']['family'] ? {
@@ -576,7 +550,6 @@ class kubernetes (
                                                           default => ['HOME=/root', 'KUBECONFIG=/etc/kubernetes/kubelet.conf'],
                                                         },
   Optional[Array] $ignore_preflight_errors           = undef,
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 ){
   if ! $facts['os']['family'] in ['Debian','RedHat'] {
     notify {"The OS family ${facts['os']['family']} is not supported by this module":}
@@ -608,32 +581,23 @@ class kubernetes (
   if $controller {
     include kubernetes::repos
     include kubernetes::packages
-<<<<<<< HEAD
     include kubernetes::config
-=======
     include kubernetes::config::kubeadm
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     include kubernetes::service
     include kubernetes::cluster_roles
     include kubernetes::kube_addons
     contain kubernetes::repos
     contain kubernetes::packages
-<<<<<<< HEAD
     contain kubernetes::config
-=======
     contain kubernetes::config::kubeadm
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     contain kubernetes::service
     contain kubernetes::cluster_roles
     contain kubernetes::kube_addons
 
     Class['kubernetes::repos']
       -> Class['kubernetes::packages']
-<<<<<<< HEAD
       -> Class['kubernetes::config']
-=======
       -> Class['kubernetes::config::kubeadm']
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
       -> Class['kubernetes::service']
       -> Class['kubernetes::cluster_roles']
       -> Class['kubernetes::kube_addons']

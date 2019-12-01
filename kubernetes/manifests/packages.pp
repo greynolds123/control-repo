@@ -20,10 +20,6 @@ class kubernetes::packages (
   Boolean $disable_swap                        = $kubernetes::disable_swap,
   Boolean $manage_kernel_modules               = $kubernetes::manage_kernel_modules,
   Boolean $manage_sysctl_settings              = $kubernetes::manage_sysctl_settings,
-<<<<<<< HEAD
-
-=======
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 ) {
 
   $kube_packages = ['kubelet', 'kubectl', 'kubeadm']

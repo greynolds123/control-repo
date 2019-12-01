@@ -31,8 +31,7 @@ class kubernetes::config::worker (
     $kubelet_merged_extra_arguments = $kubelet_extra_arguments
   }
 
-  String $cgroup_driver                    = $kubernetes::cgroup_driver,
-) {
+  String $cgroup_driver = $kubernetes::cgroup_driver, ) {
   # to_yaml emits a complete YAML document, so we must remove the leading '---'
   $kubelet_extra_config_yaml = regsubst(to_yaml($kubelet_extra_config), '^---\n', '')
 
