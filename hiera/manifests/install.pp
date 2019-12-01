@@ -72,7 +72,6 @@ define hiera::install (
       }
       $master_subscribe = Exec["install puppetserver gem ${gem_name}"]
     }
-=======
   $gem_version         = undef,
   $gem_source          = undef,
   $gem_install_options = $::hiera::gem_install_options,
@@ -100,7 +99,6 @@ define hiera::install (
       Package[$gem_name],
       Package["puppetserver ${gem_name}"],
     ]
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   } else {
     package { $gem_name:
       ensure   => $gem_ensure,

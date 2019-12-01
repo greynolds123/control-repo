@@ -10,15 +10,11 @@
   hour    => '1',
   minute  => '45',
   }
- 
+   
   cron { 'TuneDatabase':
   ensure  => present,
   user    => 'root',
   command => '/bin/sh /root/TuneDatabase.sh',
   minute  => '0',
-  }
-  }
-  hour    => '0',
-  minute  => '45',
-  }
+  } 
   }

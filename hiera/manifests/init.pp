@@ -11,10 +11,7 @@
 # Installs either /etc/puppet/hiera.yaml or /etc/puppetlabs/puppet/hiera.yaml.
 # Links /etc/hiera.yaml to the above file.
 # Creates $datadir (if $datadir_manage == true).
-<<<<<<< HEAD
-=======
 # Creates hiera.yaml in hiera version 5 format if hiera_version = 5 is passed to the class
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 #
 # === Requires:
 #
@@ -29,8 +26,6 @@
 #     ],
 #   }
 #
-<<<<<<< HEAD
-=======
 # === Sample Usage for Hiera 5:
 #
 #   class { 'hiera':
@@ -45,7 +40,6 @@
 #
 # Note: Please note that hiera 5 hierarchy should be an array of hash
 #
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 # === Authors:
 #
 # Hunter Haugen <h.haugen@gmail.com>
@@ -61,7 +55,6 @@
 # Copyright (C) 2016 Vox Pupuli, unless otherwise noted.
 #
 class hiera (
-<<<<<<< HEAD
   $hierarchy               = $::hiera::params::hierarchy,
   $backends                = ['yaml'],
   $backend_options         = {},
@@ -108,7 +101,6 @@ class hiera (
 
   #Deprecated
   $gem_source              = undef,
-=======
   Variant[Array, Array[Hash]] $hierarchy    = $::hiera::params::hierarchy,
   Optional[Enum['3','5']] $hiera_version    = $::hiera::params::hiera_version,
   Hiera::Hiera5_defaults $hiera5_defaults   = $::hiera::params::hiera5_defaults,
@@ -163,7 +155,6 @@ class hiera (
 
   #Deprecated
   $gem_source                               = undef,
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 ) inherits ::hiera::params {
 
   if $keysdir {
@@ -213,11 +204,8 @@ class hiera (
       fail("${merge_behavior} merge behavior is invalid. Valid values are: native, deep, deeper")
     }
     if $merge_behavior != 'native' {
-<<<<<<< HEAD
       require ::hiera::deep_merge
-=======
       require hiera::deep_merge
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     }
   }
 
@@ -227,12 +215,10 @@ class hiera (
       false => $eyaml_datadir,
       true  => $datadir,
     }
-<<<<<<< HEAD
     # the requested_backends has a side affect in that the eyaml will always be
     # first for backend lookups.  This can be fixed by specifing the order in
     # the backends parameter ie. ['yaml', 'eyaml', 'redis']
     $requested_backends = unique(concat(['eyaml'], $backends))
-=======
 
     # if eyaml is present in $backends, preserve its location!
     if ( 'eyaml' in $backends ) {
@@ -241,7 +227,6 @@ class hiera (
       $requested_backends = unique(concat(['eyaml'], $backends))
     }
 
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   } else {
     $requested_backends = $backends
     $eyaml_real_datadir = undef
@@ -252,15 +237,12 @@ class hiera (
   if $eyaml_gpg {
     $encrypt_method = 'gpg'
     $gpg_gnupghome  = "${_keysdir}/gpg"
-<<<<<<< HEAD
     require ::hiera::eyaml_gpg
   } elsif $eyaml {
     require ::hiera::eyaml
-=======
     require hiera::eyaml_gpg
   } elsif $eyaml {
     require hiera::eyaml
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     $encrypt_method = undef
     $gpg_gnupghome  = undef
   } else {
@@ -317,7 +299,6 @@ class hiera (
   file { $hiera_yaml:
     ensure  => present,
     content => template('hiera/hiera.yaml.erb'),
-=======
 
   # Hiera 5 additional parameters:
   # - hiera_version (String)
@@ -343,7 +324,6 @@ class hiera (
   file { $hiera_yaml:
     ensure  => file,
     content => $hiera_template,
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   }
   # Symlink for hiera command line tool
   if $create_symlink {

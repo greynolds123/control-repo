@@ -14,7 +14,6 @@
 # Copyright (C) 2013 Mike Arnold, unless otherwise noted.
 #
 class hiera::params {
-<<<<<<< HEAD
   $confdir        = $::settings::confdir
   $package_ensure = 'present'
   $package_name   = 'hiera'
@@ -65,7 +64,6 @@ class hiera::params {
     }
     $hiera_yaml = "${confdir}/hiera.yaml"
   }
-=======
   $confdir          = $::settings::confdir
   $hiera_version    = '3'
   $hiera5_defaults  = {'datadir' => 'data', 'data_hash' => 'yaml_data'}
@@ -95,5 +93,4 @@ class hiera::params {
   $datadir        = '/etc/puppetlabs/code/environments/%{::environment}/data'
   $manage_package = false
   $hiera_yaml = "${confdir}/hiera.yaml"
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 }
