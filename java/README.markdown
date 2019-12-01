@@ -26,11 +26,8 @@ To install the correct Java package on your system, include the `java` class: `i
 
 ##Usage
 
-<<<<<<< HEAD
 The java module installs the correct jdk or jre package on a wide variety of systems. By default, the module installs the jdk package, but you can set different installation parameters as needed. For example, to install jre instead of jdk, you would set the distribution parameter:
-=======
 The java module installs the correct jdk or jre package on a wide variety of systems. By default, the module will install the jdk package, but you can set different installation parameters as needed. For example, to install jre instead of jdk, you would set the distribution parameter:
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 
 ~~~
 class { 'java':
@@ -38,7 +35,6 @@ class { 'java':
 }
 ~~~
 
-<<<<<<< HEAD
 To install the latest patch version of Java 8 on CentOS 
 
 ~~~
@@ -47,8 +43,6 @@ class { 'java' :
 }
 ~~~
 
-=======
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 The defined type `java::oracle` installs one or more versions of Oracle Java SE. `java::oracle` depends on [puppet/archive](https://github.com/voxpupuli/puppet-archive).  By using `java::oracle` you agree to Oracle's licensing terms for Java SE.
 
 ~~~
@@ -96,11 +90,8 @@ Valid options: Run command `update-java-alternatives -l` for a list of available
 Valid option: String. Default: OS and distribution dependent defaults on *deb systems, undef on others.
 
 #####`package`
-<<<<<<< HEAD
 Specifies the name of the Java package. This is configurable in case you want to install a non-standard Java package. If not set, the module installs the appropriate package for the `distribution` parameter and target platform. If you set `package`, the `distribution` parameter does nothing.  
-=======
 Specifies the name of the Java package. This is configurable in case you want to install a non-standard Java package. If not set, the module will install the appropriate package for the `distribution` parameter and target platform. If you set `package`, the `distribution` parameter will do nothing.  
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 Valid option: String. Default: undef. 
 
 #####`version`
@@ -145,11 +136,7 @@ This module cannot guarantee installation of Java versions that are not availabl
 
 This module only manages a singular installation of Java, meaning it is not possible to manage e.g. OpenJDK 7, Oracle Java 7 and Oracle Java 8 in parallel on the same system.
 
-<<<<<<< HEAD
-Oracle Java packages are not included in Debian 7 and Ubuntu 12.04/14.04 repositories. To install Java on those systems, you'll need to package Oracle JDK/JRE, and then the module can install the package. For more information on how to package Oracle JDK/JRE, see the [Debian wiki](http://wiki.debian.org/JavaPackage).
-=======
 Oracle Java packages are not included in Debian 7 and Ubuntu 12.04/14.04 repositories. To install Java on those systems, you'll need to package Oracle JDK/JRE, and then the module will be able to install the package. For more information on how to package Oracle JDK/JRE, see the [Debian wiki](http://wiki.debian.org/JavaPackage).
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 
 This module is officially [supported](https://forge.puppetlabs.com/supported) for the following Java versions and platforms:
 
@@ -172,31 +159,22 @@ Sun Java is supported on:
 Oracle Java is supported on:
 * CentOS 6
 
-<<<<<<< HEAD
 ### A note about OpenBSD
-=======
 ### A note to OpenBSD
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 OpenBSD packages install Java JRE/JDK in a unique directory structure, not linking
 the binaries to a standard directory. Because of that, the path to this location
 is hardcoded in the java_version fact. Whenever a Java upgrade to a newer
 version/path will be done on OpenBSD, it has to be adapted there.
 
-<<<<<<< HEAD
 ### A note about FreeBSD
-=======
 ### A note to FreeBSD
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 By default on FreeBSD Puppet < 4.0, you will see an error as `pkgng` is not the default provider. To fix this, you can install the [zleslie/pkgng module](https://forge.puppetlabs.com/zleslie/pkgng) and set it as the default package provider like so:
 
 ```puppet
 Package {
   provider => 'pkgng',
 }
-<<<<<<< HEAD
 ```
-=======
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 
 On Puppet > 4.0 (ie. using the sysutils/puppet4 port), `pkgng` is included within Puppet and it's the default package provider.
 

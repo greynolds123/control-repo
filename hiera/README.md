@@ -42,11 +42,8 @@ If you are using the eyaml backend on:
   module to install the eyaml gem using PE's gem command.
 * Puppet Enterprise 3.7 or 3.8 then you will need the [puppetlabs-pe_puppetserver_gem](https://forge.puppetlabs.com/puppetlabs/pe_puppetserver_gem)
   module.
-<<<<<<< HEAD
 * Puppet Enterprise 2015.x or FOSS puppetserver then you will need the [puppetlabs-puppetserver_gem](https://forge.puppetlabs.com/puppetlabs/puppetserver_gem)
-=======
 * Puppet Enterprise 201x.y (ex: 2017.3) or FOSS puppetserver then you will need the [puppetlabs-puppetserver_gem](https://forge.puppetlabs.com/puppetlabs/puppetserver_gem)
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   module.
 
 ### Beginning with hiera
@@ -140,7 +137,6 @@ class { 'hiera':
 }
 ```
 ## For Hiera version 5 please see the example above in beginning with Hiera.
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 
 The resulting output in /etc/puppet/hiera.yaml:
 
