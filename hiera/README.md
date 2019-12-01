@@ -42,7 +42,6 @@ If you are using the eyaml backend on:
   module to install the eyaml gem using PE's gem command.
 * Puppet Enterprise 3.7 or 3.8 then you will need the [puppetlabs-pe_puppetserver_gem](https://forge.puppetlabs.com/puppetlabs/pe_puppetserver_gem)
   module.
-* Puppet Enterprise 2015.x or FOSS puppetserver then you will need the [puppetlabs-puppetserver_gem](https://forge.puppetlabs.com/puppetlabs/puppetserver_gem)
 * Puppet Enterprise 201x.y (ex: 2017.3) or FOSS puppetserver then you will need the [puppetlabs-puppetserver_gem](https://forge.puppetlabs.com/puppetlabs/puppetserver_gem)
   module.
 
@@ -337,7 +336,6 @@ The following parameters are available for the hiera class:
 * `datadir`
   The path to the directory where hiera will look for databases.
   Default:
-    * `'/etc/puppet/hieradata'` for Puppet Open Source
     * `'/etc/puppetlabs/puppet/hieradata'` for PE Puppet < 4
     * `'/etc/puppetlabs/code/environments/%{::environment}/hieradata'` for Puppet >= 4
 * `datadir_manage`
@@ -387,8 +385,6 @@ The following parameters are available for the hiera class:
   A hash of options to set in hiera.yaml for the deep merge behavior.
   Default: `{}`
 * `manage_package`
-  A boolean for wether the hiera package should be managed. Defaults to `true` on
-  FOSS 3 but `false` otherwise.
   A boolean for wether the hiera package should be managed.
   Default: `false`
 * `package_name`
@@ -397,9 +393,6 @@ The following parameters are available for the hiera class:
   Specifies the ensure value of the hiera package. Default: 'present'
 * `confdir`
   The path to Puppet's confdir.
-  Default: `$::settings::confdir` which should be the following:
-    * `'/etc/puppet'` for Puppet Open Source
-    * `'/etc/puppetlabs/puppet'` for Puppet Enterprise
   Default: `$::settings::confdir` which should be `'/etc/puppetlabs/puppet'`
 * `logger`
   Which hiera logger to use.
