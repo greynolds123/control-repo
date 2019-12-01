@@ -15,7 +15,6 @@ discoveryTokenUnsafeSkipCAVerification: <%= @skip_ca_verification %>
 discoveryTokenUnsafeSkipCAVerification: true
 <% end -%>
 discoveryTimeout: 5m0s
-featureGates: <%= @feature_gates %>
 <% if @feature_gates -%>
 featureGates: <%= @feature_gates %>
 <% end -%>
@@ -25,12 +24,6 @@ nodeRegistration:
   name: <%= @node_name %>
   <%- if @container_runtime == "cri_containerd" -%>
   criSocket: /run/containerd/containerd.sock
-  <%- end -%>
-  <%- if @kubelet_merged_extra_arguments -%>
-  kubeletExtraArgs:
-    <%- @kubelet_merged_extra_arguments.each do |arg| -%>
-    <%= arg %>
-    <%- end -%>
   <%- end -%>
   kubeletExtraArgs:
     cgroup-driver: <%= @cgroup_driver %>

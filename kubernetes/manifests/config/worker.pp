@@ -18,33 +18,28 @@ class kubernetes::config::worker (
   Optional[Hash] $kubelet_extra_config     = $kubernetes::kubelet_extra_config,
   Optional[Array] $ignore_preflight_errors = undef,
   Boolean $skip_ca_verification            = false,
+  String $cgroup_driver                    = $kubernetes::cgroup_driver,
 ) {
-  # Need to merge the cloud configuration parameters into extra_arguments
-  if !empty($cloud_provider) {
-    $cloud_args = empty($cloud_config) ? {
-      true    => ["cloud-provider: ${cloud_provider}"],
-      default => ["cloud-provider: ${cloud_provider}", "cloud-config: ${cloud_config}"],
-    }
-    $kubelet_merged_extra_arguments = concat($kubelet_extra_arguments, $cloud_args)
-  }
-  else {
-    $kubelet_merged_extra_arguments = $kubelet_extra_arguments
-  }
-
-  String $cgroup_driver = $kubernetes::cgroup_driver, ) {
   # to_yaml emits a complete YAML document, so we must remove the leading '---'
   $kubelet_extra_config_yaml = regsubst(to_yaml($kubelet_extra_config), '^---\n', '')
 
   $template = $kubernetes_version ? {
-    /1.1(3|4)/  => 'v1beta1',
-    default => 'v1alpha3',
+    /1.12/  => 'v1alpha3',
+    default => 'v1beta1',
+  }
+
+  file { '/etc/kubernetes':
+    ensure  => directory,
+    mode    => '0600',
+    recurse => true,
   }
 
   file { $config_file:
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => template("kubernetes/${template}/config_worker.yaml.erb"),
+    ensure    => file,
+    owner     => 'root',
+    group     => 'root',
+    mode      => '0644',
+    content   => template("kubernetes/${template}/config_worker.yaml.erb"),
+    show_diff => false,
   }
 }

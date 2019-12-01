@@ -5,13 +5,6 @@ class kubernetes::cluster_roles (
   Optional[Boolean] $worker = $kubernetes::worker,
   String $node_name = $kubernetes::node_name,
   String $container_runtime = $kubernetes::container_runtime,
-  Optional[Array] $ignore_preflight_errors = []
-) {
-  $path = ['/usr/bin','/bin','/sbin','/usr/local/bin']
-  $env_controller = ['HOME=/root', 'KUBECONFIG=/etc/kubernetes/admin.conf']
-  #Worker nodes do not have admin.conf present
-  $env_worker = ['HOME=/root', 'KUBECONFIG=/etc/kubernetes/kubelet.conf']
-
   Optional[Array] $ignore_preflight_errors = $kubernetes::ignore_preflight_errors,
   Optional[Array] $env = $kubernetes::environment,
 ) {
@@ -26,9 +19,6 @@ class kubernetes::cluster_roles (
 
   if $controller {
     kubernetes::kubeadm_init { $node_name:
-      path                    => $path,
-      env                     => $env_controller,
-      ignore_preflight_errors => $preflight_errors,
       ignore_preflight_errors => $preflight_errors,
       env                     => $env,
       }
@@ -36,10 +26,6 @@ class kubernetes::cluster_roles (
 
   if $worker {
     kubernetes::kubeadm_join { $node_name:
-      path                    => $path,
-      env                     => $env_worker,
-      cri_socket              => $cri_socket,
-      ignore_preflight_errors => $preflight_errors,
       cri_socket              => $cri_socket,
       ignore_preflight_errors => $preflight_errors,
       env                     => $env,

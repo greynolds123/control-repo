@@ -38,7 +38,6 @@ describe 'kubernetes', :type => :class do
     it { should contain_class('kubernetes') }
     it { should contain_class('kubernetes::repos') }
     it { should contain_class('kubernetes::packages')}
-    it { should contain_class('kubernetes::config')}
     it { should contain_class('kubernetes::config::kubeadm')}
     it { should contain_class('kubernetes::service')}
     it { should contain_class('kubernetes::cluster_roles')}
@@ -53,7 +52,6 @@ describe 'kubernetes', :type => :class do
     it { should contain_class('kubernetes') }
     it { should contain_class('kubernetes::repos') }
     it { should contain_class('kubernetes::packages')}
-    it { is_expected.to_not contain_class('kubernetes::config')}
     it { is_expected.to_not contain_class('kubernetes::config::kubeadm')}
     it { is_expected.to_not contain_class('kubernetes::config::worker')}
     it { should contain_class('kubernetes::service')}
@@ -65,7 +63,6 @@ describe 'kubernetes', :type => :class do
       :kubernetes_version => '1.12.2',
     } end
                 
-    it { is_expected.to_not contain_class('kubernetes::config')}
     it { is_expected.to_not contain_class('kubernetes::config::kubeadm')}
     it { is_expected.to contain_class('kubernetes::config::worker')}
   end

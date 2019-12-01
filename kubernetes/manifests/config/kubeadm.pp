@@ -1,6 +1,7 @@
 # Class kubernetes config kubeadm, populates kubeadm config file with params to bootstrap cluster
 class kubernetes::config::kubeadm (
   String $config_file = $kubernetes::config_file,
+  String $controller_address = $kubernetes::controller_address,
   Boolean $manage_etcd = $kubernetes::manage_etcd,
   String $etcd_install_method = $kubernetes::etcd_install_method,
   String $kubernetes_version  = $kubernetes::kubernetes_version,
@@ -23,9 +24,12 @@ class kubernetes::config::kubeadm (
   Integer $api_server_count = $kubernetes::api_server_count,
   String $etcd_version = $kubernetes::etcd_version,
   String $token = $kubernetes::token,
+  String $ttl_duration = $kubernetes::ttl_duration,
   String $discovery_token_hash = $kubernetes::discovery_token_hash,
   String $kubernetes_ca_crt = $kubernetes::kubernetes_ca_crt,
   String $kubernetes_ca_key = $kubernetes::kubernetes_ca_key,
+  String $kubernetes_front_proxy_ca_crt = $kubernetes::kubernetes_front_proxy_ca_crt,
+  String $kubernetes_front_proxy_ca_key = $kubernetes::kubernetes_front_proxy_ca_key,
   String $container_runtime = $kubernetes::container_runtime,
   String $sa_pub = $kubernetes::sa_pub,
   String $sa_key = $kubernetes::sa_key,
@@ -43,11 +47,16 @@ class kubernetes::config::kubeadm (
   Optional[Hash] $kubelet_extra_config = $kubernetes::kubelet_extra_config,
   String $image_repository = $kubernetes::image_repository,
   String $cgroup_driver = $kubernetes::cgroup_driver,
+  String $proxy_mode = $kubernetes::proxy_mode,
 ) {
+
+  if !($proxy_mode in ['', 'userspace', 'iptables', 'ipvs', 'kernelspace']) {
+    fail('Invalid kube-proxy mode! Must be one of "", userspace, iptables, ipvs, kernelspace.')
+  }
 
   $kube_dirs = ['/etc/kubernetes','/etc/kubernetes/manifests','/etc/kubernetes/pki','/etc/kubernetes/pki/etcd']
   $etcd = ['ca.crt', 'ca.key', 'client.crt', 'client.key','peer.crt', 'peer.key', 'server.crt', 'server.key']
-  $pki = ['ca.crt', 'ca.key','sa.pub','sa.key']
+  $pki = ['ca.crt','ca.key','front-proxy-ca.crt','front-proxy-ca.key','sa.pub','sa.key']
   $kube_dirs.each | String $dir |  {
     file  { $dir :
       ensure  => directory,
@@ -132,8 +141,8 @@ class kubernetes::config::kubeadm (
 
   $config_version = $kubernetes_version ? {
     /1.1(0|1)/ => 'v1alpha1',
-    /1.1(3|4)/  => 'v1beta1',
-    default    => 'v1alpha3',
+    /1.12/     => 'v1alpha3',
+    default    => 'v1beta1',
   }
 
   file { $config_file:
