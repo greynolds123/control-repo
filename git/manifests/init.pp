@@ -33,12 +33,9 @@ class git (
   $configs = {},
   $configs_defaults = {}
 ) {
-<<<<<<< HEAD
   if ( $package_manage ) {
-=======
   
 if ( $package_manage ) {
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     package { $package_name:
       ensure => $package_ensure,
     }

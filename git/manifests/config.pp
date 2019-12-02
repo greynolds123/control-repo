@@ -69,8 +69,6 @@ define git::config (
     default => undef,
   }
 
-<<<<<<< HEAD
-=======
   $title = 'Git Global Configuration'
   $_key  = 'admin@prod.lcoaldomain'
   $value = 'Admin'
@@ -78,7 +76,6 @@ define git::config (
   $scope = 'global'
 
 
->>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   git_config { $title:
     key     => $_key,
     value   => $value,
