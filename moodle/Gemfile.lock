@@ -59,7 +59,7 @@ GEM
     docker-api (1.24.1)
       excon (>= 0.38.0)
       json
-    excon (0.45.4)
+    excon (0.71.0)
     extlib (0.9.16)
     facter (2.4.4)
       CFPropertyList (~> 2.2.6)
