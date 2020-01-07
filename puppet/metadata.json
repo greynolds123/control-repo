@@ -1,45 +1,113 @@
 {
-  "name": "dhoppe-puppet",
-  "version": "1.2.3",
-  "author": "Dennis Hoppe",
-  "summary": "This module installs, configures and manages the Puppet service.",
-  "license": "Apache-2.0",
-  "source": "git://github.com/dhoppe/puppet-puppet.git",
-  "project_page": "https://github.com/dhoppe/puppet-puppet",
-  "issues_url": "https://github.com/dhoppe/puppet-puppet/issues",
+  "name": "theforeman-puppet",
+  "version": "12.1.0",
+  "author": "theforeman",
+  "summary": "Puppet agent and server configuration",
+  "license": "GPL-3.0+",
+  "source": "git://github.com/theforeman/puppet-puppet",
+  "project_page": "https://github.com/theforeman/puppet-puppet",
+  "issues_url": "https://github.com/theforeman/puppet-puppet/issues",
   "dependencies": [
-    {"name":"puppet/extlib","version_requirement":">= 1.0.0 < 2.0.0"},
-    {"name":"puppetlabs/stdlib","version_requirement":">= 4.5.0 < 5.0.0"}
+    {
+      "name": "puppetlabs/concat",
+      "version_requirement": ">= 4.1.0 < 7.0.0"
+    },
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 4.18.0 < 7.0.0"
+    },
+    {
+      "name": "puppet/extlib",
+      "version_requirement": ">= 3.0.0 < 5.0.0"
+    }
   ],
   "data_provider": null,
+  "description": "Module for installing the Puppet agent and Puppet server",
+  "tags": [
+    "foreman",
+    "puppet",
+    "puppetmaster",
+    "puppet-server"
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 5.5.8 < 7.0.0"
+    }
+  ],
   "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Scientific",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Fedora",
+      "operatingsystemrelease": [
+        "26"
+      ]
+    },
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "6",
-        "7",
-        "8"
+        "9"
       ]
     },
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "12.04",
-        "14.04"
+        "16.04",
+        "18.04"
       ]
-    }
-  ],
-  "requirements": [
-    {
-      "name": "pe",
-      "version_requirement": ">= 3.2.0"
     },
     {
-      "name": "puppet",
-      "version_requirement": ">= 3.2.0"
+      "operatingsystem": "FreeBSD",
+      "operatingsystemrelease": [
+        "11",
+        "12"
+      ]
+    },
+    {
+      "operatingsystem": "DragonFly",
+      "operatingsystemrelease": [
+        "4"
+      ]
+    },
+    {
+      "operatingsystem": "Archlinux"
+    },
+    {
+      "operatingsystem": "SLES",
+      "operatingsystemrelease": [
+        "11",
+        "12"
+      ]
+    },
+    {
+      "operatingsystem": "windows",
+      "operatingsystemrelease": [
+        "7",
+        "8",
+        "2008 R2",
+        "2012",
+        "2012 R2"
+      ]
     }
-  ],
-  "tags": [
-    "puppet"
   ]
 }

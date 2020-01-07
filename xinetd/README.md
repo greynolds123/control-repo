@@ -36,6 +36,7 @@ default they are *not* set, allowing the internal xinetd defaults to be used:
  * `no_access`      - Determines the remote hosts to which the particular service is unavailable.
  * `only_from`      - Determines the remote hosts to which the particular service is available.
  * `max_load`       - Takes a floating point value as the load at which the service will stop accepting connections.
+ * `cps`            - Takes two numbers to set a rate limit for incoming connections. The first number is the number of connections per second at which the service is disabled. The second number is the time in seconds before the service will be enabled again.
  * `instances`      - Determines the number of servers that can be simultaneously active for a service (the default is no limit).
  * `per_source`     - This specifies the maximum instances of this service per source IP address. 
  * `bind`           - Allows a service to be bound to a specific interface on the machine.
@@ -56,7 +57,8 @@ page.
 
 ### Parameters:
 
- * `server`       - required - determines the program to execute for this service
+ * `server`       - optional - determines the program to execute for this service (either this or `redirect` is required)
+ * `redirect`     - optional - ip or hostname and port of the target service (either this or `server` is required)
  * `port`         - optional - determines the service port (required if service is not listed in `/etc/services`)
  * `cps`          - optional
  * `flags`        - optional
@@ -67,11 +69,13 @@ page.
  * `protocol`     - optional - defaults to "tcp"
  * `user`         - optional - defaults to "root"
  * `group`        - optional - defaults to "root"
+ * `use_default_group` - optional - set to "false" to prevent using the OS specific default group for the service, defaults to "true"
  * `instances`    - optional - defaults to "UNLIMITED"
  * `wait`         - optional - based on $protocol will default to "yes" for udp and "no" for tcp
  * `service_type` - optional - type setting in xinetd
  * `nice`         - optional - integer between -20 and 19, inclusive.
- * `redirect`     - optional - ip or hostname and port of the target service
+
+Either the `server` or the `redirect` parameter must be set.
 
 ### Sample Usage
 
@@ -85,6 +89,17 @@ xinetd::service { 'tftp':
   cps         => '100 2',
   flags       => 'IPv4',
   per_source  => '11',
+}
+```
+
+```puppet
+xinetd::service { 'ssh-tunnel-host_example_com':
+  port         => '2222',
+  redirect     => 'host.example.com 22',
+  flags        => 'REUSE',
+  service_type => 'UNLISTED',
+  bind         => "${::ipaddress_eth1}",
+  only_from    => '10.130.50.174',
 }
 ```
 
