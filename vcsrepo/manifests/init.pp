@@ -2,7 +2,7 @@
 
  class vcsrepo {
   file { '/etc/yum.repos.d':
-  ensure  => directory
+  ensure   => directory,
   }
-  }
+ }
 

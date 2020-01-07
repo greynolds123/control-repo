@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "CHANGELOG.md": "c8a976c9c06c2fb468a83d102b0f9f29",
-=======
   "CHANGELOG.md": "022e0833526e055582e69075cd8491af",
->>>>>>> 0d872203b7e86fe08d7298237977177227eecc55
   "CONTRIBUTING.md": "2e0bf76b0408e7a7595cea20b6d3c65c",
   "Gemfile": "fde0500fcd1b8114bbf4843c0559fd35",
   "Guardfile": "3886cf0104f5de976e3bcd3cfbaeff9d",
@@ -266,9 +262,5 @@
   "templates/etc/systemd/system/docker.service.d/service-overrides-archlinux.conf.erb": "b366fd3053268e2e6738b1c3ebecb2d6",
   "templates/etc/systemd/system/docker.service.d/service-overrides-debian.conf.erb": "db5bfafdd7bf2e61ba5c76963b809cb2",
   "templates/etc/systemd/system/docker.service.d/service-overrides-rhel.conf.erb": "ec9c543d6f0c0e66e94f50a472e7e525",
-<<<<<<< HEAD
-  "templates/update_docker_image.sh.erb": "fb05ada566bc366840b2bf89b6a46de8"
-=======
   "templates/update_docker_image.sh.erb": "87f007dd417278ebe73e345af01867e2"
->>>>>>> 0d872203b7e86fe08d7298237977177227eecc55
 }

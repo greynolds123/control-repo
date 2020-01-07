@@ -24,15 +24,22 @@ class kubernetes::config::worker (
   $kubelet_extra_config_yaml = regsubst(to_yaml($kubelet_extra_config), '^---\n', '')
 
   $template = $kubernetes_version ? {
-    /1.1(3|4)/  => 'v1beta1',
-    default => 'v1alpha3',
+    /1.12/  => 'v1alpha3',
+    default => 'v1beta1',
+  }
+
+  file { '/etc/kubernetes':
+    ensure  => directory,
+    mode    => '0600',
+    recurse => true,
   }
 
   file { $config_file:
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => template("kubernetes/${template}/config_worker.yaml.erb"),
+    ensure    => file,
+    owner     => 'root',
+    group     => 'root',
+    mode      => '0644',
+    content   => template("kubernetes/${template}/config_worker.yaml.erb"),
+    show_diff => false,
   }
 }

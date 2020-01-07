@@ -38,6 +38,13 @@
 
 class cron {
    include cron::config
+   include cron::mc_cron
+}
+
+=======
+
+class cron {
+   include cron::config
    #include cron::mc_cron
 }
 

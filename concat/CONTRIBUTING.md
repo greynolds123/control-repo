@@ -1,3 +1,63 @@
+Checklist (and a short version for the impatient)
+=================================================
+
+  * Commits:
+
+    - Make commits of logical units.
+
+    - Check for unnecessary whitespace with "git diff --check" before
+      committing.
+
+    - Commit using Unix line endings (check the settings around "crlf" in
+      git-config(1)).
+
+    - Do not check in commented out code or unneeded files.
+
+    - The first line of the commit message should be a short
+      description (50 characters is the soft limit, excluding ticket
+      number(s)), and should skip the full stop.
+
+    - Associate the issue in the message. The first line should include
+      the issue number in the form "(#XXXX) Rest of message".
+
+    - The body should provide a meaningful commit message, which:
+
+      - uses the imperative, present tense: "change", not "changed" or
+        "changes".
+
+      - includes motivation for the change, and contrasts its
+        implementation with the previous behavior.
+
+    - Make sure that you have tests for the bug you are fixing, or
+      feature you are adding.
+
+    - Make sure the test suites passes after your commit:
+      `bundle exec rspec spec/acceptance` More information on [testing](#Testing) below
+
+    - When introducing a new feature, make sure it is properly
+      documented in the README.md
+
+  * Submission:
+
+    * Pre-requisites:
+
+      - Make sure you have a [GitHub account](https://github.com/join)
+
+      - [Create a ticket](https://tickets.puppetlabs.com/secure/CreateIssue!default.jspa), or [watch the ticket](https://tickets.puppetlabs.com/browse/) you are patching for.
+
+    * Preferred method:
+
+      - Fork the repository on GitHub.
+
+      - Push your changes to a topic branch in your fork of the
+        repository. (the format ticket/1234-short_description_of_change is
+        usually preferred for this project).
+
+      - Submit a pull request to the repository in the puppetlabs
+        organization.
+
+The long version
+
 # Contributing to Puppet modules
 
 So you want to contribute to a Puppet module: Great! Below are some instructions to get you started doing
@@ -116,6 +176,7 @@ process as easy as possible.
       GitHub has some pretty good
       [general documentation](http://help.github.com/) on using
       their site.  They also have documentation on
+      [creating pull requests](http://help.github.com/send-pull-requests/).
       [creating pull requests](https://help.github.com/articles/creating-a-pull-request-from-a-fork/).
 
       In general, after pushing your topic branch up to your
@@ -123,6 +184,10 @@ process as easy as possible.
       GitHub UI and click "Pull Request" towards the top of the page
       in order to open a pull request.
 
+
+  3.  Update the related GitHub issue.
+
+      If there is a GitHub issue associated with the change you
   3.  Update the related JIRA issue.
 
       If there is a JIRA issue associated with the change you
@@ -130,6 +195,20 @@ process as easy as possible.
       location of your branch, along with any other commentary you
       may wish to make.
 
+Testing
+
+Getting Started
+
+Our puppet modules provide [`Gemfile`](./Gemfile)s which can tell a ruby
+package manager such as [bundler](http://bundler.io/) what Ruby packages,
+or Gems, are required to build, develop, and test this software.
+
+Please make sure you have [bundler installed](http://bundler.io/#getting-started)
+on your system, then use it to install all dependencies needed for this project,
+by running
+
+```shell
+% bundle install
 # Testing
 
 ## Getting Started
@@ -155,6 +234,7 @@ Your bundle is complete!
 Use `bundle show [gemname]` to see where a bundled gem is installed.
 ```
 
+NOTE some systems may require you to run this command with sudo.
 NOTE: some systems may require you to run this command with sudo.
 
 If you already have those gems installed, make sure they are up-to-date:
@@ -163,6 +243,7 @@ If you already have those gems installed, make sure they are up-to-date:
 % bundle update
 ```
 
+With all dependencies in place and up-to-date we can now run the tests:
 ## Running Tests
 
 With all dependencies in place and up-to-date, run the tests:
@@ -173,6 +254,20 @@ With all dependencies in place and up-to-date, run the tests:
 % bundle exec rake spec
 ```
 
+This will execute all the [rspec tests](http://rspec-puppet.com/) tests
+under [spec/defines](./spec/defines), [spec/classes](./spec/classes),
+and so on. rspec tests may have the same kind of dependencies as the
+module they are testing. While the module defines in its [Modulefile](./Modulefile),
+rspec tests define them in [.fixtures.yml](./fixtures.yml).
+
+Some puppet modules also come with [beaker](https://github.com/puppetlabs/beaker)
+tests. These tests spin up a virtual machine under
+[VirtualBox](https://www.virtualbox.org/)) with, controlling it with
+[Vagrant](http://www.vagrantup.com/) to actually simulate scripted test
+scenarios. In order to run these, you will need both of those tools
+installed on your system.
+
+You can run them by issuing the following command
 This executes all the [rspec tests](http://rspec-puppet.com/) in the directories defined [here](https://github.com/puppetlabs/puppetlabs_spec_helper/blob/699d9fbca1d2489bff1736bb254bb7b7edb32c74/lib/puppetlabs_spec_helper/rake_tasks.rb#L17) and so on. 
 rspec tests may have the same kind of dependencies as the module they are testing. Although the module defines these dependencies in its [metadata.json](./metadata.json),
 rspec tests define them in [.fixtures.yml](./fixtures.yml).
@@ -191,6 +286,40 @@ Run the tests by issuing the following command
 ```
 
 This will now download a pre-fabricated image configured in the [default node-set](./spec/acceptance/nodesets/default.yml),
+install puppet, copy this module and install its dependencies per [spec/spec_helper_acceptance.rb](./spec/spec_helper_acceptance.rb)
+and then run all the tests under [spec/acceptance](./spec/acceptance).
+
+Writing Tests
+-------------
+
+XXX getting started writing tests.
+
+If you have commit access to the repository
+
+Even if you have commit access to the repository, you will still need to
+go through the process above, and have someone else review and merge
+in your changes.  The rule is that all changes must be reviewed by a
+developer on the project (that did not write the code) to ensure that
+all changes go through a code review process.
+
+Having someone other than the author of the topic branch recorded as
+performing the merge is the record that they performed the code
+review.
+
+
+Additional Resources
+====================
+
+* [Getting additional help](http://puppetlabs.com/community/get-help)
+
+* [Writing tests](http://projects.puppetlabs.com/projects/puppet/wiki/Development_Writing_Tests)
+
+* [Patchwork](https://patchwork.puppetlabs.com)
+
+* [General GitHub documentation](http://help.github.com/)
+
+* [GitHub pull request documentation](http://help.github.com/send-pull-requests/)
+
 install Puppet, copy this module, and install its dependencies per [spec/spec_helper_acceptance.rb](./spec/spec_helper_acceptance.rb)
 and then run all the tests under [spec/acceptance](./spec/acceptance).
 

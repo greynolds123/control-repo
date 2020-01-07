@@ -50,7 +50,7 @@ Puppet::Type.newtype(:ini_subsetting) do
   newparam(:path) do
     desc 'The ini file Puppet will ensure contains the specified setting.'
     validate do |value|
-      unless (Puppet.features.posix? && value =~ %r{^\/}) || (Puppet.features.microsoft_windows? && (value =~ %r{^.:\/} || value =~ %r{^\/\/[^\/]+\/[^\/]+}))
+      unless Puppet::Util.absolute_path?(value)
         raise(Puppet::Error, _("File paths must be fully qualified, not '%{value}'") % { value: value })
       end
     end
@@ -71,8 +71,7 @@ Puppet::Type.newtype(:ini_subsetting) do
   end
 
   newparam(:quote_char) do
-    desc 'The character used to quote the entire value of the setting. ' +
-         %q(Valid values are '', '"' and "'")
+    desc "The character used to quote the entire value of the setting. Valid values are '', '\"' and \"'\""
     defaultto('')
 
     validate do |value|

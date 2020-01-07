@@ -36,7 +36,7 @@ describe 'kubernetes::config::kubeadm', :type => :class do
 
     kube_dirs = ['/etc/kubernetes', '/etc/kubernetes/manifests', '/etc/kubernetes/pki', '/etc/kubernetes/pki/etcd']
     etcd = ['ca.crt', 'ca.key', 'client.crt', 'client.key', 'peer.crt', 'peer.key', 'server.crt', 'server.key']
-    pki = ['ca.crt', 'ca.key', 'sa.pub', 'sa.key']
+    pki = ['ca.crt', 'ca.key', 'front-proxy-ca.crt', 'front-proxy-ca.key', 'sa.pub', 'sa.key']
 
     kube_dirs.each do |d|
       it { is_expected.to contain_file(d.to_s) }
@@ -69,7 +69,7 @@ describe 'kubernetes::config::kubeadm', :type => :class do
 
     kube_dirs = ['/etc/kubernetes', '/etc/kubernetes/manifests', '/etc/kubernetes/pki', '/etc/kubernetes/pki/etcd']
     etcd = ['ca.crt', 'ca.key', 'client.crt', 'client.key', 'peer.crt', 'peer.key', 'server.crt', 'server.key']
-    pki = ['ca.crt', 'ca.key', 'sa.pub', 'sa.key']
+    pki = ['ca.crt', 'ca.key', 'front-proxy-ca.crt', 'front-proxy-ca.key', 'sa.pub', 'sa.key']
 
     kube_dirs.each do |d|
       it { is_expected.to contain_file(d.to_s) }
@@ -172,6 +172,20 @@ describe 'kubernetes::config::kubeadm', :type => :class do
     }
   end
 
+  context 'with version = 1.13 and kubernetes_cluster_name => my_own_name' do
+    let(:params) do
+      {
+        'kubernetes_version' => '1.13.0',
+        'kubernetes_cluster_name' => 'my_own_name',
+      }
+    end
+
+    it {
+      is_expected.to contain_file('/etc/kubernetes/config.yaml') \
+        .with_content(%r{clusterName: my_own_name\n})
+    }
+  end
+
   context 'with version = 1.14' do
     let(:params) do
       {
@@ -249,6 +263,38 @@ describe 'kubernetes::config::kubeadm', :type => :class do
     it { is_expected.to contain_file('/etc/kubernetes/config.yaml') }
     it 'has hostPath: /mnt in controller manager extra volumes' do
       expect(config_yaml[1]['controllerManager']['extraVolumes']).to include('name' => 'foo', 'hostPath' => '/mnt', 'mountPath' => '/data')
+    end
+  end
+
+  context 'with version = 1.14' do
+    let(:params) do
+      {
+        'kubernetes_version' => '1.14.1',
+        'controller_address' => 'foo',
+      }
+    end
+
+    let(:config_yaml) { YAML.load_stream(catalogue.resource('file', '/etc/kubernetes/config.yaml').send(:parameters)[:content]) }
+
+    it { is_expected.to contain_file('/etc/kubernetes/config.yaml') }
+    it 'has foo in controlPlaneEndpoint' do
+      expect(config_yaml[1]['controlPlaneEndpoint']).to include('foo')
+    end
+  end
+
+  context 'with version = 1.14' do
+    let(:params) do
+      {
+        'kubernetes_version' => '1.14.2',
+        'proxy_mode' => 'ipvs',
+      }
+    end
+
+    let(:config_yaml) { YAML.load_stream(catalogue.resource('file', '/etc/kubernetes/config.yaml').send(:parameters)[:content]) }
+
+    it { is_expected.to contain_file('/etc/kubernetes/config.yaml') }
+    it 'has ipvs in mode:' do
+      expect(config_yaml[2]['mode']).to include('ipvs')
     end
   end
 end

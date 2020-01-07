@@ -1,5 +1,12 @@
 require 'spec_helper_acceptance'
 
+<<<<<<< HEAD
+describe 'concat warn =>' do
+  basedir = default.tmpdir('concat')
+  context 'true should enable default warning message' do
+    pp = <<-EOS
+      concat { '#{basedir}/file':
+=======
 describe 'concat warn_header =>' do
   before(:all) do
     @basedir = setup_test_directory
@@ -9,16 +16,51 @@ describe 'concat warn_header =>' do
     let(:pp) do
       <<-MANIFEST
       concat { '#{@basedir}/file':
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
         warn  => true,
       }
 
       concat::fragment { '1':
+<<<<<<< HEAD
+        target  => '#{basedir}/file',
+=======
         target  => '#{@basedir}/file',
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
         content => '1',
         order   => '01',
       }
 
       concat::fragment { '2':
+<<<<<<< HEAD
+        target  => '#{basedir}/file',
+        content => '2',
+        order   => '02',
+      }
+    EOS
+
+    it 'applies the manifest twice with no stderr' do
+      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, :catch_changes => true)
+    end
+
+    describe file("#{basedir}/file") do
+      it { should be_file }
+      its(:content) {
+        should match /# This file is managed by Puppet\. DO NOT EDIT\./
+        should match /1/
+        should match /2/
+      }
+    end
+  end
+  context 'false should not enable default warning message' do
+    pp = <<-EOS
+      concat { '#{basedir}/file':
+        warn  => false,
+      }
+
+      concat::fragment { '1':
+        target  => '#{basedir}/file',
+=======
         target  => '#{@basedir}/file',
         content => '2',
         order   => '02',
@@ -30,10 +72,42 @@ describe 'concat warn_header =>' do
 
       concat::fragment { 'file2_1':
         target  => '#{@basedir}/file2',
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
         content => '1',
         order   => '01',
       }
 
+<<<<<<< HEAD
+      concat::fragment { '2':
+        target  => '#{basedir}/file',
+        content => '2',
+        order   => '02',
+      }
+    EOS
+
+    it 'applies the manifest twice with no stderr' do
+      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, :catch_changes => true)
+    end
+
+    describe file("#{basedir}/file") do
+      it { should be_file }
+      its(:content) {
+        should_not match /# This file is managed by Puppet\. DO NOT EDIT\./
+        should match /1/
+        should match /2/
+      }
+    end
+  end
+  context '# foo should overide default warning message' do
+    pp = <<-EOS
+      concat { '#{basedir}/file':
+        warn  => "# foo\n",
+      }
+
+      concat::fragment { '1':
+        target  => '#{basedir}/file',
+=======
       concat::fragment { 'file2_2':
         target  => '#{@basedir}/file2',
         content => '2',
@@ -46,10 +120,32 @@ describe 'concat warn_header =>' do
 
       concat::fragment { 'file3_1':
         target  => '#{@basedir}/file3',
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
         content => '1',
         order   => '01',
       }
 
+<<<<<<< HEAD
+      concat::fragment { '2':
+        target  => '#{basedir}/file',
+        content => '2',
+        order   => '02',
+      }
+    EOS
+
+    it 'applies the manifest twice with no stderr' do
+      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, :catch_changes => true)
+    end
+
+    describe file("#{basedir}/file") do
+      it { should be_file }
+      its(:content) {
+        should match /# foo/
+        should match /1/
+        should match /2/
+      }
+=======
       concat::fragment { 'file3_2':
         target  => '#{@basedir}/file3',
         content => '2',
@@ -79,6 +175,7 @@ describe 'concat warn_header =>' do
       expect(file("#{@basedir}/file3").content).to match %r{# foo}
       expect(file("#{@basedir}/file3").content).to match %r{1}
       expect(file("#{@basedir}/file3").content).to match %r{2}
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     end
   end
 end

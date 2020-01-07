@@ -4,6 +4,16 @@ require 'puppet/type/file/mode'
 require 'puppet/util/checksums'
 
 Puppet::Type.newtype(:concat_file) do
+<<<<<<< HEAD
+  @doc = "Gets all the file fragments and puts these into the target file.
+    This will mostly be used with exported resources.
+
+    example:
+      Concat_fragment <<| tag == 'unique_tag' |>>
+
+      concat_file { '/tmp/file':
+        tag            => 'unique_tag', # Mandatory
+=======
   @doc = <<-DOC
     @summary
       Generates a file with content from fragments sharing a common unique tag.
@@ -13,6 +23,7 @@ Puppet::Type.newtype(:concat_file) do
 
       concat_file { '/tmp/file':
         tag            => 'unique_tag', # Optional. Default to undef
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
         path           => '/tmp/file',  # Optional. If given it overrides the resource name
         owner          => 'root',       # Optional. Default to undef
         group          => 'root',       # Optional. Default to undef
@@ -20,6 +31,10 @@ Puppet::Type.newtype(:concat_file) do
         order          => 'numeric'     # Optional, Default to 'numeric'
         ensure_newline => false         # Optional, Defaults to false
       }
+<<<<<<< HEAD
+  "
+  ensurable do
+=======
   DOC
 
   ensurable do
@@ -28,6 +43,7 @@ Puppet::Type.newtype(:concat_file) do
       negates the effect of any other parameters.
     DOC
 
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     defaultvalues
 
     defaultto { :present }
@@ -37,6 +53,47 @@ Puppet::Type.newtype(:concat_file) do
     self[:ensure] == :present
   end
 
+<<<<<<< HEAD
+  newparam(:name, :namevar => true) do
+    desc "Resource name"
+  end
+
+  newparam(:tag) do
+    desc "Tag reference to collect all concat_fragment's with the same tag"
+  end
+
+  newparam(:path) do
+    desc "The output file"
+    defaultto do
+      resource.value(:name)
+    end
+  end
+
+  newparam(:owner, :parent => Puppet::Type::File::Owner) do
+    desc "Desired file owner."
+  end
+
+  newparam(:group, :parent => Puppet::Type::File::Group) do
+    desc "Desired file group."
+  end
+
+  newparam(:mode, :parent => Puppet::Type::File::Mode) do
+    desc "Desired file mode."
+  end
+
+  newparam(:order) do
+    desc "Controls the ordering of fragments. Can be set to alphabetical or numeric."
+    defaultto 'numeric'
+  end
+
+  newparam(:backup) do
+    desc "Controls the filebucketing behavior of the final file and see File type reference for its use."
+    defaultto 'puppet'
+  end
+
+  newparam(:replace) do
+    desc "Whether to replace a file that already exists on the local system."
+=======
   newparam(:tag) do
     desc 'Required. Specifies a unique tag reference to collect all concat_fragments with the same tag.'
   end
@@ -100,10 +157,50 @@ Puppet::Type.newtype(:concat_file) do
 
   newparam(:replace, boolean: true, parent: Puppet::Parameter::Boolean) do
     desc 'Specifies whether to overwrite the destination file if it already exists.'
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     defaultto true
   end
 
   newparam(:validate_cmd) do
+<<<<<<< HEAD
+    desc "Validates file."
+  end
+
+  newparam(:ensure_newline) do
+    desc "Whether to ensure there is a newline after each fragment."
+    defaultto false
+  end
+
+  # Inherit File parameters
+  newparam(:selinux_ignore_defaults) do
+  end
+
+  newparam(:selrange) do
+  end
+
+  newparam(:selrole) do
+  end
+
+  newparam(:seltype) do
+  end
+
+  newparam(:seluser) do
+  end
+
+  newparam(:show_diff) do
+  end
+  # End file parameters
+
+  autorequire(:concat_fragment) do
+    catalog.resources.collect do |r|
+      if r.is_a?(Puppet::Type.type(:concat_fragment)) && r[:tag] == self[:tag]
+        r.name
+      end
+    end.compact
+  end
+
+  # Autorequire the file we are generating below
+=======
     desc <<-DOC
       Specifies a validation command to apply to the destination file. Requires Puppet version 3.5 or newer. Valid options: a string to
       be passed to a file resource.
@@ -181,10 +278,46 @@ Puppet::Type.newtype(:concat_file) do
 
   # Autorequire the file we are generating below
   # Why is this necessary ?
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   autorequire(:file) do
     [self[:path]]
   end
 
+<<<<<<< HEAD
+  def should_content
+    return @generated_content if @generated_content
+    @generated_content = ""
+    content_fragments = []
+
+    resources = catalog.resources.select do |r|
+      r.is_a?(Puppet::Type.type(:concat_fragment)) && r[:tag] == self[:tag]
+    end
+
+    resources.each do |r|
+      content_fragments << ["#{r[:order]}___#{r[:name]}", fragment_content(r)]
+    end
+
+    if self[:order] == 'numeric'
+      sorted = content_fragments.sort do |a, b|
+        def decompound(d)
+          d.split('___').map { |v| v =~ /^\d+$/ ? v.to_i : v }
+        end
+
+        decompound(a[0]) <=> decompound(b[0])
+      end
+    else
+      sorted = content_fragments.sort_by do |a|
+        a_order, a_name = a[0].split('__')
+        [a_order, a_name]
+      end
+    end
+
+    @generated_content = sorted.map { |cf| cf[1] }.join
+
+    @generated_content
+  end
+
+=======
   def fragments
     # Collect fragments that target this resource by path, title or tag.
     @fragments ||= catalog.resources.map { |resource|
@@ -294,6 +427,7 @@ Puppet::Type.newtype(:concat_file) do
     end
   end
 
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   def fragment_content(r)
     if r[:content].nil? == false
       fragment_content = r[:content]
@@ -301,18 +435,30 @@ Puppet::Type.newtype(:concat_file) do
       @source = nil
       Array(r[:source]).each do |source|
         if Puppet::FileServing::Metadata.indirection.find(source)
+<<<<<<< HEAD
+          @source = source 
+          break
+        end
+      end
+      self.fail "Could not retrieve source(s) #{r[:source].join(", ")}" unless @source
+=======
           @source = source
           break
         end
       end
       raise _('Could not retrieve source(s) %{_array}') % { _array: Array(r[:source]).join(', ') } unless @source
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
       tmp = Puppet::FileServing::Content.indirection.find(@source)
       fragment_content = tmp.content unless tmp.nil?
     end
 
     if self[:ensure_newline]
+<<<<<<< HEAD
+      fragment_content<<"\n" unless fragment_content =~ /\n$/
+=======
       newline = Puppet::Util::Platform.windows? ? "\r\n" : "\n"
       fragment_content << newline unless fragment_content =~ %r{#{newline}$}
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     end
 
     fragment_content
@@ -320,7 +466,11 @@ Puppet::Type.newtype(:concat_file) do
 
   def generate
     file_opts = {
+<<<<<<< HEAD
+      :ensure => self[:ensure] == :absent ? :absent : :file,
+=======
       ensure: (self[:ensure] == :absent) ? :absent : :file,
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     }
 
     [:path,
@@ -336,16 +486,30 @@ Puppet::Type.newtype(:concat_file) do
      :seluser,
      :validate_cmd,
      :show_diff].each do |param|
+<<<<<<< HEAD
+      unless self[param].nil?
+        file_opts[param] = self[param]
+      end
+    end
+
+    metaparams = Puppet::Type.metaparams
+    excluded_metaparams = [ :before, :notify, :require, :subscribe, :tag ]
+=======
       file_opts[param] = self[param] unless self[param].nil?
     end
 
     metaparams = Puppet::Type.metaparams
     excluded_metaparams = [:before, :notify, :require, :subscribe, :tag]
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
 
     metaparams.reject! { |param| excluded_metaparams.include? param }
 
     metaparams.each do |metaparam|
+<<<<<<< HEAD
+      file_opts[metaparam] = self[metaparam] if self[metaparam]
+=======
       file_opts[metaparam] = self[metaparam] unless self[metaparam].nil?
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
     end
 
     [Puppet::Type.type(:file).new(file_opts)]
@@ -354,10 +518,18 @@ Puppet::Type.newtype(:concat_file) do
   def eval_generate
     content = should_content
 
+<<<<<<< HEAD
+    if !content.nil? and !content.empty?
+      catalog.resource("File[#{self[:path]}]")[:content] = content
+    end
+
+    [ catalog.resource("File[#{self[:path]}]") ]
+=======
     if !content.nil? && !content.empty?
       catalog.resource("File[#{self[:path]}]")[:content] = content
     end
 
     [catalog.resource("File[#{self[:path]}]")]
+>>>>>>> 358c2d5599e3b70bbdd5e12ad751d558ed2fc6b8
   end
 end
