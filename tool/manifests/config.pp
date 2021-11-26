@@ -1,7 +1,7 @@
 # This class deploys the iptables and other utility sripts.
 
   class tool::config {
-  case $::osfamily {
+  case  $::osfamily {
   'CentOS','RedHat': {
   file { '/root/remoteIPtables.sh':
   ensure  => present,
@@ -19,7 +19,7 @@
   owner   => root,
   mode    => '0655',
   seltype => 'admin_home_t',
-  source  => 'puppet:///modules/tool/networks.txt'
+  source  => 'puppet:///modules/tool/networks.txt',
   }
 
 
@@ -41,7 +41,7 @@
   exec { 'remoteIPtables':
   command =>'/bin/bash -x /root/remoteIPtables.sh',
   path    =>'/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin/',
-  onlyif  =>'/bin/grep -c /root/ /rot/remotIPtables.sh && exit 1 || exit 0',
+  onlyif  =>'/bin/grep -c /root/ /root/remotIPtables.sh && exit 1 || exit 0',
   before  => Exec['ClearCache'],
   }
   }
@@ -54,7 +54,7 @@
   owner   => root,
   mode    => '0655',
   seltype => 'admin_home_t',
-  source  => 'puppet:///modules/tool/manageSelinux.sh'
+  source  => 'puppet:///modules/tool/manageSelinux.sh',
   }
 
 # Check for IP for Primary services (ipscan)
@@ -63,7 +63,7 @@
   owner   => root,
   mode    => '0655',
   seltype => 'admin_home_t',
-  source  => 'puppet:///modules/tool/ipscan.sh'
+  source  => 'puppet:///modules/tool/ipscan.sh',
   }
 
 # Execute ipscan
@@ -76,7 +76,7 @@
 
 ### Copy IPtables for Ubuntu ###
   case $::osfamily {
-     'ubuntu','debian': {
+  'ubuntu','debian': {
   file { '/root/remoteIPtables-ubuntu.sh':,
   ensure => present,
   owner  => root,
@@ -100,7 +100,7 @@
 
 ### Execute IPtables for Ubuntu ###
   case $::osfamily {
-     'ubuntu','debian': {
+  'ubuntu','debian': {
   exec { 'remoteIPtables-ubuntu':
   command => '/bin/sh /root/remoteIPtables-ubuntu.sh',
   path    => '/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin',

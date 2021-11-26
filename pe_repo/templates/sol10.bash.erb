@@ -1,0 +1,46 @@
+#!/bin/bash -e
+
+download_file() {
+  source_file="https://<%= @master %>:<%= @port %><%= @prefix %>/<%= @pe_version %>/<%= @installer_build %>/${1?}"
+  download_from_url "${source_file?}" "${staging_dir?}/${1?}"
+}
+
+download_packages() {
+  download_file "packages.txt"
+  download_file "solaris-noask"
+
+  for pkg in $(cat "${staging_dir?}/packages.txt"); do
+    download_file "${pkg?}"
+  done
+}
+
+install_packages() {
+  for pkg in $(cat "${staging_dir?}/packages.txt"); do
+    gzip -dc "${staging_dir?}/${pkg?}" | pkgadd -G -a "${staging_dir?}/solaris-noask" -n -d /dev/stdin all
+  done
+}
+
+<%= scope.function_template(["pe_repo/partials/shared_functions.bash.erb"]) %>
+
+install_agent() {
+  doing_upgrade=$(is_upgrade)
+
+  staging_dir="$(mktemp -d)"
+
+  cleanup_add_cmd 'rm -rf '"${staging_dir}"
+
+  download_packages
+
+  install_packages
+
+  if [ ! y = "${doing_upgrade}" ]; then
+    puppet_config_set "$@"
+    manage_puppet_agent
+  fi
+
+  ensure_agent_links
+}
+
+install_agent "$@"
+
+# vim: ft=sh

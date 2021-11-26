@@ -1,0 +1,44 @@
+#!/bin/bash -e
+
+download_file() {
+  source_file="https://<%= @master %>:<%= @port %><%= @prefix %>/<%= @pe_version %>/<%= @installer_build %>/${1?}"
+  download_from_url "${source_file?}" "${staging_dir?}/${1?}"
+}
+
+download_packages() {
+  download_file "packages.txt"
+
+  for rpm in $(cat "${staging_dir?}/packages.txt"); do
+    download_file "${rpm?}"
+  done
+}
+
+<%= scope.function_template(["pe_repo/partials/shared_functions.bash.erb"]) %>
+
+install_agent() {
+  doing_upgrade=$(is_upgrade)
+
+  staging_dir="$(mktemp -d)"
+
+  download_packages
+
+  if [ y = "${doing_upgrade}" ]; then
+    pxp_status=$(pxp_agent_status)
+    ensure_service pxp-agent stopped
+  fi
+
+  rpm -U --replacepkgs "${staging_dir?}"/*.rpm
+
+  if [ ! y = "${doing_upgrade}" ]; then
+    puppet_config_set "$@"
+    manage_puppet_agent
+  else
+    ensure_service pxp-agent "${pxp_status}"
+  fi
+
+  ensure_agent_links "/usr/local"
+}
+
+install_agent "$@"
+
+# vim: ft=sh

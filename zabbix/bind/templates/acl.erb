@@ -1,0 +1,6 @@
+
+acl <%= @name %> {
+<%- Array(@addresses).each do |address| -%>
+	<%= address %>;
+<%- end -%>
+};

@@ -1,4 +1,4 @@
-# This file was automatically generated on 2017-02-13 04:11:50 -0800.
+# This file was automatically generated on 2019-06-08 13:59:54 -0700.
 # Use the 'puppet generate types' command to regenerate this file.
 
 # A simple resource type intended to be used as an pe_anchor in a composite class.
@@ -42,7 +42,7 @@ Puppet::Resource::ResourceType3.new(
     Puppet::Resource::Param(Any, 'name')
   ],
   {
-    /(.*)/ => ['name']
+    /(?m-ix:(.*))/ => ['name']
   },
   true,
   false)

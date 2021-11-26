@@ -1,0 +1,15 @@
+#!/bin/sh
+set -ex
+
+umask 0022                      # allow rX for group/other
+
+export TORQUEBOX_HOME=<%= scope['::pe_razor::params::torquebox_home'] %>
+export JBOSS_HOME="${TORQUEBOX_HOME}/jboss"
+export JRUBY_HOME="${TORQUEBOX_HOME}/jruby"
+export PATH="<%= scope['::pe_razor::params::razor_server'] %>/bin:$JRUBY_HOME/bin:${PATH}"
+export RAZOR_CONFIG="<%= scope['::pe_razor::params::config_defaults_path'] %>"
+
+# Actually check the migration
+cd <%= scope['::pe_razor::params::razor_server'] %>
+<%= scope['::pe_razor::params::razor_admin'] %> check-migrations
+exit $?

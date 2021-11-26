@@ -18,6 +18,7 @@ class puppet_enterprise::symlinks (
   # The defaults for our convenience links
   $platform_symlink_target = '/usr/local/bin'
   $pe_bin_location = '/opt/puppetlabs/bin'
+  $pe_gem_location = '/opt/puppetlabs/puppet/lib/ruby/vendor_gems/bin'
 
   File {
     owner => undef,
@@ -27,11 +28,11 @@ class puppet_enterprise::symlinks (
 
   # This test covers the fact returning boolean on supported
   # platforms as well as undef on Windows to prevent declaration
-  if $::platform_symlink_writable and $manage_symlinks {
+  if $facts['platform_symlink_writable'] and $manage_symlinks {
     @file { [ '/usr/local', $platform_symlink_target ]:
       ensure  => 'directory',
       replace => false,
-      tag     => ['pe-agent-symlinks', 'pe-mco-symlinks', 'pe-master-symlinks'],
+      tag     => ['pe-agent-symlinks', 'pe-master-symlinks'],
     }
 
     @file { "${platform_symlink_target}/facter":
@@ -51,7 +52,7 @@ class puppet_enterprise::symlinks (
     @file { "${platform_symlink_target}/pe-man":
       ensure => 'link',
       target => "${pe_bin_location}/pe-man",
-      tag    => 'pe-agent-symlinks',
+      tag    => 'pe-master-symlinks',
       require => File[$platform_symlink_target],
     }
 
@@ -62,16 +63,16 @@ class puppet_enterprise::symlinks (
       require => File[$platform_symlink_target],
     }
 
-    @file { "${platform_symlink_target}/mco":
-      ensure => 'link',
-      target => "${pe_bin_location}/mco",
-      tag    => 'pe-mco-symlinks',
-      require => File[$platform_symlink_target],
-    }
-
     @file { "${platform_symlink_target}/r10k":
       ensure => 'link',
       target => "${pe_bin_location}/r10k",
+      tag    => 'pe-master-symlinks',
+      require => File[$platform_symlink_target],
+    }
+
+    @file { "${platform_symlink_target}/eyaml":
+      ensure => 'link',
+      target => "${pe_gem_location}/eyaml",
       tag    => 'pe-master-symlinks',
       require => File[$platform_symlink_target],
     }

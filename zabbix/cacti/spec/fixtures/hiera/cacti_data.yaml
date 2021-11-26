@@ -1,0 +1,3 @@
+---
+#cacti::database_root_pass: 'root_password'
+#cacti::database_pass: 'cacti_password'
