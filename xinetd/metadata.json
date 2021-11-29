@@ -1,0 +1,21 @@
+{
+  "name": "puppetlabs-xinetd",
+  "version": "3.3.0",
+  "author": "puppetlabs",
+  "summary": "Configures xinetd and exposes the xinetd::service definition for adding new services.",
+  "license": "Apache-2.0",
+  "source": "https://github.com/puppetlabs/puppetlabs-xinetd",
+  "project_page": "https://github.com/puppetlabs/puppetlabs-xinetd",
+  "issues_url": "https://tickets.puppetlabs.com/browse/MODULES",
+  "dependencies": [
+  
+  ],
+  "data_provider": null,
+  "description": "Puppet module to configure xinetd services",
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 4.7.1 < 7.0.0"
+    }
+  ]
+}

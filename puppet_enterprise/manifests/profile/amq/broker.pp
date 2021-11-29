@@ -1,0 +1,40 @@
+# MCollective and Activemq have been removed in 2019.0
+# This is a stub class to warn if the PE Activemq Broker class is still being applied.
+class puppet_enterprise::profile::amq::broker (
+  $brokername                             = undef,
+  $decrease_network_consumer_priority     = true,
+  $duplex                                 = false,
+  $dynamic_only                           = true,
+  $excluded_collectives                   = [],
+  $heap_mb                                = undef,
+  $included_collectives                   = [],
+  $keystore_password                      = undef,
+  $truststore_password                    = undef,
+  $network_ttl                            = undef,
+  $openwire_protocol                      = undef,
+  Optional[Integer] $openwire_port        = undef,
+  $openwire_transport_options             = undef,
+  $queue_conduit_subscriptions            = false,
+  $stomp_protocol                         = undef,
+  $stomp_transport_options                = undef,
+  $stomp_port                             = undef,
+  $stomp_user                             = undef,
+  $stomp_password                         = undef,
+  $topic_conduit_subscriptions            = true,
+  $enable_web_console                     = false,
+  Optional[String] $memory_usage          = undef,
+  Optional[String] $topic_memory_limit    = undef,
+  Optional[String] $queue_memory_limit    = undef,
+  $store_usage                            = '1gb',
+  $temp_usage                             = '1gb',
+  Optional[String] $network_connector_tag = undef,
+  Optional[Variant[String,Array[String]]] $activemq_hubname = undef,
+  $use_dedicated_task_runner              = false,
+  Boolean $enable_gc_logging              = true,
+  Hash    $java_args                      = {},
+) {
+  notify { 'puppet_enterprise::profile::amq::broker-still-applied':
+    message  => 'MCollective and Activemq have been removed from PE 2019.0+, but the puppet_enterprise::profile::amq::broker class is still being applied. Please remove this class from your classification.',
+    loglevel => 'warning',
+  }
+}

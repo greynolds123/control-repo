@@ -1,0 +1,57 @@
+{
+  "name": "camptocamp-nagios",
+  "version": "1.0.37",
+  "author": "Camptocamp",
+  "summary": "Puppet Nagios module",
+  "license": "Apache-2.0",
+  "source": "https://github.com/camptocamp/puppet-nagios",
+  "project_page": "https://github.com/camptocamp/puppet-nagios",
+  "issues_url": "https://github.com/camptocamp/puppet-nagios/issues",
+  "dependencies": [
+    {
+      "name": "camptocamp/selinux",
+      "version_requirement": ">=0.1.0 <1.0.0"
+    },
+    {
+      "name": "puppetlabs/concat",
+      "version_requirement": ">=1.0.0 <2.0.0"
+    },
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">=3.2.0 <5.0.0"
+    }
+  ],
+  "data_provider": null,
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": "3.x"
+    }
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "6",
+        "7",
+        "8"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "12.04",
+        "14.04",
+        "16.04"
+      ]
+    },
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    }
+  ]
+}

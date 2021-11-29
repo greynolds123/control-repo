@@ -1,0 +1,21 @@
+{
+  "name": "puppetlabs-pe_r10k",
+  "version": "2016.2.0",
+  "author": "Puppet Labs",
+  "license": "PE Commercial License",
+  "summary": "A module for managing R10k on Puppet Enterprise",
+  "source": "https://github.com/puppetlabs/puppetlabs-pe_r10k",
+  "tags": ["puppetenterprise", "r10k"],
+  "operatingsystem_support": [
+    {
+    "operatingsystem":"RedHat",
+    "operatingsystemrelease":[ "5.0", "6.0" ]
+    },
+    {
+    "operatingsystem": "Ubuntu",
+    "operatingsystemrelease": [ "12.04", "10.04" ]
+    }
+   ],
+  "dependencies": [
+  ]
+}
