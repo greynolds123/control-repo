@@ -4,6 +4,7 @@
 # TODO(Krzysztof Wilczynski): We probably need to approach numeric values differently ...
 module Puppet::Parser::Functions
   newfunction(:range, :type => :rvalue, :doc => <<-DOC
+<<<<<<< HEAD
     When given range in the form of (start, stop) it will extrapolate a range as
     an array.
 
@@ -37,6 +38,45 @@ module Puppet::Parser::Functions
     iterating a given number of times. Also see the step() function in Puppet for skipping values.
 
         Integer[0, 9].each |$x| { notice($x) } # notices 0, 1, 2, ... 9
+=======
+    @summary
+      When given range in the form of (start, stop) it will extrapolate a range as
+      an array.
+
+    @return
+      the range is extrapolated as an array
+
+    @example **Usage**
+      range("0", "9")
+      Will return: [0,1,2,3,4,5,6,7,8,9]
+
+      range("00", "09")
+      Will return: [0,1,2,3,4,5,6,7,8,9]
+      (Zero padded strings are converted to integers automatically)
+
+      range("a", "c")
+      Will return: ["a","b","c"]
+
+      range("host01", "host10")
+      Will return: ["host01", "host02", ..., "host09", "host10"]
+
+      range("0", "9", "2")
+      Will return: [0,2,4,6,8]
+
+    NB Be explicit in including trailing zeros. Otherwise the underlying ruby function will fail.
+
+    > *Note:*
+      Passing a third argument will cause the generated range to step by that
+      interval, e.g.
+
+    The Puppet Language support Integer and Float ranges by using the type system. Those are suitable for
+    iterating a given number of times.
+
+    @see
+      the step() function in Puppet for skipping values.
+
+     Integer[0, 9].each |$x| { notice($x) } # notices 0, 1, 2, ... 9
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
     DOC
              ) do |arguments|
 
@@ -80,7 +120,11 @@ module Puppet::Parser::Functions
             when '...' then (start...stop) # Exclusive of last element
             end
 
+<<<<<<< HEAD
     result = range.step(step).to_a
+=======
+    result = range.step(step).first(1_000_000).to_a
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 
     return result
   end

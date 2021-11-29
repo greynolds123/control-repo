@@ -3,11 +3,24 @@
 #
 module Puppet::Parser::Functions
   newfunction(:parseyaml, :type => :rvalue, :doc => <<-DOC
+<<<<<<< HEAD
     This function accepts YAML as a string and converts it into the correct
     Puppet structure.
 
     The optional second argument can be used to pass a default value that will
     be returned if the parsing of YAML string have failed.
+=======
+    @summary
+      This function accepts YAML as a string and converts it into the correct
+      Puppet structure.
+
+    @return
+      converted YAML into Puppet structure
+
+    > *Note:*
+      The optional second argument can be used to pass a default value that will
+      be returned if the parsing of YAML string have failed.
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
   DOC
              ) do |arguments|
     raise ArgumentError, 'Wrong number of arguments. 1 or 2 arguments should be provided.' unless arguments.length >= 1

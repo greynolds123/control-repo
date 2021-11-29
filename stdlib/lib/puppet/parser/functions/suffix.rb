@@ -3,6 +3,7 @@
 #
 module Puppet::Parser::Functions
   newfunction(:suffix, :type => :rvalue, :doc => <<-DOC
+<<<<<<< HEAD
     This function applies a suffix to all elements in an array, or to the keys
     in a hash.
 
@@ -16,6 +17,24 @@ module Puppet::Parser::Functions
     function in Puppet. This example does the same as the example above:
 
         ['a', 'b', 'c'].map |$x| { "${x}p" }
+=======
+    @summary
+      This function applies a suffix to all elements in an array, or to the keys
+      in a hash.
+
+    @return
+      Array or Hash with updated elements containing the passed suffix
+
+    @example **Usage**
+
+      suffix(['a','b','c'], 'p')
+      Will return: ['ap','bp','cp']
+
+    > *Note:* that since Puppet 4.0.0 the general way to modify values is in array is by using the map
+    function in Puppet. This example does the same as the example above:
+
+    ```['a', 'b', 'c'].map |$x| { "${x}p" }```
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 
     DOC
              ) do |arguments|

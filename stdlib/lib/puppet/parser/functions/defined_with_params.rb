@@ -3,6 +3,7 @@ require 'puppet/parser/functions'
 
 Puppet::Parser::Functions.newfunction(:defined_with_params,
                                       :type => :rvalue,
+<<<<<<< HEAD
                                       :doc => <<-'DOC'
     Takes a resource reference and an optional hash of attributes.
 
@@ -16,6 +17,27 @@ Puppet::Parser::Functions.newfunction(:defined_with_params,
         if ! defined_with_params(User[dan], {'ensure' => 'present' }) {
           user { 'dan': ensure => present, }
         }
+=======
+                                      :doc => <<-DOC
+    @summary
+      Takes a resource reference and an optional hash of attributes.
+
+    Returns `true` if a resource with the specified attributes has already been added
+    to the catalog, and `false` otherwise.
+
+      ```
+      user { 'dan':
+        ensure => present,
+      }
+
+      if ! defined_with_params(User[dan], {'ensure' => 'present' }) {
+        user { 'dan': ensure => present, }
+      }
+      ```
+
+    @return [Boolean]
+      returns `true` or `false`
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 DOC
                                      ) do |vals|
   reference, params = vals

@@ -3,6 +3,7 @@
 #
 module Puppet::Parser::Functions
   newfunction(:merge, :type => :rvalue, :doc => <<-'DOC') do |args|
+<<<<<<< HEAD
     Merges two or more hashes together and returns the resulting hash.
 
     For example:
@@ -18,6 +19,23 @@ module Puppet::Parser::Functions
     Note that since Puppet 4.0.0 the same merge can be achieved with the + operator.
 
         $merged_hash = $hash1 + $hash2
+=======
+    @summary
+      Merges two or more hashes together and returns the resulting hash.
+
+    @example **Usage**
+      $hash1 = {'one' => 1, 'two', => 2}
+      $hash2 = {'two' => 'dos', 'three', => 'tres'}
+      $merged_hash = merge($hash1, $hash2) # $merged_hash =  {'one' => 1, 'two' => 'dos', 'three' => 'tres'}
+
+    When there is a duplicate key, the key in the rightmost hash will "win."
+
+    @return [Hash]
+      The merged hash
+
+    Note that since Puppet 4.0.0 the same merge can be achieved with the + operator.
+      `$merged_hash = $hash1 + $hash2`
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
     DOC
 
     if args.length < 2

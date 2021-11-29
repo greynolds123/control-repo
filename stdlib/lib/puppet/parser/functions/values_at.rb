@@ -3,7 +3,12 @@
 #
 module Puppet::Parser::Functions
   newfunction(:values_at, :type => :rvalue, :doc => <<-DOC
+<<<<<<< HEAD
     Finds value inside an array based on location.
+=======
+    @summary
+      Finds value inside an array based on location.
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 
     The first argument is the array you want to analyze, and the second element can
     be a combination of:
@@ -12,6 +17,7 @@ module Puppet::Parser::Functions
     * A range in the form of 'start-stop' (eg. 4-9)
     * An array combining the above
 
+<<<<<<< HEAD
     *Examples*:
 
         values_at(['a','b','c'], 2)
@@ -32,6 +38,30 @@ module Puppet::Parser::Functions
         ['a', 'b', 'c', 'd'][1, 2]   # results in ['b', 'c']
         ['a', 'b', 'c', 'd'][2, -1]  # results in ['c', 'd']
         ['a', 'b', 'c', 'd'][1, -2]  # results in ['b', 'c']
+=======
+    @return
+      an array of values identified by location
+
+    @example **Usage**
+
+      values_at(['a','b','c'], 2)
+      Would return ['c']
+
+      values_at(['a','b','c'], ["0-1"])
+      Would return ['a','b']
+
+      values_at(['a','b','c','d','e'], [0, "2-3"])
+      Would return ['a','c','d']
+
+    > *Note:*
+    Since Puppet 4.0.0 it is possible to slice an array with index and count directly in the language.
+    A negative value is taken to be "from the end" of the array:
+
+    `['a', 'b', 'c', 'd'][1, 2]`   results in `['b', 'c']`
+    `['a', 'b', 'c', 'd'][2, -1]`  results in `['c', 'd']`
+    `['a', 'b', 'c', 'd'][1, -2]`  results in `['b', 'c']`
+
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
     DOC
              ) do |arguments|
 

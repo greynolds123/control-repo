@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 # Uses sprintf with named references.
+=======
+# @summary
+#  Uses sprintf with named references.
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 #
 # The first parameter is format string describing how the rest of the parameters in the hash
 # should be formatted. See the documentation for the `Kernel::sprintf` function in Ruby for

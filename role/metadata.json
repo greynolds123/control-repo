@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "GDR-role",
+=======
+  "name": "role",
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
   "version": "0.1.0",
   "author": "Aon",
   "summary": "It provides the roles for the production environments.",
@@ -8,6 +12,7 @@
   "project_page": "https://github.com/greynolds123/control-repo/tree/production/role",
   "issues_url": "https://github.com/greynolds123/control-repo/tree/production/role",
   "dependencies": [
+<<<<<<< HEAD
     {
       "name": "puppetlabs-stdlib",
       "version_requirement": ">= 1.0.0"
@@ -69,3 +74,10 @@
   "template-url": "file:///opt/puppetlabs/pdk/share/cache/pdk-templates.git#1.10.0",
   "template-ref": "1.10.0-0-gbba9ac3"
 }
+=======
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+  ],
+  "data_provider": null
+}
+
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a

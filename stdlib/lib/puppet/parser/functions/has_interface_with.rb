@@ -3,6 +3,7 @@
 #
 module Puppet::Parser::Functions
   newfunction(:has_interface_with, :type => :rvalue, :doc => <<-DOC
+<<<<<<< HEAD
     Returns boolean based on kind and value:
       * macaddress
       * netmask
@@ -15,6 +16,22 @@ module Puppet::Parser::Functions
 
     If no "kind" is given, then the presence of the interface is checked:
     has_interface_with("lo")                        => true
+=======
+    @summary
+      Returns boolean based on kind and value.
+
+    @return
+      boolean values `true` or `false`
+
+    Valid kinds are `macaddress`, `netmask`, `ipaddress` and `network`.
+
+    @example **Usage**
+      has_interface_with("macaddress", "x:x:x:x:x:x") # Returns `false`
+      has_interface_with("ipaddress", "127.0.0.1") # Returns `true`
+
+    @example If no "kind" is given, then the presence of the interface is checked:
+      has_interface_with("lo") # Returns `true`
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
     DOC
              ) do |args|
 

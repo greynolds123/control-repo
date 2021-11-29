@@ -4,7 +4,15 @@
 #
 module Puppet::Parser::Functions
   newfunction(:sort, :type => :rvalue, :doc => <<-DOC
+<<<<<<< HEAD
     Sorts strings and arrays lexically.
+=======
+    @summary
+      Sorts strings and arrays lexically.
+
+    @return
+      sorted string or array
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 
     Note that from Puppet 6.0.0 the same function in Puppet will be used instead of this.
   DOC

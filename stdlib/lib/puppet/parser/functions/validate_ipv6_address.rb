@@ -3,6 +3,7 @@
 #
 module Puppet::Parser::Functions
   newfunction(:validate_ipv6_address, :doc => <<-DOC
+<<<<<<< HEAD
     Validate that all values passed are valid IPv6 addresses.
     Fail compilation if any value fails this check.
 
@@ -17,6 +18,27 @@ module Puppet::Parser::Functions
 
     $some_array = [ true, false, "garbage string", "1.2.3.4" ]
     validate_ipv6_address($some_array)
+=======
+    @summary
+      Validate that all values passed are valid IPv6 addresses.
+      Fail compilation if any value fails this check.
+
+    @return
+      passes when the given values are valid IPv6 addresses or raise an error when they are not and fails compilation
+
+    @example **Usage**
+      The following values will pass:
+
+        $my_ip = "3ffe:505:2"
+        validate_ipv6_address(1)
+        validate_ipv6_address($my_ip)
+        validate_bool("fe80::baf6:b1ff:fe19:7507", $my_ip)
+
+      The following values will fail, causing compilation to abort:
+
+        $some_array = [ true, false, "garbage string", "1.2.3.4" ]
+        validate_ipv6_address($some_array)
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 
     DOC
              ) do |args|

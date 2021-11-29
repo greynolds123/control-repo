@@ -8,7 +8,11 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+<<<<<<< HEAD
     addressable (2.4.0)
+=======
+    addressable (2.8.0)
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
     autoparse (0.3.3)
       addressable (>= 2.3.1)
       extlib (>= 0.9.15)

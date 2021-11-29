@@ -1,4 +1,18 @@
+<<<<<<< HEAD
 Puppet::Functions.create_function(:validate_absolute_path) do
+=======
+# @summary
+#   Validate the string represents an absolute path in the filesystem.
+Puppet::Functions.create_function(:validate_absolute_path) do
+  # @param scope
+  #   The main value that will be passed to the method
+  #
+  # @param args
+  #   Any additional values that are to be passed to the method
+  #
+  # @return [Boolean]
+  #   A boolean value returned from the called function.
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
   dispatch :deprecation_gen do
     param 'Any', :scope
     repeated_param 'Any', :args

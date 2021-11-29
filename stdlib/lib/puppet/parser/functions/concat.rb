@@ -3,6 +3,7 @@
 #
 module Puppet::Parser::Functions
   newfunction(:concat, :type => :rvalue, :doc => <<-DOC
+<<<<<<< HEAD
     Appends the contents of multiple arrays into array 1.
 
     *Example:*
@@ -16,6 +17,25 @@ module Puppet::Parser::Functions
     Note: Since Puppet 4.0 concatenation of arrays and hashes can be done with the + operator.
 
       ['1','2','3'] + ['4','5','6'] + ['7','8','9']
+=======
+    @summary
+      Appends the contents of multiple arrays into array 1.
+
+    @example Example usage
+
+      concat(['1','2','3'],'4') returns ['1','2','3','4']
+      concat(['1','2','3'],'4',['5','6','7']) returns ['1','2','3','4','5','6','7']
+
+    > *Note:*
+      Since Puppet 4.0, you can use the `+`` operator for concatenation of arrays and
+      merge of hashes, and the `<<`` operator for appending:
+
+    `['1','2','3'] + ['4','5','6'] + ['7','8','9']` returns `['1','2','3','4','5','6','7','8','9']`
+    `[1, 2, 3] << 4` returns `[1, 2, 3, 4]`
+    `[1, 2, 3] << [4, 5]` returns `[1, 2, 3, [4, 5]]`
+
+    @return [Array] The single concatenated array
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
   DOC
              ) do |arguments|
 

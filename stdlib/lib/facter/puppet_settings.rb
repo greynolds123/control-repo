@@ -16,7 +16,11 @@ rescue LoadError => e
   load rb_file if File.exist?(rb_file) || raise(e)
 end
 
+<<<<<<< HEAD
 # These will be nil if Puppet is not available.
+=======
+# Facter fact returns the value of the Puppet vardir
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 Facter.add(:puppet_vardir) do
   setcode do
     Facter::Util::PuppetSettings.with_puppet do
@@ -25,6 +29,10 @@ Facter.add(:puppet_vardir) do
   end
 end
 
+<<<<<<< HEAD
+=======
+# Facter fact returns the value of the Puppet environment path
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 Facter.add(:puppet_environmentpath) do
   setcode do
     Facter::Util::PuppetSettings.with_puppet do
@@ -33,6 +41,10 @@ Facter.add(:puppet_environmentpath) do
   end
 end
 
+<<<<<<< HEAD
+=======
+# Facter fact returns the value of the Puppet server
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 Facter.add(:puppet_server) do
   setcode do
     Facter::Util::PuppetSettings.with_puppet do

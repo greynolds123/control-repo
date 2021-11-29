@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Digs into the facts hash using dot-notation
 #
 # Example usage:
@@ -14,6 +15,30 @@
 #     fact('vmware."VRA.version"')
 #
 Puppet::Functions.create_function(:fact) do
+=======
+# @summary
+#   Digs into the facts hash using dot-notation
+#
+# Supports the use of dot-notation for referring to structured facts. If a fact requested
+# does not exist, returns Undef.
+#
+# @example Example usage:
+#     fact('osfamily')
+#     fact('os.architecture')
+#
+# @example Array indexing:
+#     fact('mountpoints."/dev".options.1')
+#
+# @example Fact containing a "." in the name:
+#     fact('vmware."VRA.version"')
+#
+Puppet::Functions.create_function(:fact) do
+  # @param fact_name
+  #   The name of the fact to check
+  #
+  # @return
+  #   All information retrieved on the given fact_name
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
   dispatch :fact do
     param 'String', :fact_name
   end

@@ -3,7 +3,18 @@
 #
 module Puppet::Parser::Functions
   newfunction(:is_ip_address, :type => :rvalue, :doc => <<-DOC
+<<<<<<< HEAD
     Returns true if the string passed to this function is a valid IP address.
+=======
+    @summary
+      **Deprecated:** Returns true if the string passed to this function is a valid IP address.
+
+    @return [Boolean]
+      Returns `true` or `false`
+
+    > **Note:* **Deprecated** Will be removed in a future version of stdlib. See
+    [`validate_legacy`](#validate_legacy).
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
     DOC
              ) do |arguments|
 

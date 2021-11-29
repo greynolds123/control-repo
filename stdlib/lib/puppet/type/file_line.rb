@@ -1,5 +1,6 @@
 Puppet::Type.newtype(:file_line) do
   desc <<-DOC
+<<<<<<< HEAD
     Ensures that a given line is contained within a file.  The implementation
     matches the full line, including whitespace at the beginning and end.  If
     the line is not contained in the given file, Puppet will append the line to
@@ -29,23 +30,73 @@ Puppet::Type.newtype(:file_line) do
           line   => 'export HTTP_PROXY=http://squid.puppetlabs.vm:3128',
           match  => '^export\ HTTP_PROXY\=',
         }
+=======
+    @summary
+      Ensures that a given line is contained within a file.
+
+    The implementation matches the full line, including whitespace at the
+    beginning and end.  If the line is not contained in the given file, Puppet
+    will append the line to the end of the file to ensure the desired state.
+    Multiple resources may be declared to manage multiple lines in the same file.
+
+    * Ensure Example
+    ```
+    file_line { 'sudo_rule':
+      path => '/etc/sudoers',
+      line => '%sudo ALL=(ALL) ALL',
+    }
+
+    file_line { 'sudo_rule_nopw':
+      path => '/etc/sudoers',
+      line => '%sudonopw ALL=(ALL) NOPASSWD: ALL',
+    }
+    ```
+    In this example, Puppet will ensure both of the specified lines are
+    contained in the file /etc/sudoers.
+
+    * Match Example
+
+    ```
+    file_line { 'bashrc_proxy':
+      ensure => present,
+      path   => '/etc/bashrc',
+      line   => 'export HTTP_PROXY=http://squid.puppetlabs.vm:3128',
+      match  => '^export\ HTTP_PROXY\=',
+    }
+    ```
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 
     In this code example match will look for a line beginning with export
     followed by HTTP_PROXY and replace it with the value in line.
 
+<<<<<<< HEAD
     Examples With `ensure => absent`:
+=======
+    * Examples With `ensure => absent`:
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 
     This type has two behaviors when `ensure => absent` is set.
 
     One possibility is to set `match => ...` and `match_for_absence => true`,
     as in the following example:
 
+<<<<<<< HEAD
         file_line { 'bashrc_proxy':
           ensure            => absent,
           path              => '/etc/bashrc',
           match             => '^export\ HTTP_PROXY\=',
           match_for_absence => true,
         }
+=======
+    ```
+    file_line { 'bashrc_proxy':
+      ensure            => absent,
+      path              => '/etc/bashrc',
+      match             => '^export\ HTTP_PROXY\=',
+      match_for_absence => true,
+    }
+    ```
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 
     In this code example match will look for a line beginning with export
     followed by HTTP_PROXY and delete it.  If multiple lines match, an
@@ -57,6 +108,7 @@ Puppet::Type.newtype(:file_line) do
     The second way of using `ensure => absent` is to specify a `line => ...`,
     and no match:
 
+<<<<<<< HEAD
         file_line { 'bashrc_proxy':
           ensure => absent,
           path   => '/etc/bashrc',
@@ -76,6 +128,32 @@ Puppet::Type.newtype(:file_line) do
           match    => '^*lock:',
           encoding => "iso-8859-1",
         }
+=======
+    ```
+    file_line { 'bashrc_proxy':
+      ensure => absent,
+      path   => '/etc/bashrc',
+      line   => 'export HTTP_PROXY=http://squid.puppetlabs.vm:3128',
+    }
+    ```
+
+    > *Note:*
+    When ensuring lines are absent this way, the default behavior
+    this time is to always remove all lines matching, and this behavior
+    can't be disabled.
+
+    * Encoding example:
+
+    ```
+    file_line { "XScreenSaver":
+      ensure   => present,
+      path     => '/root/XScreenSaver',
+      line     => "*lock: 10:00:00",
+      match    => '^*lock:',
+      encoding => "iso-8859-1",
+    }
+    ```
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 
     Files with special characters that are not valid UTF-8 will give the
     error message "invalid byte sequence in UTF-8".  In this case, determine
@@ -88,6 +166,10 @@ Puppet::Type.newtype(:file_line) do
   DOC
 
   ensurable do
+<<<<<<< HEAD
+=======
+    desc 'Manage the state of this type.'
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
     defaultvalues
     defaultto :present
   end
@@ -97,6 +179,7 @@ Puppet::Type.newtype(:file_line) do
   end
 
   newparam(:match) do
+<<<<<<< HEAD
     desc 'An optional ruby regular expression to run against existing lines in the file.' \
          ' If a match is found, we replace that line rather than adding a new line.' \
          ' A regex comparison is performed against the line value and if it does not' \
@@ -108,19 +191,42 @@ Puppet::Type.newtype(:file_line) do
          ' If set to true and match is set, the line that matches match will be deleted.' \
          ' If set to false (the default), match is ignored when ensure => absent.' \
          ' When `ensure => present`, match_for_absence is ignored.'
+=======
+    desc 'An optional ruby regular expression to run against existing lines in the file.
+          If a match is found, we replace that line rather than adding a new line.
+          A regex comparison is performed against the line value and if it does not
+          match an exception will be raised.'
+  end
+
+  newparam(:match_for_absence) do
+    desc 'An optional value to determine if match should be applied when ensure => absent.
+          If set to true and match is set, the line that matches match will be deleted.
+          If set to false (the default), match is ignored when ensure => absent.
+          When `ensure => present`, match_for_absence is ignored.'
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
     newvalues(true, false)
     defaultto false
   end
 
   newparam(:multiple) do
+<<<<<<< HEAD
     desc 'An optional value to determine if match can change multiple lines.' \
          ' If set to false, an exception will be raised if more than one line matches'
+=======
+    desc 'An optional value to determine if match can change multiple lines.
+          If set to false, an exception will be raised if more than one line matches'
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
     newvalues(true, false)
   end
 
   newparam(:after) do
+<<<<<<< HEAD
     desc 'An optional value used to specify the line after which we will add any new lines. (Existing lines are added in place)' \
          ' This is also takes a regex.'
+=======
+    desc 'An optional value used to specify the line after which we will add any new lines. (Existing lines are added in place)
+          This is also takes a regex.'
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
   end
 
   # The line property never changes; the type only ever performs a create() or
@@ -172,7 +278,10 @@ Puppet::Type.newtype(:file_line) do
   autorequire(:file) do
     self[:path]
   end
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
   validate do
     if self[:replace_all_matches_not_matching_line].to_s == 'true' && self[:multiple].to_s == 'false'
       raise(Puppet::Error, 'multiple must be true when replace_all_matches_not_matching_line is true')

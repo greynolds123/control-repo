@@ -2,6 +2,7 @@
 # validate_String.rb
 #
 module Puppet::Parser::Functions
+<<<<<<< HEAD
   newfunction(:validate_string, :doc => <<-'DOC') do |args|
     Validate that all passed values are string data structures. Abort catalog
     compilation if any value fails this check.
@@ -25,6 +26,36 @@ module Puppet::Parser::Functions
 
     DOC
 
+=======
+  newfunction(:validate_string, :doc => <<-DOC
+    @summary
+      Validate that all passed values are string data structures
+
+    @return
+      Validate that all passed values are string data structures. Failed
+      compilation if any value fails this check.
+
+    @example **Usage**
+      The following values will pass:
+
+          $my_string = "one two"
+          validate_string($my_string, 'three')
+
+      The following values will fail, causing compilation to abort:
+
+          validate_string(true)
+          validate_string([ 'some', 'array' ])
+    > *Note:*
+    Validate_string(undef) will not fail in this version of the
+    functions API (incl. current and future parser). Instead, use:
+    ```
+      if $var == undef {
+         fail('...')
+        }
+    ```
+    DOC
+             ) do |args|
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
     function_deprecation([:validate_string, 'This method is deprecated, please use the stdlib validate_legacy function,
                             with Stdlib::Compat::String. There is further documentation for validate_legacy function in the README.'])
 

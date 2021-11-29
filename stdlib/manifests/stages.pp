@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Class: stdlib::stages
 #
 # This class manages a standard set of run stages for Puppet. It is managed by
@@ -5,6 +6,16 @@
 #
 # The high level stages are (in order):
 #
+=======
+# @summary
+#   This class manages a standard set of run stages for Puppet. It is managed by
+#   the stdlib class, and should not be declared independently.
+#
+# Declares various run-stages for deploying infrastructure,
+# language runtimes, and application layers.
+# 
+# The high level stages are (in order):
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 #  * setup
 #  * main
 #  * runtime
@@ -14,6 +25,7 @@
 #  * deploy_app
 #  * deploy
 #
+<<<<<<< HEAD
 # Parameters: none
 #
 # Actions:
@@ -29,6 +41,13 @@
 #    include ::stdlib
 #    class { java: stage => 'runtime' }
 #  }
+=======
+# @example
+#   node default {
+#     include ::stdlib
+#     class { java: stage => 'runtime' }
+#   }
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 #
 class stdlib::stages {
 

@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 # Returns the type when passed a value.
+=======
+# @summary
+#   Returns the type of the passed value.
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 #
 # @example how to compare values' types
 #   # compare the types of two values
@@ -13,6 +18,13 @@
 # The built-in type() function in puppet is generally preferred over this function
 # this function is provided for backwards compatibility.
 Puppet::Functions.create_function(:type_of) do
+<<<<<<< HEAD
+=======
+  # @return [String]
+  #   the type of the passed value
+  #
+  # @param value
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
   def type_of(value)
     Puppet::Pops::Types::TypeCalculator.infer_set(value)
   end

@@ -2,6 +2,7 @@
 # validate_absolute_path.rb
 #
 module Puppet::Parser::Functions
+<<<<<<< HEAD
   newfunction(:validate_absolute_path, :doc => <<-'DOC') do |args|
     Validate the string represents an absolute path in the filesystem.  This function works
     for windows and unix style paths.
@@ -27,6 +28,38 @@ module Puppet::Parser::Functions
         $undefined = undef
         validate_absolute_path($undefined)
 
+=======
+  newfunction(:validate_absolute_path, :doc => <<-DOC) do |args|
+    @summary
+      Validate the string represents an absolute path in the filesystem.  This function works
+      for windows and unix style paths.
+
+    @return
+      passes when the string is an absolute path or raise an error when it is not and fails compilation
+
+    @example **Usage**
+
+      The following values will pass:
+
+          $my_path = 'C:/Program Files (x86)/Puppet Labs/Puppet'
+          validate_absolute_path($my_path)
+          $my_path2 = '/var/lib/puppet'
+          validate_absolute_path($my_path2)
+          $my_path3 = ['C:/Program Files (x86)/Puppet Labs/Puppet','C:/Program Files/Puppet Labs/Puppet']
+          validate_absolute_path($my_path3)
+          $my_path4 = ['/var/lib/puppet','/usr/share/puppet']
+          validate_absolute_path($my_path4)
+
+      The following values will fail, causing compilation to abort:
+
+          validate_absolute_path(true)
+          validate_absolute_path('../var/lib/puppet')
+          validate_absolute_path('var/lib/puppet')
+          validate_absolute_path([ 'var/lib/puppet', '/var/foo' ])
+          validate_absolute_path([ '/var/lib/puppet', 'var/foo' ])
+          $undefined = undef
+          validate_absolute_path($undefined)
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
     DOC
 
     require 'puppet/util'

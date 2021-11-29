@@ -60,8 +60,13 @@ class pe_repo (
   # or want to prevent people from managing it. We just care about the
   # packages/public/ directory.
   exec { 'create repo_dir':
+<<<<<<< HEAD
     command => "mkdir -p /opt/puppetlabs/server/data",
     creates => "${repo_dir}/packages",
+=======
+    command => "mkdir -p ${repo_dir}",
+    creates => $repo_dir,
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
     path    => '/sbin/:/bin/',
   }
 

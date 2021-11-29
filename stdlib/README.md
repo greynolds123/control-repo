@@ -2,6 +2,7 @@
 
 #### Table of Contents
 
+<<<<<<< HEAD
 1. [Module Description - What the module does and why it is useful](#module-description)
 1. [Setup - The basics of getting started with stdlib](#setup)
 1. [Usage - Configuration options and additional functionality](#usage)
@@ -19,6 +20,26 @@
 ## Module Description
 
 This module provides a standard library of resources for Puppet modules. Puppet modules make heavy use of this standard library. The stdlib module adds the following resources to Puppet:
+=======
+1. [Overview](#overview)
+1. [Module Description](#module-description)
+1. [Setup](#setup)
+1. [Usage](#usage)
+1. [Reference](#reference)
+    1. [Data Types](#data-types)
+    1. [Facts](#facts)
+1. [Limitations](#limitations)
+1. [Development](#development)
+1. [Contributors](#contributors)
+
+## Overview
+
+This module provides a standard library of resources for Puppet modules.
+
+## Module Description
+
+Puppet modules make heavy use of this standard library. The stdlib module adds the following resources to Puppet:
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 
  * Stages
  * Facts
@@ -29,14 +50,22 @@ This module provides a standard library of resources for Puppet modules. Puppet 
 
 > *Note:* As of version 3.7, Puppet Enterprise no longer includes the stdlib module. If you're running Puppet Enterprise, you should install the most recent release of stdlib for compatibility with Puppet modules.
 
+<<<<<<< HEAD
 <a id="setup"></a>
+=======
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 ## Setup
 
 [Install](https://puppet.com/docs/puppet/latest/modules_installing.html) the stdlib module to add the functions, facts, and resources of this standard library to Puppet.
 
+<<<<<<< HEAD
 If you are authoring a module that depends on stdlib, be sure to [specify dependencies](https://puppet.com/docs/puppet/latest/modules_metadata.html#specifying-dependencies-in-modules) in your metadata.json.
 
 <a id="usage"></a>
+=======
+If you are authoring a module that depends on stdlib, be sure to [specify dependencies](https://puppet.com/docs/puppet/latest/modules_installing.html) in your metadata.json.
+
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 ## Usage
 
 Most of stdlib's features are automatically loaded by Puppet. To use standardized run stages in Puppet, declare this class in your manifest with `include stdlib`.
@@ -63,6 +92,7 @@ node default {
 }
 ```
 
+<<<<<<< HEAD
 <a id="reference"></a>
 ## Reference
 
@@ -277,6 +307,11 @@ Default value: `true`.
 Replaces all lines matched by `match` parameter, even if `line` already exists in the file.
 
 Default value: `false`.
+=======
+## Reference
+
+For information on the classes and types, see the [REFERENCE.md](https://github.com/puppetlabs/puppetlabs-stdlib/blob/master/REFERENCE.md).
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 
 <a id="data-types"></a>
 ### Data types
@@ -670,6 +705,7 @@ Match an IPv6 address which may contain `::` used to compress zeros as documente
 Match an IPv6 address in the CIDR format. It will only match if the address contains an address prefix (for example, it will match   'FF01:0:0:0:0:0:0:101/32', 'FF01::101/60', '::/0',
 but not 'FF01:0:0:0:0:0:0:101', 'FF01::101', '::').
 
+<<<<<<< HEAD
 <a id="facts"></a>
 ### Facts
 
@@ -3162,21 +3198,130 @@ A negative value is taken to be "from the end" of the array, for example:
 Takes one element from first array given and merges corresponding elements from second array given. This generates a sequence of n-element arrays, where *n* is one more than the count of arguments. For example, `zip(['1','2','3'],['4','5','6'])` results in ["1", "4"], ["2", "5"], ["3", "6"]. *Type*: rvalue.
 
 <a id="limitations"></a>
+=======
+#### `Stdlib::ObjectStore`
+
+Matches cloud object store uris.
+
+Acceptable input example:
+
+```shell
+s3://mybucket/path/to/file
+
+gs://bucket/file
+
+```
+Valid values: cloud object store uris.
+
+
+#### `Stdlib::ObjectStore::GSUri`
+
+Matches Google Cloud object store uris.
+
+Acceptable input example:
+
+```shell
+
+gs://bucket/file
+
+gs://bucket/path/to/file
+
+```
+Valid values: Google Cloud object store uris.
+
+
+#### `Stdlib::ObjectStore::S3Uri`
+
+Matches Amazon Web Services S3 object store uris.
+
+Acceptable input example:
+
+```shell
+s3://bucket/file
+
+s3://bucket/path/to/file
+
+```
+Valid values: Amazon Web Services S3 object store uris.
+
+#### `Stdlib::Syslogfacility`
+
+An enum that defines all syslog facilities defined in [RFC5424](https://tools.ietf.org/html/rfc5424). This is based on work in the [voxpupuli/nrpe](https://github.com/voxpupuli/puppet-nrpe/commit/5700fd4f5bfc3e237195c8833039f9ed1045cd6b) module.
+
+<a id="facts"></a>
+### Facts
+
+#### `package_provider`
+
+Returns the default provider Puppet uses to manage packages on this system.
+
+#### `is_pe`
+
+Returns whether Puppet Enterprise is installed. Does not report anything on platforms newer than PE 3.x.
+
+#### `pe_version`
+
+Returns the version of Puppet Enterprise installed. Does not report anything on platforms newer than PE 3.x.
+
+#### `pe_major_version`
+
+Returns the major version Puppet Enterprise that is installed. Does not report anything on platforms newer than PE 3.x.
+
+#### `pe_minor_version`
+
+Returns the minor version of Puppet Enterprise that is installed. Does not report anything on platforms newer than PE 3.x.
+
+#### `pe_patch_version`
+
+Returns the patch version of Puppet Enterprise that is installed.
+
+#### `puppet_vardir`
+
+Returns the value of the Puppet vardir setting for the node running Puppet or Puppet agent.
+
+#### `puppet_environmentpath`
+
+Returns the value of the Puppet environment path settings for the node running Puppet or Puppet agent.
+
+#### `puppet_server`
+
+Returns the Puppet agent's `server` value, which is the hostname of the Puppet master with which the agent should communicate.
+
+#### `root_home`
+
+Determines the root home directory.
+
+Determines the root home directory, which depends on your operating system. Generally this is '/root'.
+
+#### `service_provider`
+
+Returns the default provider Puppet uses to manage services on this system
+
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 ## Limitations
 
 As of Puppet Enterprise 3.7, the stdlib module is no longer included in PE. PE users should install the most recent release of stdlib for compatibility with Puppet modules.
 
 For an extensive list of supported operating systems, see [metadata.json](https://github.com/puppetlabs/puppetlabs-stdlib/blob/master/metadata.json)
 
+<<<<<<< HEAD
 <a id="development"></a>
 ## Development
 
 Puppet modules on the Puppet Forge are open projects, and community contributions are essential for keeping them great. We can’t access the huge number of platforms and myriad hardware, software, and deployment configurations that Puppet is intended to serve. We want to keep it as easy as possible to contribute changes so that our modules work in your environment. There are a few guidelines that we need contributors to follow so that we can have a chance of keeping on top of things. For more information, see our [module contribution guide](https://docs.puppet.com/forge/contributing.html).
+=======
+## Development
+
+Puppet modules on the Puppet Forge are open projects, and community contributions are essential for keeping them great. We can’t access the huge number of platforms and myriad hardware, software, and deployment configurations that Puppet is intended to serve. We want to keep it as easy as possible to contribute changes so that our modules work in your environment. There are a few guidelines that we need contributors to follow so that we can have a chance of keeping on top of things. For more information, see our [module contribution guide](https://github.com/puppetlabs/puppetlabs-stdlib/blob/master/CONTRIBUTING.md).
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 
 To report or research a bug with any part of this module, please go to
 [http://tickets.puppetlabs.com/browse/MODULES](http://tickets.puppetlabs.com/browse/MODULES).
 
+<<<<<<< HEAD
 <a id="contributors"></a>
+=======
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 ## Contributors
 
 The list of contributors can be found at: [https://github.com/puppetlabs/puppetlabs-stdlib/graphs/contributors](https://github.com/puppetlabs/puppetlabs-stdlib/graphs/contributors).

@@ -3,6 +3,7 @@
 #
 module Puppet::Parser::Functions
   newfunction(:union, :type => :rvalue, :doc => <<-DOC
+<<<<<<< HEAD
     This function returns a union of two or more arrays.
 
     *Examples:*
@@ -10,6 +11,17 @@ module Puppet::Parser::Functions
         union(["a","b","c"],["b","c","d"])
 
     Would return: ["a","b","c","d"]
+=======
+    @summary
+      This function returns a union of two or more arrays.
+
+    @return
+      a unionized array of two or more arrays
+    @example **Usage**
+
+      union(["a","b","c"],["b","c","d"])
+      Would return: ["a","b","c","d"]
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
     DOC
              ) do |arguments|
 

@@ -4,6 +4,7 @@
 #
 module Puppet::Parser::Functions
   newfunction(:strftime, :type => :rvalue, :doc => <<-DOC
+<<<<<<< HEAD
     This function returns formatted time.
 
     Note that since Puppet 4.8.0 the function with the same name in Puppet will be used instead of this
@@ -20,6 +21,23 @@ module Puppet::Parser::Functions
         strftime("%Y-%m-%d")
 
     *Format meaning:*
+=======
+    @summary
+      This function returns formatted time.
+
+    @return
+      converted time according to the directives in the given format string
+
+    > *Note:* that since Puppet 4.8.0 the function with the same name in Puppet will be used instead of this
+    function. It also supports the Timestamp and Timespan data types in the Puppet language.
+
+    @example **Usage**
+
+      To return the time since epoch: strftime("%s")
+      To return the date: strftime("%Y-%m-%d")
+
+    **Format meaning:**
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 
         %a - The abbreviated weekday name (``Sun'')
         %A - The  full  weekday  name (``Sunday'')

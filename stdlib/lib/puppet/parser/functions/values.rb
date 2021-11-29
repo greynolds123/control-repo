@@ -3,6 +3,7 @@
 #
 module Puppet::Parser::Functions
   newfunction(:values, :type => :rvalue, :doc => <<-DOC
+<<<<<<< HEAD
     When given a hash this function will return the values of that hash.
 
     *Examples:*
@@ -21,6 +22,29 @@ module Puppet::Parser::Functions
     Note: from Puppet 5.5.0, the compatible function with the same name in Puppet core
     will be used instead of this function.
     DOC
+=======
+    @summary
+      When given a hash this function will return the values of that hash.
+
+    @return
+      array of values
+
+    @example **Usage**
+      $hash = {
+        'a' => 1,
+        'b' => 2,
+        'c' => 3,
+      }
+      values($hash)
+
+      This example would return: ```[1,2,3]```
+
+    > *Note:*
+    From Puppet 5.5.0, the compatible function with the same name in Puppet core
+    will be used instead of this function.
+
+  DOC
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
              ) do |arguments|
 
     raise(Puppet::ParseError, "values(): Wrong number of arguments given (#{arguments.size} for 1)") if arguments.empty?

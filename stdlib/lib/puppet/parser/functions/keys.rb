@@ -3,10 +3,21 @@
 #
 module Puppet::Parser::Functions
   newfunction(:keys, :type => :rvalue, :doc => <<-DOC
+<<<<<<< HEAD
     Returns the keys of a hash as an array.
 
     Note: from Puppet 5.5.0, the compatible function with the same name in Puppet core
     will be used instead of this function.
+=======
+    @summary
+      **Deprecated:** Returns the keys of a hash as an array.
+
+    @return [Array]
+      An array containing each of the hashes key values.
+
+    > **Note:** **Deprecated** from Puppet 5.5.0, the built-in [`keys`](https://puppet.com/docs/puppet/latest/function.html#keys)
+    function will be used instead of this function.
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
     DOC
              ) do |arguments|
 

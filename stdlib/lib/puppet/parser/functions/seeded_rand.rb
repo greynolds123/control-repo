@@ -6,7 +6,19 @@ Puppet::Parser::Functions.newfunction(
   :arity => 2,
   :type => :rvalue,
   :doc => <<-DOC
+<<<<<<< HEAD
     Usage: `seeded_rand(MAX, SEED)`. MAX must be a positive integer; SEED is any string.
+=======
+    @summary
+      Generates a random whole number greater than or equal to 0 and less than MAX, using the value of SEED for repeatable randomness.
+
+    @return
+      random number greater than or equal to 0 and less than MAX
+
+    @example **Usage:**
+      seeded_rand(MAX, SEED).
+      MAX must be a positive integer; SEED is any string.
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 
     Generates a random whole number greater than or equal to 0 and less
     than MAX, using the value of SEED for repeatable randomness.  If SEED

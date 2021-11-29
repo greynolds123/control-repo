@@ -3,6 +3,7 @@
 #
 module Puppet::Parser::Functions
   newfunction(:validate_domain_name, :doc => <<-DOC
+<<<<<<< HEAD
     Validate that all values passed are syntactically correct domain names.
     Fail compilation if any value fails this check.
 
@@ -20,6 +21,30 @@ module Puppet::Parser::Functions
         validate_domain_name('-foo.example.com')
         validate_domain_name('www.example.2com')
 
+=======
+    @summary
+      Validate that all values passed are syntactically correct domain names.
+      Fail compilation if any value fails this check.
+
+    @return
+      passes when the given values are syntactically correct domain names or raise an error when they are not and fails compilation
+
+    @example **Usage**
+
+      The following values will pass:
+
+          $my_domain_name = 'server.domain.tld'
+          validate_domain_name($my_domain_name)
+          validate_domain_name('domain.tld', 'puppet.com', $my_domain_name)
+
+      The following values will fail, causing compilation to abort:
+
+          validate_domain_name(1)
+          validate_domain_name(true)
+          validate_domain_name('invalid domain')
+          validate_domain_name('-foo.example.com')
+          validate_domain_name('www.example.2com')
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
     DOC
              ) do |args|
 

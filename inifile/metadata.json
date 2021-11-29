@@ -1,6 +1,10 @@
 {
   "name": "puppetlabs-inifile",
+<<<<<<< HEAD
   "version": "3.0.0",
+=======
+  "version": "4.0.0",
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
   "author": "puppetlabs",
   "summary": "Resource types for managing settings in INI files",
   "license": "Apache-2.0",
@@ -10,7 +14,11 @@
   "dependencies": [
     {
       "name": "puppetlabs/translate",
+<<<<<<< HEAD
       "version_requirement": ">= 1.0.0 < 2.0.0"
+=======
+      "version_requirement": ">= 1.0.0 < 3.0.0"
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
     }
   ],
   "data_provider": null,
@@ -20,7 +28,12 @@
       "operatingsystemrelease": [
         "5",
         "6",
+<<<<<<< HEAD
         "7"
+=======
+        "7",
+        "8"
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
       ]
     },
     {
@@ -58,13 +71,21 @@
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
         "8",
+<<<<<<< HEAD
         "9"
+=======
+        "9",
+        "10"
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
       ]
     },
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
+<<<<<<< HEAD
         "14.04",
+=======
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
         "16.04",
         "18.04"
       ]
@@ -82,6 +103,10 @@
         "2008 R2",
         "2012 R2",
         "2016",
+<<<<<<< HEAD
+=======
+        "2019",
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
         "10"
       ]
     },
@@ -101,6 +126,11 @@
     }
   ],
   "template-url": "https://github.com/puppetlabs/pdk-templates#master",
+<<<<<<< HEAD
   "template-ref": "heads/master-0-gf778803",
   "pdk-version": "1.10.0"
+=======
+  "template-ref": "heads/master-0-g0b5b39b",
+  "pdk-version": "1.14.0"
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 }

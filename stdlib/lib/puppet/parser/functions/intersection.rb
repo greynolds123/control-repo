@@ -3,12 +3,24 @@
 #
 module Puppet::Parser::Functions
   newfunction(:intersection, :type => :rvalue, :doc => <<-DOC
+<<<<<<< HEAD
     This function returns an array of the intersection of two.
 
     *Examples:*
 
         intersection(["a","b","c"],["b","c","d"])  # returns ["b","c"]
         intersection(["a","b","c"],[1,2,3,4])      # returns [] (true, when evaluated as a Boolean)
+=======
+    @summary
+      This function returns an array of the intersection of two.
+
+    @return
+      an array of the intersection of two.
+
+    @example Example Usage:
+      intersection(["a","b","c"],["b","c","d"])  # returns ["b","c"]
+      intersection(["a","b","c"],[1,2,3,4])      # returns [] (true, when evaluated as a Boolean)
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
     DOC
              ) do |arguments|
 

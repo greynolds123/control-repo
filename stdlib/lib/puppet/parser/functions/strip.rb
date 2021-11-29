@@ -3,6 +3,7 @@
 #
 module Puppet::Parser::Functions
   newfunction(:strip, :type => :rvalue, :doc => <<-DOC
+<<<<<<< HEAD
     This function removes leading and trailing whitespace from a string or from
     every string inside an array.
 
@@ -13,6 +14,21 @@ module Puppet::Parser::Functions
     Would result in: "aaa"
 
     Note: from Puppet 6.0.0, the compatible function with the same name in Puppet core
+=======
+    @summary
+      This function removes leading and trailing whitespace from a string or from
+      every string inside an array.
+
+    @return
+      String or Array converted
+
+    @example **Usage**
+
+      strip("    aaa   ")
+      Would result in: "aaa"
+
+    > *Note:*: from Puppet 6.0.0, the compatible function with the same name in Puppet core
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
     will be used instead of this function.
     DOC
              ) do |arguments|

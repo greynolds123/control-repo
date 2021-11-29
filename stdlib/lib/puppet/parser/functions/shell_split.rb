@@ -4,7 +4,15 @@ require 'shellwords'
 #
 module Puppet::Parser::Functions
   newfunction(:shell_split, :type => :rvalue, :doc => <<-DOC
+<<<<<<< HEAD
     Splits a string into an array of tokens in the same way the Bourne shell does.
+=======
+    @summary
+      Splits a string into an array of tokens in the same way the Bourne shell does.
+
+    @return
+      array of tokens
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 
     This function behaves the same as ruby's Shellwords.shellsplit() function
   DOC

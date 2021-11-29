@@ -4,6 +4,7 @@
 Puppet::Parser::Functions.newfunction(
   :fqdn_rotate,
   :type => :rvalue,
+<<<<<<< HEAD
   :doc => "Usage: `fqdn_rotate(VALUE, [SEED])`. VALUE is required and
   must be an array or a string. SEED is optional and may be any number
   or string.
@@ -13,6 +14,21 @@ Puppet::Parser::Functions.newfunction(
   get a different random rotation from this function, but a given node's
   result will be the same every time unless its hostname changes.) Adding
   a SEED can be useful if you need more than one unrelated rotation.",
+=======
+  :doc => <<-DOC
+  @summary
+    Rotates an array or string a random number of times, combining the `$fqdn` fact
+    and an optional seed for repeatable randomness.
+
+  @return
+    rotated array or string
+
+  @example Example Usage:
+    fqdn_rotate(['a', 'b', 'c', 'd'])
+    fqdn_rotate('abcd')
+    fqdn_rotate([1, 2, 3], 'custom seed')
+  DOC
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 ) do |args|
 
   raise(Puppet::ParseError, "fqdn_rotate(): Wrong number of arguments given (#{args.size} for 1)") if args.empty?

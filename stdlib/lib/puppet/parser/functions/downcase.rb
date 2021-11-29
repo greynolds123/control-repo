@@ -4,10 +4,24 @@
 #
 module Puppet::Parser::Functions
   newfunction(:downcase, :type => :rvalue, :doc => <<-DOC
+<<<<<<< HEAD
     Converts the case of a string or all strings in an array to lower case.
 
     Note: from Puppet 6.0.0, the compatible function with the same name in Puppet core
     will be used instead of this function.
+=======
+    @summary
+      **Deprecated:** Converts the case of a string or all strings in an array to lower case.
+
+    > *Note:* **Deprecated** from Puppet 6.0.0, this function has been replaced with a
+    built-in [`downcase`](https://puppet.com/docs/puppet/latest/function.html#downcase) function.
+    >
+    This function is an implementation of a Ruby class and might not be UTF8 compatible.
+    To ensure compatibility, use this function with Ruby 2.4.0 or greater.
+
+    @return [String] The converted String, if it was a String that was given
+    @return [Array[String]] The converted Array, if it was a Array that was given
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
   DOC
              ) do |arguments|
 

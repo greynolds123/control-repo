@@ -3,6 +3,7 @@
 #
 module Puppet::Parser::Functions
   newfunction(:reject, :type => :rvalue, :doc => <<-DOC) do |args|
+<<<<<<< HEAD
     This function searches through an array and rejects all elements that match
     the provided regular expression.
 
@@ -18,6 +19,24 @@ module Puppet::Parser::Functions
     equivalence of the reject() function:
 
         ['aaa','bbb','ccc','aaaddd'].filter |$x| { $x !~ /aaa/ }
+=======
+    @summary
+      This function searches through an array and rejects all elements that match
+      the provided regular expression.
+
+    @return
+      an array containing all the elements which doesn'' match the provided regular expression
+
+    @example **Usage**
+
+      reject(['aaa','bbb','ccc','aaaddd'], 'aaa')
+
+      Would return: ['bbb','ccc']
+
+    > *Note:*
+    Since Puppet 4.0.0 the same is in general done with the filter function. Here is the equivalence of the reject() function:
+    ['aaa','bbb','ccc','aaaddd'].filter |$x| { $x !~ /aaa/ }
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
 DOC
 
     if args.size != 2

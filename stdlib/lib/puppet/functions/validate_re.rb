@@ -1,4 +1,23 @@
+<<<<<<< HEAD
 Puppet::Functions.create_function(:validate_re) do
+=======
+# @summary
+#  Perform validation of a string against one or more regular
+#  expressions.
+#
+Puppet::Functions.create_function(:validate_re) do
+  # @param scope
+  #   The main value that will be passed to the method
+  #
+  # @param args
+  #   Any additional values that are to be passed to the method
+  #   The first argument of this function should be a string to
+  #   test, and the second argument should be a stringified regular expression
+  #   (without the // delimiters) or an array of regular expressions
+  #
+  # @return [Boolean]
+  #   `true` or `false` returned from the called function.
+>>>>>>> 3e0569df506721e4616112328527bfb8431b063a
   dispatch :deprecation_gen do
     param 'Any', :scope
     repeated_param 'Any', :args
