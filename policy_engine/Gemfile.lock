@@ -9,7 +9,7 @@ GEM
       multi_json (>= 1.0.0)
     aws-sdk (1.42.0)
       json (~> 1.4)
-      nokogiri (>= 1.4.4)
+      nokogiri (>= 1.13.3)
     beaker (1.21.0)
       aws-sdk (= 1.42.0)
       blimpy (~> 0.6)
@@ -23,7 +23,7 @@ GEM
       mime-types (~> 1.25)
       net-scp (~> 1.1)
       net-ssh (~> 2.6)
-      nokogiri (~> 1.5.10)
+      nokogiri (~> 1.13.3)
       rbvmomi (= 1.8.1)
       unf (~> 0.1)
     beaker-rspec (3.0.0)
@@ -65,7 +65,7 @@ GEM
       fog-core (~> 1.22)
       fog-json
       ipaddress (~> 0.5)
-      nokogiri (~> 1.5, >= 1.5.11)
+      nokogiri (~> 1.5, >= 1.13.3)
     fog-brightbox (0.10.1)
       fog-core (~> 1.22)
       fog-json
@@ -109,14 +109,14 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.2)
-    nokogiri (1.5.11)
+    nokogiri (1.13.3)
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
     rbvmomi (1.8.1)
       builder
-      nokogiri (>= 1.4.1)
+      nokogiri (>= 1.13.3)
       trollop
     retriable (2.1.0)
     rspec (2.99.0)
