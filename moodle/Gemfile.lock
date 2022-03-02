@@ -17,7 +17,7 @@ GEM
       aws-sdk-v1 (= 1.66.0)
     aws-sdk-v1 (1.66.0)
       json (~> 1.4)
-      nokogiri (>= 1.4.4)
+      nokogiri (>= 1.13.3)
     beaker (2.31.0)
       aws-sdk (~> 1.57)
       beaker-answers (~> 0.0)
@@ -90,7 +90,7 @@ GEM
       fog-voxel
       fog-xml (~> 0.1.1)
       ipaddress (~> 0.5)
-      nokogiri (~> 1.5, >= 1.5.11)
+      nokogiri (~> 1.5, >= 1.13.3)
     fog-atmos (0.1.0)
       fog-core
       fog-xml
@@ -162,7 +162,7 @@ GEM
       fog-xml
     fog-xml (0.1.2)
       fog-core
-      nokogiri (~> 1.5, >= 1.5.11)
+      nokogiri (~> 1.5, >= 1.13.3)
     formatador (0.2.5)
     google-api-client (0.8.6)
       activesupport (>= 3.2)
@@ -211,7 +211,7 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (2.9.2)
     net-telnet (0.1.1)
-    nokogiri (1.6.7.1)
+    nokogiri (1.13.3)
       mini_portile2 (~> 2.0.0.rc2)
     open_uri_redirections (0.2.1)
     puppet (4.3.1)
@@ -230,7 +230,7 @@ GEM
     rake (10.4.2)
     rbvmomi (1.8.2)
       builder
-      nokogiri (>= 1.4.1)
+      nokogiri (>= 1.13.3)
       trollop
     require_all (1.3.3)
     retriable (1.4.1)
