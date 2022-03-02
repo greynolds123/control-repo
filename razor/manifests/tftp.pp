@@ -1,42 +1,11 @@
-# == Class: razor::tftp
-#
-# Razor Provisioning: Bootfiles for "exporting" by TFTP Server
-#
-# This is a private class. Only use the 'razor' class.
-#
-# === Authors
-#
-# Nicolas Truyens <nicolas@truyens.com>
-#
-class razor::tftp inherits razor {
-  # Validation
-  validate_string($::razor::server_hostname)
+class razor::tftp(
+  $server
+) {
+  include ::tftp
 
-  #Root directory
-  if ($::razor::tftp_root == undef) {
-    $directory = $::tftp::directory
-  } else {
-    validate_absolute_path($::razor::tftp_root)
-    $directory = $::razor::tftp_root
-  }
+  ::tftp::file { "undionly.kpxe": }
 
-  # undionly.kpxe
-  wget::fetch { 'http://boot.ipxe.org/undionly.kpxe':
-    destination => "${directory}/undionly.kpxe",
-  } ->
-
-  tftp::file { 'undionly.kpxe':
-    ensure => file,
-    source => "${directory}/undionly.kpxe",
-  }
-
-  # bootstrap.ipxe
-  wget::fetch { "http://${::razor::server_hostname}:8080/api/microkernel/bootstrap":
-    destination => "${directory}/bootstrap.ipxe",
-  } ->
-
-  tftp::file { 'bootstrap.ipxe':
-    ensure => file,
-    source => "${directory}/bootstrap.ipxe",
+  ::tftp::file { "bootstrap.ipxe":
+    content => template('razor/bootstrap.ipxe.erb')
   }
 }

@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+#
+# We match the final `\d` to ensure that only "modified" builds as per
+# git-describe are treated to a version bump; RC builds will have letters
+# after the `-` and are exempt.
+if (version = %x{git describe}.chomp) =~ /-\d+-[0-9a-f]+$/i
+  version = version.sub(/-\d+-[0-9a-f]+$/i) {|v|
+    puts v
+    ".#{v[1..-2].to_i(10) + 1}-"
+  }
+end
+
+puts verison
+exit 0
