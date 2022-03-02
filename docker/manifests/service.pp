@@ -38,8 +38,8 @@
 #
 class docker::service (
   $docker_command                    = $docker::docker_command,
-  $docker_start_command              = $docker::docker_start_command,
   $service_name                      = $docker::service_name,
+  $daemon_subcommand                 = $docker::daemon_subcommand,
   $tcp_bind                          = $docker::tcp_bind,
   $ip_forward                        = $docker::ip_forward,
   $iptables                          = $docker::iptables,
@@ -48,9 +48,6 @@ class docker::service (
   $bridge                            = $docker::bridge,
   $fixed_cidr                        = $docker::fixed_cidr,
   $default_gateway                   = $docker::default_gateway,
-  $ipv6                              = $docker::ipv6,
-  $ipv6_cidr                         = $docker::ipv6_cidr,
-  $default_gateway_ipv6              = $docker::default_gateway_ipv6,
   $socket_bind                       = $docker::socket_bind,
   $log_level                         = $docker::log_level,
   $log_driver                        = $docker::log_driver,
@@ -81,14 +78,13 @@ class docker::service (
   $dm_loopmetadatasize               = $docker::dm_loopmetadatasize,
   $dm_datadev                        = $docker::dm_datadev,
   $dm_metadatadev                    = $docker::dm_metadatadev,
-  $tmp_dir_config                    = $docker::tmp_dir_config,
   $tmp_dir                           = $docker::tmp_dir,
+  $nowarn_kernel                     = $docker::nowarn_kernel,
   $dm_thinpooldev                    = $docker::dm_thinpooldev,
   $dm_use_deferred_removal           = $docker::dm_use_deferred_removal,
   $dm_use_deferred_deletion          = $docker::dm_use_deferred_deletion,
   $dm_blkdiscard                     = $docker::dm_blkdiscard,
   $dm_override_udev_sync_check       = $docker::dm_override_udev_sync_check,
-  $overlay2_override_kernel_check    = $docker::overlay2_override_kernel_check,
   $storage_devs                      = $docker::storage_devs,
   $storage_vg                        = $docker::storage_vg,
   $storage_root_size                 = $docker::storage_root_size,
@@ -108,27 +104,24 @@ class docker::service (
   $service_overrides_template        = $docker::service_overrides_template,
   $service_hasstatus                 = $docker::service_hasstatus,
   $service_hasrestart                = $docker::service_hasrestart,
-  $daemon_environment_files          = $docker::daemon_environment_files,
   $tls_enable                        = $docker::tls_enable,
   $tls_verify                        = $docker::tls_verify,
   $tls_cacert                        = $docker::tls_cacert,
   $tls_cert                          = $docker::tls_cert,
   $tls_key                           = $docker::tls_key,
-  $registry_mirror                   = $docker::registry_mirror,
 ) {
 
-  unless $::osfamily =~ /(Debian|RedHat|windows)/ {
-    fail translate(('The docker::service class needs a Debian, Redhat or Windows based system.'))
+  unless $::osfamily =~ /(Debian|RedHat|Archlinux|Gentoo)/ {
+    fail('The docker::service class needs a Debian, RedHat, Archlinux or Gentoo based system.')
   }
 
   $dns_array = any2array($dns)
   $dns_search_array = any2array($dns_search)
-  $labels_array = any2array($labels)
   $extra_parameters_array = any2array($extra_parameters)
   $shell_values_array = any2array($shell_values)
   $tcp_bind_array = any2array($tcp_bind)
 
-  if $service_config != undef {
+  if $service_config {
     $_service_config = $service_config
   } else {
     if $::osfamily == 'Debian' {
@@ -150,16 +143,11 @@ class docker::service (
       notify  => $_manage_service,
     }
   }
-  if $::osfamily == 'windows' {
-    file { ['C:/ProgramData/docker/', 'C:/ProgramData/docker/config/']:
-      ensure  => directory,
-    }
-  }
 
   case $service_provider {
     'systemd': {
       file { '/etc/systemd/system/docker.service.d':
-        ensure => directory,
+        ensure => directory
       }
 
       if $service_overrides_template {
@@ -207,23 +195,13 @@ class docker::service (
   }
 
   if $manage_service {
-    if $::osfamily == 'windows' {
-      reboot { 'pending_reboot':
-        when    => 'pending',
-        onlyif  => 'component_based_servicing',
-        timeout => 1,
-      }
-    }
-
-    if ! defined(Service['docker']) {
-      service { 'docker':
-        ensure     => $service_state,
-        name       => $service_name,
-        enable     => $service_enable,
-        hasstatus  => $service_hasstatus,
-        hasrestart => $service_hasrestart,
-        provider   => $service_provider,
-      }
+    service { 'docker':
+      ensure     => $service_state,
+      name       => $service_name,
+      enable     => $service_enable,
+      hasstatus  => $service_hasstatus,
+      hasrestart => $service_hasrestart,
+      provider   => $service_provider,
     }
   }
 }

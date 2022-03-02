@@ -28,3 +28,15 @@ end
 RSpec.configure do |c|
   c.default_facts = default_facts
 end
+<<<<<<< HEAD:modules/spec/spec_helper.rb
+=======
+
+def ensure_module_defined(module_name)
+  module_name.split('::').reduce(Object) do |last_module, next_module|
+    last_module.const_set(next_module, Module.new) unless last_module.const_defined?(next_module)
+    last_module.const_get(next_module)
+  end
+end
+
+# 'spec_overrides' from sync.yml will appear below this line
+>>>>>>> 84f86b38d051023fc936c4e907a7ede0a9bd4066:kubernetes/spec/spec_helper.rb

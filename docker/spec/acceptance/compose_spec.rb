@@ -1,18 +1,9 @@
 require 'spec_helper_acceptance'
 
-broken = false
-
-if fact('osfamily') == 'windows'
-  puts "Not implemented on Windows"
-  broken = true
-elsif fact('osfamily') == 'RedHat'
-  docker_args = "repo_opt => '--enablerepo=localmirror-extras'"
-end  
-
-describe 'docker compose', :win_broken => broken do 
+describe 'docker compose' do
   before(:all) do
     install_code = <<-code
-      class { 'docker': #{docker_args}}
+      class { 'docker': }
       class { 'docker::compose': }
     code
     apply_manifest(install_code, :catch_failures=>true)

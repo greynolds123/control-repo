@@ -3,31 +3,25 @@
 # A define which executes a command inside a container.
 #
 define docker::exec(
-  Optional[Boolean] $detach        = false,
-  Optional[Boolean] $interactive   = false,
-  Optional[Boolean] $tty           = false,
-  Optional[String] $container      = undef,
-  Optional[String] $command        = undef,
-  Optional[String] $unless         = undef,
-  Optional[Boolean] $sanitise_name = true,
-  Optional[Boolean] $refreshonly   = false,
-  Optional[String] $onlyif         = undef,
+  $detach = false,
+  $interactive = false,
+  $tty = false,
+  $container = undef,
+  $command = undef,
+  $unless = undef,
+  $sanitise_name = true,
 ) {
   include docker::params
 
   $docker_command = $docker::params::docker_command
+  validate_string($docker_command)
 
-  if $::osfamily == 'windows' {
-    $exec_environment = 'PATH=C:/Program Files/Docker/'
-    $exec_timeout = 3000
-    $exec_path = ['c:/Windows/Temp/', 'C:/Program Files/Docker/']
-    $exec_provider = 'powershell'
-  } else {
-    $exec_environment = 'HOME=/root'
-    $exec_path = ['/bin', '/usr/bin']
-    $exec_timeout = 0
-    $exec_provider = undef
-  }
+  validate_string($container)
+  validate_string($command)
+  validate_string($unless)
+  validate_bool($detach)
+  validate_bool($interactive)
+  validate_bool($tty)
 
   $docker_exec_flags = docker_exec_flags({
     detach => $detach,
@@ -37,7 +31,7 @@ define docker::exec(
 
 
   if $sanitise_name {
-    $sanitised_container = regsubst($container, '[^0-9A-Za-z.\-_]', '-', 'G')
+    $sanitised_container = regsubst($container, '[^0-9A-Za-z.\-]', '-', 'G')
   } else {
     $sanitised_container = $container
   }
@@ -47,20 +41,11 @@ define docker::exec(
       ''                 => undef,
       default            => "${docker_command} exec ${docker_exec_flags} ${sanitised_container} ${$unless}",
   }
-  $onlyif_command = $onlyif ? {
-    undef     => undef,
-    ''        => undef,
-    'running' => "${docker_command} ps --no-trunc --format='table {{.Names}}' | grep '^${sanitised_container}$'",
-    default   => $onlyif
-  }
 
   exec { $exec:
-    environment => $exec_environment,
-    onlyif      => $onlyif_command,
-    path        => $exec_path,
-    refreshonly => $refreshonly,
-    timeout     => $exec_timeout,
-    provider    => $exec_provider,
+    environment => 'HOME=/root',
+    path        => ['/bin', '/usr/bin'],
+    timeout     => 0,
     unless      => $unless_command,
   }
 }

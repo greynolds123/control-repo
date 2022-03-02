@@ -1,7 +1,5 @@
 require 'shellwords'
-#
-# docker_exec_flags.rb
-#
+
 module Puppet::Parser::Functions
   # Transforms a hash into a string of docker exec flags
   newfunction(:docker_exec_flags, :type => :rvalue) do |args|
@@ -20,6 +18,6 @@ module Puppet::Parser::Functions
       flags << '--tty=true'
     end
 
-    flags.flatten.join(' ')
+    flags.flatten.join(" ")
   end
 end

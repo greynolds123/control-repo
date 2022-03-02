@@ -1,23 +1,14 @@
 require 'spec_helper_acceptance'
 
-broken = false
-
-if fact('osfamily') == 'windows'
-  puts "Not implemented on Windows"
-  broken = true
-elsif fact('osfamily') == 'RedHat'
-  docker_args = "repo_opt => '--enablerepo=localmirror-extras'" 
-end
-
-describe 'docker network', :win_broken => broken do
+describe 'docker network' do
   command = 'docker'
 
   before(:all) do
-    install_code = "class { 'docker': #{docker_args}}"
+    install_code = "class { 'docker': }"
     apply_manifest(install_code, :catch_failures=>true)
   end
 
-  describe command("#{command} network --help") do
+  describe command("#{command} network help") do
     its(:exit_status) { should eq 0 }
   end
 

@@ -1,38 +1,14 @@
 require 'spec_helper_acceptance'
 
-broken = false
-
-if fact('osfamily') == 'windows'
-  puts "Not implemented on Windows"
-  broken = true
-elsif fact('osfamily') == 'RedHat'
-  docker_args = "repo_opt => '--enablerepo=localmirror-extras'" 
-end
-
-describe 'docker', :win_broken => broken do
-  package_name = 'docker-ce'
+describe 'docker' do
+  package_name = 'docker-engine'
   service_name = 'docker'
   command = 'docker'
-
-  context 'When adding system user' do
-    let(:pp) {"
-            class { 'docker':
-              docker_users => ['user1']
-            }
-    "}
-
-     it 'the docker daemon' do
-       apply_manifest(pp, :catch_failures=>true) do |r|
-         expect(r.stdout).to_not match(/docker-systemd-reload-before-service/)
-       end
-     end
-   end
 
   context 'with default parameters' do
     let(:pp) {"
 			class { 'docker':
-        docker_users => [ 'testuser' ],
-        #{docker_args}
+				docker_users => [ 'testuser' ],
 			}
 			docker::image { 'nginx': }
 			docker::run { 'nginx':
@@ -112,30 +88,12 @@ describe 'docker', :win_broken => broken do
     end
   end
 
-  context "When registry_mirror is set" do
-    let(:pp) {"
-      class { 'docker':
-        registry_mirror => 'http://testmirror.io'
-      }
-    "}
-     it 'should apply with no errors' do
-       apply_manifest(pp, :catch_failures=>true)
-     end
-
-    it 'should have a registry mirror set' do
-      shell('ps -aux | grep docker') do |r|
-        expect(r.stdout).to match(/--registry-mirror=http:\/\/testmirror.io/)
-      end
-    end
-  end
-
   context 'registry' do
     before(:all) do
       registry_host = 'localhost'
       registry_port = 5000
       @registry_address = "#{registry_host}:#{registry_port}"
-      @registry_bad_address = "#{registry_host}:5001"
-      # @registry_email = 'user@example.com'
+      @registry_email = 'user@example.com'
       @config_file = '/root/.docker/config.json'
       @manifest = <<-EOS
         class { 'docker': }
@@ -158,11 +116,11 @@ describe 'docker', :win_broken => broken do
         docker::registry { '#{@registry_address}':
           username => 'username',
           password => 'password',
+          email    => '#{@registry_email}',
         }
       EOS
       apply_manifest(manifest, :catch_failures=>true)
       shell("grep #{@registry_address} #{@config_file}", :acceptable_exit_codes => [0])
-      shell("test -e \"/root/registry-auth-puppet_receipt_#{@registry_address}_root\"", :acceptable_exit_codes => [0])
     end
 
     it 'should be able to logout from the registry' do
@@ -173,21 +131,8 @@ describe 'docker', :win_broken => broken do
       EOS
       apply_manifest(manifest, :catch_failures=>true)
       shell("grep #{@registry_address} #{@config_file}", :acceptable_exit_codes => [1,2])
-      # shell("grep #{@registry_email} #{@config_file}", :acceptable_exit_codes => [1,2])
+      shell("grep #{@registry_email} #{@config_file}", :acceptable_exit_codes => [1,2])
     end
-
-    it 'should not create receipt if registry login fails' do
-      manifest = <<-EOS
-        docker::registry { '#{@registry_bad_address}':
-          username => 'username',
-          password => 'password',
-        }
-      EOS
-      apply_manifest(manifest, :catch_failures=>true)
-      shell("grep #{@registry_bad_address} #{@config_file}", :acceptable_exit_codes => [1,2])
-      shell("test -e \"/root/registry-auth-puppet_receipt_#{@registry_bad_address}_root\"", :acceptable_exit_codes => [1])
-    end
-
   end
 
 end
