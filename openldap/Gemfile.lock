@@ -9,7 +9,8 @@ GEM
   remote: https://rubygems.org/
   specs:
     CFPropertyList (2.2.8)
-    addressable (2.4.0)
+    addressable (2.8.1)
+      public_suffix (>= 2.0.2, < 6.0)
     backports (3.6.8)
     diff-lcs (1.2.5)
     domain_name (0.5.20160310)
@@ -60,6 +61,7 @@ GEM
     net-http-persistent (2.9.4)
     net-http-pipeline (1.0.1)
     netrc (0.11.0)
+    public_suffix (5.0.0)
     puppet (4.4.2)
       CFPropertyList (~> 2.2.6)
       facter (> 2.0, < 4)
